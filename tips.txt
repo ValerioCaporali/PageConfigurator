@@ -1,0 +1,4 @@
+Nella sidebar quando clicco il link di una specifica pagina da modificare, mi apre una nuova pagina dove la sidebar a sinistra scompare e ne creo una nuova dentro la nuova pagina (sul lato destro)
+che conterrà tutti i widget/elementi che si possono inserire nella pagina.
+
+! la deserializzazione da json al modello non mi restituisce un array di oggetti, perciò non riesco a passare il modello al javascript

@@ -1,0 +1,184 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@using Newtonsoft.Json;
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">*@
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link href="~/css/Sidebar.css" rel="stylesheet" />
+    <link href="~/css/style.css" rel="stylesheet" />
+
+</head>
+
+<style>
+    [contenteditable="true"]:active,
+    [contenteditable="true"]:focus {
+        border: none;
+        outline: none;
+    }
+
+    [contenteditable="true"]:focus>style::before {
+        content: "styles";
+        font-size: 1.5em;
+        font-weight: 700;
+    }
+
+    [contenteditable="true"]:focus>style {
+        display: block;
+        position: relative;
+        right: -50%;
+        top: -2em;
+        color: blue;
+        font-family: courier, monospace;
+        font-size: .75em;
+        line-height: 1.5;
+        padding: .5em;
+        background: #fff;
+        border: 1px solid #999;
+        box-shadow: 1px 1px 2px #777;
+        border-radius: 5px;
+    }
+</style>
+
+<body>
+    <div class="page-wrapper chiller-theme toggled">
+        <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+            <i class="fas fa-bars"></i>
+        </a>
+        <nav id="sidebar" class="sidebar-wrapper">
+            <div class="sidebar-content">
+                <div class="sidebar-brand">
+                    <a href="#">pro sidebar</a>
+                    <div id="close-sidebar">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+                <div class="sidebar-header">
+                    <div class="user-pic">
+                        <img class="img-responsive img-rounded"
+                            src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
+                            alt="User picture">
+                    </div>
+                    <div class="user-info">
+                        <span class="user-name">
+                            Jhon
+                            <strong>Smith</strong>
+                        </span>
+                        <span class="user-role">Administrator</span>
+                        <span class="user-status">
+                            <i class="fa fa-circle"></i>
+                            <span>Online</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="sidebar-menu">
+                    <ul>
+                        <li class="header-menu">
+                            <span>General</span>
+                        </li>
+                        @if (@ViewBag.HomePagesNumber > 0)
+                        {
+                            <li class="sidebar-dropdown">
+                                <a href="#">
+                                    <i class="far fa-file"></i>
+                                    <span>Home Pages</span>
+                                    <span id="home-pages-number" class="badge badge-pill badge-success"></span>
+                                </a>
+                                <div class="sidebar-submenu">
+                                    <ul id="home-pages-list">
+
+                                    </ul>
+                                </div>
+                            </li>
+                        }
+                        @if (@ViewBag.PagesNumber == 0)
+                        {
+
+                        }
+
+                        <li class="sidebar-dropdown">
+                            <a href="#">
+                                <i class="far fa-file"></i>
+                                <span>Pagine</span>
+                                <span id="pages-number" class="badge badge-pill badge-success"></span>
+                            </a>
+                            <div class="sidebar-submenu">
+                                <ul id="pages-list">
+
+                                </ul>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </div>
+        </nav>
+        <!-- sidebar-wrapper  -->
+
+        <main class="page-content" id="main">
+            <h4 id="page-title" contenteditable="true" style="display:block;"></h4>
+            <div class="demo-container">
+                <div id="page">
+                    <div id="responsive-box">
+
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body>
+
+</html>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/js/configurator.js" asp-append-version="true"></script>
+<script type="text/javascript">
+    $(".sidebar-dropdown > a").click(function () {
+        $(".sidebar-submenu").slideUp(200);
+        if (
+            $(this)
+                .parent()
+                .hasClass("active")
+        ) {
+            $(".sidebar-dropdown").removeClass("active");
+            $(this)
+                .parent()
+                .removeClass("active");
+        } else {
+            $(".sidebar-dropdown").removeClass("active");
+            $(this)
+                .next(".sidebar-submenu")
+                .slideDown(200);
+            $(this)
+                .parent()
+                .addClass("active");
+        }
+    });
+
+    $("#close-sidebar").click(function () {
+        $(".page-wrapper").removeClass("toggled");
+        $(".page-content").addClass("myPadding");
+    });
+    $("#show-sidebar").click(function () {
+        $(".page-wrapper").addClass("toggled");
+        $(".page-content").removeClass("myPadding");
+    });
+
+</script>
+@* @RenderSection("Scripts", required: false) *@

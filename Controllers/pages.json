@@ -1,0 +1,1836 @@
+[
+    {
+        "Name": "Public Home",
+        "Id": "home",
+        "Language": "en",
+        "Widgets": [
+            {
+                "Row": 0,
+                "Column": 0,
+                "ColumnSpan": 12,
+                "Type": 1,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/2022/banner_1.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/2022/banner_2.jpg"
+                    ],
+                    "EnableLoop": true,
+                    "SlideshowDelay": 3000
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "ColumnSpan": 12,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class='public-home-title'>NEWS</div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Top": "15px",
+                        "Bottom": "15px"
+                    }
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 0,
+                "ColumnSpan": 3,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='position:relative;text-align:center;'><img width='100%' src=\"https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/news/voile-blanche-qwark.jpg\"><div style='position:absolute;bottom:0;padding:20px;width:100%;background-color:white;opacity:0.6;'>VOILE BLANCHE QWARK</div></div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Top": "30px",
+                        "Left": "30px",
+                        "Bottom": "30px"
+                    }
+                },
+                "MobileStyle": {
+                    "Padding": {
+                        "Total": "15px"
+                    }
+                },
+                "ClickAction": {
+                    "Url": "https://www.voileblanche.com/en/qwark-it",
+                    "External": true
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 3,
+                "ColumnSpan": 3,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='position:relative;text-align:center;'><img width='100%' src=\"https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/2022/naturino_news.jpg\"><div style='position:absolute;bottom:0;padding:20px;width:100%;background-color:white;opacity:0.6;'>NATURINO CLOTHING</div></div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "30px 15px"
+                    }
+                },
+                "MobileStyle": {
+                    "Padding": {
+                        "Total": "15px"
+                    }
+                },
+                "ClickAction": {
+                    "Url": "https://www.naturino.com/en_en/shop-by-look",
+                    "External": true
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 6,
+                "ColumnSpan": 3,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='position:relative;text-align:center;'><img width='100%' src=\"https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/2022/falcotto_news.jpg\"><div style='position:absolute;bottom:0;padding:20px;width:100%;background-color:white;opacity:0.6;'>FALCOTTO CLOTHING</div></div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Top": "30px",
+                        "Right": "30px",
+                        "Bottom": "30px"
+                    }
+                },
+                "MobileStyle": {
+                    "Padding": {
+                        "Total": "15px"
+                    }
+                },
+                "ClickAction": {
+                    "Url": "https://www.falcotto.com/en_en/shop-by-look",
+                    "External": true
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 9,
+                "ColumnSpan": 3,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='position:relative;text-align:center;'><img width='100%' src=\"https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/2022/fm_for_naturino_news.jpg\"><div style='position:absolute;bottom:0;padding:20px;width:100%;background-color:white;opacity:0.6;'>FLOWER MOUNTAIN FOR NATURINO</div></div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Top": "30px",
+                        "Right": "30px",
+                        "Bottom": "30px"
+                    }
+                },
+                "MobileStyle": {
+                    "Padding": {
+                        "Total": "15px"
+                    }
+                },
+                "ClickAction": {
+                    "Url": "https://www.naturino.com/en_en/flower-mountain-for-naturino",
+                    "External": true
+                }
+            },
+            {
+                "Row": 3,
+                "Column": 0,
+                "ColumnSpan": 12,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class='public-home-title'>TEAM FALC</div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Top": "15px",
+                        "Bottom": "15px"
+                    }
+                }
+            },
+            {
+                "Row": 4,
+                "Column": 1,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/MICAELA_ROMITI.jpg\" class=\"member-image\"/> <div class=\"team-member-info\"><div class=\"job-title\">B2B</div><div class=\"member-name\">Micaela Romiti</div><a class=\"contact-cta\" href='mailto:micaela.romiti@falc.biz'>CONTACTS</a></div>"
+                }
+            },
+            {
+                "Row": 4,
+                "Column": 3,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/VANIA_GIUSTOZZI.jpg\" class=\"member-image\"/> <div class=\"team-member-info\"> <div class=\"job-title\">SALES</div><div class=\"member-name\">Vania Giustozzi</div><a class=\"contact-cta\" href='mailto:vania.giustozzi@falc.biz'>CONTACTS</a></div>"
+                }
+            },
+            {
+                "Row": 4,
+                "Column": 5,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/MARCO_ORFEI.jpg\" class=\"member-image\"/> <div class=\"team-member-info\"> <div class=\"job-title\">CFO</div><div class=\"member-name\">Marco Orfei</div><a class=\"contact-cta\" href='mailto:marco.orfei@falc.biz'>CONTACTS</a></div>"
+                }
+            },
+            {
+                "Row": 4,
+                "Column": 7,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/OMBRETTA_SCOCCO.jpg\" class=\"member-image\"/> <div class=\"team-member-info\"> <div class=\"job-title\">MARKETING</div><div class=\"member-name\">Ombretta Scocco</div><a class=\"contact-cta\" href='mailto:ombretta.scocco@falc.biz'>CONTACTS</a></div>"
+                }
+            },
+            {
+                "Row": 4,
+                "Column": 9,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/PAMELA_MAZZAGATTA.jpg\" class=\"member-image\"/> <div class=\"team-member-info\"> <div class=\"job-title\">CUSTOMER CARE</div><div class=\"member-name\">Pamela Mazzagatta</div><a class=\"contact-cta\" href='mailto:pamela.mazzagatta@falc.biz'>CONTACTS</a></div>"
+                }
+            },
+            {
+                "Row": 6,
+                "MobileRow": 12,
+                "Column": 0,
+                "ColumnSpan": 12,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div id='events' class='public-home-title'>EVENTS AND FAIRS</div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Top": "15px",
+                        "Bottom": "15px"
+                    },
+                    "Margin": {
+                        "Top": "50px"
+                    }
+                }
+            },
+            {
+                "Row": 7,
+                "MobileRow": 13,
+                "Column": 0,
+                "ColumnSpan": 12,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class='public-home-events'><div style='margin:30px;'><div class=\"event-type-title\">CHILD</div><div class=\"event-box\"><div class=\"event-title\">GALLERY | DÜSSELDORF</div><div class=\"event-dates\">29 - 31 AUGUST 2021</div><div class=\"event-title\">MICAM | MILAN</div><div class=\"event-dates\">19 - 21 SEPTEMBER 2021</div><span>DISCOVER ALL OTHER EVENTS </span><i class='dx-icon-chevronright'></i></div></div><div style='margin:30px;'><div class=\"event-type-title\">ADULT</div><div class=\"event-box\"><div class=\"event-title\">GALLERY | DÜSSELDORF</div><div class=\"event-dates\">29 - 31 AUGUST 2021</div><div class=\"event-title\">MICAM | MILAN</div><div class=\"event-dates\">19 - 21 SEPTEMBER 2021</div><span>DISCOVER ALL OTHER EVENTS</span><i class='dx-icon-chevronright'></i></div></div></div>"
+                }
+            },
+            {
+                "Row": 8,
+                "MobileRow": 14,
+                "Column": 0,
+                "ColumnSpan": 12,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div id='websites' class='public-home-title'>WEBSITES</div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Top": "15px",
+                        "Bottom": "15px"
+                    }
+                }
+            },
+            {
+                "Row": 9,
+                "MobileRow": 15,
+                "Column": 0,
+                "ColumnSpan": 4,
+                "Type": 1,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/2022/naturino.jpg"
+                    ]
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "15px"
+                    }
+                },
+                "Text": {
+                    "Value": "<div style='background-color:white;opacity:0.6;padding:15px;font-size:18px;'>NATURINO</div>",
+                    "Position": {
+                        "Type": 0
+                    }
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "https://www.naturino.com/",
+                    "External": true
+                }
+            },
+            {
+                "Row": 9,
+                "MobileRow": 15,
+                "Column": 4,
+                "ColumnSpan": 4,
+                "Type": 1,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/2022/falcotto.jpg"
+                    ]
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "15px"
+                    }
+                },
+                "Text": {
+                    "Value": "<div style='background-color:white;opacity:0.6;padding:15px;font-size:18px;'>FALCOTTO</div>",
+                    "Position": {
+                        "Type": 0
+                    }
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "https://www.falcotto.com/",
+                    "External": true
+                }
+            },
+            {
+                "Row": 9,
+                "MobileRow": 15,
+                "Column": 8,
+                "ColumnSpan": 4,
+                "Type": 1,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/2022/voile_blanche.jpg"
+                    ]
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "15px"
+                    }
+                },
+                "Text": {
+                    "Value": "<div style='background-color:white;opacity:0.6;padding:15px;font-size:18px;'>VOILE BLANCHE</div>",
+                    "Position": {
+                        "Type": 0
+                    }
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "https://www.voileblanche.com/",
+                    "External": true
+                }
+            },
+            {
+                "Row": 10,
+                "MobileRow": 16,
+                "Column": 0,
+                "ColumnSpan": 4,
+                "Type": 1,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/2022/w6yz.jpg"
+                    ]
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "15px"
+                    }
+                },
+                "Text": {
+                    "Value": "<div style='background-color:white;opacity:0.6;padding:15px;font-size:18px;'>W6YZ</div>",
+                    "Position": {
+                        "Type": 0
+                    }
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "https://www.w6yz.com/",
+                    "External": true
+                }
+            },
+            {
+                "Row": 10,
+                "MobileRow": 16,
+                "Column": 4,
+                "ColumnSpan": 4,
+                "Type": 1,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/2022/flower_mountain.jpg"
+                    ]
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "15px"
+                    }
+                },
+                "Text": {
+                    "Value": "<div style='background-color:white;opacity:0.6;padding:15px;font-size:18px;'>FLOWER MOUNTAIN</div>",
+                    "Position": {
+                        "Type": 0
+                    }
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "https://www.flowermountain.com/",
+                    "External": true
+                }
+            },
+            {
+                "Row": 10,
+                "MobileRow": 16,
+                "Column": 8,
+                "ColumnSpan": 4,
+                "Type": 1,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/2022/candice_cooper.jpg"
+                    ]
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "15px"
+                    }
+                },
+                "Text": {
+                    "Value": "<div style='background-color:white;opacity:0.6;padding:15px;font-size:18px;'>CANDICE COOPER</div>",
+                    "Position": {
+                        "Type": 0
+                    }
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "https://www.candicecooper.com/",
+                    "External": true
+                }
+            }
+        ]
+    },
+    {
+        "Name": "Public Home",
+        "Id": "home",
+        "Language": "it",
+        "Widgets": [
+            {
+                "Row": 0,
+                "Column": 0,
+                "ColumnSpan": 12,
+                "Type": 1,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/2022/banner_1.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/2022/banner_2.jpg"
+                    ],
+                    "EnableLoop": true,
+                    "SlideshowDelay": 3000
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "ColumnSpan": 12,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class='public-home-title'>NEWS</div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Top": "15px",
+                        "Bottom": "15px"
+                    }
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 0,
+                "ColumnSpan": 3,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='position:relative;text-align:center;'><img width='100%' src=\"https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/news/voile-blanche-qwark.jpg\"><div style='position:absolute;bottom:0;padding:20px;width:100%;background-color:white;opacity:0.6;'>VOILE BLANCHE QWARK</div></div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Top": "30px",
+                        "Left": "30px",
+                        "Bottom": "30px"
+                    }
+                },
+                "MobileStyle": {
+                    "Padding": {
+                        "Total": "15px"
+                    }
+                },
+                "ClickAction": {
+                    "Url": "https://www.voileblanche.com/it/qwark-it",
+                    "External": true
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 3,
+                "ColumnSpan": 3,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='position:relative;text-align:center;'><img width='100%' src=\"https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/2022/naturino_news.jpg\"><div style='position:absolute;bottom:0;padding:20px;width:100%;background-color:white;opacity:0.6;'>NATURINO ABBIGLIAMENTO</div></div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "30px 15px"
+                    }
+                },
+                "MobileStyle": {
+                    "Padding": {
+                        "Total": "15px"
+                    }
+                },
+                "ClickAction": {
+                    "Url": "https://www.naturino.com/it_it/shop-by-look",
+                    "External": true
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 6,
+                "ColumnSpan": 3,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='position:relative;text-align:center;'><img width='100%' src=\"https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/2022/falcotto_news.jpg\"><div style='position:absolute;bottom:0;padding:20px;width:100%;background-color:white;opacity:0.6;'>FALCOTTO ABBIGLIAMENTO</div></div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Top": "30px",
+                        "Right": "30px",
+                        "Bottom": "30px"
+                    }
+                },
+                "MobileStyle": {
+                    "Padding": {
+                        "Total": "15px"
+                    }
+                },
+                "ClickAction": {
+                    "Url": "https://www.falcotto.com/it_it/shop-by-look",
+                    "External": true
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 9,
+                "ColumnSpan": 3,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='position:relative;text-align:center;'><img width='100%' src=\"https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/2022/fm_for_naturino_news.jpg\"><div style='position:absolute;bottom:0;padding:20px;width:100%;background-color:white;opacity:0.6;'>FLOWER MOUNTAIN FOR NATURINO</div></div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Top": "30px",
+                        "Right": "30px",
+                        "Bottom": "30px"
+                    }
+                },
+                "MobileStyle": {
+                    "Padding": {
+                        "Total": "15px"
+                    }
+                },
+                "ClickAction": {
+                    "Url": "https://www.naturino.com/it_it/flower-mountain-for-naturino",
+                    "External": true
+                }
+            },
+            {
+                "Row": 3,
+                "Column": 0,
+                "ColumnSpan": 12,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class='public-home-title'>TEAM FALC</div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Top": "15px",
+                        "Bottom": "15px"
+                    }
+                }
+            },
+            {
+                "Row": 4,
+                "Column": 1,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/MICAELA_ROMITI.jpg\" class=\"member-image\"/> <div class=\"team-member-info\"><div class=\"job-title\">B2B</div><div class=\"member-name\">Micaela Romiti</div><a class='contact-cta' href='mailto:micaela.romiti@falc.biz'>CONTATTI</a></div>"
+                }
+            },
+            {
+                "Row": 4,
+                "Column": 3,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/VANIA_GIUSTOZZI.jpg\" class=\"member-image\"/> <div class=\"team-member-info\"><div class=\"job-title\">SALES</div><div class=\"member-name\">Vania Giustozzi</div><a class='contact-cta' href='mailto:vania.giustozzi@falc.biz'>CONTATTI</a></div>"
+                }
+            },
+            {
+                "Row": 4,
+                "Column": 5,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/MARCO_ORFEI.jpg\" class=\"member-image\"/> <div class=\"team-member-info\"><div class=\"job-title\">CFO</div><div class=\"member-name\">Marco Orfei</div><a class=\"contact-cta\" href='mailto:marco.orfei@falc.biz'>CONTATTI</a></div>"
+                }
+            },
+            {
+                "Row": 4,
+                "Column": 7,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/OMBRETTA_SCOCCO.jpg\" class=\"member-image\"/> <div class=\"team-member-info\"><div class=\"job-title\">MARKETING</div><div class=\"member-name\">Ombretta Scocco</div><a class='contact-cta' href='mailto:ombretta.scocco@falc.biz'>CONTATTI</a></div>"
+                }
+            },
+            {
+                "Row": 4,
+                "Column": 9,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/PAMELA_MAZZAGATTA.jpg\" class=\"member-image\"/> <div class=\"team-member-info\"><div class=\"job-title\">CUSTOMER CARE</div><div class=\"member-name\">Pamela Mazzagatta</div><a class='contact-cta' href='mailto:pamela.mazzagatta@falc.biz'>CONTATTI</a></div>"
+                }
+            },
+            {
+                "Row": 6,
+                "MobileRow": 12,
+                "Column": 0,
+                "ColumnSpan": 12,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div id='events' class='public-home-title'>EVENTI E FIERE</div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Top": "15px",
+                        "Bottom": "15px"
+                    }
+                }
+            },
+            {
+                "Row": 7,
+                "MobileRow": 13,
+                "Column": 0,
+                "ColumnSpan": 12,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class='public-home-events'><div style='margin:30px;'><div class=\"event-type-title\">BAMBINO</div><div class=\"event-box\"><div class=\"event-title\">GALLERY | DÜSSELDORF</div><div class=\"event-dates\">29 - 31 AGOSTO 2021</div><div class=\"event-title\">MICAM | MILANO</div><div class=\"event-dates\">19 - 21 SETTEMBRE 2021</div><span>SCOPRI GLI ALTRI EVENTI</span><i class='dx-icon-chevronright'></i></div></div><div style='margin:30px;'><div class=\"event-type-title\">ADULTO</div><div class=\"event-box\"><div class=\"event-title\">GALLERY | DÜSSELDORF</div><div class=\"event-dates\">29 - 31 AGOSTO 2021</div><div class=\"event-title\">MICAM | MILANO</div><div class=\"event-dates\">19 - 21 SETTEMBRE 2021</div><span>SCOPRI GLI ALTRI EVENTI </span><i class='dx-icon-chevronright'></i></div></div></div>"
+                }
+            },
+            {
+                "Row": 8,
+                "MobileRow": 14,
+                "Column": 0,
+                "ColumnSpan": 12,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div id='websites' class='public-home-title'>SITI WEB</div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Top": "15px",
+                        "Bottom": "15px"
+                    }
+                }
+            },
+            {
+                "Row": 9,
+                "MobileRow": 15,
+                "Column": 0,
+                "ColumnSpan": 4,
+                "Type": 1,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/2022/naturino.jpg"
+                    ]
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "15px"
+                    }
+                },
+                "Text": {
+                    "Value": "<div style='background-color:white;opacity:0.6;padding:15px;font-size:18px;'>NATURINO</div>",
+                    "Position": {
+                        "Type": 0
+                    }
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "https://www.naturino.com/",
+                    "External": true
+                }
+            },
+            {
+                "Row": 9,
+                "MobileRow": 15,
+                "Column": 4,
+                "ColumnSpan": 4,
+                "Type": 1,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/2022/falcotto.jpg"
+                    ]
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "15px"
+                    }
+                },
+                "Text": {
+                    "Value": "<div style='background-color:white;opacity:0.6;padding:15px;font-size:18px;'>FALCOTTO</div>",
+                    "Position": {
+                        "Type": 0
+                    }
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "https://www.falcotto.com/",
+                    "External": true
+                }
+            },
+            {
+                "Row": 9,
+                "MobileRow": 15,
+                "Column": 8,
+                "ColumnSpan": 4,
+                "Type": 1,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/2022/voile_blanche.jpg"
+                    ]
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "15px"
+                    }
+                },
+                "Text": {
+                    "Value": "<div style='background-color:white;opacity:0.6;padding:15px;font-size:18px;'>VOILE BLANCHE</div>",
+                    "Position": {
+                        "Type": 0
+                    }
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "https://www.voileblanche.com/",
+                    "External": true
+                }
+            },
+            {
+                "Row": 10,
+                "MobileRow": 16,
+                "Column": 0,
+                "ColumnSpan": 4,
+                "Type": 1,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/2022/w6yz.jpg"
+                    ]
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "15px"
+                    }
+                },
+                "Text": {
+                    "Value": "<div style='background-color:white;opacity:0.6;padding:15px;font-size:18px;'>W6YZ</div>",
+                    "Position": {
+                        "Type": 0
+                    }
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "https://www.w6yz.com/",
+                    "External": true
+                }
+            },
+            {
+                "Row": 10,
+                "MobileRow": 16,
+                "Column": 4,
+                "ColumnSpan": 4,
+                "Type": 1,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/2022/flower_mountain.jpg"
+                    ]
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "15px"
+                    }
+                },
+                "Text": {
+                    "Value": "<div style='background-color:white;opacity:0.6;padding:15px;font-size:18px;'>FLOWER MOUNTAIN</div>",
+                    "Position": {
+                        "Type": 0
+                    }
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "https://www.flowermountain.com/",
+                    "External": true
+                }
+            },
+            {
+                "Row": 10,
+                "MobileRow": 16,
+                "Column": 8,
+                "ColumnSpan": 4,
+                "Type": 1,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/2022/candice_cooper.jpg"
+                    ]
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "15px"
+                    }
+                },
+                "Text": {
+                    "Value": "<div style='background-color:white;opacity:0.6;padding:15px;font-size:18px;'>CANDICE COOPER</div>",
+                    "Position": {
+                        "Type": 0
+                    }
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "https://www.candicecooper.com/",
+                    "External": true
+                }
+            }
+        ]
+    },
+    {
+        "Name": "Condizioni Generali di Vendita",
+        "Id": "cgv",
+        "Language": "it",
+        "Widgets": [
+            {
+                "Row": 0,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='font-weight:700;padding:5px;font-size:20px;text-align:left;line-height:20px;margin-bottom:10px;'>Pronti a darti<br>una mano.</div><div class='link underline' data-destination-url='/public/cgv'>Condizioni di vendita</div><div class='link' data-destination-url='/public/privacy'>Privacy Policy</div><div class='link' data-destination-url='/public/cookie'>Utilizzo dei cookie</div>"
+                },
+                "Style": {
+                    "Margin": {
+                        "Total": "16px auto"
+                    },
+                    "Padding": {
+                        "Total": "30px 20px"
+                    },
+                    "Background": "#e5e6e5",
+                    "Width": "fit-content"
+                }
+            },
+            {
+                "Row": 0,
+                "Column": 1,
+                "ColumnSpan": 3,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='text-align:left;'><div class='title'>Condizioni generali di vendita online business to business</div><div class='title'>Oggetto del contratto</div><div>Le presenti Condizioni Generali di Vendita (di seguito denominate CGV) sono valide esclusivamente tra la società Falc Spa, con sede legale in 62012 Civitanova Marche (MC) alla C.da San Domenico n 24, P Iva 00347770430 ( di seguito anche detta “venditore”) e qualunque operatore commerciale (di seguito denominato anche cliente/acquirente) che effettua acquisti online sul sito internet <a href='https://b2b.falc.biz'>https://b2b.falc.biz</a> (gestito da Falc Spa). Eventuali deroghe saranno valide solo se sottoscritte dalle parti.</div><div><br>Falc Spa, titolare dei marchi: Naturino, Falcotto, Voile Blanche, Flower Mountain, W6yz, Candice Cooper, effettua transazioni commerciali tramite il proprio sito ufficiale: <a href='https://b2b.falc.biz'>https://b2b.falc.biz</a>, regolate dalle presenti CGV. Le stesse disciplinano tutti gli acquisti effettuati sul sito conformemente alla normativa italiana e comunitaria in materia di commercio elettronico. Tali vendite online B2B sono regolate, oltre che dalle presenti CGV, anche dalle condizioni particolari di vendita quali, a titolo d’esempio, il prezzo, le modalità di pagamento e consegna, la tipologia del prodotto ecc.</div><div><br>Le presenti CGV possono essere oggetto di modifiche in ogni momento e la data di pubblicazione delle stesse sul sito equivale alla data di entrata in vigore. In caso di modifiche,si applicheranno le CGV in vigore alla data di invio dell’ordine di acquisto.</div><div><br>Il Cliente, pertanto, è tenuto a leggere attentamente le presenti CGV che Falc Spa mette a disposizione nella sezione Termini di vendita, sia prima che durante la procedura di acquisto ed è invitato ad accettarle mediante l’apposizione di un flag nella casella indicata.</div><div><br>Con l’apposizione del flag il cliente accetta le presenti CGV in tutte le sue parti.</div><div><br>Nell’e-mail di conferma dell’ordine il cliente riceverà anche un collegamento ipertestuale per scaricare ed archiviare una copia delle presenti CGV così come previsto dall’art 51 comma 1 del D.lgs 206/2005, modificato dal D.lgs 21/2014.</div><div><br>Le presenti CGV si applicano a tutti gli acquisti effettuati sul sito da clientela italiana ed estera. Esse non disciplinano la vendita di prodotti e/o fornitura di servizi da parte di soggetti diversi da Falc Spa che siano presenti sul sito tramite link, banner (immagini o animazioni a scopo pubblicitario) o altri collegamenti ipertestuali. Sui siti web consultabili tramite tali collegamenti Falc Spa non effettua alcun tipo di controllo o monitoraggio e non è responsabile per eventuali violazioni di legge degli stessi.</div><div class='title'>Informazioni precontrattuali per il consumatore</div><div>Il cliente, prima della conclusione dell’ordine e quindi dell’accettazione del contratto d’acquisto, prende visione delle caratteristiche dei beni che vengono descritte nelle schede prodotto al momento della scelta.</div><div><br>Falc Spa si impegna a descrivere e presentare gli articoli venduti sul sito nella maniera più realistica possibile. Ciononostante è bene tener presente che potrebbero presentarsi alcuni errori, imprecisioni o piccole incongruenze con il prodotto reale.</div><div><br>Prima di concludere l’acquisto, accettare conseguentemente il contratto a esso relativo e convalidare l’ordine con “obbligo di pagamento”, il cliente è informato relativamente a: 1) prezzo totale del bene comprensivo delle imposte più i dettagli spese di spedizione e ulteriori informazioni ritenute necessarie; 2) termine indicativo previsto per la consegna della merce.</div><div class='title'>Modalita’ di acquisto sul sito</div><div>L’acquisto di prodotti può avvenire solo previa registrazione del cliente contattando il Servizio clienti Falc Spa. Al cliente saranno attribuiti codice utente e password da utilizzarsi per l’accesso sul sito <a href='https://b2b.falc.biz'>https://b2b.falc.biz</a>. Le credenziali di registrazione devono essere utilizzate solo dal cliente con la massima diligenza e segretezza e non possono essere cedute a terzi poiché è unico responsabile della loro custodia ed utilizzo</div><div><br>Il cliente garantisce che le informazioni personali fornite durante la procedura di registrazione siano complete e veritiere e accetta di tenere il venditore indenne e manlevato da qualsiasi obbligo risarcitorio e/o sanzione e/o danno derivante da violazione delle regole che disciplinano la registrazione e l’acquisto dei prodotti dal sito. </div><div><br>La registrazione consente ai clienti di effettuare anche le seguenti attività: 1) consultare il proprio storico ordini; 2) accedere alla propria area documenti.</div><div><br>L’acquisto sul sito è consentito a coloro che rivestono la qualità di operatore commerciale munito di partita Iva. Non potranno effettuare acquisti sul sito i consumatori finali.</div><div><br>Falc Spa, si riserva la facoltà di non accettare ordini che risultino anomali, provenienti da clienti con cui si abbia in corso un contenzioso, che non abbiano rilasciato dati identificativi esatti e comunque in ogni caso in cui lo ritenga opportuno, senza che ciò possa comportare richieste di risarcimenti da parte del cliente.</div></div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "0 5%"
+                    }
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 1,
+                "ColumnSpan": 3,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='text-align:left;'><div class='title'>Conclusione ed efficacia del contratto</div><div>Il contratto di vendita è considerato concluso con l’invio, da parte di Falc Spa al cliente, di un’e-mail di conferma dell’ordine. Tale mail contiene i dati del cliente ed il numero d’ordine, il prezzo della merce acquistata, le spese di spedizione e l’indirizzo di consegna al quale sarà inviata la merce. Nella mail saranno inviate anche le presenti CGV che il cliente potrà salvare o stampare su supporto durevole. Il cliente si impegna a verificare la correttezza dei dati personali e di spedizione in essa contenuti e a comunicare tempestivamente a Falc Spa eventuali correzioni.</div><div><br>Luogo di conclusione del contratto sarà sempre la sede legale di Falc Spa.</div><div><br>Con il perfezionamento dell’ordine di acquisto attraverso il sito il cliente dichiara di accettare incondizionatamente ed integralmente le presenti CGV che il venditore s’impegna a fornirgli su supporto durevole ai sensi dell’art 51 Codice del Consumo.</div><div><br>Falc Spa s’impegna a consegnare fisicamente la merce entro 30 giorni lavorativi decorrenti dall’invio dell’email di conferma al cliente ossia dalla conclusione del contratto.</div><div class='title'>Acquisto dei prodotti</div><div>I prodotti oggetto del presente rapporto contrattuale sono gli articoli di calzature ed accessori presenti nel catalogo elettronico pubblicato sul sito e visualizzabili al momento dell’effettuazione dell’ordine da parte del cliente inerenti tutti i marchi Falc Spa: Naturino, Falcotto, Flower Mountain, W6yz, Voile Blanche, Candice Cooper.<br>Ciascun prodotto è accompagnato da una scheda informativa (scheda prodotto) che ne illustra le principali caratteristiche. Le immagini e le descrizioni dei prodotti pubblicate sul sito riproducono quanto più fedelmente possibile le reali caratteristiche dei prodotti. Resta inteso che tali immagini e descrizioni potrebbero non essere perfettamente rappresentative degli stessi e devono pertanto essere considerate come indicative e con le tolleranze d’uso.</div><div><br>Il contratto di acquisto è risolutivamente condizionato al buon esito del pagamento (importo totale dovuto comprensivo di prezzo del prodotto, spese di consegna e ogni eventuale aggiunta). Nel caso in cui il pagamento non vada a buon fine il contratto di acquisto si intenderà risolto di diritto ai sensi e per gli effetti dell’art. 1456 c.c.</div><div class='title'>Disponibilita’ dei prodotti</div><div>La disponibilità dei prodotti si riferisce alla disponibilità effettiva nel momento in cui il cliente effettua l’ordine. Tale disponibilità deve comunque essere considerata puramente indicativa perché, per effetto della contemporanea presenza sul sito di più utenti, i prodotti potrebbero essere venduti ad altri clienti prima della conferma dell’ordine. Qualora il prodotto risultasse non più disponibile per le ragioni sopra indicate ovvero negli altri casi di indisponibilità sopravvenuta del prodotto, fatti salvi i diritti attribuiti al cliente dalla legge ed in particolare al Capo XIV del  titolo II del Libro IV del codice civile, Falc Spa avviserà immediatamente l’utente tramite e-mail o contatto telefonico al numero 0733/79091.</div><div><br>Nel caso in cui si verificasse l’ipotesi di cui all’art. 61, IV e V comma, Codice del Consumo, e il pagamento dell’importo totale dovuto sia già avvenuto, Falc Spa effettuerà il rimborso dell’importo senza indebito ritardo e, in ogni caso, entro il termine di 15 giorni lavorativi dall’invio dell’ordine. L’importo del rimborso sarà comunicato all’utente via e-mail. Tale importo sarà accreditato sullo stesso mezzo di pagamento utilizzato dall’utente per l’acquisto.</div><div><br>Nel caso di ordini aventi ad oggetto una pluralità di Prodotti (“Ordine multiplo”), qualora la sopravvenuta indisponibilità riguardi solo taluni di essi, il contratto deve intendersi comunque valido ed efficace per la parte disponibile ordinata. Il contratto di acquisto avente ad oggetto i prodotti non disponibili sarà quindi risolto parzialmente e limitatamente a tali prodotti con conseguente restituzione, qualora sia stato già versato, del prezzo dei prodotti non disponibili, comprese le spese di consegna entro 15 giorni lavorativi dall’invio dell’ordine.</div><div><br>Qualora la sopravvenuta indisponibilità riguardi tutti i prodotti oggetto dell’ordine, Falc Spa avviserà immediatamente l’utente tramite e-mail o contatto telefonico al numero 0733/79091. L’utente sarà legittimato a risolvere immediatamente il contratto. Qualora già versato verrà rimborsato il prezzo dell’ordine e le spese di consegna entro 15 giorni lavorativi dalla conferma dell’ordine.</div><div class='title'>Prezzi</div><div>I prezzi indicati nel catalogo elettronico pubblicato sul sito : <a href='https://b2b.falc.biz'>https://b2b.falc.biz</a> sono espressi in euro o comunque in valuta locale con listino esente Iva e oneri doganali, se presenti.<br>Il venditore si riserva il diritto di aggiornare i prezzi dei prodotti. Resta inteso che il prezzo applicato al rapporto contrattuale tra venditore ed acquirente sarà quello indicato sul sito internet al momento dell’effettuazione dell’ordine da parte dell’acquirente.</div><div><br>I costi di spedizione ed ogni altro eventuale, non sono compresi nel prezzo d’acquisto ma sono indicati e calcolati al momento della conclusione del processo di acquisto.</div><div><br>Falc Spa manterrà la proprietà dei prodotti fino alla completa corresponsione del prezzi degli stessi</div></div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "0 5%"
+                    }
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 1,
+                "ColumnSpan": 3,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='text-align:left;'><div class='title'>Pagamenti</div><div>Il pagamento del prezzo di vendita + iva e spese di spedizione oltre che eventuali oneri doganali, dovrà essere effettuato con le modalità e tempistiche indicate nell’ordine di acquisto o nella fattura di vendita secondo gli accordi commerciali intercorsi con l’Ufficio Commerciale.</div><div><br>In caso di pagamento in ritardo rispetto alle tempistiche concordate, verranno applicati al cliente interessi di mora pari al tasso di interesse legale e Falc Spa avrà facoltà di risolvere il contratto.</div><div><br>Falc Spa ha diritto di sospendere l’adempimento delle proprie obbligazioni di vendita ai sensi dell’art 1461 c.c. nel caso in cui le condizioni patrimoniali del cliente divenissero tali da porre in serio pericolo il conseguimento della controprestazione</div><div class='title'>Consegna dei prodotti</div><div>Sul territorio Italiano le spedizioni avvengono tramite consegna al corriere. La merce dovrà essere consegnata fisicamente al cliente entro 30 giorni dalla conclusione del contratto. In caso di mancata consegna entro 30 giorni il cliente ha diritto di annullare l’acquisto o di concordare una diversa data di consegna. In caso di annullamento per mancata consegna imputabile a Falc Spa la stessa rimborserà al cliente la somma corrisposta entro e non oltre 14 giorni. Eventuali ritardi consegna dovuti al vettore devono essere considerati di sua esclusiva responsabilità e non imputabili a Falc Spa.</div><div><br>Spetta al cliente verificare le condizioni del prodotto che gli è stato consegnato. Si raccomanda pertanto al cliente di verificare il numero di prodotti ricevuto e che l’imballo risulti integro, non danneggiato, né bagnato o comunque alterato anche nei materiali di chiusura e lo si invita, nel suo interesse, a indicare sul documento di trasporto del vettore, eventuali anomalie, accettando il pacco con riserva. Il ricevimento senza riserve dei prodotti, infatti, non consente al cliente di agire in giudizio nei confronti del corriere, nel caso di perdita o danneggiamento degli stessi.</div><div><br>Per una maggiore sicurezza dei trasporti, Falc Spa utilizza un imballo personalizzato con specifico nastro. Nel caso in cui la confezione presenti evidenti segni di manomissione o alterazione, il cliente dovrà darne pronta comunicazione al Servizio Clienti.</div><div><br>I prodotti saranno consegnati all’indirizzo indicato dall’acquirente al momento dell’effettuazione dell’ordine. I termini di consegna sono quelli indicati nel riepilogo dell’ordine e nella conferma dello stesso.</div><div><br>Nel caso in cui la consegna non possa essere effettuata per l’assenza del destinatario al momento della stessa all’indirizzo indicato dall’acquirente, il corriere depositerà nella cassetta delle lettere un avviso di passaggio. Il corriere effettuerà quindi un secondo tentativo di consegna. Dopo due tentativi di consegna andati a vuoto, oppure nel caso in cui la consegna non possa essere effettuata causa errore nell’indirizzo indicato dall’acquirente, il pacco sarà messo in giacenza presso il corriere che provvederà a informare Falc Spa. Le eventuali spese di giacenza saranno a carico del cliente.</div><div><br>Il Servizio Clienti contatterà tempestivamente via e-mail l’acquirente, per informarlo della mancata consegna e per concordare i termini della nuova spedizione. Qualora il destinatario desideri che la consegna avvenga presso un nuovo indirizzo o voglia ritirare il pacco presso il deposito, dovrà contattare Falc Spa affinché venga data l’autorizzazione al corriere a procedere.</div><div><br>L’Acquirente prende atto che il ritiro del pacco è un suo preciso obbligo derivante dal contratto di acquisto del prodotto e prende conseguentemente atto che, in ogni caso, trascorsi 3 giorni da quello in cui il pacco è stato posto in giacenza, il contratto si intenderà risolto di diritto ai sensi e per gli effetti di cui all’art. 1456 c.c.</div><div class='title'>Garanzie e conformita’ dei prodotti</div><div>I Prodotti offerti sul Sito sono conformi alla quantità e alla descrizione contenute nell’ordine di acquisto, nonché esenti da difetti di fabbricazione. L’accettazione dei prodotti da parte dello spedizioniere fa fede della buona condizione dell’imballaggio ed ogni responsabilità di Falc Spa a questo riguardo cessa alla consegna. Il Cliente è altresì tenuto a controllare, all’arrivo dei prodotti che siano conformi all’ordine. In difetto s’intendono accettati.</div><div><br>Il Venditore è responsabile nei confronti del consumatore per qualsiasi difetto di conformità esistente al momento della consegna del prodotto ( VIZIO APPARENTE) relativi alla quantità, numero, caratteristiche esteriori dei prodotti, colore, non è idoneo all’uso al quale è destinato, non è conforme alla descrizione fatta dal venditore ecc. Tale garanzia ha effetto purchè tali vizi siano notificati a Falc Spa mediante lettera racc a/r a pena di decadenza entro 8 giorni dalla data della scoperta del difetto..</div><div><br>Per poter usufruire della Garanzia Legale, il cliente dovrà quindi fornire innanzitutto prova della data dell’acquisto e della consegna del bene. E’ opportuno, quindi, che lo stesso, a fini di tale prova, conservi la fattura di acquisto, nonché qualsiasi documento attestante la consegna.</div><div><br>Falc Spa ha diritto di visionare il prodotto che presenti difformità, pertanto, i prodotti difettosi dovranno essere restituiti in visione a Falc Spa previa autorizzazione della stessa che valuterà se il vizio sia veramente esistente. Non saranno oggetto di garanzia i beni che presentano segni evidenti di utilizzo, manomissione, usura, logoramento.</div><div><br>In caso di difetto di conformità debitamente denunciato nei termini, il cliente ha diritto: in via primaria alla riparazione o sostituzione gratuita del bene, a sua scelta, salvo che il rimedio richiesto sia oggettivamente impossibile o eccessivamente oneroso rispetto all’altro; in via secondaria (nel caso cioè in cui la riparazione o la sostituzione siano impossibili o eccessivamente onerose) alla riduzione del prezzo o alla risoluzione del contratto con restituzione del prezzo, a sua scelta.</div></div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "0 5%"
+                    }
+                }
+            },
+            {
+                "Row": 3,
+                "Column": 1,
+                "ColumnSpan": 3,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='text-align:left;'><div class='title'>Clausola risolutiva espressa</div><div>Falc Spa avrà diritto di risolvere la singola vendita mediante semplice comunicazione scritta al cliente al verificarsi di uno dei seguenti eventi: a) mancato rispetto dei termini di pagamento, b) mancato ritiro dei prodotti c) insolvenza, fallimento, procedura concorsuale dell’acquirente d) sentenze di condanna per illeciti civili o penali a carico del cliente.</div><div class='title'>Informazioni sul trattamento dati personali degli utenti che consultano i siti web falc S.p.A. ai sensi art 13 del Regolamento (UE) 2016/679</div><div>Il cliente dichiara di aver preso visione dell’informativa ai sensi degli artt 13 e 14 del Regolamento Europeo (UE) 2016/679 (GDPR) disponibile sul sito al seguente link e con l’accettazione delle presenti CGV fornisce il consenso al trattamento dei propri dati personali  per le finalità e modalità indicate nell’informativa. I dati del Cliente saranno raccolti e trattati in forma cartacea, informatica o telematica esclusivamente al fine di  consentire l’esecuzione dell’ordine di acquisto. I dati raccolti da Falc Spa saranno conservati per un periodo di tempo non superiore a quello necessario agli scopi per i quali sono stati raccolti e successivamente trattati. Titolare del trattamento è Falc Spa con sede in 62012 Civitanova Marche alla C.da San Domenico n 24, (P. Iva 00347770430).</div><div class='title'>Cookies</div><div>Sul sito internet <a href='https://b2b.falc.biz'>https://b2b.falc.biz</a> sono attivi dei cookies volti a trattenere informazioni provenienti dal computer del visitatore del Sito. Tali informazioni possono riguardare l’indirizzo IP, il sistema operativo usato, ecc. Tali informazioni raccolte verranno utilizzate da Falc Spa solo a fini statistici e per migliorare il sito e la sua offerta di servizi on line ai visitatori.</div><div><br>I cookies possono essere disabilitati dai visitatori del sito attivando l’apposita configurazione tra le opzioni internet del proprio computer o browser. Disattivando i cookies sarà tuttavia possibile che il sito internet https://b2b.falc.biz non sia attivo in ogni sua pagina ed in ogni suo servizio, limitandone così l’effettiva fruizione da parte del visitatore.</div><div><br>Il sito internet https://b2b.falc.biz utilizza “Google Analytics”, un servizio di analisi di siti internet fornito da Google Inc. (“Google”). Questo servizio misura il traffico generato sul sito Falc Spa con l’aiuto di cookies che contengono dati totalmente anonimi. Questi dati relativi all’utilizzo del sito Internet saranno trasmessi automaticamente senza alcun intervento da parte di Falc Spa e saranno conservati a cura e sotto la esclusiva responsabilità di “Google”.</div><div class='title'>Copyright</div><div>Tutti i testi, le immagini ed i marchi che compaiono sul sito https://b2b.falc.biz sono di proprietà di Falc Spa e sono tutelati dalle leggi sul copyright e della proprietà intellettuale. Qualunque uso non autorizzato, sarà perseguito ai sensi di legge.</div><div class='title'>Responsabilita’</div><div>Falc Spa non è responsabile per gli eventuali disagi o danni derivanti dall’utilizzo di Internet, ivi inclusa l’interruzione di servizio, intrusioni esterne o presenza di virus o qualsiasi altro incidente di forza maggiore.</div><div><br>Falc Spa declina ogni responsabilità per qualsiasi inadempimento dei suoi obblighi contrattuali in caso di avvenimento fortuito o forza maggiore.</div><div class='title'>Integrita’</div><div>Nel caso in cui qualsiasi disposizione di questo contratto sia nulla in seguito a un cambiamento nella legislazione, ciò non pregiudica in alcun modo la validità delle restanti clausole che verranno integrate dalle corrispondenti disposizioni legislative.</div><div class='title'>Legge applicabile e foro competente</div><div>Per ogni controversia relativa all’applicazione, esecuzione e interpretazione delle presenti CGV è competente il foro di Macerata.</div><div class='title'>Servizio clienti e reclami</div><div>E’ possibile chiedere informazioni, inviare comunicazioni, richiedere assistenza o inoltrare reclami, contattando il Servizio Assistenza Clienti di Falc Spa (“Servizio Clienti”) con le seguenti modalità:</div><div>- tramite il formulario “Contattaci”, cliccando sul presente  <a href='https://www.promod.it/guida-all-acquisto/modulo-di-contatto/categorie/09'>link;</a></div><div>- per e-mail, all’indirizzo: b2bfalcspa@falc.biz e per telefono, al numero +39 (0) 733 79091 attivo dal lunedì al venerdì dalle ore 08,30-12,30 e dalle ore 14,00-18,00;</div><div>- per posta, scrivendo a Falc Spa, Customer Care, C.da San Domenico n 24, 62012 Civitanova Marche (MC);</div><div class='title'>Clausole vessatorie</div><div>Con la semplice apposizione del flag, le presenti CGV si intendono lette ed interamente accettate nonché accettate doppiamente anche in riferimento ai seguenti articoli: 1) oggetto del contratto, 2) informazioni precontrattuali per il consumatore, 3) modalità di acquisto sul sito, 4) conclusione ed efficacia del contratto, 5) acquisto dei prodotti, 6) disponibilità dei prodotti, 7) prezzi, 8) pagamenti, 9) consegna dei prodotti, 10) garanzie e conformità dei prodotti, 11) clausola risolutiva espressa, 12) informazioni sul trattamento dati personali degli utenti che consultano i siti web Falc Spa ai sensi art 13 del Regolamento (UE) 2016/679, 13) cookies, 14) copyright 15) responsabilità, 16) integrità, 17) legge applicabile e foro competente, 18) servizio clienti e reclami, 19) clausole vessatorie</div><div style='padding-top:20px;'>Ultima revisione del 03/07/2020</div></div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "0 5%"
+                    },
+                    "Margin": {
+                        "Bottom": "30px"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "Name": "Condizioni Generali di Vendita",
+        "Id": "cgv",
+        "Language": "en",
+        "Widgets": [
+            {
+                "Row": 0,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='font-weight:700;padding:5px;font-size:20px;text-align:left;line-height:20px;margin-bottom:10px;'>Pronti a darti<br>una mano.</div><div class='link underline' data-destination-url='/public/cgv'>Condizioni di vendita</div><div class='link' data-destination-url='/public/privacy'>Privacy Policy</div><div class='link' data-destination-url='/public/cookie'>Utilizzo dei cookie</div>"
+                },
+                "Style": {
+                    "Margin": {
+                        "Total": "16px auto"
+                    },
+                    "Padding": {
+                        "Total": "30px 20px"
+                    },
+                    "Background": "#e5e6e5",
+                    "Width": "fit-content"
+                }
+            },
+            {
+                "Row": 0,
+                "Column": 1,
+                "ColumnSpan": 3,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='text-align:left;'><div class='title'>Online business to business general terms and conditions of sale</div><div class='title'>Subject matter of the agreement</div><div>These General Terms and Conditions of Sale (hereinafter the GTCS) shall be valid exclusively between the company Falc Spa, with registered office in 62012 Civitanova Marche (MC) at C.da San Domenico 24, VAT reg. no. 00347770430 (hereinafter also referred to as the “seller”) and any commercial operator (hereinafter also referred to as CUSTOMER/PURCHASER) who makes an online purchase on the website <a href='https://b2b.falc.biz'>https://b2b.falc.biz</a> (managed by Falc Spa). Any exceptions will be valid only if signed by the parties.</div><div><br>Falc Spa, as owner of the trademarks: Naturino, Falcotto, Voile Blanche, Flower Mountain, W6yz, Candice Cooper, carries out commercial transactions through its official website: <a href='https://b2b.falc.biz'>https://b2b.falc.biz</a>, subject to these GTCS. These GTCS are applicable to all purchases made on the website in accordance with Italian and Community e-commerce laws. B2B online sales are subject to these GTCS, and to special terms of sale such as, the price, payment and delivery terms, type of product, etc.</div><div><br>These GTCS may be amended at any time; the date of publication of the GTCS on the website is intended as date of entry into force thereof. In the case of modifications, the GTCS applicable on the date the order is sent are intended as valid.</div><div><br>The Customer should therefore carefully read these GTCS, that Falc Spa publishes in the section Sales Terms, both before and during the purchase process, that the Customer will be asked to accept by flagging the check box.</div><div><br>In flagging the check box, the Customer accepts these GTCS in full.</div><div><br>In the order confirmation sent to the Customer by e-mail, the Customer will also receive a link to download and file a copy of these GTCS, as set forth by section 51 paragraph 1 of Legislative Decree 206/2005, as amended by Legislative Decree 21/2014.</div><div><br>These GTCS apply to any purchase made on the website by Italian and foreign customers. These GTCS are not applicable to the sale of products and/or the supply of services by parties other than Falc Spa, that may be present on the website through links and banners (advertising images or animations) or other hyperlinks. Falc Spa does not control or monitor the websites linked to its website, and accordingly declines all and any liability for any breach of any laws thereof.</div><div class='title'>Pre-contractual information for the consumer</div><div>Before finalising the order, and accepting the purchase agreement, the Customer should read the characteristics of the product shown on the product data sheet.</div><div><br>Falc Spa describes and presents the products sold on the website as realistically as possible. The Customer should however bear in mind that the product illustrated may have slight errors, inaccuracies or small inconsistencies with respect to the product actually received.</div><div><br>Before completing the purchase, accepting the agreement and approving the order with “obligation of payment”, the customer will receive the following information: 1) the total price of the goods including taxes, details of the shipping costs and any other information deemed to be necessary; 2) the approximate delivery date of the goods.</div><div class='title'>Purchase procedure on the website</div><div>Products may be purchased only if the customer has registered by contacting Falc Spa’s Customer Care. The customer will be given a user name and password that it should use to log into the website <a href='https://b2b.falc.biz'>https://b2b.falc.biz</a>. The username and password must be used only by the customer who must not disclose them and should keep them in a safe place; the login details may not be transferred to any third party given that the customer is solely responsible for the safekeeping and use of the username and password.</div><div><br>The customer guarantees that the personal details provided during the registration procedure are complete and accurate, and agrees to hold the seller harmless from any indemnity and/or penalty and/or damages resulting from breach of the rules applicable to the registration and purchase of products on the website.</div><div><br>After registration a customer may: 1) consult its order history; 2) access its personal document area.</div><div><br>Only business operators with VAT number may purchase on this website. End customers cannot make purchases on the website.</div><div><br>Falc Spa reserves the right not to accept orders that are anomalous, from customers with whom claims are pending, from customers who have not provided accurate identification details and in any case at the sole discretion of the company, without entitling customers to file claims of any kind.</div></div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "0 5%"
+                    }
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 1,
+                "ColumnSpan": 3,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='text-align:left;'><div class='title'>Conclusion and effectiveness of the agreement</div><div>The sales agreement is considered to be concluded when Falc Spa sends the e-mail to the customer confirming the order. The email contains the customer's details and order number, the price of the goods purchased, the shipping costs and the delivery address to which the goods are to be sent. These GTCS will also be attached to the email for the customer to save or print on a durable medium. The customer shall in any case verify the accuracy of the personal details and shipping data indicated in the email, promptly notifying Falc Spa of any discrepancies.</div><div><br>The place where the agreement is concluded is in any case intended as the registered office of Falc Spa.</div><div><br>In completing the purchase order through the website, the customer declares to unconditionally accept these GTCS in full, that the seller shall provide to the customer on a durable medium as set forth by article 51 of the Consumer Code.</div><div><br>Falc Spa shall physically deliver the goods within 30 working days from date the email confirming the order is sent to the customer, namely from the conclusion of the agreement.</div><div class='title'>Purchase of products</div><div>The products pursuant to this agreement are the footwear items and accessories shown in the electronic catalogue published on the website which may be viewed when the customer places the order for any of the Falc Spa brands: Naturino, Falcotto, Flower Mountain, W6yz, Voile Blanche, Candice Cooper.<br>A product data sheet describing the main characteristics of the product is included with each product. The pictures and descriptions of the products published on the website are as faithful as possible to the real characteristics of the products. The pictures and descriptions may of course not be perfectly true to life and should therefore be considered as approximate and with the tolerances of use.</div><div><br>The purchase agreement is strictly dependent on the successful conclusion of the payment (total amount due including the price of the product, delivery costs and any extras). Should payment not go through, the purchase agreement is intended as legally terminated within the meaning of section 1456 of the Italian Civil Code.</div><div class='title'>Availability of products</div><div>Product availability is intended as the actual availability of the product when the customer places the order. Availability should however be considered as purely indicative, given that due to the simultaneous presence on the website of several users at any one time, the products may be sold to other customers before the order is confirmed. Should the product selected no longer be available for the above or any other reason, without prejudice to the rights attributed to the customer by law and in particular, by Chapter XIV of Title II Book IV of the Italian Civil Code, Falc Spa will immediately notify the user by e-mail or phone on 0733/79091.</div><div><br>In the case described by article 61, paragraph IV and V of the Consumer Code, if payment of the full amount due has already been made, Falc Spa will reimburse the amount without undue delay and, in any case, within 15 working days from the time the order is placed. The user will receive an e-mail communicating the amount that is to be refunded. The amount will be credited to the customer using the same payment method the user has used to purchase the product.</div><div><br>In the case of orders for several Products (“Multiple Order”), if only some of the Products are unavailable, the agreement will in any case be considered valid and effective for the products ordered that are available. A purchase agreement that includes unavailable products will therefore be terminated in part only for the unavailable products, refunding any amount that has already been paid for the unavailable products, including delivery costs, within 15 working days from the time the order is placed.</div><div><br>If none of the products ordered are available, Falc Spa will immediately notify the user by e-mail or telephone contact on 0733/79091. The user shall in this case have the right to terminate the agreement immediately. If the price has already been paid, the price and delivery costs will be refunded within 15 working days from order confirmation.</div><div class='title'>Prices</div><div>The prices indicated in the electronic catalogue published on the website: <a href='https://b2b.falc.biz'>https://b2b.falc.biz</a> are given in Euro or in any case in the local currency with price list not including VAT and customs duties, if any.<br>The seller reserves the right to update the prices of the products at any time. The price applied to the contractual relationship between the seller and the buyer is intended as that published on the website at the time the order is placed by the buyer.</div><div><br>Shipping costs and any other costs are not included in the purchase price but are indicated and calculated when the purchase process is completed.</div><div><br>Falc Spa retains ownership of the products until full payment of the prices of the products has been received.</div></div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "0 5%"
+                    }
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 1,
+                "ColumnSpan": 3,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='text-align:left;'><div class='title'>Payments</div><div>Payment of the sales price + VAT and shipping costs inclusive of any customs duty, should be made in the manner and within the terms indicated by the purchase order or sales invoice according to the sales agreements entered into with the Sales Office.</div><div><br>In the case of late payment with respect to the agreed payment term, interest on arrears will be charged to the customer at the legal interest rate, and Falc Spa shall in any case have the right to terminate the agreement.</div><div><br>Falc Spa has the right to suspend the execution of its sales obligations pursuant to section 1461 of the Italian Civil Code if the client's financial situation make it fair to suppose that there is a serious risk that payment of the price may not be made.</div><div class='title'>Delivery of products</div><div>In Italy shipments are made by delivery to the courier. The goods should physically be delivered to the customer within 30 days from the date on which the agreement is concluded. In the case of non-delivery within 30 days the customer shall have the right to cancel the purchase or establish a different delivery date. If the order is cancelled due to non-delivery of the order for reasons attributable to Falc Spa, the latter will refund the sum paid to the customer within no more than 14 days. Late delivery due to reasons attributable to the courier are the sole responsibility thereof, and Falc Spa declines any liability therefor.</div><div><br>The customer should verify the condition of the product delivered. The customer should check the number of products received and that the packaging is whole, undamaged, with no signs of dampness or wet, above all the sealing materials and should, in its interest, describe on the carrier's transport document , any anomalies that it may ascertain, and should in this case accept the parcel with reservation. If the customer accepts the products without reservation, the customer may not take legal action against the courier, should the products delivered be damaged or go astray.</div><div><br>In order to ensure greater transport safety, Falc Spa uses customized packaging and special tape. If the package shows obvious signs of tampering or alteration, the customer should promptly call our Customer Care.</div><div><br>The products will be delivered to the address indicated by the buyer when it places the order. The delivery terms are those indicated by the order summary and order confirmation.</div><div><br>If the customer is not available to accept delivery of the shipment, the courier may leave the customer a delivery attempt notice in the mailbox. The courier will then attempt to make a second delivery. After two failed delivery attempts, or if the delivery cannot be made due to an error in the address indicated by the buyer, the package will be placed in storage by the courier who will inform Falc Spa. Storage costs, if any, will be borne by the customer.</div><div><br>Our Customer Care will contact the buyer promptly by e-mail, to inform it the courier was unable to make delivery and agree to the terms of a new shipment. If the recipient wants the delivery to be made at a new address or prefers to collect the package from the warehouse, it should contact Falc Spa in order to authorise the courier to proceed with the delivery in this way.</div><div><br>The Buyer acknowledges that accepting the package is a precise obligation thereof pursuant to the product purchase agreement and consequently acknowledges that, in any case, 3 days from the date on which the package is placed in storage, the agreement is intended as legally terminated pursuant to section 1456 of the Italian Civil Code.</div><div class='title'>Warranties and product conformity</div><div>The Products offered on the Website comply with the quantity and description contained in the purchase order, and do not have manufacturing defects. Acceptance of the products by the shipper confirms that the packaging is in good condition and Falc Spa’s liability in this regard accordingly ceases upon delivery. Upon receipt of the products, the Customer should check that they comply with the order. Failing this, the goods are intended as accepted.</div><div><br>The Seller is liable to the consumer for any defect of conformity existing at the time of delivery of the product (APPARENT DEFECT) relating to the quantity, number, external characteristics of the products, colour, unsuitability for the intended use, non-conformity with respect to the seller’s description etc. This warranty shall be effective only if such defects are notified to Falc Spa by letter with acknowledgement of receipt, on penalty of forfeiture, within 8 days from the date the defect is discovered.</div><div><br>In order to claim against the Legal Warranty, the customer is therefore firstly required to provide proof of the date of purchase and delivery of the goods. The customer should therefore keep the purchase invoice and any document that may be used to confirm the delivery in a safe place.</div><div><br>Falc Spa has the right to inspect the defective product, so that defective products should be returned for inspection to Falc Spa subject to prior authorization thereby, and will be examined by Falc Spa in order to establish if the defect actually exists. Goods that show evident signs that they have been used, tampered with or wear and tear are not covered by the warranty.</div><div><br>In the event of a defect of conformity reported by the customer within the required term, the customer has the right: firstly, to have the goods repaired or replaced, at its discretion, unless the remedy requested is objectively impossible or excessively costly with respect to the other remedy; secondly, (should it be impossible or excessively costly to repair or replace the goods) to a reduction of the price or termination of the agreement with reimbursement of the price, at the customer’s discretion.</div></div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "0 5%"
+                    }
+                }
+            },
+            {
+                "Row": 3,
+                "Column": 1,
+                "ColumnSpan": 3,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='text-align:left;'><div class='title'>Express termination clause</div><div>Falc Spa shall have the right to terminate a single sale simply by forwarding written notice to the customer in any of the following cases: a) failure to comply with the payment terms, b) failure to collect the products c) insolvency, bankruptcy, insolvency proceedings of the buyer d) a judgement published against the customer for any civil or criminal offence.</div><div class='title'>INFORMATION ON THE PROCESSING OF THE PERSONAL DATA OF USERS WHO USE FALC SPA WEBSITES pursuant to article 13 of Regulation (EU) 2016/679</div><div>The Customer declares to have read the privacy policy pursuant to articles 13 and 14 of European Regulation (EU) 2016/679 (GDPR) published on the website on the followinglinkand, in accepting these GTCS, authorises the processing of its personal data for the purposes and according to the methods indicated by the privacy policy. The Customer's data will be collected and processed in hardcopy format or with automated means exclusively to permit the execution of the purchase order. The data acquired by Falc Spa will be retained for a period of time not exceeding that necessary for the purposes for which such data are acquired and processed. The data controller is Falc Spa with registered office in 62012 Civitanova Marche at C.da San Domenico 24, (VAT reg. no. 00347770430).</div><div class='title'>Cookies</div><div>Cookies are used on the website <a href='https://b2b.falc.biz'>https://b2b.falc.biz</a> to retain data obtained from the computer of any user who visits the Website. The type of data acquired are, for example, the IP address, the operating system used, etc. The data acquired will be used by Falc Spa only for statistical purposes and to improve the website experience and the online services offered to visitors.</div><div><br>Cookies may be disabled by users who visit the website by changing the cookie settings in the internet options of their computer or web browser. If the cookies are disabled however, the customer may be unable to use all the pages and services of the website https://b2b.falc.biz, thus limiting full use of the website.</div><div><br>The website https://b2b.falc.biz uses “Google Analytics”, a web analytics service provided by Google Inc. (“Google”). This service measures the traffic generated on Falc Spa’s website with the help of cookies that contain completely anonymous data. Data relating to the use of the Website will be automatically transmitted without any intervention by Falc Spa and stored under the sole responsibility of “Google”.</div><div class='title'>Copyrights</div><div>All texts, images, trademarks and brands published on the website https://b2b.falc.biz are owned by Falc Spa and are protected by copyrights and intellectual property rights. Any unauthorized use will be prosecuted as set forth by law.</div><div class='title'>Liability</div><div>Falc Spa shall not be liable for any inconvenience or damage deriving from the use of the Web, including any interruption of service, external intrusions or the presence of viruses or any other circumstances of force majeure.</div><div><br>Falc Spa declines all and any liability for any breach of its contractual obligations in the case of accidents or circumstances of force majeure.</div><div class='title'>Entire contract</div><div>Should any provision of this agreement be invalid following any amendment to applicable laws, such provision will not affect the validity of the remaining clauses, that will be supplemented by the provisions of applicable laws.</div><div class='title'>Applicable law and jurisdiction</div><div>The court having jurisdiction in the case of disputes relating to the application, execution and interpretation of these GTSS shall be exclusively that of Macerata.</div><div class='title'>Customer care and claims</div><div>A Customer may request information, send communications, request assistance or submit claims, by contacting Falc Spa’s Customer Care (“Customer Care”) in any of the following ways:</div><div>- by using the “Contact Us” form, on this <a href='https://www.promod.it/guida-all-acquisto/modulo-di-contatto/categorie/09'>link;</a></div><div>- by e-mail, on: b2bfalcspa@falc.biz and by calling +39 (0) 733 79091 from Monday to Friday from 8.30 a.m. to 12.30 p.m. and from 2.00 p.m. to 6.00p.m.;</div><div>- by ordinary mail, writing to Falc Spa, Customer Care, C.da San Domenico 24, 62012 Civitanova Marche (MC);</div><div class='title'>Vexatious clauses</div><div>n flagging these GTCS, the Customer acknowledges that it has read and accepted these GTSC in full, and in particular the following clauses: 1) subject matter of the agreement, 2) pre-contractual information for the consumer, 3) purchase procedure on the website, 4) conclusion and effectiveness of the agreement, 5) purchase of products, 6) availability of products, 7) prices, 8) payments, 9) product delivery, 10) product warranties and conformity, 11) express termination clause, 12) information on the processing of personal data of users who visit the Falc Spa websites pursuant to art 13 of Regulation (EU) 2016/679, 13 ) cookies, 14) copyrights 15) liability, 16) entire agreement, 17) applicable law and jurisdiction, 18) customer care and claims, 19) vexatious clauses</div><div style='padding-top:20px;'>Last revision 3 July 2020</div></div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "0 5%"
+                    },
+                    "Margin": {
+                        "Bottom": "30px"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "Name": "Cookie Policy",
+        "Id": "cookie",
+        "Widgets": [
+            {
+                "Row": 0,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='font-weight:700;padding:5px;font-size:20px;text-align:left;line-height:20px;margin-bottom:10px;'>Pronti a darti<br>una mano.</div><div class='link' data-destination-url='/public/cgv'>Condizioni di vendita</div><div class='link' data-destination-url='/public/privacy'>Privacy Policy</div><div class='link underline' data-destination-url='/public/cookie'>Utilizzo dei cookie</div>"
+                },
+                "Style": {
+                    "Margin": {
+                        "Total": "16px auto"
+                    },
+                    "Padding": {
+                        "Total": "30px 20px"
+                    },
+                    "Background": "#e5e6e5",
+                    "Width": "fit-content"
+                }
+            },
+            {
+                "Row": 0,
+                "Column": 1,
+                "ColumnSpan": 3,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='text-align:left;'><div class='title'>Informativa privacy relativa ai trattamenti effettuati tramite il sito inclusi i cookie</div><div class='title '>Trattamento dati utili ai fini della navigazione</div><div>La presente informativa è resa ai sensi è rivolta a tutti coloro che interagiscono con i servizi relativi al sito    siti <a href='https://b2b.falc.biz'>https://b2b.falc.biz</a>.<br>I sistemi informatici e le procedure software    preposte al funzionamento di questo sito acquisiscono, nel corso del loro normale esercizio, alcuni dati personali    la cui trasmissione è implicita nell’uso dei protocolli di comunicazione Internet. Tra le informazioni che possono    essere raccolte abbiamo gli indirizzi IP, il tipo di browser o il sistema operativo utilizzato, il nome di dominio,    gli indirizzi dei siti web dai quali è stato effettuato l’accesso o l’uscita, l’orario in cui è stata effettuata    richiesta al server, ulteriori informazioni sulla navigazione dell’utente nel sito ed altri parametri relativi al    sistema operativo e all’ambiente informatico. Falc Spa tratta dati personali al fine di fornire i propri servizi a    clienti ed utenti, di profilare gli utenti per fornire pubblicità personalizzata e di rilevare le frequenze di    visita ai siti. Si informa che per queste finalità, il conferimento dei dati è facoltativo ma può servire a    migliorare i nostri prodotti e servizi e a comunicarLe aggiornamenti di Suo interesse. Quando un utente accede al    sito Web, i nostri fornitori di servizi autorizzati possono usare cookie e altre tecnologie similari per scopi    pubblicitari e per memorizzare le informazioni, al fine di offrirLe un’esperienza migliore, più veloce e sicura.</div><div class='title '>Titolare del trattamento</div><div>Titolare del trattamento è Falc Spa in persona del legale rappresentante con sede in 62012 Civitanova Marche alla    C.da San Domenico n 24 Civitanova Marche , P Iva 00347770430.</div><div class='title '>Definizioni</div><div>I cookie sono brevi frammenti di testo formati da lettere e numeri che vengono salvati nella memoria del browser o    del dispositivo quando si visita un sito o si visualizza un messaggio. I cookie consentono ad un sito di riconoscere    un particolare dispositivo o browser per poi essere ritrasmessi agli stessi siti alla successiva visita del medesimo    utente. I cookie hanno la funzione di snellire l’analisi del traffico sul web o di segnalare quando un sito    specifico o una parte di esso vengono visitati, di distinguere tra loro i visitatori per poter fornire contenuti    personalizzati, ed aiutano gli amministratori a migliorare il sito e l’esperienza di navigazione degli stessi    utenti.<br>Attraverso i cookie non possiamo accedere ad altre informazioni memorizzate sul vostro dispositivo, anche    se è qui che essi vengono scaricati. I cookie non possono veicolare virus o malwar e non sono dannosi per il    terminale dell’utente.<br>Di seguito potrete trovare tutte le informazioni sui cookie installati attraverso questo    sito e le indicazioni necessarie su come gestire le proprie preferenze al riguardo.</div><div class='title '>Tipologie di cookie</div><div>L’utilizzo di cookie da parte del Titolare di questo sito si inquadra nella Privacy Policy dello stesso.Per    consentire la fruizione del nostro sito e l’erogazione dei nostri servizi, facciamo uso sia di cosiddetti    cookie persistenti (cioè cookie che rimangono in memoria fino a quando non sono eliminati manualmente    dall’utente o per i quali è prevista una rimozione programmata a lungo termine) sia i cosiddetti cookie di sessione, che non sono memorizzati in modo persistente sul computer del visitatore e scompaiono con    la chiusura del browser.<br>Utilizziamo cookie di tipologie differenti, con specifiche funzioni, che possiamo così    classificare:</div><div class='title '>temporanei (o di sessione): </div><span>sono utilizzati per archiviare informazioni temporanee indispensabili per il corretto funzionamento del nostro    sito e consentono all’utente di navigare e visualizzare i contenuti. Una loro eventuale disattivazione comporterebbe    malfunzionamenti del sito. In genere, cookie di questo genere sono necessari, ad esempio, per mantenere aperta una    sessione di navigazione o per consentire all’utente di accedere ad eventuali aree riservate. O ancora, possono    ricordare temporaneamente i testi inseriti durante la compilazione di un modulo, quando si torna ad una pagina    precedente nel corso di una medesima sessione. Sono rimossi dal computer alla chiusura di Internet Explorer.</span><div class='title '>Permanenti (o salvati): </div><span>sono utilizzati per archiviare informazioni in modo da evitare che l’utente debba ridigitarli ogni volta che    visita il sito. In generale, ad esempio, cookie di questo tipo, ricordano in quale lingua l’utente preferisce    visualizzare i nostri contenuti o ricordano ( per un periodo limitato) gli articoli presenti nel carrello virtuale    nel caso in cui si chiuda la sessione prima di aver ultimato l’acquisto. Rimangono memorizzati nel computer anche    dopo aver chiuso Internet Explorer.</span><div class='title '>Di prima parte: </div><span>derivano dal sito Web visualizzato e possono essere permanenti o temporanei, possono essere utilizzati per    archiviare informazioni che verranno riutilizzate alla successiva visita del sito.</span><div class='title '>Di terze parti: </div><span>derivano da annunci di altri siti, ad esempio popup o striscioni pubblicitari presenti nel sito Web visualizzato,    possono essere utilizzati per scopi di Marketing</span><div class='title '>Cookie di terze parti ossia rilasciati da siti diversi da Falc Spa</div><div style='margin-left:50px;'><span class='title'>• Statistici, di Google Analytics, </span>(necessario il consenso): sono utilizzati per raccogliere informazioni sulle modalità di navigazione degli utenti    sul nostro sito. Queste informazioni vengono analizzate in forma aggregata per soli fini statistici. Non sono    necessari ma sono per noi di grande aiuto per consentirci di migliorare i nostri contenuti ed i nostri servizi in    base alle indicazioni che ricaviamo dall’analisi delle statistiche. Falc Spa utilizza Google Analytics, un    servizio di analisi del traffico web fornito da Google Inc., 1600 Amphitheatre Parkway – Mountian View- CA94043 USA,    che fa uso di cookie per raccogliere ed analizzare in forma aggregata informazioni relative alla navigazione degli    utenti. Ne Falc Spa, né Google associano il vostro indirizzo IP ad altri dati in loro possesso per identificarvi    direttamente. Le informazioni raccolte vengono elaborate dai sistemi di Google Analytics allo scopo di produrre    report per gli amministratori di Falc Spa che li utilizzano per verificare il corretto funzionamento dei servizi ed    eventualmente, il tasso di gradimento dei contenuti proposti. Per disabilitare i cookie statistici impedendo così a    Google Analytics di raccogliere dati sulla vostra navigazione, potete scaricare l’apposito componente per la    disattivazione di Google Analytics che trovate qui: <a        href='https://tools.google.com/dlpage/gaoptout'>https://tools.google.com/dlpage/gaoptout</a></div><br><div style='margin-left:50px;'><span class='title'>• Di profilazione/di pubblicità </span>(necessario il consenso): sono utilizzati per presentare contenuti anche di tipo pubblicitario, possono essere    utilizzati, ad esempio, per limitare il numero di volte che viene proposto un contenuto pubblicitario o per aiutarci    a valutare l’efficacia delle nostre campagne pubblicitarie sui nostri siti internet, non sono necessari ma    consentono di offrirvi contenuti più vicini ai vostri interessi. Il diniego del consenso all’uso dei cookie di    profilazione e marketing non interferirà sulla possibilità di accedere al sito</div><br><div>Falc Spa, sempre allo scopo di produrre report sul corretto funzionamento dei servizi ed eventualmente sul tasso di    gradimento dei contenuti proposti, utilizza anche Web Trends Analytics, un servizio di analisi del traffico web    fornito da Webtrends Inc, 555 SW Oak Street – Suite 300 – Portland OR – 97204 USA, che fa uso di cookie per    raccogliere ed analizzare in forma aggregata informazioni relative alla navigazione degli utenti.<br>Né Falc Spa, né    Web Trends Inc associano il vostro indirizzo IP ad altri dati in loro possesso per identificarvi    direttamente<br>Falc Spa utilizza specifici cookie per la gestione delle proprie campagne pubblicitarie e per    erogare su questo sito contenuti pubblicitari basati sugli interessi manifestati dagli utenti attraverso la    navigazione in internet (OBA). Vengono rilasciati anche cookie utilizzati per la visualizzazione di pubblicità    mirate a utenti che hanno precedentemente visitato questo sito.<br>Nella tabella qui sotto potete trovare dettagli    sui singoli cookie ed eventualmente disattivarli:</div></div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "0 5%"
+                    }
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 1,
+                "ColumnSpan": 3,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='text-align:left;'><table cellspacing='0'><tr><th>SERVIZIO</th><th>DISATTIVA</th></tr><tr><td>Adform</td><td>Clicca qui</td></tr><tr><td>Atlas solutions LLC</td><td>Clicca qui</td></tr><tr><td>Double Click</td><td>Clicca qui</td></tr><tr><td>AdWords Conversion</td><td>Clicca qui</td></tr><tr><td>Dynamic Remarketting</td><td>Clicca qui</td></tr><tr><td>Facebook Custom Audience</td><td>Clicca qui</td></tr><tr><td>Google Tag Manager</td><td>Clicca qui</td></tr><tr><td>Janrain</td><td>Clicca qui</td></tr><tr><td>Turn</td><td>Clicca qui</td></tr></table><div class='title '>social plugins e widget (di terze parti)</div><div>Le nostre pagine web potrebbero contenere plug-in dei più noti social network (Facebook, Twitter, Linkedin) gestitidalle terze parti coinvolte, tali plug-in potrebbero, ad esempio, corrispondere ai pulsanti “Like” di Facebook o“Retweet” di Twitter. Se si accede ad una delle nostre pagine web, dotata di un simile plug-in, il browser internetsi collega direttamente ai server delle terze parti ed il plug-in viene visualizzato sullo schermo grazie allaconnessione con il browser. Il plug-in potrebbe comunicare ai server delle terze parti quali pagine l’utente havisitato.<br>Se un utente di social network visita le nostre pagine web mentre è collegato al proprio account, taliinformazioni potrebbero essere associate all’account. Anche nel caso in cui si utilizzino le funzioni del plug-in (per esempio facendo clic sul pulsante “Mi Piace”) le informazioni saranno associate all’account.<br>Nella tabellaqui sotto potete trovare dettagli sui singoli plug-in ed eventualmente disattivarli</div><table cellspacing='0'><tr><th>SERVIZIO</th><th>DISATTIVA</th></tr><tr><td>Facebook</td><td>Clicca qui</td></tr></table><div class='title '>Consenso dell’utente</div><div>Collegandosi per la prima volta ad una qualunque pagina di Falc Spa, l’utente vedrà apparire un banner contenente una sintetica informativa sull’utilizzo dei cookie.<br>A questo punto ci sono tre alternative:<br>il click sul tasto AUTORIZZO che equivale al consenso ed accettazione della presente Cookie Policy ed all’utilizzo dei cookie così come indicato nell’informativa breve.<br>1. L’accesso alla Cookie Policy e la scelta tra le diverse opzioni di tipologia di cookie.<br>2. continuare a navigare nel sito, accettando implicitamente l’utilizzo di tutti i cookie.<br>Il sito ricorda la scelta effettuata dall’utente, pertanto, l’informativa breve non verrà riproposta nei collegamenti successivi dallo stesso dispositivo. Tuttavia l’utente ha sempre la possibilità di revocare in tutto od in parte il consenso già espresso.<br>Qualora si riscontrassero problemi di natura tecnica legati alla prestazione del consenso, vi preghiamo di contattarci tramite gli appositi canali previsti da questo sito per consentirci di prestarvi assistenza.</div><div class='title '>Come configurare il proprio terminale</div><div>Qualora non fosse d’accordo con l’installazione dei cookie, l’utente dovrà configurare il browser in modo da disabilitare la ricezione dei cookie o non usare questo sito. Disabilitando i cookie però il sito o alcune sue funzioni potrebbero non operare correttamente. Per modificare le modalità di utilizzo dei cookie, per bloccarne la ricezione o ancora per eliminare i cookie presenti sul proprio terminale, è sufficiente entrare nelle impostazioni del proprio browser.<br>La maggior parte dei browser prevede la possibilità di accettare o rifiutare tutti i cookie o accettarne solo alcuni.<br>Anche se attraverso passaggi simili, il metodo di configurazione del cookie varia per ciascun browser. Per ulteriori informazioni sui cookie di soggetti terzi relativi alla pubblicità e su come disattivarli, puoi visitare i seguenti siti web:<br><a href='http://www.allaboutcookies.org'>http://www.allaboutcookies.org</a><br><a href='http://www.youronlinechoises.com’>http://www.youronlinechoises.com</a><br><a href='http://tools.google.com/dlpage/gaoptout’>http://tools.google.com/dlpage/gaoptout</a><br><a href='http://www.aboutads.info/choices’>http://www.aboutads.info/choices</a><br><a href='http://networkadvertising.org/choices’>http://networkadvertising.org/choices</a></div><div class='title '>Esercizi dei diritti dell’interessato</div><div>L’interessato, in relazione ai dati personali oggetto della presente informativa, ha la facoltà di esercitare i diritti previsti dal Regolamento UE di seguito riportati:</div><div class='title '>- Diritto di accesso dell’interessato [art. 15 del Regolamento UE]: </div><span>l’interessato ha diritto di ottenere dal titolare conferma che sia o meno in corso un trattamento dei propri dati personali e, in tal caso, l’accesso alle informazioni espressamente previste dall’articolo citato, tra cui a titolo esemplificativo e non esaustivo le finalità del trattamento, le categorie di dati e destinatari, il periodo di conservazione, l’esistenza del diritto di cancellazione, rettifica o limitazione, il diritto di proporre reclamo, tutte le informazioni disponibili sull’origine dei dati, l’eventuale esistenza di un processo decisionale automatizzato ai sensi dell’art. 22 del Regolamento, nonché copia dei propri dati personali.</span><div class='title '>- Diritto di rettifica [art. 16 del Regolamento UE]: </div><span>l’interessato ha diritto di ottenere dal titolare la rettifica e/o l’integrazione dei dati personali inesatti che lo riguardano, senza ingiustificato ritardo;</span><div class='title '>- Diritto alla cancellazione (“diritto all’oblio”) [art. 17 del Regolamento UE]: </div><span>l’interessato ha diritto alla cancellazione dei propri dati personali senza ingiustificato ritardo, se sussiste uno dei motivi espressamente previsti dall’articolo citato, tra cui a titolo esemplificativo e non esaustivo il venir meno della necessità del trattamento rispetto alle finalità, la revoca del consenso su cui si basa il trattamento, opposizione al trattamento nel caso in cui sia basato su interesse legittimo non prevalente, trattamento illecito dei dati, cancellazione per obblighi di legge, dati dei minori trattati in assenza delle condizioni di applicabilità previsto dall’art. 8 del Regolamento;</span><div class='title '> - Diritto di limitazione di trattamento [art. 18 del Regolamento UE]: </div><span>nei casi previsti dall’art. 18, tra cui il trattamento illecito, la contestazione dell’esattezza dei dati, l’opposizione dell’interessato e il venir meno del bisogno trattamento da parte del titolare, i dati dell’interessato devono essere trattati solo per la conservazione salvo il consenso dello stesso e gli altri casi previsti espressamente dall’articolo citato; </span><div class='title '>- Diritto alla portabilità dei dati [art. 20 del Regolamento UE]: </div><span>l’interessato, nei casi in cui il trattamento si basi sul consenso e sul contratto e sia effettuato con mezzi automatizzati, potrà richiedere di ricevere i propri dati personali in formato strutturato, di uso comune e leggibile da dispositivo automatico, e ha diritto di trasmetterli a un altro titolare; </span><div class='title '>- Diritto di opposizione [art. 21 del Regolamento UE]: </div><span>l’interessato ha diritto di opporsi al trattamento dei propri dati personali, nel caso in cui il trattamento sia basato su interesse legittimo non prevalente o venga effettuato per finalità di marketing diretto; </span><div class='title '>- Diritto di non essere sottoposto a processi decisionale automatizzato [art. 22 del Regolamento UE]: </div><span>l’interessato ha diritto a non essere sottoposto ad una decisione, compresa la profilazione, basata unicamente sul trattamento automatizzato (ad esempio svolta esclusivamente tramite strumenti elettronici o programmi informatici).</span><div class='title '>Diritto di proporre reclamo</div><div>L’interessato, qualora ritenga che i propri diritti siano stati compromessi, ha diritto di proporre reclamo all’Autorità Garante per la protezione dei dati personali, secondo le modalità indicate dalla stessa Autorità al seguente indirizzo internet : <br><a href='http://www.garanteprivacy.it/web/guest/home/docweb/-/docweb-display/docweb/4535524'>http://www.garanteprivacy.it/web/guest/home/docweb/-/docweb-display/docweb/4535524</a> oppure inviando comunicazione scritta all’ Autorità Garante per la Protezione dei Dati Personali, Piazza Montecitorio n.121, 00186 Roma.</div><div style='padding-top:20px;'>Aggiornato al 06/07/2020</div></div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "0 5%"
+                    },
+                    "Margin": {
+                        "Bottom": "30px"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "Name": "Privacy Policy",
+        "Id": "privacy",
+        "Widgets": [
+            {
+                "Row": 0,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='font-weight:700;padding:5px;font-size:20px;text-align:left;line-height:20px;margin-bottom:10px;'>Pronti a darti<br>una mano.</div><div class='link' data-destination-url='/public/cgv'>Condizioni di vendita</div><div class='link underline' data-destination-url='/public/privacy'>Privacy Policy</div><div class='link' data-destination-url='/public/cookie'>Utilizzo dei cookie</div>"
+                },
+                "Style": {
+                    "Margin": {
+                        "Total": "16px auto"
+                    },
+                    "Padding": {
+                        "Total": "30px 20px"
+                    },
+                    "Background": "#e5e6e5",
+                    "Width": "fit-content"
+                }
+            },
+            {
+                "Row": 0,
+                "Column": 1,
+                "ColumnSpan": 3,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='text-align:left;'><div class='title'>Privacy Policy di Falc S.p.A.</div><div>(artt. 13 del Regolamento UE n 2016/679 sulla Protezione Dati Personali)</div><div>informativa policy aggiornata <br>Regolamento UE 2016/679</div><div class='title '>Chi siamo e perche’ stiamo fornendo questo documento</div> <div>La Falc Spa, gruppo societario corrente in Civitanova Marche, per consentire la piena attuazione ed il rispetto dei propri clienti in piena attuazione delle tutele e dei diritti riconosciuti dal Regolamento UE 2016/679 del 27/04/2016 relativo alla protezione delle persone fisiche con riguardo al trattamento dati personali, vuole fornirti, in maniera semplice ed intuitiva, tutte le informazioni utili e necessarie affinché tu possa conferire i tuoi dati personali in maniera consapevole ed informata ed in qualsiasi momento ottenere chiarimenti, cancellazioni, rettifiche.</div> <div class='title '>Titolare del trattamento</div> <div>La società che tratterà i tuoi dati personali e che quindi riveste il ruolo di titolare del trattamento secondo la definizione di cui nell’art. 4 punto 7 è la FALC SPA con sede legale in persona del suo legale rappresentante pro tempore, corrente in Civitanova Marche alla C.da San Domenico n 24, iscritta al Registro Imprese di Macerata, P. Iva 00347770430 di seguito denominata TITOLARE DEL TRATTAMENTO. Il titolare adotta le opportune misure di sicurezza volte ad impedire l’accesso, la divulgazione, la modifica, la distruzione dei Dati Personali.</div> <div class='title '>Dati trattati</div> <div>Falc Spa tratterà dati anagrafici delle aziende con cui entra in contatto commercialmente: dati anagrafici, di contatto, ed ogni altro dato necessario al corretto espletamento ed esecuzione del contratto in essere tra le parti.</div> <div class='title '>Modalita’ di trattamento</div> <div>Il trattamento viene effettuato mediante strumenti informatici e/o telematici, con modalità organizzative e con logiche strettamente correlate alle finalità indicate. Oltre al titolare potrebbero, in alcuni casi, avere accesso ai dati altri soggetti coinvolti nell’organizzazione di Falc Spa ( personale amministrativo, commerciale, marketing, legali, amministratori di sistema) ovvero soggetti esterni ( come fornitori di servizi tecnici terzi, corrieri postali, hosting provider, società informatiche, agenzie di comunicazione) nominati anche, se necessario, Responsabili del trattamento da parte del titolare. L’elenco aggiornato dei responsabili potrà essere richiesto al titolare del trattamento. <br><br> I dati saranno trattati in sicurezza e riservatezza sia manualmente si attraverso l’ausilio di strumenti elettronici.</div> <div class='title '>Base giuridica del trattamento</div> <div>La base giuridica del trattamento è la corretta esecuzione dei rapporti commerciali in essere tra le parti. Il conferimento dei dati è facoltativo ma necessario per poter espletare correttamente il contratto e le misure precontrattuali. In caso i dati non vogliano essere conferiti, il contratto non potrà avere esecuzione. E’ comunque sempre possibile richiedere al titolare di chiarire la concreta base giuridica di ciascun trattamento ed in particolare di specificare se il trattamento sia basato sulla legge, previsto da un contratto o necessario per concludere un contratto.</div></div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "0 5%"
+                    }
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 1,
+                "ColumnSpan": 3,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='text-align:left;'><div class='title '>Luogo</div> <div>I dati sono trattati presso le sedi operative del titolare ed in ogni altro luogo in cui le parti coinvolte nel trattamento siano localizzate. I dati personali dell’utente potrebbero essere trasferiti in un paese diverso in cui l’utente si trova sempre e solo per le finalità della corretta esecuzione contrattuale. Qualora abbia luogo uno dei trasferimenti appena descritti l’utente può chiedere informazioni al titolare del trattamento.</div></div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "0 5%"
+                    }
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 1,
+                "ColumnSpan": 3,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='text-align:left;'><div class='title '>A chi puoi rivolgerti</div> <div>La Falc Spa, nel pieno rispetto del Regolamento ha previsto la nomina di una figura di controllo e supporto che, tra i vari compiti affidati, agisca anche come punto di contatto con l’interessato. La Falc Spa ha adottato tale figura c.d. Data Protection Officer nominando, a norma dell’art 37 del Regolamento l’avv. Emanuela Marsili (DI SEGUITO DPO), i cui dati di contatto sono: email: emanuela.marsili@falc.biz.</div></div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "0 5%"
+                    }
+                }
+            },
+            {
+                "Row": 3,
+                "Column": 1,
+                "ColumnSpan": 3,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='text-align:left;'><div class='title '>Periodo di conservazione</div> <div>I dati sono trattati e conservati per il tempo richiesto dalle finalità per le quali sono stati raccolti. Pertanto: i dati raccolti per scopi collegati all’esecuzione di un contratto saranno trattenuti sino a quando sia completata l’esecuzione dello stesso. I dati raccolti per finalità riconducibili all’interesse legittimo del titolare saranno trattenuti sino al soddisfacimento di tale interesse. Quando il trattamento è basato sul consenso dell’utente, il titolare può conservare i dati personali più a lungo sino a quando detto consenso non venga revocato. Al termine del periodo di conservazione i dati personali saranno cancellati. Pertanto, una volta cancellati, il diritto di accesso,cancellazione, rettificazione,portabilità degli stessi non potranno essere esercitati.</div></div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "0 5%"
+                    }
+                }
+            },
+            {
+                "Row": 4,
+                "Column": 1,
+                "ColumnSpan": 3,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='text-align:left;'><div class='title '>Finalita’ del trattamento dei dati raccolti</div> <div>I dati dell’utente sono raccolti per consentire al titolare di fornire i propri servizi commerciali anche secondo le seguenti finalità: accesso agli account su servizi terzi, affiliazione commerciale, commercio dei contenuti, contattare l’utente, funzionalità sociali, gestione contatti e invio messaggi, gestione dei pagamenti, gestione dei tag, heat mapping e registrazione sessioni, hosting ed infrastruttura backend, interazione con le piattaforme di live chat, interazione con piattaforme per sondaggi online, interazione con piattaforme di raccolta dati e altre terze parti, interazione con social network e piattaforme esterne, interazioni basate sulla posizione, monitoraggio dell’infrastruttura, ottimizzazione e distribuzione del traffico, protezione dello spam, pubblicità, registrazione, autenticazione, remarketing e behavioral targeting, salvataggio e gestione backup, statistica, test di performance di contenuti e funzionalità (A/B testing), trasferimento di dati al di fuori UE e visualizzazione di contenuti da piattaforme esterne.</div></div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "0 5%"
+                    }
+                }
+            },
+            {
+                "Row": 5,
+                "Column": 1,
+                "ColumnSpan": 3,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='text-align:left;'><div class='title '>Dettagli sul trattamento dati personali</div> <div>I dati personali sono raccolti per le seguenti finalità ed utilizzando i seguenti servizi: Accesso agli account su servizi terzi;<br> Affiliazione commerciale;<br> Commento dei contenuti;<br> Contattare l’utente;<br> Funzionalità sociali;<br> Gestione contatti e invio messaggi;<br> Gestione dei pagamenti;<br> Gestione dei tag;<br> Heat mapping e registrazione sessioni;<br> Hosting ed infrastruttura backend;<br> Interazione con le piattaforme di live chat;<br> Interazione con le piattaforme per sondaggi online;<br> Interazione con piattaforme di raccolta dati terze parti;<br> Interazione con social network e piattaforme esterne;<br> Interazioni basate sulla posizione;<br> Monitoraggio dell’infrastruttura;<br> Ottimizzazione e distribuzione del traffico;<br> Protezione dello spam;<br> Pubblicità;<br> Registrazione ed autenticazione;<br> Remarketing e behavioral targeting;<br> Salvataggio e gestione di backup;<br> Statistica;<br> Test di performance di contenuti e funzionalità (A/B testing);<br> Trasferimento di dati al di fuori della UE;<br> Visualizzazione di contenuti da piattaforme esterne;<br> Analisi dei dati dell’utente e previsioni (profilazione);<br> Dati personali raccolti attraverso fonti diverse dall’utente;<br> Identificazione dell’utente tramite identificativo univoco universale (UUID);<br> Notifiche push;<br> Partecipazione al Privacy Shield: trasferimenti di dati dall’Unione Europea verso gli Stati Uniti;<br> Processi decisionali automatizzati;<br> Vendita di beni e servizi online.</div></div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "0 5%"
+                    }
+                }
+            },
+            {
+                "Row": 6,
+                "Column": 1,
+                "ColumnSpan": 3,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='text-align:left;'><div class='title '>Permessi facebook richiesti da falc S.p.A.</div> <div>Falc Spa può richiedere alcuni permessi Facebook che le consentano di eseguire azioni con l’account Facebook dell’utente e di raccogliere informazioni, inclusi dati personali da esso. Questo servizio permette a Falc Spa di connettersi con l’account dell’utente sul social network Facebook, fornito fa Facebook Inc. <br><br>Per maggiori informazioni sui permessi puoi far riferimento alla privacy policy Facebook. I permessi richiesti sono i seguenti:<br><br>Informazioni di base: le informazioni di base dell’utente che normalmente includono i seguenti dati: ID, nome, immagine, genere, lingua, localizzazione ed, in alcuni casi gli “Amici” di Facebook. Se l’utente ha reso disponibili, pubblicamente, dati ulteriori, gli stessi saranno disponibili.<br><br>Accesso ai dati privati: permette l’accesso ai dati privati dell’utente e degli amici.</div></div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "0 5%"
+                    }
+                }
+            },
+            {
+                "Row": 7,
+                "Column": 1,
+                "ColumnSpan": 3,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='text-align:left;'><div class='title '>Diritti dell’utente</div> <div>Gli utenti possono esercitare i diritti previsti dal GDPR ossia: revocare il consenso in ogni momento tramite comunicazione al DPO all’indirizzo sopra indicato; opporsi al trattamento dei propri dati: l’utente può opporsi al trattamento dei propri dati quando esso avviene su una base giuridica diversa dal consenso; accedere ai propri dati: l’utente ha il diritto di ottenere informazioni sui dati trattati dal titolare, su determinati aspetti del trattamento ed a ricevere una copia dei dati trattati ( art 15 GDPR); verificare e chiedere la rettificazione: l’utente può verificare la correttezza ei propri dati e richiederne l’aggiornamento o la correzione; ottenere la limitazione del trattamento: quando ricorrono determinate condizioni l’utente può richiedere la limitazione del trattamento dei propri dati. In tal caso il titolare non tratterà i dati per alcun altro scopo se non la loro conservazione; ottenere la cancellazione o rimozione dei propri dati personali: art 17 GDPR ricevere i propri dati o farli trasferire ad altro titolare ( diritto alla portabilità) : l’utente ha diritto di ricevere i propri dati in formato strutturato, di uso comune e leggibile da dispositivo automatico e, ove tecnicamente fattibile, di ottenerne il trasferimento, senza ostacoli, ad altro titolare. Questa disposizione è applicabile quando i dati sono trattati con strumenti automatizzati ed il trattamento è basato sul consenso dell’utente, su un contratto di cui l’utente è parte o su misure contrattuali ad esso connesse; proporre reclamo: l’utente può proporre un reclamo all’autorità di controllo della protezione dei dati personali competente o di agire in sede giudiziale.</div></div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "0 5%"
+                    }
+                }
+            },
+            {
+                "Row": 8,
+                "Column": 1,
+                "ColumnSpan": 3,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='text-align:left;'><div class='title '>Come esercitare i propri diritti</div> <div>L’utente, per esercitare i propri diritti, può utilizzare una richiesta di contatto al DPO all’indirizzo indicato nel presente documento ( a chi puoi rivolgerti). Le richieste saranno evase nel più breve tempo possibile, in ogni caso entro un mese:</div></div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "0 5%"
+                    }
+                }
+            },
+            {
+                "Row": 9,
+                "Column": 1,
+                "ColumnSpan": 3,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='text-align:left;'><div class='title '>Log di sistema e manutenzione</div> <div>Per necessità legate al funzionamento e manutenzione, Falc Spa e gli eventuali servizi terzi da essa utilizzati potrebbero raccogliere log di sistema, ossia file che registrano le interazioni e che possono contenere anche dati personali, quali l’indirizzo IP Utente.</div></div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "0 5%"
+                    }
+                }
+            },
+            {
+                "Row": 10,
+                "Column": 1,
+                "ColumnSpan": 3,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class='title ' style='text-align:left;'>Risposta alle richieste “do not track”</div> <div style='text-align:left;'>Falc Spa non supporta le richieste “Do Not Track”. Per scoprire se gli eventuali servizi di terze parti utilizzati le supportino, l’utente è invitato a consultare le rispettive privacy policy</div>"
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "0 5%"
+                    }
+                }
+            },
+            {
+                "Row": 11,
+                "Column": 1,
+                "ColumnSpan": 3,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='text-align:left;'><div class='title '>Modifiche a questa privacy policy</div> <div>Il titolare del trattamento si riserva il diritto di apportare modifiche a questa privacy policy in qualunque momento dandone informazione agli utenti su questa pagina e/o sul sito. Si prega, dunque, di consultare la data di ultima modifica privacy policy indicata in fondo. Qualora le modifiche interessino trattamenti la cui base giuridica è il consenso, il titolare provvederà a raccogliere nuovamente il consenso dell’utente, se necessario.<br><br>Il titolare del trattamento si riserva il diritto di apportare modifiche a questa privacy policy in qualunque momento dandone informazione agli utenti su questa pagina e/o sul sito. Si prega, dunque, di consultare la data di ultima modifica privacy policy indicata in fondo. Qualora le modifiche interessino trattamenti la cui base giuridica è il consenso, il titolare provvederà a raccogliere nuovamente il consenso dell’utente, se necessario. <br><br>Data ultima modifica: 06/07/2020</div></div>"
+                },
+                "Style": {
+                    "Margin": {
+                        "Bottom": "20px"
+                    },
+                    "Padding": {
+                        "Total": "0 5%"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "Name": "About",
+        "Id": "about",
+        "Language": "it",
+        "Widgets": [
+            {
+                "Row": 0,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src='https://newb2bapi.falc.biz/api/v1/server/resources/images/about/IMG-ABOUT.jpg' width='100%'>"
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src='/assets/images/company-logo.jpg' style='max-width:100%;object-fit:scale-down;'>"
+                },
+                "Style": {
+                    "Margin": {
+                        "Total": "5% auto"
+                    },
+                    "Width": "300px"
+                },
+                "MobileStyle": {
+                    "Width": "150px"
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='width:100%;text-align:left;line-height:2;'>Falc S.p.A è un’azienda italiana leader nel settore delle calzature e della moda , conosciuta nel mondo per i suoi marchi, il suo know how produttivo  e la sua organizzazione commerciale.<br>Eccellenza, stile e innovazione sono le qualità che rendono i nostri brand conosciuti ed apprezzati in tutto il mondo.</div>"
+                },
+                "Style": {
+                    "Margin": {
+                        "Left": "30%",
+                        "Right": "30%"
+                    },
+                    "FontSize": "20px"
+                },
+                "MobileStyle": {
+                    "Margin": {
+                        "Total": "0 10px"
+                    },
+                    "FontSize": "14px"
+                }
+            },
+            {
+                "Row": 3,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class='brand-list'><a href='https://www.candicecooper.com/'>CANDICE COOPER</a> | <a href='https://www.falcotto.com/it_it'>FALCOTTO</a> | <a href='https://www.flowermountain.com/'>FLOWER MOUNTAIN</a> | <a href='https://www.naturino.com/'>NATURINO</a> | <a href='https://www.voileblanche.com/'>VOILE BLANCHE</a> | <a href='https://www.w6yz.com/'>W6YZ</a></div>"
+                },
+                "Style": {
+                    "Margin": {
+                        "Top": "5%",
+                        "Bottom": "5%"
+                    }
+                },
+                "MobileStyle": {
+                    "Margin": {
+                        "Total": "5% 10px"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "Name": "About",
+        "Id": "about",
+        "Language": "en",
+        "Widgets": [
+            {
+                "Row": 0,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src='https://newb2bapi.falc.biz/api/v1/server/resources/images/about/IMG-ABOUT.jpg' width='100%'>"
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src='/assets/images/company-logo.jpg' style='max-width:100%;object-fit:scale-down;'>"
+                },
+                "Style": {
+                    "Margin": {
+                        "Total": "5% auto"
+                    },
+                    "Width": "300px"
+                },
+                "MobileStyle": {
+                    "Width": "150px"
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='width:100%;text-align:left;line-height:2;'>Falc S.p.A  is a leading Italian footwear and fashion company famous for its brands, it’s manufacturing know-how and sales organization. Excellence, style and innovation are the qualities that make our brands known and highly regarded</div>"
+                },
+                "Style": {
+                    "Margin": {
+                        "Left": "30%",
+                        "Right": "30%"
+                    },
+                    "FontSize": "20px"
+                },
+                "MobileStyle": {
+                    "Margin": {
+                        "Total": "0 10px"
+                    },
+                    "FontSize": "14px"
+                }
+            },
+            {
+                "Row": 3,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class='brand-list'><a href='https://www.candicecooper.com/'>CANDICE COOPER</a> | <a href='https://www.falcotto.com/it_it'>FALCOTTO</a> | <a href='https://www.flowermountain.com/'>FLOWER MOUNTAIN</a> | <a href='https://www.naturino.com/'>NATURINO</a> | <a href='https://www.voileblanche.com/'>VOILE BLANCHE</a> | <a href='https://www.w6yz.com/'>W6YZ</a></div>"
+                },
+                "Style": {
+                    "Margin": {
+                        "Top": "5%",
+                        "Bottom": "5%"
+                    },
+                    "FontSize": "20px"
+                },
+                "MobileStyle": {
+                    "Margin": {
+                        "Total": "5% 10px"
+                    },
+                    "FontSize": "14px"
+                }
+            }
+        ]
+    },
+    {
+        "Name": "Contacts",
+        "Id": "contacts",
+        "Language": "it",
+        "Widgets": [
+            {
+                "Row": 0,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='width:100%;height:100%;position:relative;'><img src='https://newb2bapi.falc.biz/api/v1/server/resources/images/contacts/CONTATTI.jpg' width='100%'><div style='color:white;font-weight:900;position:absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);'>CONTATTACI</div></div>"
+                },
+                "Style": {
+                    "FontSize": "50px"
+                },
+                "MobileStyle": {
+                    "FontSize": "20px"
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src='/assets/images/company-logo.jpg' style='max-width:100%;object-fit:scale-down;'>"
+                },
+                "Style": {
+                    "Margin": {
+                        "Total": "5% auto"
+                    },
+                    "Width": "300px"
+                },
+                "MobileStyle": {
+                    "Width": "150px"
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class='contacts-row'><div class='panel'><div class='title'>TELEFONO</div><div>Il nostro Servizio Clienti è disponibile dal Lunedì al venerdì dalle ore 8.30 - 12.30 e dalle 14.00 alle 18.00</div></div><a class='panel' href='tel:+390733790790'>Chiamaci +39 0733 790 790</a></div>"
+                }
+            },
+            {
+                "Row": 3,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class='contacts-row'><div class='panel'><div class='title'>INDIRIZZO EMAIL</div><div>Per contattare il Servizio Clienti via email</div></div><a class='panel' href='mailto:b2bfalcspa@falc.biz'>Scrivici b2bfalcspa@falc.biz</a></div>"
+                }
+            },
+            {
+                "Row": 4,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class='contacts-row' style='border:0;'><div class='panel'><div class='title'>SEDE</div></div><div class='panel address'>Falc S.p.A.<br>C.da San Domenico, 24<br>62012 Civitanova Marche (MC)</div></div>"
+                }
+            },
+            {
+                "Row": 5,
+                "Column": 0,
+                "Type": 5,
+                "Content": {
+                    "Latitude": 43.311598,
+                    "Longitude": 13.678388,
+                    "Zoom": 12,
+                    "Styles": "[{\"elementType\": \"geometry\",\"stylers\": [{\"color\": \"#f5f5f5\"}]},{\"elementType\": \"labels.icon\",\"stylers\": [{\"visibility\": \"off\"}]},{\"elementType\": \"labels.text.fill\",\"stylers\": [{\"color\": \"#616161\"}]},{\"elementType\": \"labels.text.stroke\",\"stylers\": [{\"color\": \"#f5f5f5\"}]},{\"featureType\": \"administrative\",\"elementType\": \"geometry\",\"stylers\": [{\"visibility\": \"off\"}]},{\"featureType\": \"administrative.land_parcel\",\"stylers\": [{\"visibility\": \"off\"}]},{\"featureType\": \"administrative.land_parcel\",\"elementType\": \"labels.text.fill\",\"stylers\": [{\"color\": \"#bdbdbd\"}]},{\"featureType\": \"administrative.neighborhood\",\"stylers\": [{\"visibility\": \"off\"}]},{\"featureType\": \"poi\",\"stylers\": [{\"visibility\": \"off\"}]},{\"featureType\": \"poi\",\"elementType\": \"geometry\",\"stylers\": [{\"color\": \"#eeeeee\"}]},{\"featureType\": \"poi\",\"elementType\": \"labels.text\",\"stylers\": [{\"visibility\": \"off\"}]},{\"featureType\": \"poi\",\"elementType\": \"labels.text.fill\",\"stylers\": [{\"color\": \"#757575\"}]},{\"featureType\": \"poi.park\",\"elementType\": \"geometry\",\"stylers\": [{\"color\": \"#e5e5e5\"}]},{\"featureType\": \"poi.park\",\"elementType\": \"labels.text.fill\",\"stylers\": [{\"color\": \"#9e9e9e\"}]},{\"featureType\": \"road\",\"elementType\": \"geometry\",\"stylers\": [{\"color\": \"#ffffff\"}]},{\"featureType\": \"road\",\"elementType\": \"labels\",\"stylers\": [{\"visibility\": \"off\"}]},{\"featureType\": \"road\",\"elementType\": \"labels.icon\",\"stylers\": [{\"visibility\": \"off\"}]},{\"featureType\": \"road.arterial\",\"stylers\": [{\"color\": \"#d9dad9\"}]},{\"featureType\": \"road.arterial\",\"elementType\": \"labels\",\"stylers\": [{\"visibility\": \"off\"}]},{\"featureType\": \"road.arterial\",\"elementType\": \"labels.text.fill\",\"stylers\": [{\"color\": \"#757575\"}]},{\"featureType\": \"road.highway\",\"elementType\": \"geometry\",\"stylers\": [{\"color\": \"#dadada\"}]},{\"featureType\": \"road.highway\",\"elementType\": \"labels\",\"stylers\": [{\"visibility\": \"off\"}]},{\"featureType\": \"road.highway\",\"elementType\": \"labels.text.fill\",\"stylers\": [{\"color\": \"#616161\"}]},{\"featureType\": \"road.local\",\"stylers\": [{\"visibility\": \"off\"}]},{\"featureType\": \"road.local\",\"elementType\": \"labels.text.fill\",\"stylers\": [{\"color\": \"#9e9e9e\"}]},{\"featureType\": \"transit\",\"stylers\": [{\"visibility\": \"off\"}]},{\"featureType\": \"transit.line\",\"elementType\": \"geometry\",\"stylers\": [{\"color\": \"#e5e5e5\"}]},{\"featureType\": \"transit.station\",\"elementType\": \"geometry\",\"stylers\": [{\"color\": \"#eeeeee\"}]},{\"featureType\": \"water\",\"elementType\": \"geometry\",\"stylers\": [{\"color\": \"#c9c9c9\"}]},{\"featureType\": \"water\",\"elementType\": \"geometry.fill\",\"stylers\": [{\"color\": \"#edefe0\"}]},{\"featureType\": \"water\",\"elementType\": \"labels.text\",\"stylers\": [{\"visibility\": \"off\"}]},{\"featureType\": \"water\",\"elementType\": \"labels.text.fill\",\"stylers\": [{\"color\": \"#9e9e9e\"}]}]"
+                },
+                "Style": {
+                    "Margin": {
+                        "Total": "5% 10%"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "Name": "Contacts",
+        "Id": "contacts",
+        "Language": "en",
+        "Widgets": [
+            {
+                "Row": 0,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='width:100%;height:100%;position:relative;'><img src='https://newb2bapi.falc.biz/api/v1/server/resources/images/contacts/CONTATTI.jpg' width='100%'><div style='color:white;font-weight:900;position:absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);'>CONTATTACI</div></div>"
+                },
+                "Style": {
+                    "FontSize": "50px"
+                },
+                "MobileStyle": {
+                    "FontSize": "20px"
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src='/assets/images/company-logo.jpg' style='max-width:100%;object-fit:scale-down;'>"
+                },
+                "Style": {
+                    "Margin": {
+                        "Total": "5% auto"
+                    },
+                    "Width": "300px"
+                },
+                "MobileStyle": {
+                    "Width": "150px"
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class='contacts-row'><div class='panel'><div class='title'>PHONE</div><div>Our Customer Service is available from Monday to Friday from 8.30 - 12.30 and from 14.00 to 18.00</div></div><a class='panel' href='tel:+390733790790'>Call us +39 0733 790 790</a></div>"
+                }
+            },
+            {
+                "Row": 3,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class='contacts-row'><div class='panel'><div class='title'>EMAIL ADDRESS</div><div>To contact Customer Service by e-mail</div></div><a class='panel' href='mailto:b2bfalcspa@falc.biz'>Write us b2bfalcspa@falc.biz</a></div>"
+                }
+            },
+            {
+                "Row": 4,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class='contacts-row' style='border:0;'><div class='panel'><div class='title'>HEADQUARTERS</div></div><div class='panel address'>Falc S.p.A.<br>C.da San Domenico, 24<br>62012 Civitanova Marche (MC)</div></div>"
+                }
+            },
+            {
+                "Row": 5,
+                "Column": 0,
+                "Type": 5,
+                "Content": {
+                    "Latitude": 43.311598,
+                    "Longitude": 13.678388,
+                    "Zoom": 12,
+                    "Styles": "[{\"elementType\": \"geometry\",\"stylers\": [{\"color\": \"#f5f5f5\"}]},{\"elementType\": \"labels.icon\",\"stylers\": [{\"visibility\": \"off\"}]},{\"elementType\": \"labels.text.fill\",\"stylers\": [{\"color\": \"#616161\"}]},{\"elementType\": \"labels.text.stroke\",\"stylers\": [{\"color\": \"#f5f5f5\"}]},{\"featureType\": \"administrative\",\"elementType\": \"geometry\",\"stylers\": [{\"visibility\": \"off\"}]},{\"featureType\": \"administrative.land_parcel\",\"stylers\": [{\"visibility\": \"off\"}]},{\"featureType\": \"administrative.land_parcel\",\"elementType\": \"labels.text.fill\",\"stylers\": [{\"color\": \"#bdbdbd\"}]},{\"featureType\": \"administrative.neighborhood\",\"stylers\": [{\"visibility\": \"off\"}]},{\"featureType\": \"poi\",\"stylers\": [{\"visibility\": \"off\"}]},{\"featureType\": \"poi\",\"elementType\": \"geometry\",\"stylers\": [{\"color\": \"#eeeeee\"}]},{\"featureType\": \"poi\",\"elementType\": \"labels.text\",\"stylers\": [{\"visibility\": \"off\"}]},{\"featureType\": \"poi\",\"elementType\": \"labels.text.fill\",\"stylers\": [{\"color\": \"#757575\"}]},{\"featureType\": \"poi.park\",\"elementType\": \"geometry\",\"stylers\": [{\"color\": \"#e5e5e5\"}]},{\"featureType\": \"poi.park\",\"elementType\": \"labels.text.fill\",\"stylers\": [{\"color\": \"#9e9e9e\"}]},{\"featureType\": \"road\",\"elementType\": \"geometry\",\"stylers\": [{\"color\": \"#ffffff\"}]},{\"featureType\": \"road\",\"elementType\": \"labels\",\"stylers\": [{\"visibility\": \"off\"}]},{\"featureType\": \"road\",\"elementType\": \"labels.icon\",\"stylers\": [{\"visibility\": \"off\"}]},{\"featureType\": \"road.arterial\",\"stylers\": [{\"color\": \"#d9dad9\"}]},{\"featureType\": \"road.arterial\",\"elementType\": \"labels\",\"stylers\": [{\"visibility\": \"off\"}]},{\"featureType\": \"road.arterial\",\"elementType\": \"labels.text.fill\",\"stylers\": [{\"color\": \"#757575\"}]},{\"featureType\": \"road.highway\",\"elementType\": \"geometry\",\"stylers\": [{\"color\": \"#dadada\"}]},{\"featureType\": \"road.highway\",\"elementType\": \"labels\",\"stylers\": [{\"visibility\": \"off\"}]},{\"featureType\": \"road.highway\",\"elementType\": \"labels.text.fill\",\"stylers\": [{\"color\": \"#616161\"}]},{\"featureType\": \"road.local\",\"stylers\": [{\"visibility\": \"off\"}]},{\"featureType\": \"road.local\",\"elementType\": \"labels.text.fill\",\"stylers\": [{\"color\": \"#9e9e9e\"}]},{\"featureType\": \"transit\",\"stylers\": [{\"visibility\": \"off\"}]},{\"featureType\": \"transit.line\",\"elementType\": \"geometry\",\"stylers\": [{\"color\": \"#e5e5e5\"}]},{\"featureType\": \"transit.station\",\"elementType\": \"geometry\",\"stylers\": [{\"color\": \"#eeeeee\"}]},{\"featureType\": \"water\",\"elementType\": \"geometry\",\"stylers\": [{\"color\": \"#c9c9c9\"}]},{\"featureType\": \"water\",\"elementType\": \"geometry.fill\",\"stylers\": [{\"color\": \"#edefe0\"}]},{\"featureType\": \"water\",\"elementType\": \"labels.text\",\"stylers\": [{\"visibility\": \"off\"}]},{\"featureType\": \"water\",\"elementType\": \"labels.text.fill\",\"stylers\": [{\"color\": \"#9e9e9e\"}]}]"
+                },
+                "Style": {
+                    "Margin": {
+                        "Total": "5% 10%"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "Name": "Candice Cooper marketing tools",
+        "Id": "cc-marketing-tools",
+        "VisibilityRule": 1,
+        "Widgets": [
+            {
+                "Row": 0,
+                "Column": 0,
+                "Type": 3,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/marketing_tools_2022.pdf"
+                    ]
+                },
+                "Style": {
+                    "Height": "750px"
+                }
+            }
+        ]
+    },
+    {
+        "Name": "Voile Blance marketing tools",
+        "Id": "vb-marketing-tools",
+        "VisibilityRule": 1,
+        "Widgets": [
+            {
+                "Row": 0,
+                "Column": 0,
+                "Type": 3,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/marketing_tools_2022.pdf"
+                    ]
+                },
+                "Style": {
+                    "Height": "750px"
+                }
+            }
+        ]
+    },
+    {
+        "Name": "Flower mountain marketing tools",
+        "Id": "fm-marketing-tools",
+        "VisibilityRule": 1,
+        "Widgets": [
+            {
+                "Row": 0,
+                "Column": 0,
+                "Type": 3,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/marketing_tools_2022.pdf"
+                    ]
+                },
+                "Style": {
+                    "Height": "750px"
+                }
+            }
+        ]
+    },
+    {
+        "Name": "W6YZ marketing tools",
+        "Id": "w6yz-marketing-tools",
+        "VisibilityRule": 1,
+        "Widgets": [
+            {
+                "Row": 0,
+                "Column": 0,
+                "Type": 3,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/MARKETING-TOOLS-W6YZ-2021.pdf"
+                    ]
+                },
+                "Style": {
+                    "Height": "750px"
+                }
+            }
+        ]
+    },
+    {
+        "Name": "W6YZ Junior marketing tools",
+        "Id": "w6yz-junior-marketing-tools",
+        "VisibilityRule": 1,
+        "Widgets": [
+            {
+                "Row": 0,
+                "Column": 0,
+                "Type": 3,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/MARKETING-TOOLS-W6YZ-JUNIOR-2021.pdf"
+                    ]
+                },
+                "Style": {
+                    "Height": "750px"
+                }
+            }
+        ]
+    },
+    {
+        "Name": "FM for Naturino marketing tools",
+        "Id": "fmnaturino-marketing-tools",
+        "VisibilityRule": 1,
+        "Widgets": [
+            {
+                "Row": 0,
+                "Column": 0,
+                "Type": 3,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/MARKETING-TOOLS-FLOWER-MOUNTAIN-FOR-NATURINO.pdf"
+                    ]
+                },
+                "Style": {
+                    "Height": "750px"
+                }
+            }
+        ]
+    },
+    {
+        "Name": "Naturino marketing tools",
+        "Id": "naturino-marketing-tools",
+        "VisibilityRule": 1,
+        "Widgets": [
+            {
+                "Row": 0,
+                "Column": 0,
+                "Type": 3,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/marketing_tools_2022.pdf"
+                    ]
+                },
+                "Style": {
+                    "Height": "750px"
+                }
+            }
+        ]
+    },
+    {
+        "Name": "Falcotto marketing tools",
+        "Id": "falcotto-marketing-tools",
+        "VisibilityRule": 1,
+        "Widgets": [
+            {
+                "Row": 0,
+                "Column": 0,
+                "Type": 3,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/marketing_tools_2022.pdf"
+                    ],
+                    "Options": "{ \"Page\": 2 }"
+                },
+                "Style": {
+                    "Height": "750px"
+                }
+            }
+        ]
+    },
+
+
+
+
+    {
+        "Name": "test",
+        "Id": "test",
+        "VisibilityRule": 1,
+        "Widgets": [
+            {
+                "Row": 0,
+                "Column": 0,
+                "Type": 3,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/test/naturino_marketing_tool.pdf"
+                    ]
+                },
+                "Style": {
+                    "Height": "750px"
+                }
+            }
+        ]
+    },
+
+
+
+
+
+    {
+        "Name": "Naturino Marketing Settembre 2021",
+        "Id": "naturino_2021_09",
+        "VisibilityRule": 1,
+        "Widgets": [
+            {
+                "Row": 0,
+                "Column": 0,
+                "Type": 102,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/09-24-1.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/09-24-2.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/09-24-3.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/09-24-4.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/09-24-5.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/09-27-1.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/09-27-2.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/09-29-1.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/09-29-2.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/09-29-3.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/09-29-4.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/10-01-3.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/10-12-1.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/13-1.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/13-2.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/13-3.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/14-4.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/17-1.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/17-2.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/19-1.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/22-1.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/22-2.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/26-1.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/26-2.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/26-3.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/32-1.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/36-1.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/37-1.jpg"
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        "Name": "Naturino Marketing Dicembre 2021",
+        "Id": "naturino_2021_12",
+        "VisibilityRule": 1,
+        "Widgets": [
+            {
+                "Row": 0,
+                "Column": 0,
+                "Type": 102,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-01.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-03-1.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-03-2.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-05.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-06.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-10.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-12.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-14-1.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-14-2.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-17.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-19.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-21.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-24.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01.24.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-06.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-07.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-08.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-09-1.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-09-2.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-10-1.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-10-2.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-11.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-13-1.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-13-2.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-14.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-15-1.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-15-2.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-16-1.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-16-2.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-17.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-18.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-20-1.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-20-2.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-21-1.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-21-2.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-22.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-23.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-24-1.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-24-2.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-27.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-28.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-29.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-30-1.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-30-2.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-30-3.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/facebook_cover.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/Naturino_4.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/Naturino_6.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/Naturino_25.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/Naturino_5.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/Naturino_26.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/Naturino_27.jpg"
+                    ]
+                }
+            }
+        ]
+    }
+
+]
