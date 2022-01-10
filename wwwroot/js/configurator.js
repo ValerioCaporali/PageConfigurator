@@ -240,6 +240,7 @@ var handelWidgetType = (widget) => {
             break;
         default:
             var div = document.createElement("div");
+            div.innerHTML = "widget to handle";
             return div;
     }
 }
@@ -285,41 +286,26 @@ var handleGalleryWidget = (widget) => {
 
 var handleVideoWidget = (widget) => {
     var videoContainer = document.createElement("div");
+    videoContainer.id = "video-container";
     var video = document.createElement("iframe");
     const regExp = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+    // vimeo: https://player.vimeo.com/video/76979871
+    // youtube: https://www.youtube.com/embed/qC0vDKVPCrw
     var src = "https://www.youtube.com/embed/qC0vDKVPCrw";
     var video_url = new URL(src);
     console.log(video_url)
     console.log(video_url.searchParams.get('autoplay'))
     var youtubeUrl = "";
     var vimeoUrl = "";
-    if (src.match(regExp) || source.indexOf("www.youtube-nocookie") != -1) {
+    if (src.match(regExp) || src.indexOf("www.youtube-nocookie") != -1) {
         console.log("youtube url");
-        youtubeUrl = src;
-        video.src = youtubeUrl;
         video.allowFullscreen = "true";
-        if (widget.content.enableAutoplay) {
-            if (video_url.searchParams.get('autoplay') != null) {
-                video_url.searchParams.set('autoplay', 1);
-            } else {
-                video_url.searchParams.append('autoplay', 1);
-            }
-            video.allow = "autoplay";
-        } else {
-            if (video_url.searchParams.get('autoplay') != null) {
-                video_url.searchParams.set('autoplay', 0)
-            } else {
-                video_url.searchParams.append('autoplay', 0)
-            }
-        }
-        if (widget.content.disableControls)
-            youtubeUrl.concat("?controls=0");
-        if (widget.content.enableLoop)
-            youtubeUrl.concat("?loop=1");
-        video.src = video_url;
+        var youtube_video = handleVideo(widget, video_url, video);
+        video.src = youtube_video;
     } else if (src.indexOf("player.vimeo" != -1)) {
-        vimeoUrl = src;
-        video.src = vimeoUrl;
+        video.allowFullscreen = "true";
+        var vimeo_video = handleVideo(widget, video_url, video)
+        video.src = vimeo_video;
         console.log("vimeo url");
     }
     if (widget.content.width)
@@ -455,4 +441,43 @@ var handelTextPosition = (widget, text) => {
         text.style.bottom = widget.text.position.bottom;
         text.style.left = widget.text.position.left;
     }
+}
+
+var handleVideo = (widget, video_url, video) => {
+    if (widget.content.enableAutoplay) {
+        if (video_url.searchParams.get('autoplay') != null)
+            video_url.searchParams.set('autoplay', 1);
+        else
+            video_url.searchParams.append('autoplay', 1);
+        video.allow = "autoplay";
+    } else {
+        if (video_url.searchParams.get('autoplay') != null)
+            video_url.searchParams.set('autoplay', 0)
+        else
+            video_url.searchParams.append('autoplay', 0)
+    }
+    if (widget.content.disableControls) {
+        if (video_url.searchParams.get('controls') != null) 
+            video_url.searchParams.set('controls', 0)
+        else
+            video_url.searchParams.append('controls', 0)
+    } else {
+        if (video_url.searchParams.get('controls') != null) 
+            video_url.searchParams.set('controls', 1)
+        else
+            video_url.searchParams.append('controls', 1)
+    }
+    if (widget.content.enableLoop) {
+        if (video_url.searchParams.get('loop') != null)
+            video_url.searchParams.set('loop', 1)
+        else
+            video_url.searchParams.append('loop', 1)
+    } else {
+        if (video_url.searchParams.get('loop') != null)
+            video_url.searchParams.set('loop', 0)
+        else
+            video_url.searchParams.append('loop', 0)
+    }
+
+    return video_url;
 }
