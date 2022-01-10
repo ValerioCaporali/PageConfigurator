@@ -8,7 +8,6 @@ let selectedPage;
 (async() => {
     var response = await fetch(base_url + 'HomePages');
     homePages = await response.json();
-    console.log(homePages[0]);
     document.getElementById('home-pages-number').innerHTML = homePages.length;
     populatePageList("Home", homePages);
 })().catch(err => {
@@ -68,7 +67,6 @@ var openPageStream = (index, pageType) => {
 
 // use this to show page preview (home and normal pages)
 var showPagePreview = (page) => {
-    console.log(page);
     document.getElementById("demo-container").style.display = "block";
     var title = document.getElementById("page-title");
     title.innerHTML = "";
@@ -81,26 +79,7 @@ var showPagePreview = (page) => {
     var select = document.getElementById("language");
     createOptions("language", page.language);
     createOptions("default", page.default);
-    fillPage(page.widgets)
-        // page.widgets.forEach((widget) => {
-        //         console.log(widget);
-        //         console.log(widget.row, widget.column);
-        //         var element = document.createElement("div");
-        //         element.classList.add("header");
-        //         element.setAttribute("data-options", "dxItem: { locaction[{row: " + widget.row + ", col: " + widget.column + ", colspan: " + widget.columnSpan + ", screen: 'lg'}, {row: 0, col: 0, colspan: 2, screen: 'sm'}] }");
-        //         var p = document.createElement("p");
-        //         p.innerHTML = "prova";
-        //         element.appendChild(p);
-        //         var pageBox = document.getElementById("responsive-box");
-        //         pageBox.appendChild(element);
-        //     })
-        // var attribute = document.createAttribute("data-options");
-        // attribute.value = "dxItem: { locaction[{row: " + widget.row + ", col: " + widget.column + ", colspan: " + widget.columnSpan + ", screen: 'lg'}, {row: 0, col: 0, colspan: 2, screen: 'sm'}] }";
-        // element.classList.add("header");
-        // element.data-options = "";
-        // element.attr("data-options", "dxItem: { title: ciao }");
-        // $(element).addClass("header");
-        // element.setAttributeNode(attribute);
+    fillPage(page.widgets);
 }
 
 var createOptions = (selectId, currentValue) => {
@@ -132,37 +111,10 @@ var createOptions = (selectId, currentValue) => {
     }
 }
 
-// $(() => {
-//     $('#responsive-box').dxResponsiveBox({
-//         rows: [
-//             { ratio: 1 },
-//             { ratio: 2 },
-//             { ratio: 2, screen: 'xs' },
-//             { ratio: 1 },
-//             { ratio: 1 },
-//             { ratio: 1 },
-//         ],
-//         cols: [
-//             { ratio: 1 },
-//             { ratio: 1, screen: 'lg' },
-//             { ratio: 1 },
-//             { ratio: 1 },
-//             { ratio: 1 },
-//             { ratio: 1 },
-//         ],
-//         singleColumnScreen: 'sm',
-//         screenByWidth(width) {
-//             return (width < 700) ? 'sm' : 'lg';
-//         },
-//     });
-// });
-
 
 var fillPage = (widgets) => {
     var totRows = calculateRows(widgets)
     var totCols = calculateColumns(widgets)
-    console.log(totRows)
-    console.log(totCols)
     var rows = new Array();
     var cols = new Array();
     var object = { ratio: 1 };
@@ -172,8 +124,6 @@ var fillPage = (widgets) => {
     for (var i = 0; i < totCols; i++) {
         cols.push(object);
     }
-    console.log(rows)
-    console.log(cols)
     let items = widgets.map(w => {
         return {
             location: [{
@@ -216,7 +166,6 @@ var calculateColumns = (widgets) => {
 }
 
 var handleWidget = (widget) => {
-    console.log(widget)
     var elem = handelWidgetType(widget);
     if (widget.style != null) {
         elem = handleWidgetStyle(widget, elem);
@@ -238,6 +187,10 @@ var handelWidgetType = (widget) => {
             var videoContainer = handleVideoWidget(widget);
             return videoContainer;
             break;
+        case 3:
+            var pdfContainer = handlePdfWidget(widget);
+            return pdfContainer;
+            break;
         default:
             var div = document.createElement("div");
             div.innerHTML = "widget to handle";
@@ -256,7 +209,6 @@ var handleGalleryWidget = (widget) => {
     var div = document.createElement("div");
     galleryContainer.classList.add("gallery-container");
     var randomId = Math.floor(Math.random() * 1000000)
-    console.log("gallery")
     div.id = "gallery" + randomId
     setTimeout(() => {
         $('#gallery' + randomId).dxGallery({
@@ -293,12 +245,9 @@ var handleVideoWidget = (widget) => {
     // youtube: https://www.youtube.com/embed/qC0vDKVPCrw
     var src = "https://www.youtube.com/embed/qC0vDKVPCrw";
     var video_url = new URL(src);
-    console.log(video_url)
-    console.log(video_url.searchParams.get('autoplay'))
     var youtubeUrl = "";
     var vimeoUrl = "";
     if (src.match(regExp) || src.indexOf("www.youtube-nocookie") != -1) {
-        console.log("youtube url");
         video.allowFullscreen = "true";
         var youtube_video = handleVideo(widget, video_url, video);
         video.src = youtube_video;
@@ -306,16 +255,108 @@ var handleVideoWidget = (widget) => {
         video.allowFullscreen = "true";
         var vimeo_video = handleVideo(widget, video_url, video)
         video.src = vimeo_video;
-        console.log("vimeo url");
+    } else {
+        video.src = video_url;
     }
     if (widget.content.width)
-        video.style.width = widget.content.width
+        video.style.width = widget.content.width;
     if (widget.content.height)
-        video.style.height = widget.content.height
+        video.style.height = widget.content.height;
     if (widget.content.responsive)
         video.style.width = "100%";
     videoContainer.appendChild(video);
     return videoContainer;
+}
+
+var handlePdfWidget = (widget) => {
+    const url = '../docs/pdf.pdf';
+    
+    var canvas = document.createElement('canvas');
+    canvas.id = 'pdf-render';
+    ctx = canvas.getContext('2d');
+
+    let pdfSettings = {
+        pdfDoc: null,
+        pageNum: 1,
+        pageIsRendering: false,
+        pageNumIsPending: null,
+        scale: 2,
+        myCanvas: canvas,
+        myCtx: ctx
+    }
+
+    pdfjsLib.getDocument(url).promise.then(pdfDoc_ => {
+        pdfDoc = pdfDoc_;
+        setTimeout(() => {
+            renderPdfPage(pdfSettings);
+        }, 2000);
+    });
+    var container = document.createElement("div");
+    container.appendChild(pdfSettings.myCanvas)
+    return pdfSettings.myCanvas;
+}
+
+var renderPdfPage = (pdfSettings) => {
+    pdfSettings.pageIsRendering = true;
+    scale = pdfSettings.scale;
+    pdfDoc.getPage(pdfSettings.pageNum).then(page => {
+        const viewPort = page.getViewport({ scale });
+        pdfSettings.myCanvas.height = viewPort.height;
+        pdfSettings.myCanvas.width = viewPort.width;
+
+        const renderCtx = {
+            canvasContext: pdfSettings.ctx,
+            viewPort
+        }
+
+        page.render(renderCtx).promise.then(() => {
+            pdfSettings.pageIsRendering = false;
+
+            if (pdfSettings.pageNumIsPending !== null) {
+                renderPdfPage(pdfSettings.pageNumIsPending, pdfSettings);
+                pdfSettings.pageNumIsPending = null;
+            }
+        });
+    });
+}
+
+var handleVideo = (widget, video_url, video) => {
+    if (widget.content.enableAutoplay) {
+        if (video_url.searchParams.get('autoplay') != null)
+            video_url.searchParams.set('autoplay', 1);
+        else
+            video_url.searchParams.append('autoplay', 1);
+        video.allow = "autoplay";
+    } else {
+        if (video_url.searchParams.get('autoplay') != null)
+            video_url.searchParams.set('autoplay', 0)
+        else
+            video_url.searchParams.append('autoplay', 0)
+    }
+    if (widget.content.disableControls) {
+        if (video_url.searchParams.get('controls') != null) 
+            video_url.searchParams.set('controls', 0)
+        else
+            video_url.searchParams.append('controls', 0)
+    } else {
+        if (video_url.searchParams.get('controls') != null) 
+            video_url.searchParams.set('controls', 1)
+        else
+            video_url.searchParams.append('controls', 1)
+    }
+    if (widget.content.enableLoop) {
+        if (video_url.searchParams.get('loop') != null)
+            video_url.searchParams.set('loop', 1)
+        else
+            video_url.searchParams.append('loop', 1)
+    } else {
+        if (video_url.searchParams.get('loop') != null)
+            video_url.searchParams.set('loop', 0)
+        else
+            video_url.searchParams.append('loop', 0)
+    }
+
+    return video_url;
 }
 
 
@@ -441,43 +482,4 @@ var handelTextPosition = (widget, text) => {
         text.style.bottom = widget.text.position.bottom;
         text.style.left = widget.text.position.left;
     }
-}
-
-var handleVideo = (widget, video_url, video) => {
-    if (widget.content.enableAutoplay) {
-        if (video_url.searchParams.get('autoplay') != null)
-            video_url.searchParams.set('autoplay', 1);
-        else
-            video_url.searchParams.append('autoplay', 1);
-        video.allow = "autoplay";
-    } else {
-        if (video_url.searchParams.get('autoplay') != null)
-            video_url.searchParams.set('autoplay', 0)
-        else
-            video_url.searchParams.append('autoplay', 0)
-    }
-    if (widget.content.disableControls) {
-        if (video_url.searchParams.get('controls') != null) 
-            video_url.searchParams.set('controls', 0)
-        else
-            video_url.searchParams.append('controls', 0)
-    } else {
-        if (video_url.searchParams.get('controls') != null) 
-            video_url.searchParams.set('controls', 1)
-        else
-            video_url.searchParams.append('controls', 1)
-    }
-    if (widget.content.enableLoop) {
-        if (video_url.searchParams.get('loop') != null)
-            video_url.searchParams.set('loop', 1)
-        else
-            video_url.searchParams.append('loop', 1)
-    } else {
-        if (video_url.searchParams.get('loop') != null)
-            video_url.searchParams.set('loop', 0)
-        else
-            video_url.searchParams.append('loop', 0)
-    }
-
-    return video_url;
 }
