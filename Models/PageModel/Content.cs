@@ -11,5 +11,14 @@ namespace Model.PageModel
         public int SlideShowDelay { get; set; }
         public bool? ServerSideScalingEnabled { get; set; }
         public bool? CacheEnabled { get; set; }
+        public bool ShowIndicator { get; set; }
+        public bool ShowNavButtons { get; set; }
+        public string ShowcaseId { get; set; }
+        public string Options { get; set; }
+        public bool EnableAutoplay { get; set; }
+        public bool DisableControls { get; set; }
+        public bool Responsive { get; set; }
+        public string Width { get; set; }
+        public string Height { get; set; }
     }
 }

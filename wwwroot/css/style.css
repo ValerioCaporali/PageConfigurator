@@ -16,7 +16,7 @@
 }
 
 #page .header {
-    background-color: rgba(243, 158, 108, 0.8);
+    background-color: rgba(243, 158, 108, 0.8) !important;
     text-align: center;
 }
 
@@ -32,8 +32,8 @@
     background-color: rgba(119, 199, 231, 0.8);
 }
 
-#page .footer {
-    background-color: rgba(123, 155, 207, 0.8);
+#page .page-footer {
+    background-color: rgba(123, 155, 207, 0.8) !important;
 }
 
 .item {
@@ -44,4 +44,32 @@
     font-size: 20px;
     padding-top: 10px;
     text-align: center;
+}
+
+.widget-container {
+    margin-right: 240px;
+}
+
+#gallery {
+    margin: auto;
+    max-width: 450px;
+}
+
+.options {
+    padding: 20px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 180px;
+    top: 0;
+    background-color: rgba(191, 191, 191, 0.15);
+}
+
+.caption {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.option {
+    margin-top: 10px;
 }

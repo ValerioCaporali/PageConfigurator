@@ -44,7 +44,7 @@ namespace Pages_configurator.Controllers
 
             ViewBag.prova = "boh";
             var homePagesJson = await System.IO.File.ReadAllTextAsync("Controllers/home.json");
-            var homePages = JsonConvert.DeserializeObject<List<Page<HtmlConfiguration>>>(homePagesJson);
+            var homePages = JsonConvert.DeserializeObject<List<Page>>(homePagesJson);
             var homePagesNumber = homePages.Count();
             var test = JsonConvert.SerializeObject(homePages);
             ViewBag.HomePagesNumber = homePagesNumber;
@@ -54,7 +54,7 @@ namespace Pages_configurator.Controllers
             Console.WriteLine(homePages);
 
             var pagesJson = await System.IO.File.ReadAllTextAsync("Controllers/pages.json");
-            var pages = JsonConvert.DeserializeObject<List<Page<HtmlConfiguration>>>(pagesJson);
+            var pages = JsonConvert.DeserializeObject<List<Page>>(pagesJson);
             var pagesNumber = pages.Count();
             ViewBag.PagesNumber = pagesNumber;
             ViewBag.AllPages = pages;

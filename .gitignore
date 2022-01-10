@@ -1,0 +1,10 @@
+
+bin/
+
+.vs/
+
+.idea/
+
+obj/
+
+resources/Models/.DS_Store

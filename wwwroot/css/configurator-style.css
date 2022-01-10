@@ -1,0 +1,429 @@
+.public-home-title {
+    font-size: 40px;
+    text-align: center;
+}
+
+.public-home-title:before,
+.public-home-title:after {
+    display: inline-block;
+    content: "";
+    border-top: 2px solid #000;
+    width: 100px;
+    margin: 0 20px;
+    transform: translateY(-1rem)
+}
+
+.contact-cta {
+    text-decoration: none;
+    color: #000!important;
+    transition: .3s;
+    -webkit-transition: .3s;
+    -moz-transition: .3s;
+    -o-transition: .3s
+}
+
+.contact-cta:hover {
+    cursor: pointer
+}
+
+.title {
+    font-weight: 700;
+    padding: 16px 0
+}
+
+.underline {
+    text-decoration: underline
+}
+
+table {
+    margin-top: 50px;
+    border-collapse: collapse
+}
+
+td,
+th {
+    border: 1px solid #000;
+    padding: 8px
+}
+
+.link {
+    padding: 5px;
+    text-align: left
+}
+
+.link:hover {
+    cursor: pointer
+}
+
+.link:last-of-type {
+    margin-bottom: 10px
+}
+
+.team-member-info {
+    text-align: center
+}
+
+.team-member-info .job-title {
+    font-size: 16px;
+    font-weight: 700
+}
+
+.team-member-info .member-name {
+    font-size: 14px;
+    font-weight: 600;
+    padding-bottom: 10px
+}
+
+.member-image {
+    display: block;
+    width: 100%;
+    margin-bottom: 24px
+}
+
+.public-home-events {
+    display: flex;
+    justify-content: center
+}
+
+.public-home-events .event-type-title {
+    background-color: #91a1b3;
+    color: #fff;
+    font-size: 18px;
+    padding: 10px 100px 10px 10px;
+    text-align: left
+}
+
+.public-home-events .event-box {
+    background-color: #e0e4e9;
+    text-align: left;
+    padding: 10px 100px 10px 10px
+}
+
+.public-home-events .event-box .event-title {
+    font-size: 18px;
+    font-weight: 700
+}
+
+.public-home-events .event-box .event-dates {
+    padding-bottom: 10px
+}
+
+.main-box-cta {
+    padding: 25px 40px;
+    background-color: rgba(255, 255, 255, .6);
+    font-size: 20px;
+    font-weight: 700;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid rgba(0, 0, 0, .3)
+}
+
+.main-box-image {
+    width: 100%;
+    min-height: 100px;
+    border: 1px solid #000
+}
+
+.brand-home-title {
+    font-size: 100px;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    width: 100%;
+    padding: 30px
+}
+
+.brand-history {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #fff;
+    padding: 5%;
+    text-align: left;
+    height: 500px;
+    font-size: 16px
+}
+
+.brand-history .title {
+    margin-bottom: 5%;
+    font-size: 25px;
+    font-weight: 700
+}
+
+.brand-history-image {
+    height: 500px;
+    object-fit: cover;
+    width: 100%
+}
+
+.shop-now-banner {
+    display: block;
+    width: 100%;
+    min-height: 200px
+}
+
+.shop-now-cta {
+    position: absolute;
+    top: 45%;
+    right: 10px;
+    font-size: 40px;
+    color: #fff;
+    padding: 10px 15px;
+    font-weight: 700
+}
+
+.falcotto {
+    background-color: #9fc4cd
+}
+
+.naturino {
+    background-color: #b9c9b8
+}
+
+.naturino-pink {
+    background-color: #d8aa9e
+}
+
+.flower-mountain {
+    right: auto;
+    left: 0;
+    background-color: #5e6e70
+}
+
+.fm-history {
+    padding: 5% 10%;
+    line-height: 28px
+}
+
+.fm-history .symbol {
+    width: 120px;
+    margin-top: 10%;
+    align-self: center
+}
+
+.w6yz-quotes {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    width: 50px;
+    transform: translateX(-50%)
+}
+
+.brand-list a {
+    padding: 0 10px
+}
+
+.contacts-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 10%;
+    padding: 20px 0;
+    line-height: 2;
+    border-bottom: 1px solid #d3d3d3
+}
+
+.contacts-row .panel {
+    text-align: left
+}
+
+.contacts-row .panel .title {
+    font-size: 20px;
+    font-weight: 300
+}
+
+.contacts-row .address {
+    line-height: 1;
+    margin: auto 0;
+    width: 210px
+}
+
+.contacts-row a {
+    margin: auto 0;
+    width: 210px;
+    text-decoration: none;
+    color: #000
+}
+
+.map-container {
+    width: 100%!important
+}
+
+.flower-mountain-logo {
+    max-width: 60%;
+    margin: auto;
+    object-fit: scale-down
+}
+
+.candice-cooper-logo {
+    max-width: 15%
+}
+
+@media(max-width:1000px) {
+    .fm-history {
+        line-height: 24px
+    }
+    .fm-history .symbol {
+        margin-top: 5%
+    }
+}
+
+@media(max-width:900px) {
+    .brand-history {
+        font-size: 14px
+    }
+    .w6yz-quotes {
+        top: 0
+    }
+}
+
+@media(max-width:700px) {
+    .brand-home-title {
+        font-size: 50px
+    }
+    .shop-now-cta {
+        font-size: 30px
+    }
+    .public-home-events {
+        flex-direction: column
+    }
+    .public-home-title {
+        font-size: 25px
+    }
+    .public-home-title:before,
+    .public-home-title::after {
+        width: 30px;
+        margin: 0 10px;
+        transform: translateY(-8px)
+    }
+}
+
+.marketing-top-logo {
+    max-width: 15%;
+    margin-top: 5px
+}
+
+.w6yz-top-logo,
+.vb-top-logo {
+    max-width: 20%
+}
+
+.falcotto-top-logo {
+    max-width: 30%
+}
+
+.vb-top-logo,
+.naturino-top-logo {
+    margin-top: 32px;
+    margin-bottom: 24px
+}
+
+.marketing-section-title {
+    text-align: left;
+    background-color: #000;
+    color: #fff;
+    padding: 16px;
+    width: calc(100% - 64px);
+    margin: 16px 32px;
+    text-transform: uppercase;
+    font-weight: 700!important
+}
+
+.falcotto-section-title {
+    background-color: #a0c5d0
+}
+
+.naturino-section-title {
+    background-color: #b9c8b7
+}
+
+.w6yz-section-title {
+    background-color: #c12a34
+}
+
+.marketing-section-description {
+    text-align: left;
+    line-height: 180%;
+    margin: 16px 32px;
+    font-size: 16px
+}
+
+.marketing-pdf-cover {
+    display: block;
+    width: calc(100% - 64px);
+    margin: 32px
+}
+
+.marketing-pdf-cta {
+    position: absolute;
+    padding: 1% 24px;
+    font-size: 22px;
+    background-color: rgba(255, 255, 255, .75);
+    text-decoration: underline
+}
+
+.disclaimer {
+    display: flex;
+    font-size: small;
+    font-weight: 600;
+    align-items: center
+}
+
+.disclaimer .icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 16px
+}
+
+.falcotto-cta {
+    background-color: rgba(160, 197, 208, .75);
+    color: #fff
+}
+
+.naturino-cta {
+    background-color: rgba(185, 200, 183, .75);
+    color: #fff
+}
+
+.vb-cta {
+    background-color: transparent;
+    color: #fff
+}
+
+.fm-cta {
+    background-color: #ebeceb;
+    color: #000
+}
+
+.w6yz-cta {
+    background-color: #c12a34;
+    color: #fff
+}
+
+@media(max-width:1000px) {
+    .marketing-section-title,
+    .marketing-section-description {
+        margin: 16px
+    }
+    .marketing-section-description {
+        font-size: 14px
+    }
+    .marketing-section-title {
+        width: calc(100% - 32px)
+    }
+    .marketing-top-logo {
+        max-width: 60%
+    }
+    .marketing-pdf-cover {
+        width: calc(100% - 32px);
+        margin: 16px
+    }
+    .marketing-pdf-cta {
+        bottom: 16px!important;
+        left: 16px!important;
+        width: calc(100% - 32px)!important;
+        padding: 4px;
+        font-size: 16px
+    }
+}

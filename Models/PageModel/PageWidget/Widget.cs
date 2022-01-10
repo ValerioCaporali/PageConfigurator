@@ -5,7 +5,7 @@ using Model.PageModel.PageStyle;
 
 namespace Model.PageModel.PageWidget
 {
-    public class Widget<T>
+    public class Widget
     {
         public string Id { get; set; }
         public int Row { get; set; }
@@ -14,7 +14,7 @@ namespace Model.PageModel.PageWidget
         public int Column { get; set; }
         public int ColumnSpan { get; set; }
         public WidgetType Type { get; set; }
-        public T Content { get; set; }
+        public Content Content { get; set; }
         public Text Text { get; set; }
         public BaseClickAction ClickAction { get; set; }
         public Style Style { get; set; }

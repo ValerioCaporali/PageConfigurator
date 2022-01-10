@@ -4,14 +4,14 @@ using Model.PageModel.PageWidget;
 
 namespace Model.PageModel
 {
-    public class Page<T>
+    public class Page
     {
         public int Kind { get; set; }
         public string Name { get; set; }
-        public string Language { get; set; }
+        public string? Language { get; set; }
         public bool? Default { get; set; }
         public string CustomerGroupValueOid { get; set; }
-        public List<Widget<T>> Widgets { get; set; }
+        public List<Widget> Widgets { get; set; }
     }
 }
 

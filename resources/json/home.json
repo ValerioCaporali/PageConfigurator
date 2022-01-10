@@ -1,0 +1,3594 @@
+[{
+        "Kind": 0,
+        "Name": "Reorder/campaign home page",
+        "Language": "en",
+        "Default": true,
+        "Widgets": [{
+                "Row": 0,
+                "Column": 0,
+                "ColumnSpan": 4,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/public/blobs/home/reorder.jpg?v=1\" class=\"main-box-image\"><div class=\"main-box-cta\">RE-ORDER</div>"
+                },
+                "Style": {
+                    "Margin": {
+                        "Left": "20px",
+                        "Right": "10px",
+                        "Top": "10px",
+                        "Bottom": "10px"
+                    }
+                },
+                "ClickAction": {
+                    "Type": 1
+                }
+            },
+            {
+                "Row": 0,
+                "Column": 4,
+                "ColumnSpan": 4,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/public/blobs/home/sales-campaigns.jpg?v=1\" class=\"main-box-image\"><div class=\"main-box-cta\">ORDERS</div>"
+                },
+                "Style": {
+                    "Margin": {
+                        "Left": "10px",
+                        "Right": "20px",
+                        "Top": "10px",
+                        "Bottom": "10px"
+                    }
+                },
+                "ClickAction": {
+                    "Type": 2
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "ColumnSpan": 4,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/public/blobs/home/documents.jpg?v=1\" class=\"main-box-image\"><div class=\"main-box-cta\">DOCUMENTS</div>"
+                },
+                "Style": {
+                    "Margin": {
+                        "Left": "20px",
+                        "Right": "10px",
+                        "Top": "10px",
+                        "Bottom": "10px"
+                    }
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "/customers/{customer}/documents"
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 4,
+                "ColumnSpan": 4,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/public/blobs/home/marketing.jpg?v=1\" class=\"main-box-image\"><div class=\"main-box-cta\">MARKETING</div>"
+                },
+                "Style": {
+                    "Margin": {
+                        "Left": "10px",
+                        "Right": "20px",
+                        "Top": "10px",
+                        "Bottom": "10px"
+                    }
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "/marketing"
+                }
+            }
+        ]
+    },
+    {
+        "Kind": 0,
+        "Name": "Reorder/campaign home page",
+        "Language": "it",
+        "Default": true,
+        "Widgets": [{
+                "Row": 0,
+                "Column": 0,
+                "ColumnSpan": 4,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/public/blobs/home/reorder.jpg?v=1\" class=\"main-box-image\"><div class=\"main-box-cta\">RIASSORTIMENTO</div>"
+                },
+                "Style": {
+                    "Margin": {
+                        "Left": "20px",
+                        "Right": "10px",
+                        "Top": "10px",
+                        "Bottom": "10px"
+                    }
+                },
+                "ClickAction": {
+                    "Type": 1
+                }
+            },
+            {
+                "Row": 0,
+                "Column": 4,
+                "ColumnSpan": 4,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/public/blobs/home/sales-campaigns.jpg?v=1\" class=\"main-box-image\"><div class=\"main-box-cta\">ORDINI</div>"
+                },
+                "Style": {
+                    "Margin": {
+                        "Left": "10px",
+                        "Right": "20px",
+                        "Top": "10px",
+                        "Bottom": "10px"
+                    }
+                },
+                "ClickAction": {
+                    "Type": 2
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "ColumnSpan": 4,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/public/blobs/home/documents.jpg?v=1\" class=\"main-box-image\"><div class=\"main-box-cta\">DOCUMENTI</div>"
+                },
+                "Style": {
+                    "Margin": {
+                        "Left": "20px",
+                        "Right": "10px",
+                        "Top": "10px",
+                        "Bottom": "10px"
+                    }
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "/customers/{customer}/documents"
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 4,
+                "ColumnSpan": 4,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/public/blobs/home/marketing.jpg?v=1\" class=\"main-box-image\"><div class=\"main-box-cta\">MARKETING</div>"
+                },
+                "Style": {
+                    "Margin": {
+                        "Left": "10px",
+                        "Right": "20px",
+                        "Top": "10px",
+                        "Bottom": "10px"
+                    }
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "/marketing"
+                }
+            }
+        ]
+    },
+    {
+        "Kind": 0,
+        "Name": "Home Page Falcotto",
+        "Default": false,
+        "SalesCampaignCode": "FALCOTTO1",
+        "Widgets": [{
+                "Row": 0,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"brand-home-title falcotto\" style=\"display: flex; align-items: center; justify-content: center;\"><img src='https://newb2bapi.falc.biz/api/v1/media/public/blobs/new-season/falcotto/logo-white.png' style=\"width: 60%; height: 160px; object-fit: cover;\"/></div>"
+                },
+                "Style": {
+                    "Margin": {
+                        "Total": "15px"
+                    }
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/ss22/falcotto.jpg\" class=\"shop-now-banner\"/>"
+                },
+                "ClickAction": {
+                    "Type": 1
+                },
+                "Style": {
+                    "Margin": {
+                        "Total": "15px"
+                    }
+                },
+                "MobileStyle": {
+                    "Margin": {
+                        "Left": "15px",
+                        "Right": "15px",
+                        "Bottom": "15px"
+                    }
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 3,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/ss22/must-have/falcotto.pdf?scroll=h"
+                    ]
+                },
+                "Style": {
+                    "Height": "700px",
+                    "Margin": {
+                        "Total": "15px"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "Kind": 0,
+        "Name": "Home Page Flower Mountain By Naturino",
+        "Default": false,
+        "SalesCampaignCode": "FLOWER_MOUNTAI1",
+        "Widgets": [{
+                "Row": 0,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src='https://newb2bapi.falc.biz/api/v1/server/resources/images/flower-mountain/brand-logo.png?v=1' style=\"max-width: 60%; margin: auto; object-fit:scale-down;\"/>"
+                },
+                "Style": {
+                    "Margin": {
+                        "Left": "5%",
+                        "Right": "5%"
+                    }
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/ss22/fm-for-naturino.jpg\" class=\"shop-now-banner\"/>"
+                },
+                "ClickAction": {
+                    "Type": 1
+                },
+                "Style": {
+                    "Margin": {
+                        "Total": "15px"
+                    }
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 3,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/ss22/must-have/fm-for-naturino.pdf?scroll=h"
+                    ]
+                },
+                "Style": {
+                    "Height": "700px",
+                    "Margin": {
+                        "Total": "15px"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "Kind": 0,
+        "Name": "Home Page Naturino",
+        "Default": false,
+        "SalesCampaignCode": "NATURINO1",
+        "Widgets": [{
+                "Row": 0,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"brand-home-title naturino\">NATURINO</div>"
+                },
+                "Style": {
+                    "Margin": {
+                        "Total": "15px"
+                    }
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/ss22/naturino.jpg\" class=\"shop-now-banner\"/>"
+                },
+                "ClickAction": {
+                    "Type": 1
+                },
+                "Style": {
+                    "Margin": {
+                        "Total": "15px"
+                    }
+                },
+                "MobileStyle": {
+                    "Margin": {
+                        "Left": "15px",
+                        "Right": "15px",
+                        "Bottom": "15px"
+                    }
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 3,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/ss22/must-have/naturino.pdf?scroll=h"
+                    ]
+                },
+                "Style": {
+                    "Height": "700px",
+                    "Margin": {
+                        "Total": "15px"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "Kind": 0,
+        "Name": "Home Page Voile Blanche Uomo",
+        "Default": false,
+        "SalesCampaignCode": "VB_UOMO1",
+        "Widgets": [{
+                "Row": 0,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src='https://newb2bapi.falc.biz/api/v1/server/resources/images/voile_blanche/logo.jpg' style=\"max-height:100px; object-fit:scale-down;\">"
+                },
+                "Style": {
+                    "Margin": {
+                        "Left": "5%",
+                        "Right": "5%"
+                    }
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/ss22/vb-uomo.jpg\" width='100%'>"
+                },
+                "Style": {
+                    "Margin": {
+                        "Total": "15px"
+                    }
+                },
+                "ClickAction": {
+                    "Type": 1
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 3,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/ss22/must-have/vb.pdf?scroll=h"
+                    ]
+                },
+                "Style": {
+                    "Height": "700px",
+                    "Padding": {
+                        "Total": "15px"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "Kind": 0,
+        "Name": "Home Page Voile Blanche Donna",
+        "Default": false,
+        "SalesCampaignCode": "VB_DONNA1",
+        "Widgets": [{
+                "Row": 0,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src='https://newb2bapi.falc.biz/api/v1/server/resources/images/voile_blanche/logo.jpg' style=\"max-height:100px; object-fit:scale-down;\">"
+                },
+                "Style": {
+                    "Margin": {
+                        "Left": "5%",
+                        "Right": "5%"
+                    }
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/ss22/vb-donna.jpg\" width='100%'>"
+                },
+                "Style": {
+                    "Margin": {
+                        "Total": "15px"
+                    }
+                },
+                "ClickAction": {
+                    "Type": 1
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 3,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/ss22/must-have/vb.pdf?scroll=h"
+                    ]
+                },
+                "Style": {
+                    "Height": "700px",
+                    "Padding": {
+                        "Total": "15px"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "Kind": 0,
+        "Name": "Home Page Voile Blanche Hybro",
+        "Default": false,
+        "SalesCampaignCode": "VB_HYBRO",
+        "Widgets": [{
+                "Row": 0,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src='https://newb2bapi.falc.biz/api/v1/server/resources/images/voile_blanche/logo.jpg' style=\"max-height:100px; object-fit:scale-down;\">"
+                },
+                "Style": {
+                    "Margin": {
+                        "Left": "5%",
+                        "Right": "5%"
+                    }
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/ss22/vb-hybro.jpg\" width='100%'>"
+                },
+                "Style": {
+                    "Margin": {
+                        "Total": "15px"
+                    }
+                },
+                "ClickAction": {
+                    "Type": 1
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 3,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/ss22/must-have/vb.pdf?scroll=h"
+                    ]
+                },
+                "Style": {
+                    "Height": "700px",
+                    "Padding": {
+                        "Total": "15px"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "Kind": 0,
+        "Name": "Home Page W6YZ Adulto",
+        "Default": false,
+        "SalesCampaignCode": "W6YZ_ADULTO1",
+        "Widgets": [{
+                "Row": 0,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src='https://newb2bapi.falc.biz/api/v1/server/resources/images/w6yz/logo.jpg' style=\"max-height:150px; object-fit:scale-down;\"/>"
+                },
+                "Style": {
+                    "Margin": {
+                        "Left": "5%",
+                        "Right": "5%"
+                    }
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/ss22/w6yz-adulto.jpg\" class=\"shop-now-banner\"/>"
+                },
+                "ClickAction": {
+                    "Type": 1
+                },
+                "Style": {
+                    "Margin": {
+                        "Total": "15px"
+                    }
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 3,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/ss22/must-have/w6yz-adult.pdf?scroll=h"
+                    ]
+                },
+                "Style": {
+                    "Height": "700px",
+                    "Margin": {
+                        "Total": "15px"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "Kind": 0,
+        "Name": "Home Page Bambino W6YZ",
+        "Default": false,
+        "SalesCampaignCode": "W6YZ_BAMBINO1",
+        "Widgets": [{
+                "Row": 0,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src='https://newb2bapi.falc.biz/api/v1/server/resources/images/w6yz/logo.jpg' style=\"max-height:150px; object-fit:scale-down;\"/>"
+                },
+                "Style": {
+                    "Margin": {
+                        "Left": "5%",
+                        "Right": "5%"
+                    }
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/ss22/w6yz-junior.jpg\"  class=\"shop-now-banner\"/>"
+                },
+                "ClickAction": {
+                    "Type": 1
+                },
+                "Style": {
+                    "Margin": {
+                        "Total": "15px"
+                    }
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 3,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/ss22/must-have/w6yz-junior.pdf?scroll=h"
+                    ]
+                },
+                "Style": {
+                    "Height": "700px",
+                    "Margin": {
+                        "Total": "15px"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "Kind": 0,
+        "Name": "Home Page Flower Mountain Donna/Uomo",
+        "Default": false,
+        "SalesCampaignCode": "FM_ADULTO1",
+        "Widgets": [{
+                "Row": 0,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src='https://newb2bapi.falc.biz/api/v1/server/resources/images/flower-mountain/brand-logo.png?v=1' style=\"max-width: 60%; margin: auto; object-fit:scale-down;\"/>"
+                },
+                "Style": {
+                    "Margin": {
+                        "Left": "5%",
+                        "Right": "5%"
+                    }
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/ss22/flower-mountain.jpg\" class=\"shop-now-banner\"/>"
+                },
+                "ClickAction": {
+                    "Type": 1
+                },
+                "Style": {
+                    "Margin": {
+                        "Total": "15px"
+                    }
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 3,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/ss22/must-have/flower-mountain.pdf?scroll=h"
+                    ]
+                },
+                "Style": {
+                    "Height": "700px",
+                    "Margin": {
+                        "Total": "15px"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "Kind": 0,
+        "Name": "Home Page Candice Cooper",
+        "Default": false,
+        "SalesCampaignId": "48aa03cd-0075-4b18-8f9a-6c01c8c3b630",
+        "Widgets": [{
+                "Row": 0,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src='https://newb2bapi.falc.biz/api/v1/server/resources/images/candice_cooper/CC-Logo.jpg' style='max-width:15%'>"
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div style='width:100%;height:100%;position:relative'><img src='https://newb2bapi.falc.biz/api/v1/server/resources/images/candice_cooper/A10A9074.jpg' width='100%'><div style='background:black;color:white;font-size:25px;padding:10px 20px;font-weight:500;position:absolute;bottom:10%;right:0;'>SHOP NOW</div></div>"
+                },
+                "ClickAction": {
+                    "Type": 1
+                },
+                "Style": {
+                    "Padding": {
+                        "Left": "50px",
+                        "Right": "50px",
+                        "Bottom": "20px"
+                    }
+                },
+                "MobileStyle": {
+                    "Padding": {
+                        "Bottom": "10px"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "Kind": 0,
+        "Name": "New Home Page Candice Cooper",
+        "Default": false,
+        "SalesCampaignCode": "CANDICE_COOPER1",
+        "Widgets": [{
+                "Row": 0,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src='https://newb2bapi.falc.biz/api/v1/server/resources/images/candice_cooper/CC-Logo.jpg' style='max-width:15%;margin-top:5px;'>"
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/ss22/candice-cooper.jpg\" width='100%'>"
+                },
+                "ClickAction": {
+                    "Type": 1
+                },
+                "Style": {
+                    "Margin": {
+                        "Total": "15px"
+                    }
+                },
+                "MobileStyle": {
+                    "Margin": {
+                        "Left": "15px",
+                        "Right": "15px",
+                        "Bottom": "15px"
+                    }
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 3,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/ss22/must-have/candice-cooper.pdf?scroll=h"
+                    ]
+                },
+                "Style": {
+                    "Height": "700px",
+                    "Margin": {
+                        "Total": "15px"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "Kind": 0,
+        "Name": "Voile Blanche Wise Mood",
+        "Default": false,
+        "SalesCampaignCode": "VB 2_WISE MOOD",
+        "Widgets": [{
+                "Row": 0,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src='https://newb2bapi.falc.biz/api/v1/server/resources/images/2021/VB 2_WISE MOOD.jpg' style='width: 100%; padding: 24px'>"
+                },
+                "ClickAction": {
+                    "Type": 1
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 2,
+                "Content": {
+                    "Source": [
+                        "https://player.vimeo.com/video/502255038?title=0&byline=0&portrait=0"
+                    ],
+                    "Responsive": true
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "15px"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "Kind": 0,
+        "Name": "Voile Blanche Happy Feet",
+        "Default": false,
+        "SalesCampaignCode": "VB 2_HAPPY FEET",
+        "Widgets": [{
+                "Row": 0,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src='https://newb2bapi.falc.biz/api/v1/server/resources/images/2021/VB 2_HAPPY FEET.jpg' style='width: 100%; padding: 24px'>"
+                },
+                "ClickAction": {
+                    "Type": 1
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "ColumnSpan": 2,
+                "Type": 2,
+                "Content": {
+                    "Source": [
+                        "https://player.vimeo.com/video/502255038?title=0&byline=0&portrait=0"
+                    ],
+                    "Responsive": true
+                },
+                "Style": {
+                    "Padding": {
+                        "Total": "15px"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "Kind": 0,
+        "Name": "Candice Cooper marketing page",
+        "Default": false,
+        "Language": "it",
+        "SalesCampaignCode": "MKT_CANDICE_CO2",
+        "Widgets": [{
+                "Row": 0,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src='https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/logo.jpg' class=\"marketing-top-logo\">"
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title\">IMMAGINI DI CAMPAGNA</h1>"
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"marketing-section-description\">In questa sezione potete scaricare foto e video di campagna da usare per le vostre attività di comunicazione sui nostri brand. Per eventuali immagini da stampare in grandi dimensioni contattateci alla mail <a href=\"mailto:marketing@falc.biz\">marketing@falc.biz</a><br/><div class=\"disclaimer\"><img src=\"http://b2b.falc.biz/assets/icons/warning.svg\" class=\"icon\"/>Il materiale video-fotografico concesso in uso è di proprietà della Falc spa e deve essere utilizzato solamente per promuovere i marchi di proprietà della stessa. Questo materiale non può essere utilizzato in alcun modo in combinazione con segni distintivi di altri marchi.</div></div>"
+                }
+            },
+            {
+                "Row": 3,
+                "Column": 0,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC0137.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC0137_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC0277.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC0277_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC0317.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC0317_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC0431.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC0431_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC0451.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC0451_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC0499.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC0499_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC5800.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC5800_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC5966.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC5966_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC6037.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC6037_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC6155.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC6155_logo.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "500px",
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Left": "32px",
+                        "Right": "32px"
+                    },
+                    "MobileMargin": {
+                        "Left": "16px",
+                        "Right": "16px"
+                    }
+                }
+            },
+            {
+                "Row": 4,
+                "Column": 0,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC6240.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC6240_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC6531.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC6531_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC6658.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC6658_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC6666.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC6666_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC6760.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC6760_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC9712.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC9712_logo.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "500px",
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                }
+            },
+            {
+                "Row": 5,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title\">VIDEO DI CAMPAGNA</h1>"
+                }
+            },
+            {
+                "Row": 6,
+                "Column": 0,
+                "Type": 2,
+                "Content": {
+                    "Source": [
+                        "https://player.vimeo.com/video/581130581?title=0&byline=0&portrait=0"
+                    ],
+                    "Responsive": true
+                },
+                "Style": {
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                }
+            },
+            {
+                "Row": 7,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title\">MATERIALE MARKETING</h1>"
+                }
+            },
+            {
+                "Row": 8,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"marketing-section-description\">In questa sezione è possibile visualizzare il catalogo del materiale marketing disponibile e richiedere i singoli oggetti usando il codice assegnato ad ognuno di loro.<br>Per il materiale PREMIUM contattateci alla mail <a href=\"mailto:marketing@falc.biz\">marketing@falc.biz</a></div>"
+                }
+            },
+            {
+                "Row": 9,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/tools-cover.jpg\" class=\"marketing-pdf-cover\"/> <div style=\"left: 15%; bottom: 35%;\" class=\"marketing-pdf-cta\">CLICCA PER VISUALIZZARE</div>"
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "private/cc-marketing-tools",
+                    "External": true
+                }
+            }
+        ]
+    },
+    {
+        "Kind": 0,
+        "Name": "Candice Cooper marketing page",
+        "Default": false,
+        "Language": "en",
+        "SalesCampaignCode": "MKT_CANDICE_CO2",
+        "Widgets": [{
+                "Row": 0,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src='https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/logo.jpg' class=\"marketing-top-logo\">"
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title\">BRAND PICTURES</h1>"
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"marketing-section-description\">In this section you can download campaign photos and videos to be used to comunicate our brands. If you want to print some pictures in big sizes please contact us at <a href=\"mailto:marketing@falc.biz\">marketing@falc.biz</a><br/><div class=\"disclaimer\"><img src=\"http://b2b.falc.biz/assets/icons/warning.svg\" class=\"icon\"/>The video-photographic material granted for use is owned by Falc spa and must be used only to promote the brands owned by Falc spa. This material cannot be used in any way in combination with distinctive signs of other brands.</div></div>"
+                }
+            },
+            {
+                "Row": 3,
+                "Column": 0,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC0137.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC0137_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC0277.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC0277_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC0317.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC0317_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC0431.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC0431_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC0451.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC0451_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC0499.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC0499_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC5800.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC5800_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC5966.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC5966_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC6037.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC6037_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC6155.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC6155_logo.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "500px",
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Left": "32px",
+                        "Right": "32px"
+                    },
+                    "MobileMargin": {
+                        "Left": "16px",
+                        "Right": "16px"
+                    }
+                }
+            },
+            {
+                "Row": 4,
+                "Column": 0,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC6240.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC6240_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC6531.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC6531_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC6658.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC6658_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC6666.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC6666_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC6760.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC6760_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC9712.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/_DSC9712_logo.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "500px",
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                }
+            },
+            {
+                "Row": 5,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title\">BRAND VIDEO</h1>"
+                }
+            },
+            {
+                "Row": 6,
+                "Column": 0,
+                "Type": 2,
+                "Content": {
+                    "Source": [
+                        "https://player.vimeo.com/video/581130581?title=0&byline=0&portrait=0"
+                    ],
+                    "Responsive": true
+                },
+                "Style": {
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                }
+            },
+            {
+                "Row": 7,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title\">MARKETING TOOLS</h1>"
+                }
+            },
+            {
+                "Row": 8,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"marketing-section-description\">In this section you can view the catalogue of available marketing tools  and order materials using the code assigned to each item.<br>For PREMIUM materials please contact us at <a href=\"mailto:marketing@falc.biz\">marketing@falc.biz</a></div>"
+                }
+            },
+            {
+                "Row": 9,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/tools-cover.jpg\" class=\"marketing-pdf-cover\"/> <div style=\"left: 15%; bottom: 35%;\" class=\"marketing-pdf-cta\">CLICK HERE TO OPEN</div>"
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "private/cc-marketing-tools",
+                    "External": true
+                }
+            }
+        ]
+    },
+    {
+        "Kind": 0,
+        "Name": "Falcotto marketing page",
+        "Default": false,
+        "Language": "it",
+        "SalesCampaignCode": "MKT_FALCOTTO2",
+        "Widgets": [{
+                "Row": 0,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src='https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/logo.jpg' class=\"marketing-top-logo falcotto-top-logo\">"
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title falcotto-section-title\">IMMAGINI DI CAMPAGNA</h1>"
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"marketing-section-description\">In questa sezione potete scaricare foto e video di campagna da usare per le vostre attività di comunicazione sui nostri brand. Per eventuali immagini da stampare in grandi dimensioni contattateci alla mail <a href=\"mailto:marketing@falc.biz\">marketing@falc.biz</a><br/><div class=\"disclaimer\"><img src=\"http://b2b.falc.biz/assets/icons/warning.svg\" class=\"icon\"/>Il materiale video-fotografico concesso in uso è di proprietà della Falc spa e deve essere utilizzato solamente per promuovere i marchi di proprietà della stessa. Questo materiale non può essere utilizzato in alcun modo in combinazione con segni distintivi di altri marchi.</div></div>"
+                }
+            },
+            {
+                "Row": 3,
+                "Column": 0,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_015.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_015_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_065_T.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_065_T_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_088.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_088_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_126.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_126_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_264.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_264_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_291.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_291_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_318.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_318_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_360.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_360_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_402.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_402_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_412.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_412_logo.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "500px",
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Left": "32px",
+                        "Right": "32px"
+                    },
+                    "MobileMargin": {
+                        "Left": "16px",
+                        "Right": "16px"
+                    }
+                }
+            },
+            {
+                "Row": 4,
+                "Column": 0,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_166.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_166_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_234.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_234_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_303.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_303_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_353.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_353_logo.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "350px",
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                }
+            },
+            {
+                "Row": 5,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title falcotto-section-title\">VIDEO DI CAMPAGNA</h1>"
+                }
+            },
+            {
+                "Row": 6,
+                "Column": 0,
+                "Type": 2,
+                "Content": {
+                    "Source": [
+                        "https://player.vimeo.com/video/578091181?title=0&byline=0&portrait=0"
+                    ],
+                    "Responsive": true
+                },
+                "Style": {
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                }
+            },
+            {
+                "Row": 8,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title falcotto-section-title\">MATERIALE MARKETING</h1>"
+                }
+            },
+            {
+                "Row": 9,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"marketing-section-description\">In questa sezione è possibile visualizzare il catalogo del materiale marketing disponibile e richiedere i singoli oggetti usando il codice assegnato ad ognuno di loro.<br>Per il materiale PREMIUM contattateci alla mail <a href=\"mailto:marketing@falc.biz\">marketing@falc.biz</a></div>"
+                }
+            },
+            {
+                "Row": 10,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/tools-cover.jpg\" class=\"marketing-pdf-cover\"/> <div style=\"left: 5%; bottom: 35%;\" class=\"marketing-pdf-cta falcotto-cta\">CLICCA PER VISUALIZZARE</div>"
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "private/falcotto-marketing-tools",
+                    "External": true
+                }
+            }
+        ]
+    },
+    {
+        "Kind": 0,
+        "Name": "Falcotto marketing page",
+        "Default": false,
+        "Language": "en",
+        "SalesCampaignCode": "MKT_FALCOTTO2",
+        "Widgets": [{
+                "Row": 0,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src='https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/logo.jpg' class=\"marketing-top-logo falcotto-top-logo\">"
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title falcotto-section-title\">BRAND PICTURES</h1>"
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"marketing-section-description\">In this section you can download campaign photos and videos to be used to comunicate our brands. If you want to print some pictures in big sizes please contact us at <a href=\"mailto:marketing@falc.biz\">marketing@falc.biz</a><br/><div class=\"disclaimer\"><img src=\"http://b2b.falc.biz/assets/icons/warning.svg\" class=\"icon\"/>The video-photographic material granted for use is owned by Falc spa and must be used only to promote the brands owned by Falc spa. This material cannot be used in any way in combination with distinctive signs of other brands.</div></div>"
+                }
+            },
+            {
+                "Row": 3,
+                "Column": 0,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_015.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_015_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_065_T.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_065_T_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_088.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_088_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_126.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_126_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_264.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_264_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_291.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_291_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_318.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_318_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_360.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_360_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_402.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_402_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_412.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_412_logo.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "500px",
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Left": "32px",
+                        "Right": "32px"
+                    },
+                    "MobileMargin": {
+                        "Left": "16px",
+                        "Right": "16px"
+                    }
+                }
+            },
+            {
+                "Row": 4,
+                "Column": 0,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_166.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_166_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_234.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_234_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_303.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_303_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_353.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/210522_Falcotto_BoutVerger_353_logo.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "350px",
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                }
+            },
+            {
+                "Row": 5,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title falcotto-section-title\">BRAND VIDEO</h1>"
+                }
+            },
+            {
+                "Row": 6,
+                "Column": 0,
+                "Type": 2,
+                "Content": {
+                    "Source": [
+                        "https://player.vimeo.com/video/578091181?title=0&byline=0&portrait=0"
+                    ],
+                    "Responsive": true
+                },
+                "Style": {
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                }
+            },
+            {
+                "Row": 8,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title falcotto-section-title\">MARKETING TOOLS</h1>"
+                }
+            },
+            {
+                "Row": 9,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"marketing-section-description\">In this section you can view the catalogue of available marketing tools  and order materials using the code assigned to each item.<br>For PREMIUM materials please contact us at <a href=\"mailto:marketing@falc.biz\">marketing@falc.biz</a></div>"
+                }
+            },
+            {
+                "Row": 10,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/tools-cover.jpg\" class=\"marketing-pdf-cover\"/> <div style=\"left: 5%; bottom: 35%;\" class=\"marketing-pdf-cta falcotto-cta\">CLICK HERE TO OPEN</div>"
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "private/falcotto-marketing-tools",
+                    "External": true
+                }
+            }
+        ]
+    },
+    {
+        "Kind": 0,
+        "Name": "Naturino marketing page",
+        "Default": false,
+        "Language": "it",
+        "SalesCampaignCode": "MKT_NATURINO2",
+        "Widgets": [{
+                "Row": 0,
+                "Column": 0,
+                "ColumnSpan": 4,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src='https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/logo.png' class=\"marketing-top-logo naturino-top-logo\">"
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "ColumnSpan": 4,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title naturino-section-title\">IMMAGINI DI CAMPAGNA</h1>"
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 0,
+                "ColumnSpan": 4,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"marketing-section-description\">In questa sezione potete scaricare foto e video di campagna da usare per le vostre attività di comunicazione sui nostri brand. Per eventuali immagini da stampare in grandi dimensioni contattateci alla mail <a href=\"mailto:marketing@falc.biz\">marketing@falc.biz</a><br/><div class=\"disclaimer\"><img src=\"http://b2b.falc.biz/assets/icons/warning.svg\" class=\"icon\"/>Il materiale video-fotografico concesso in uso è di proprietà della Falc spa e deve essere utilizzato solamente per promuovere i marchi di proprietà della stessa. Questo materiale non può essere utilizzato in alcun modo in combinazione con segni distintivi di altri marchi.</div></div>"
+                }
+            },
+            {
+                "Row": 3,
+                "Column": 0,
+                "ColumnSpan": 4,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_1.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_1_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_2.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_2_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_7.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_7_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_21.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_21_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_25.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_25_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_28.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_28_logo.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "500px",
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Left": "32px",
+                        "Right": "32px"
+                    },
+                    "MobileMargin": {
+                        "Left": "16px",
+                        "Right": "16px"
+                    }
+                }
+            },
+            {
+                "Row": 4,
+                "Column": 0,
+                "ColumnSpan": 4,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_8.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_8_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_9.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_9_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_10.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_10_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_14.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_14_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_15.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_15_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_16.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_16_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_20.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_20_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_24.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_24_logo.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "350px",
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                }
+            },
+            {
+                "Row": 5,
+                "Column": 0,
+                "Type": 1,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/cover.jpg"
+                    ]
+                },
+                "Style": {
+                    "Width": "calc(100% - 35px)",
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px"
+                    }
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "private/naturino_2021_09"
+                }
+            },
+            {
+                "Row": 5,
+                "Column": 1,
+                "Type": 1,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/cover.jpg"
+                    ]
+                },
+                "Style": {
+                    "Width": "calc(100% - 35px)",
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "17px",
+                        "Right": "18px"
+                    }
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "private/naturino_2021_12"
+                }
+            },
+            {
+                "Row": 6,
+                "Column": 0,
+                "ColumnSpan": 4,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title naturino-section-title\">VIDEO DI CAMPAGNA</h1>"
+                }
+            },
+            {
+                "Row": 7,
+                "Column": 0,
+                "ColumnSpan": 4,
+                "Type": 2,
+                "Content": {
+                    "Source": [
+                        "https://player.vimeo.com/video/577627719?title=0&byline=0&portrait=0"
+                    ],
+                    "Responsive": true
+                },
+                "Style": {
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                }
+            },
+            {
+                "Row": 8,
+                "Column": 0,
+                "ColumnSpan": 4,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title naturino-section-title\">MATERIALE MARKETING</h1>"
+                }
+            },
+            {
+                "Row": 9,
+                "Column": 0,
+                "ColumnSpan": 4,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"marketing-section-description\">In questa sezione è possibile visualizzare il catalogo del materiale marketing disponibile e richiedere i singoli oggetti usando il codice assegnato ad ognuno di loro.<br>Per il materiale PREMIUM contattateci alla mail <a href=\"mailto:marketing@falc.biz\">marketing@falc.biz</a></div>"
+                }
+            },
+            {
+                "Row": 10,
+                "Column": 0,
+                "ColumnSpan": 4,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/tools-cover.jpg\" class=\"marketing-pdf-cover\"/> <div style=\"left: 5%; bottom: 35%;\" class=\"marketing-pdf-cta naturino-cta\">CLICCA PER VISUALIZZARE</div>"
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "private/naturino-marketing-tools",
+                    "External": true
+                }
+            }
+        ]
+    },
+    {
+        "Kind": 0,
+        "Name": "Naturino marketing page",
+        "Default": false,
+        "Language": "en",
+        "SalesCampaignCode": "MKT_NATURINO2",
+        "Widgets": [{
+                "Row": 0,
+                "Column": 0,
+                "ColumnSpan": 4,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src='https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/logo.png' class=\"marketing-top-logo naturino-top-logo\">"
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "ColumnSpan": 4,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title naturino-section-title\">BRAND PICTURES</h1>"
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 0,
+                "ColumnSpan": 4,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"marketing-section-description\">In this section you can download campaign photos and videos to be used to comunicate our brands. If you want to print some pictures in big sizes please contact us at <a href=\"mailto:marketing@falc.biz\">marketing@falc.biz</a><br/><div class=\"disclaimer\"><img src=\"http://b2b.falc.biz/assets/icons/warning.svg\" class=\"icon\"/>The video-photographic material granted for use is owned by Falc spa and must be used only to promote the brands owned by Falc spa. This material cannot be used in any way in combination with distinctive signs of other brands.</div></div>"
+                }
+            },
+            {
+                "Row": 3,
+                "Column": 0,
+                "ColumnSpan": 4,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_1.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_1_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_2.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_2_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_7.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_7_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_21.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_21_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_25.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_25_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_28.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_28_logo.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "500px",
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Left": "32px",
+                        "Right": "32px"
+                    },
+                    "MobileMargin": {
+                        "Left": "16px",
+                        "Right": "16px"
+                    }
+                }
+            },
+            {
+                "Row": 4,
+                "Column": 0,
+                "ColumnSpan": 4,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_8.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_8_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_9.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_9_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_10.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_10_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_14.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_14_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_15.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_15_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_16.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_16_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_20.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_20_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_24.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/Naturino_24_logo.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "350px",
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                }
+            },
+            {
+                "Row": 5,
+                "Column": 0,
+                "Type": 1,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/cover.jpg"
+                    ]
+                },
+                "Style": {
+                    "Width": "calc(100% - 35px)",
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px"
+                    }
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "private/naturino_2021_09"
+                }
+            },
+            {
+                "Row": 5,
+                "Column": 1,
+                "Type": 1,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/cover.jpg"
+                    ]
+                },
+                "Style": {
+                    "Width": "calc(100% - 35px)",
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "17px",
+                        "Right": "18px"
+                    }
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "private/naturino_2021_12"
+                }
+            },
+            {
+                "Row": 6,
+                "Column": 0,
+                "ColumnSpan": 4,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title naturino-section-title\">BRAND VIDEO</h1>"
+                }
+            },
+            {
+                "Row": 7,
+                "Column": 0,
+                "ColumnSpan": 4,
+                "Type": 2,
+                "Content": {
+                    "Source": [
+                        "https://player.vimeo.com/video/577627719?title=0&byline=0&portrait=0"
+                    ],
+                    "Responsive": true
+                },
+                "Style": {
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                }
+            },
+            {
+                "Row": 8,
+                "Column": 0,
+                "ColumnSpan": 4,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title naturino-section-title\">MARKETING TOOLS</h1>"
+                }
+            },
+            {
+                "Row": 9,
+                "Column": 0,
+                "ColumnSpan": 4,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"marketing-section-description\">In this section you can view the catalogue of available marketing tools  and order materials using the code assigned to each item.<br>For PREMIUM materials please contact us at <a href=\"mailto:marketing@falc.biz\">marketing@falc.biz</a></div>"
+                }
+            },
+            {
+                "Row": 10,
+                "Column": 0,
+                "ColumnSpan": 4,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/tools-cover.jpg\" class=\"marketing-pdf-cover\"/> <div style=\"left: 5%; bottom: 35%;\" class=\"marketing-pdf-cta naturino-cta\">CLICK HERE TO OPEN</div>"
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "private/naturino-marketing-tools",
+                    "External": true
+                }
+            }
+        ]
+    },
+    {
+        "Kind": 0,
+        "Name": "Voile Blanche marketing page",
+        "Default": false,
+        "Language": "it",
+        "SalesCampaignCode": "MKT_VOILE_BLAN2",
+        "Widgets": [{
+                "Row": 0,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src='https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/logo.jpg' class=\"marketing-top-logo vb-top-logo\">"
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title\">IMMAGINI DI CAMPAGNA</h1>"
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"marketing-section-description\">In questa sezione potete scaricare foto e video di campagna da usare per le vostre attività di comunicazione sui nostri brand. Per eventuali immagini da stampare in grandi dimensioni contattateci alla mail <a href=\"mailto:marketing@falc.biz\">marketing@falc.biz</a><br/><div class=\"disclaimer\"><img src=\"http://b2b.falc.biz/assets/icons/warning.svg\" class=\"icon\"/>Il materiale video-fotografico concesso in uso è di proprietà della Falc spa e deve essere utilizzato solamente per promuovere i marchi di proprietà della stessa. Questo materiale non può essere utilizzato in alcun modo in combinazione con segni distintivi di altri marchi.</div></div>"
+                }
+            },
+            {
+                "Row": 3,
+                "Column": 0,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/01_112.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/01_112_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/01_653.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/01_653_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/02_857.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/02_857_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/02_866.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/02_866_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/02_876.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/02_876_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/02_1024.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/02_1024_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/02_1098.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/02_1098_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/02_1159.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/02_1159_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/02_1295.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/02_1295_logo.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "500px",
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Left": "32px",
+                        "Right": "32px"
+                    },
+                    "MobileMargin": {
+                        "Left": "16px",
+                        "Right": "16px"
+                    }
+                }
+            },
+            {
+                "Row": 4,
+                "Column": 0,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/03_1638.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/03_1638_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/03_1671.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/03_1671_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/03_1764.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/03_1764_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/03_1773.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/03_1773_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/Amin_2196.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/Amin_2196_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/Amin_2490.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/Amin_2490_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/Giada_231.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/Giada_231_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/Giada_359.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/Giada_359_logo.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "500px",
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                }
+            },
+            {
+                "Row": 5,
+                "Column": 0,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1016274.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1016278.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1016293.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1016416.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1016460.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1016531.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1016763.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1016840.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1016878.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1016923.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1017002.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1017203.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1017269.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1017305.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1017336.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1017376.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1017389.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1017404.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1017424.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1017443.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1017452.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "500px",
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                }
+            },
+            {
+                "Row": 6,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title\">VIDEO DI CAMPAGNA</h1>"
+                }
+            },
+            {
+                "Row": 7,
+                "Column": 0,
+                "Type": 2,
+                "Content": {
+                    "Source": [
+                        "https://player.vimeo.com/video/626510312?title=0&byline=0&portrait=0"
+                    ],
+                    "Responsive": true
+                },
+                "Style": {
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                },
+                "MobileStyle": {
+                    "Height": "200px"
+                }
+            },
+            {
+                "Row": 8,
+                "Column": 0,
+                "Type": 2,
+                "Content": {
+                    "Source": [
+                        "https://player.vimeo.com/video/643884831?title=0&byline=0&portrait=0"
+                    ],
+                    "Responsive": true
+                },
+                "Style": {
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                },
+                "MobileStyle": {
+                    "Height": "200px"
+                }
+            },
+            {
+                "Row": 9,
+                "Column": 0,
+                "Type": 2,
+                "Content": {
+                    "Source": [
+                        "https://player.vimeo.com/video/600073243?title=0&byline=0&portrait=0"
+                    ],
+                    "Responsive": true
+                },
+                "Style": {
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                },
+                "MobileStyle": {
+                    "Height": "200px"
+                }
+            },
+            {
+                "Row": 10,
+                "Column": 0,
+                "Type": 2,
+                "Content": {
+                    "Source": [
+                        "https://player.vimeo.com/video/600074288?title=0&byline=0&portrait=0"
+                    ],
+                    "Responsive": true
+                },
+                "Style": {
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                }
+            },
+            {
+                "Row": 11,
+                "Column": 0,
+                "Type": 2,
+                "Content": {
+                    "Source": [
+                        "https://player.vimeo.com/video/525668160?title=0&byline=0&portrait=0"
+                    ],
+                    "Responsive": true
+                },
+                "Style": {
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                }
+            },
+            {
+                "Row": 12,
+                "Column": 0,
+                "Type": 2,
+                "Content": {
+                    "Source": [
+                        "https://player.vimeo.com/video/525669783?title=0&byline=0&portrait=0"
+                    ],
+                    "Responsive": true
+                },
+                "Style": {
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                }
+            },
+            {
+                "Row": 13,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title\">MATERIALE MARKETING</h1>"
+                }
+            },
+            {
+                "Row": 14,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"marketing-section-description\">In questa sezione è possibile visualizzare il catalogo del materiale marketing disponibile e richiedere i singoli oggetti usando il codice assegnato ad ognuno di loro.<br>Per il materiale PREMIUM contattateci alla mail <a href=\"mailto:marketing@falc.biz\">marketing@falc.biz</a></div>"
+                }
+            },
+            {
+                "Row": 15,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/tools-cover.jpg\" class=\"marketing-pdf-cover\"/> <div style=\"left: 6%; bottom: 75%;\" class=\"marketing-pdf-cta vb-cta\">CLICCA PER VISUALIZZARE</div>"
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "private/vb-marketing-tools",
+                    "External": true
+                }
+            }
+        ]
+    },
+    {
+        "Kind": 0,
+        "Name": "Voile Blanche marketing page",
+        "Default": false,
+        "Language": "en",
+        "SalesCampaignCode": "MKT_VOILE_BLAN2",
+        "Widgets": [{
+                "Row": 0,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src='https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/logo.jpg' class=\"marketing-top-logo vb-top-logo\">"
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title\">BRAND PICTURES</h1>"
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"marketing-section-description\">In this section you can download campaign photos and videos to be used to comunicate our brands. If you want to print some pictures in big sizes please contact us at <a href=\"mailto:marketing@falc.biz\">marketing@falc.biz</a><br/><div class=\"disclaimer\"><img src=\"http://b2b.falc.biz/assets/icons/warning.svg\" class=\"icon\"/>The video-photographic material granted for use is owned by Falc spa and must be used only to promote the brands owned by Falc spa. This material cannot be used in any way in combination with distinctive signs of other brands.</div></div>"
+                }
+            },
+            {
+                "Row": 3,
+                "Column": 0,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/01_112.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/01_112_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/01_653.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/01_653_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/02_857.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/02_857_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/02_866.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/02_866_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/02_876.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/02_876_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/02_1024.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/02_1024_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/02_1098.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/02_1098_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/02_1159.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/02_1159_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/02_1295.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/02_1295_logo.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "500px",
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Left": "32px",
+                        "Right": "32px"
+                    },
+                    "MobileMargin": {
+                        "Left": "16px",
+                        "Right": "16px"
+                    }
+                }
+            },
+            {
+                "Row": 4,
+                "Column": 0,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/03_1638.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/03_1638_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/03_1671.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/03_1671_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/03_1764.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/03_1764_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/03_1773.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/03_1773_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/Amin_2196.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/Amin_2196_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/Amin_2490.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/Amin_2490_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/Giada_231.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/Giada_231_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/Giada_359.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/Giada_359_logo.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "500px",
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                }
+            },
+            {
+                "Row": 5,
+                "Column": 0,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1016274.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1016278.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1016293.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1016416.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1016460.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1016531.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1016763.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1016840.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1016878.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1016923.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1017002.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1017203.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1017269.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1017305.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1017336.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1017376.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1017389.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1017404.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1017424.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1017443.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/2021_11_09/VB_26_1017452.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "500px",
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                }
+            },
+            {
+                "Row": 6,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title\">BRAND VIDEO</h1>"
+                }
+            },
+            {
+                "Row": 7,
+                "Column": 0,
+                "Type": 2,
+                "Content": {
+                    "Source": [
+                        "https://player.vimeo.com/video/626510312?title=0&byline=0&portrait=0"
+                    ],
+                    "Responsive": true
+                },
+                "Style": {
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                },
+                "MobileStyle": {
+                    "Height": "200px"
+                }
+            },
+            {
+                "Row": 8,
+                "Column": 0,
+                "Type": 2,
+                "Content": {
+                    "Source": [
+                        "https://player.vimeo.com/video/643884831?title=0&byline=0&portrait=0"
+                    ],
+                    "Responsive": true
+                },
+                "Style": {
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                },
+                "MobileStyle": {
+                    "Height": "200px"
+                }
+            },
+            {
+                "Row": 9,
+                "Column": 0,
+                "Type": 2,
+                "Content": {
+                    "Source": [
+                        "https://player.vimeo.com/video/600073243?title=0&byline=0&portrait=0"
+                    ],
+                    "Responsive": true
+                },
+                "Style": {
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                },
+                "MobileStyle": {
+                    "Height": "200px"
+                }
+            },
+            {
+                "Row": 10,
+                "Column": 0,
+                "Type": 2,
+                "Content": {
+                    "Source": [
+                        "https://player.vimeo.com/video/600074288?title=0&byline=0&portrait=0"
+                    ],
+                    "Responsive": true
+                },
+                "Style": {
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                }
+            },
+            {
+                "Row": 11,
+                "Column": 0,
+                "Type": 2,
+                "Content": {
+                    "Source": [
+                        "https://player.vimeo.com/video/525668160?title=0&byline=0&portrait=0"
+                    ],
+                    "Responsive": true
+                },
+                "Style": {
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                }
+            },
+            {
+                "Row": 12,
+                "Column": 0,
+                "Type": 2,
+                "Content": {
+                    "Source": [
+                        "https://player.vimeo.com/video/525669783?title=0&byline=0&portrait=0"
+                    ],
+                    "Responsive": true
+                },
+                "Style": {
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                }
+            },
+            {
+                "Row": 13,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title\">MARKETING TOOLS</h1>"
+                }
+            },
+            {
+                "Row": 14,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"marketing-section-description\">In this section you can view the catalogue of available marketing tools  and order materials using the code assigned to each item.<br>For PREMIUM materials please contact us at <a href=\"mailto:marketing@falc.biz\">marketing@falc.biz</a></div>"
+                }
+            },
+            {
+                "Row": 15,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/tools-cover.jpg\" class=\"marketing-pdf-cover\"/> <div style=\"left: 15%; bottom: 35%;\" class=\"marketing-pdf-cta vb-cta\">CLICK HERE TO OPEN</div>"
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "private/vb-marketing-tools",
+                    "External": true
+                }
+            }
+        ]
+    },
+    {
+        "Kind": 0,
+        "Name": "Flower mountain marketing page",
+        "Default": false,
+        "Language": "it",
+        "SalesCampaignCode": "MKT_FM_ADULTO2",
+        "Widgets": [{
+                "Row": 0,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src='https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/logo.jpg' class=\"marketing-top-logo falcotto-top-logo\">"
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title\">IMMAGINI DI CAMPAGNA</h1>"
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"marketing-section-description\">In questa sezione potete scaricare foto e video di campagna da usare per le vostre attività di comunicazione sui nostri brand. Per eventuali immagini da stampare in grandi dimensioni contattateci alla mail <a href=\"mailto:marketing@falc.biz\">marketing@falc.biz</a><br/><div class=\"disclaimer\"><img src=\"http://b2b.falc.biz/assets/icons/warning.svg\" class=\"icon\"/>Il materiale video-fotografico concesso in uso è di proprietà della Falc spa e deve essere utilizzato solamente per promuovere i marchi di proprietà della stessa. Questo materiale non può essere utilizzato in alcun modo in combinazione con segni distintivi di altri marchi.</div></div>"
+                }
+            },
+            {
+                "Row": 3,
+                "Column": 0,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ03239.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ03239_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ03633.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ03633_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ03745.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ03745_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ04452.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ04452_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ04513.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ04513_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ05219.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ05219_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ05302.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ05302_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ06143.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ06143_logo.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "500px",
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Left": "32px",
+                        "Right": "32px"
+                    },
+                    "MobileMargin": {
+                        "Left": "16px",
+                        "Right": "16px"
+                    }
+                }
+            },
+            {
+                "Row": 4,
+                "Column": 0,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/_DF80404.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/_DF80404_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/_DF80885.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/_DF80885_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/_DF81868.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/_DF81868_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ04009.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ04009_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ04518.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ04518_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ04774.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ04774_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ05432.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ05432_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ05570.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ05570_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ05665.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ05665_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ05742.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ05742_logo.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "350px",
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                }
+            },
+            {
+                "Row": 7,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title\">MATERIALE MARKETING</h1>"
+                }
+            },
+            {
+                "Row": 8,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"marketing-section-description\">In questa sezione è possibile visualizzare il catalogo del materiale marketing disponibile e richiedere i singoli oggetti usando il codice assegnato ad ognuno di loro.<br>Per il materiale PREMIUM contattateci alla mail <a href=\"mailto:marketing@falc.biz\">marketing@falc.biz</a></div>"
+                }
+            },
+            {
+                "Row": 9,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/tools-cover.jpg\" class=\"marketing-pdf-cover\"/> <div style=\"left: 16%; bottom: 35%;\" class=\"marketing-pdf-cta fm-cta\">CLICCA PER VISUALIZZARE</div>"
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "private/fm-marketing-tools",
+                    "External": true
+                }
+            }
+        ]
+    },
+    {
+        "Kind": 0,
+        "Name": "Flower mountain marketing page",
+        "Default": false,
+        "Language": "en",
+        "SalesCampaignCode": "MKT_FM_ADULTO2",
+        "Widgets": [{
+                "Row": 0,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src='https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/logo.jpg' class=\"marketing-top-logo falcotto-top-logo\">"
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title\">BRAND PICTURES</h1>"
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"marketing-section-description\">In this section you can download campaign photos and videos to be used to comunicate our brands. If you want to print some pictures in big sizes please contact us at <a href=\"mailto:marketing@falc.biz\">marketing@falc.biz</a><br/><div class=\"disclaimer\"><img src=\"http://b2b.falc.biz/assets/icons/warning.svg\" class=\"icon\"/>The video-photographic material granted for use is owned by Falc spa and must be used only to promote the brands owned by Falc spa. This material cannot be used in any way in combination with distinctive signs of other brands.</div></div>"
+                }
+            },
+            {
+                "Row": 3,
+                "Column": 0,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ03239.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ03239_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ03633.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ03633_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ03745.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ03745_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ04452.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ04452_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ04513.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ04513_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ05219.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ05219_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ05302.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ05302_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ06143.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ06143_logo.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "500px",
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Left": "32px",
+                        "Right": "32px"
+                    },
+                    "MobileMargin": {
+                        "Left": "16px",
+                        "Right": "16px"
+                    }
+                }
+            },
+            {
+                "Row": 4,
+                "Column": 0,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/_DF80404.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/_DF80404_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/_DF80885.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/_DF80885_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/_DF81868.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/_DF81868_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ04009.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ04009_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ04518.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ04518_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ04774.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ04774_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ05432.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ05432_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ05570.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ05570_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ05665.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ05665_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ05742.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/ZZZ05742_logo.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "350px",
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                }
+            },
+            {
+                "Row": 7,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title\">MARKETING TOOLS</h1>"
+                }
+            },
+            {
+                "Row": 8,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"marketing-section-description\">In this section you can view the catalogue of available marketing tools  and order materials using the code assigned to each item.<br>For PREMIUM materials please contact us at <a href=\"mailto:marketing@falc.biz\">marketing@falc.biz</a></div>"
+                }
+            },
+            {
+                "Row": 9,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/tools-cover.jpg\" class=\"marketing-pdf-cover\"/> <div style=\"left: 16%; bottom: 35%;\" class=\"marketing-pdf-cta fm-cta\">CLICK HERE TO OPEN</div>"
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "private/fm-marketing-tools",
+                    "External": true
+                }
+            }
+        ]
+    },
+    {
+        "Kind": 0,
+        "Name": "W6YZ marketing page",
+        "Default": false,
+        "Language": "it",
+        "SalesCampaignCode": "MKT_W6YZ_ADUL2",
+        "Widgets": [{
+                "Row": 0,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src='https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/logo.jpg' class=\"marketing-top-logo w6yz-top-logo\">"
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title w6yz-section-title\">IMMAGINI DI CAMPAGNA</h1>"
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"marketing-section-description\">In questa sezione potete scaricare foto e video di campagna da usare per le vostre attività di comunicazione sui nostri brand. Per eventuali immagini da stampare in grandi dimensioni contattateci alla mail <a href=\"mailto:marketing@falc.biz\">marketing@falc.biz</a><br/><div class=\"disclaimer\"><img src=\"http://b2b.falc.biz/assets/icons/warning.svg\" class=\"icon\"/>Il materiale video-fotografico concesso in uso è di proprietà della Falc spa e deve essere utilizzato solamente per promuovere i marchi di proprietà della stessa. Questo materiale non può essere utilizzato in alcun modo in combinazione con segni distintivi di altri marchi.</div></div>"
+                }
+            },
+            {
+                "Row": 3,
+                "Column": 0,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5218.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5218_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5227.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5227_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5461.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5461_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5541.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5541_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5636.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5636_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5648.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5648_logo.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "500px",
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Left": "32px",
+                        "Right": "32px"
+                    },
+                    "MobileMargin": {
+                        "Left": "16px",
+                        "Right": "16px"
+                    }
+                }
+            },
+            {
+                "Row": 4,
+                "Column": 0,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A4645.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A4645_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A4719.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A4719_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A4744.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A4744_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5080.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5080_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5119.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5119_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5204.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5204_logo.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "350px",
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                }
+            },
+            {
+                "Row": 5,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title w6yz-section-title\">VIDEO DI CAMPAGNA</h1>"
+                }
+            },
+            {
+                "Row": 6,
+                "Column": 0,
+                "Type": 2,
+                "Content": {
+                    "Source": [
+                        "https://player.vimeo.com/video/586162498?title=0&byline=0&portrait=0"
+                    ],
+                    "Responsive": true
+                },
+                "Style": {
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                }
+            },
+            {
+                "Row": 7,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title w6yz-section-title\">MATERIALE MARKETING</h1>"
+                }
+            },
+            {
+                "Row": 8,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"marketing-section-description\">In questa sezione è possibile visualizzare il catalogo del materiale marketing disponibile e richiedere i singoli oggetti usando il codice assegnato ad ognuno di loro.<br>Per il materiale PREMIUM contattateci alla mail <a href=\"mailto:marketing@falc.biz\">marketing@falc.biz</a></div>"
+                }
+            },
+            {
+                "Row": 9,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/tools-cover.jpg\" class=\"marketing-pdf-cover\"/> <div style=\"right: 12%; bottom: 30%;\" class=\"marketing-pdf-cta w6yz-cta\">CLICCA PER VISUALIZZARE</div>"
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "private/w6yz-marketing-tools",
+                    "External": true
+                }
+            }
+        ]
+    },
+    {
+        "Kind": 0,
+        "Name": "W6YZ marketing page",
+        "Default": false,
+        "Language": "en",
+        "SalesCampaignCode": "MKT_W6YZ_ADUL2",
+        "Widgets": [{
+                "Row": 0,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src='https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/logo.jpg' class=\"marketing-top-logo w6yz-top-logo\">"
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title w6yz-section-title\">BRAND PICTURES</h1>"
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"marketing-section-description\">In this section you can download campaign photos and videos to be used to comunicate our brands. If you want to print some pictures in big sizes please contact us at <a href=\"mailto:marketing@falc.biz\">marketing@falc.biz</a><br/><div class=\"disclaimer\"><img src=\"http://b2b.falc.biz/assets/icons/warning.svg\" class=\"icon\"/>The video-photographic material granted for use is owned by Falc spa and must be used only to promote the brands owned by Falc spa. This material cannot be used in any way in combination with distinctive signs of other brands.</div></div>"
+                }
+            },
+            {
+                "Row": 3,
+                "Column": 0,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5218.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5218_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5227.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5227_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5461.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5461_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5541.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5541_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5636.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5636_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5648.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5648_logo.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "500px",
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Left": "32px",
+                        "Right": "32px"
+                    },
+                    "MobileMargin": {
+                        "Left": "16px",
+                        "Right": "16px"
+                    }
+                }
+            },
+            {
+                "Row": 4,
+                "Column": 0,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A4645.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A4645_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A4719.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A4719_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A4744.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A4744_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5080.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5080_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5119.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5119_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5204.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/_51A5204_logo.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "350px",
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                }
+            },
+            {
+                "Row": 5,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title w6yz-section-title\">BRAND VIDEO</h1>"
+                }
+            },
+            {
+                "Row": 6,
+                "Column": 0,
+                "Type": 2,
+                "Content": {
+                    "Source": [
+                        "https://player.vimeo.com/video/586162498?title=0&byline=0&portrait=0"
+                    ],
+                    "Responsive": true
+                },
+                "Style": {
+                    "Margin": {
+                        "Bottom": "15px",
+                        "Top": "15px",
+                        "Left": "35px",
+                        "Right": "35px"
+                    }
+                }
+            },
+            {
+                "Row": 7,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title w6yz-section-title\">MARKETING TOOLS</h1>"
+                }
+            },
+            {
+                "Row": 8,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"marketing-section-description\">In this section you can view the catalogue of available marketing tools  and order materials using the code assigned to each item.<br>For PREMIUM materials please contact us at <a href=\"mailto:marketing@falc.biz\">marketing@falc.biz</a></div>"
+                }
+            },
+            {
+                "Row": 9,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/tools-cover.jpg\" class=\"marketing-pdf-cover\"/> <div style=\"left: 12%; bottom: 30%;\" class=\"marketing-pdf-cta w6yz-cta\">CLICK HERE TO OPEN</div>"
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "private/w6yz-marketing-tools",
+                    "External": true
+                }
+            }
+        ]
+    },
+    {
+        "Kind": 0,
+        "Name": "FLM for Naturino marketing page",
+        "Default": false,
+        "Language": "en",
+        "SalesCampaignCode": "MKT_FM_BY_NAT2",
+        "Widgets": [{
+                "Row": 0,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src='https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/logo.png' class=\"marketing-top-logo falcotto-top-logo\">"
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title\">BRAND PICTURES</h1>"
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"marketing-section-description\">In this section you can download campaign photos and videos to be used to comunicate our brands. If you want to print some pictures in big sizes please contact us at <a href=\"mailto:marketing@falc.biz\">marketing@falc.biz</a><br/><div class=\"disclaimer\"><img src=\"http://b2b.falc.biz/assets/icons/warning.svg\" class=\"icon\"/>The video-photographic material granted for use is owned by Falc spa and must be used only to promote the brands owned by Falc spa. This material cannot be used in any way in combination with distinctive signs of other brands.</div></div>"
+                }
+            },
+            {
+                "Row": 3,
+                "Column": 0,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/1W0A4534.JPG",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/1W0A4534_logo.JPG",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/Naturino_12.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/Naturino_12_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/Naturino_17.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/Naturino_17_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/Naturino_19.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/Naturino_19_logo.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "500px",
+                    "Margin": {
+                        "Bottom": "32px",
+                        "Left": "32px",
+                        "Right": "32px"
+                    },
+                    "MobileMargin": {
+                        "Left": "16px",
+                        "Right": "16px"
+                    }
+                }
+            },
+            {
+                "Row": 4,
+                "Column": 0,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/1W0A4544.JPG",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/1W0A4544_logo.JPG",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/1W0A4617.JPG",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/1W0A4617_logo.JPG",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/1W0A4621.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/1W0A4621_logo.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "350px",
+                    "Margin": {
+                        "Bottom": "32px",
+                        "Left": "32px",
+                        "Right": "32px"
+                    },
+                    "MobileMargin": {
+                        "Left": "16px",
+                        "Right": "16px"
+                    }
+                }
+            },
+            {
+                "Row": 5,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title\">MARKETING TOOLS</h1>"
+                }
+            },
+            {
+                "Row": 6,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"marketing-section-description\">In this section you can view the catalogue of available marketing tools  and order materials using the code assigned to each item.<br>For PREMIUM materials please contact us at <a href=\"mailto:marketing@falc.biz\">marketing@falc.biz</a></div>"
+                }
+            },
+            {
+                "Row": 7,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/tools-cover.jpg\" class=\"marketing-pdf-cover\"/> <div style=\"left: 15%; bottom: 10%;\" class=\"marketing-pdf-cta\">CLICK HERE TO OPEN</div>"
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "private/fmnaturino-marketing-tools",
+                    "External": true
+                }
+            }
+        ]
+    },
+    {
+        "Kind": 0,
+        "Name": "FLM for Naturino marketing page",
+        "Default": false,
+        "Language": "it",
+        "SalesCampaignCode": "MKT_FM_BY_NAT2",
+        "Widgets": [{
+                "Row": 0,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src='https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/logo.png' class=\"marketing-top-logo falcotto-top-logo\">"
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title\">IMMAGINI DI CAMPAGNA</h1>"
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"marketing-section-description\">In questa sezione potete scaricare foto e video di campagna da usare per le vostre attività di comunicazione sui nostri brand. Per eventuali immagini da stampare in grandi dimensioni contattateci alla mail <a href=\"mailto:marketing@falc.biz\">marketing@falc.biz</a><br/><div class=\"disclaimer\"><img src=\"http://b2b.falc.biz/assets/icons/warning.svg\" class=\"icon\"/>Il materiale video-fotografico concesso in uso è di proprietà della Falc spa e deve essere utilizzato solamente per promuovere i marchi di proprietà della stessa. Questo materiale non può essere utilizzato in alcun modo in combinazione con segni distintivi di altri marchi.</div></div>"
+                }
+            },
+            {
+                "Row": 3,
+                "Column": 0,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/1W0A4534.JPG",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/1W0A4534_logo.JPG",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/Naturino_12.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/Naturino_12_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/Naturino_17.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/Naturino_17_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/Naturino_19.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/Naturino_19_logo.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "500px",
+                    "Margin": {
+                        "Bottom": "32px",
+                        "Left": "32px",
+                        "Right": "32px"
+                    },
+                    "MobileMargin": {
+                        "Left": "16px",
+                        "Right": "16px"
+                    }
+                }
+            },
+            {
+                "Row": 4,
+                "Column": 0,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/1W0A4544.JPG",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/1W0A4544_logo.JPG",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/1W0A4617.JPG",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/1W0A4617_logo.JPG",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/1W0A4621.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/1W0A4621_logo.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "350px",
+                    "Margin": {
+                        "Bottom": "32px",
+                        "Left": "32px",
+                        "Right": "32px"
+                    },
+                    "MobileMargin": {
+                        "Left": "16px",
+                        "Right": "16px"
+                    }
+                }
+            },
+            {
+                "Row": 5,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title\">MATERIALE MARKETING</h1>"
+                }
+            },
+            {
+                "Row": 6,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"marketing-section-description\">In questa sezione è possibile visualizzare il catalogo del materiale marketing disponibile e richiedere i singoli oggetti usando il codice assegnato ad ognuno di loro.<br>Per il materiale PREMIUM contattateci alla mail <a href=\"mailto:marketing@falc.biz\">marketing@falc.biz</a></div>"
+                }
+            },
+            {
+                "Row": 7,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/tools-cover.jpg\" class=\"marketing-pdf-cover\"/> <div style=\"left: 15%; bottom: 10%;\" class=\"marketing-pdf-cta\">CLICCA PER VISUALIZZARE</div>"
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "private/fmnaturino-marketing-tools",
+                    "External": true
+                }
+            }
+        ]
+    },
+    {
+        "Kind": 0,
+        "Name": "W6YZ junior marketing page",
+        "Default": false,
+        "Language": "en",
+        "SalesCampaignCode": "MKT_W6YZ_BAMB2",
+        "Widgets": [{
+                "Row": 0,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src='https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/logo.jpg' class=\"marketing-top-logo w6yz-top-logo\">"
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title w6yz-section-title\">BRAND PICTURES</h1>"
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"marketing-section-description\">In this section you can download campaign photos and videos to be used to comunicate our brands. If you want to print some pictures in big sizes please contact us at <a href=\"mailto:marketing@falc.biz\">marketing@falc.biz</a><br/><div class=\"disclaimer\"><img src=\"http://b2b.falc.biz/assets/icons/warning.svg\" class=\"icon\"/>The video-photographic material granted for use is owned by Falc spa and must be used only to promote the brands owned by Falc spa. This material cannot be used in any way in combination with distinctive signs of other brands.</div></div>"
+                }
+            },
+            {
+                "Row": 3,
+                "Column": 0,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A8916.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A8916_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A9235.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A9235_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/IMG_9019.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/IMG_9019_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A9151.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A9151_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A9264.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A9264_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/IMG_9056.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/IMG_9056_logo.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "500px",
+                    "Margin": {
+                        "Bottom": "32px",
+                        "Left": "32px",
+                        "Right": "32px"
+                    },
+                    "MobileMargin": {
+                        "Left": "16px",
+                        "Right": "16px"
+                    }
+                }
+            },
+            {
+                "Row": 4,
+                "Column": 0,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A8987.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A8987_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A9179.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A9179_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A9251.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A9251_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A9279.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A9279_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A9446.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A9446_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A9523.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A9523_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/IMG_8924.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/IMG_8924_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/IMG_8966.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/IMG_8966_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/IMG_9157.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/IMG_9157_logo.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "350px",
+                    "Margin": {
+                        "Bottom": "32px",
+                        "Left": "32px",
+                        "Right": "32px"
+                    },
+                    "MobileMargin": {
+                        "Left": "16px",
+                        "Right": "16px"
+                    }
+                }
+            },
+            {
+                "Row": 5,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title w6yz-section-title\">MARKETING TOOLS</h1>"
+                }
+            },
+            {
+                "Row": 6,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"marketing-section-description\">In this section you can view the catalogue of available marketing tools  and order materials using the code assigned to each item.<br>For PREMIUM materials please contact us at <a href=\"mailto:marketing@falc.biz\">marketing@falc.biz</a></div>"
+                }
+            },
+            {
+                "Row": 7,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/tools-cover.jpg\" class=\"marketing-pdf-cover\"/> <div style=\"left: 12%; bottom: 30%;\" class=\"marketing-pdf-cta w6yz-cta\">CLICK HERE TO OPEN</div>"
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "private/w6yz-junior-marketing-tools",
+                    "External": true
+                }
+            }
+        ]
+    },
+    {
+        "Kind": 0,
+        "Name": "W6YZ junior marketing page",
+        "Default": false,
+        "Language": "it",
+        "SalesCampaignCode": "MKT_W6YZ_BAMB2",
+        "Widgets": [{
+                "Row": 0,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src='https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/logo.jpg' class=\"marketing-top-logo w6yz-top-logo\">"
+                }
+            },
+            {
+                "Row": 1,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title w6yz-section-title\">IMMAGINI DI CAMPAGNA</h1>"
+                }
+            },
+            {
+                "Row": 2,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"marketing-section-description\">In questa sezione potete scaricare foto e video di campagna da usare per le vostre attività di comunicazione sui nostri brand. Per eventuali immagini da stampare in grandi dimensioni contattateci alla mail <a href=\"mailto:marketing@falc.biz\">marketing@falc.biz</a><br/><div class=\"disclaimer\"><img src=\"http://b2b.falc.biz/assets/icons/warning.svg\" class=\"icon\"/>Il materiale video-fotografico concesso in uso è di proprietà della Falc spa e deve essere utilizzato solamente per promuovere i marchi di proprietà della stessa. Questo materiale non può essere utilizzato in alcun modo in combinazione con segni distintivi di altri marchi.</div></div>"
+                }
+            },
+            {
+                "Row": 3,
+                "Column": 0,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A8916.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A8916_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A9235.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A9235_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/IMG_9019.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/IMG_9019_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A9151.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A9151_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A9264.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A9264_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/IMG_9056.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/IMG_9056_logo.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "500px",
+                    "Margin": {
+                        "Bottom": "32px",
+                        "Left": "32px",
+                        "Right": "32px"
+                    },
+                    "MobileMargin": {
+                        "Left": "16px",
+                        "Right": "16px"
+                    }
+                }
+            },
+            {
+                "Row": 4,
+                "Column": 0,
+                "Type": 101,
+                "Content": {
+                    "Source": [
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A8987.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A8987_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A9179.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A9179_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A9251.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A9251_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A9279.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A9279_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A9446.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A9446_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A9523.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/1W0A9523_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/IMG_8924.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/IMG_8924_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/IMG_8966.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/IMG_8966_logo.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/IMG_9157.jpg",
+                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/IMG_9157_logo.jpg"
+                    ]
+                },
+                "Style": {
+                    "Height": "350px",
+                    "Margin": {
+                        "Bottom": "32px",
+                        "Left": "32px",
+                        "Right": "32px"
+                    },
+                    "MobileMargin": {
+                        "Left": "16px",
+                        "Right": "16px"
+                    }
+                }
+            },
+            {
+                "Row": 5,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<h1 class=\"marketing-section-title w6yz-section-title\">MATERIALE MARKETING</h1>"
+                }
+            },
+            {
+                "Row": 6,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<div class=\"marketing-section-description\">In questa sezione è possibile visualizzare il catalogo del materiale marketing disponibile e richiedere i singoli oggetti usando il codice assegnato ad ognuno di loro.<br>Per il materiale PREMIUM contattateci alla mail <a href=\"mailto:marketing@falc.biz\">marketing@falc.biz</a></div>"
+                }
+            },
+            {
+                "Row": 7,
+                "Column": 0,
+                "Type": 0,
+                "Content": {
+                    "Text": "<img src=\"https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/tools-cover.jpg\" class=\"marketing-pdf-cover\"/> <div style=\"left: 12%; bottom: 30%;\" class=\"marketing-pdf-cta w6yz-cta\">CLICCA PER VISUALIZZARE</div>"
+                },
+                "ClickAction": {
+                    "Type": 0,
+                    "Url": "private/w6yz-junior-marketing-tools",
+                    "External": true
+                }
+            }
+        ]
+    }
+]

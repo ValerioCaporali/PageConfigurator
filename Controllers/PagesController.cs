@@ -38,19 +38,19 @@ namespace Pages_configurator.Controllers
 
         // use this to return to javascript the json with home pages
         [HttpGet("HomePages")]
-        public async Task<ActionResult<List<Page<HtmlConfiguration>>>> GetHomePages()
+        public async Task<ActionResult<List<Page>>> GetHomePages()
         {
             var homePagesJson = await System.IO.File.ReadAllTextAsync("Controllers/home.json");
-            var homePages = JsonConvert.DeserializeObject<List<Page<HtmlConfiguration>>>(homePagesJson);
+            var homePages = JsonConvert.DeserializeObject<List<Page>>(homePagesJson);
             return homePages;
         }
 
         // use this to return to javascript the json with normal pages
         [HttpGet("Pages")]
-        public async Task<ActionResult<List<Page<HtmlConfiguration>>>> GetPages()
+        public async Task<ActionResult<List<Page>>> GetPages()
         {
             var pagesJson = await System.IO.File.ReadAllTextAsync("Controllers/pages.json");
-            var pages = JsonConvert.DeserializeObject<List<Page<HtmlConfiguration>>>(pagesJson);
+            var pages = JsonConvert.DeserializeObject<List<Page>>(pagesJson);
             return pages;
         }
 
