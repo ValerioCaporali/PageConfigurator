@@ -253,7 +253,7 @@ var handleVideoWidget = (widget) => {
         video.src = youtube_video;
     } else if (src.indexOf("player.vimeo" != -1)) {
         video.allowFullscreen = "true";
-        var vimeo_video = handleVideo(widget, video_url, video)
+        var vimeo_video = handleVideo(widget, video_url, video);
         video.src = vimeo_video;
     } else {
         video.src = video_url;
@@ -280,7 +280,7 @@ var handlePdfWidget = (widget) => {
         pageNum: 1,
         pageIsRendering: false,
         pageNumIsPending: null,
-        scale: 2,
+        scale: 1.5,
         myCanvas: canvas,
         myCtx: ctx
     }
@@ -288,25 +288,32 @@ var handlePdfWidget = (widget) => {
     pdfjsLib.getDocument(url).promise.then(pdfDoc_ => {
         pdfDoc = pdfDoc_;
         setTimeout(() => {
-            renderPdfPage(pdfSettings);
-        }, 2000);
+            renderPdfPage(null, pdfSettings);
+        }, 200);
     });
-    var container = document.createElement("div");
-    container.appendChild(pdfSettings.myCanvas)
-    return pdfSettings.myCanvas;
+    var pdfContainer = document.createElement("div");
+    pdfSettings.myCanvas.style.margin = "0 auto";
+    pdfSettings.myCanvas.style.display = "block";
+    pdfContainer.appendChild(pdfSettings.myCanvas);
+    return pdfContainer;
 }
 
-var renderPdfPage = (pdfSettings) => {
+var renderPdfPage = (pagePending = null, pdfSettings) => {
     pdfSettings.pageIsRendering = true;
     scale = pdfSettings.scale;
-    pdfDoc.getPage(pdfSettings.pageNum).then(page => {
-        const viewPort = page.getViewport({ scale });
-        pdfSettings.myCanvas.height = viewPort.height;
-        pdfSettings.myCanvas.width = viewPort.width;
+    var pageToRender;
+    if (pagePending != null)
+        pageToRender = pagePending;
+    else pageToRender = pdfSettings.pageNum;
+    pdfDoc.getPage(pageToRender).then(page => {
+        var viewport = page.getViewport({ scale });
+        console.log(viewport);
+        pdfSettings.myCanvas.height = viewport.height;
+        pdfSettings.myCanvas.width = viewport.width;
 
         const renderCtx = {
-            canvasContext: pdfSettings.ctx,
-            viewPort
+            canvasContext: pdfSettings.myCtx,
+            viewport
         }
 
         page.render(renderCtx).promise.then(() => {

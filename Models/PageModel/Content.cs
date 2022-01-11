@@ -20,5 +20,10 @@ namespace Model.PageModel
         public bool Responsive { get; set; }
         public string Width { get; set; }
         public string Height { get; set; }
+        public float Latitude { get; set; }
+        public float Longitude { get; set; }
+        public int Zoom { get; set; }
+        public string Styles { get; set; }
+        public string Icon { get; set; }
     }
 }
