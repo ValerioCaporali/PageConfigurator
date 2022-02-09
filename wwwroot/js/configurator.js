@@ -232,7 +232,6 @@ var handleGalleryWidget = (widget) => {
 
             }
         }, 2000)
-        // div.style.maxWidth = "100%";
     return galleryContainer;
 }
 
@@ -269,7 +268,7 @@ var handleVideoWidget = (widget) => {
 }
 
 var handlePdfWidget = (widget) => {
-    const url = '../docs/pdf.pdf';
+    const url = '../docs/pdf-doc.pdf';
 
     var canvas = document.createElement('canvas');
     var pdfNavbar = createPdfNavbar();
@@ -294,12 +293,16 @@ var handlePdfWidget = (widget) => {
 
             // next and previous pdf page buttons
             document.querySelector('#prev-page').addEventListener('click', () => {
-                console.log("cliccato indietro")
                 showPrevPage(pdfSettings)
             });
             document.querySelector('#next-page').addEventListener('click', () => {
-                console.log("cliccato avanti")
                 showNextPage(pdfSettings)
+            });
+            document.querySelector('#zoom-out').addEventListener('click', () => {
+                zoomOutPdf(pdfSettings);
+            });
+            document.querySelector('#zoom-in').addEventListener('click', () => {
+                zoomInPdf(pdfSettings);
             });
 
             renderPdfPage(null, pdfSettings);
@@ -314,7 +317,6 @@ var handlePdfWidget = (widget) => {
 }
 
 var renderPdfPage = (pagePending = null, pdfSettings) => {
-    console.log("render pdf page")
     pdfSettings.pageIsRendering = true;
     scale = pdfSettings.scale;
     var pageToRender;
@@ -324,7 +326,6 @@ var renderPdfPage = (pagePending = null, pdfSettings) => {
     else {
         pageToRender = pdfSettings.pageNum;
     }
-    console.log("page to render ", pageToRender)
 
     pdfSettings.pdfDoc.getPage(pageToRender).then(page => {
         var viewport = page.getViewport({ scale });
@@ -346,13 +347,12 @@ var renderPdfPage = (pagePending = null, pdfSettings) => {
         });
 
         // output current page
-        document.getElementById('page-num').textContent = pdfSettings.pageNum;
+        document.getElementById('page-num').textContent = pdfSettings.pageNum + ' / ' + pdfSettings.pdfDoc.numPages;
     });
 }
 
 // Checks for pages rendering
 const queueRenderPage = (pdfSettings, num) => {
-    console.log(pdfSettings)
     if (pdfSettings.pageIsRendering) {
         pdfSettings.pageNumIsPending = num;
     } else {
@@ -376,24 +376,56 @@ const showNextPage = (pdfSettings) => {
     queueRenderPage(pdfSettings, pdfSettings.pageNum);
 }
 
+var displayPage = (pdfSettings) => {
+    pdfSettings.pdfDoc.getPage(pdfSettings.pageNum).then(() => {
+        renderPdfPage(null, pdfSettings)
+    })
+}
+
+const zoomInPdf = (pdfSetting) => {
+    pdfSetting.scale = pdfSetting.scale + 0.25;
+    displayPage(pdfSetting)
+}
+
+const zoomOutPdf = (pdfSetting) => {
+    if (pdfSetting.scale <= 0.25)
+        return;
+    pdfSetting.scale = pdfSetting.scale - 0.25;
+    displayPage(pdfSetting)
+}
+
 // Create pdf navbar
 var createPdfNavbar = () => {
     var pdfNavbar = document.createElement('div');
+    pdfNavbar.className = 'pdf-toolbar'
     var prevButton = document.createElement('button');
     var nextButton = document.createElement('button');
+    var zoomInButton = document.createElement('button');
+    var zoomOutButton = document.createElement('button');
     prevButton.id = 'prev-page';
     nextButton.id = 'next-page';
+    zoomInButton.id = 'zoom-in';
+    zoomOutButton.id = 'zoom-out';
     var prevIcon = document.createElement('i');
     var nextIcon = document.createElement('i');
+    var zoomInIcon = document.createElement('i');
+    var zoomOutIcon = document.createElement('i');
     prevIcon.className = "fas fa-arrow-circle-left";
     nextIcon.className = "fas fa-arrow-circle-right";
+    zoomInIcon.className = "fas fa-plus-circle";
+    zoomOutIcon.className = "fas fa-minus-circle"
     prevButton.appendChild(prevIcon);
     nextButton.appendChild(nextIcon);
+    zoomInButton.appendChild(zoomInIcon);
+    zoomOutButton.appendChild(zoomOutIcon);
     var currPage = document.createElement('span');
+    currPage.className = "pdf-page-info";
     currPage.id = 'page-num';
     pdfNavbar.appendChild(prevButton);
     pdfNavbar.appendChild(nextButton);
     pdfNavbar.appendChild(currPage);
+    pdfNavbar.appendChild(zoomInButton);
+    pdfNavbar.appendChild(zoomOutButton);
     return pdfNavbar;
 }
 

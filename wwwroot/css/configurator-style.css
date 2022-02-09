@@ -401,6 +401,10 @@ th {
     color: #fff
 }
 
+.page-info {
+    margin-left: 1rem;
+}
+
 @media(max-width:1000px) {
     .marketing-section-title,
     .marketing-section-description {
