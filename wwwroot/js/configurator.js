@@ -176,8 +176,8 @@ var handleWidget = (widget) => {
 var handelWidgetType = (widget) => {
     switch (widget.type) {
         case 0:
-            var div = handleTextWidget(widget);
-            return div;
+            var textContainer = handleTextWidget(widget);
+            return textContainer;
             break;
         case 1:
             var galleryContainer = handleGalleryWidget(widget);
@@ -270,44 +270,64 @@ var handleVideoWidget = (widget) => {
 
 var handlePdfWidget = (widget) => {
     const url = '../docs/pdf.pdf';
-    
+
     var canvas = document.createElement('canvas');
+    var pdfNavbar = createPdfNavbar();
+
     canvas.id = 'pdf-render';
     ctx = canvas.getContext('2d');
 
     let pdfSettings = {
+        pdfNavbar: pdfNavbar,
         pdfDoc: null,
         pageNum: 1,
         pageIsRendering: false,
         pageNumIsPending: null,
-        scale: 1.5,
+        scale: 1,
         myCanvas: canvas,
         myCtx: ctx
     }
 
     pdfjsLib.getDocument(url).promise.then(pdfDoc_ => {
-        pdfDoc = pdfDoc_;
+        pdfSettings.pdfDoc = pdfDoc_;
         setTimeout(() => {
+
+            // next and previous pdf page buttons
+            document.querySelector('#prev-page').addEventListener('click', () => {
+                console.log("cliccato indietro")
+                showPrevPage(pdfSettings)
+            });
+            document.querySelector('#next-page').addEventListener('click', () => {
+                console.log("cliccato avanti")
+                showNextPage(pdfSettings)
+            });
+
             renderPdfPage(null, pdfSettings);
         }, 200);
     });
     var pdfContainer = document.createElement("div");
     pdfSettings.myCanvas.style.margin = "0 auto";
     pdfSettings.myCanvas.style.display = "block";
+    pdfContainer.appendChild(pdfNavbar);
     pdfContainer.appendChild(pdfSettings.myCanvas);
     return pdfContainer;
 }
 
 var renderPdfPage = (pagePending = null, pdfSettings) => {
+    console.log("render pdf page")
     pdfSettings.pageIsRendering = true;
     scale = pdfSettings.scale;
     var pageToRender;
-    if (pagePending != null)
+    if (pagePending) {
         pageToRender = pagePending;
-    else pageToRender = pdfSettings.pageNum;
-    pdfDoc.getPage(pageToRender).then(page => {
+    }
+    else {
+        pageToRender = pdfSettings.pageNum;
+    }
+    console.log("page to render ", pageToRender)
+
+    pdfSettings.pdfDoc.getPage(pageToRender).then(page => {
         var viewport = page.getViewport({ scale });
-        console.log(viewport);
         pdfSettings.myCanvas.height = viewport.height;
         pdfSettings.myCanvas.width = viewport.width;
 
@@ -319,12 +339,62 @@ var renderPdfPage = (pagePending = null, pdfSettings) => {
         page.render(renderCtx).promise.then(() => {
             pdfSettings.pageIsRendering = false;
 
-            if (pdfSettings.pageNumIsPending !== null) {
+            if (pdfSettings.pageNumIsPending) {
                 renderPdfPage(pdfSettings.pageNumIsPending, pdfSettings);
                 pdfSettings.pageNumIsPending = null;
             }
         });
+
+        // output current page
+        document.getElementById('page-num').textContent = pdfSettings.pageNum;
     });
+}
+
+// Checks for pages rendering
+const queueRenderPage = (pdfSettings, num) => {
+    console.log(pdfSettings)
+    if (pdfSettings.pageIsRendering) {
+        pdfSettings.pageNumIsPending = num;
+    } else {
+        renderPdfPage(num, pdfSettings);
+    }
+}
+
+// Show preview pdf page
+const showPrevPage = (pdfSettings) => {
+    if (pdfSettings.pageNum <= 1)
+        return
+    pdfSettings.pageNum--;
+    queueRenderPage(pdfSettings, pdfSettings.pageNum);
+}
+
+// Show next pdf page
+const showNextPage = (pdfSettings) => {
+    if (pdfSettings.pageNum >= pdfSettings.pdfDoc.numPages)
+        return;
+    pdfSettings.pageNum++;
+    queueRenderPage(pdfSettings, pdfSettings.pageNum);
+}
+
+// Create pdf navbar
+var createPdfNavbar = () => {
+    var pdfNavbar = document.createElement('div');
+    var prevButton = document.createElement('button');
+    var nextButton = document.createElement('button');
+    prevButton.id = 'prev-page';
+    nextButton.id = 'next-page';
+    var prevIcon = document.createElement('i');
+    var nextIcon = document.createElement('i');
+    prevIcon.className = "fas fa-arrow-circle-left";
+    nextIcon.className = "fas fa-arrow-circle-right";
+    prevButton.appendChild(prevIcon);
+    nextButton.appendChild(nextIcon);
+    var currPage = document.createElement('span');
+    currPage.id = 'page-num';
+    pdfNavbar.appendChild(prevButton);
+    pdfNavbar.appendChild(nextButton);
+    pdfNavbar.appendChild(currPage);
+    return pdfNavbar;
 }
 
 var handleVideo = (widget, video_url, video) => {
@@ -336,31 +406,31 @@ var handleVideo = (widget, video_url, video) => {
         video.allow = "autoplay";
     } else {
         if (video_url.searchParams.get('autoplay') != null)
-            video_url.searchParams.set('autoplay', 0)
+            video_url.searchParams.set('autoplay', 0);
         else
-            video_url.searchParams.append('autoplay', 0)
+            video_url.searchParams.append('autoplay', 0);
     }
     if (widget.content.disableControls) {
-        if (video_url.searchParams.get('controls') != null) 
-            video_url.searchParams.set('controls', 0)
+        if (video_url.searchParams.get('controls') != null)
+            video_url.searchParams.set('controls', 0);
         else
-            video_url.searchParams.append('controls', 0)
+            video_url.searchParams.append('controls', 0);
     } else {
-        if (video_url.searchParams.get('controls') != null) 
+        if (video_url.searchParams.get('controls') != null)
             video_url.searchParams.set('controls', 1)
         else
-            video_url.searchParams.append('controls', 1)
+            video_url.searchParams.append('controls', 1);
     }
     if (widget.content.enableLoop) {
         if (video_url.searchParams.get('loop') != null)
-            video_url.searchParams.set('loop', 1)
+            video_url.searchParams.set('loop', 1);
         else
-            video_url.searchParams.append('loop', 1)
+            video_url.searchParams.append('loop', 1);
     } else {
         if (video_url.searchParams.get('loop') != null)
-            video_url.searchParams.set('loop', 0)
+            video_url.searchParams.set('loop', 0);
         else
-            video_url.searchParams.append('loop', 0)
+            video_url.searchParams.append('loop', 0);
     }
 
     return video_url;
