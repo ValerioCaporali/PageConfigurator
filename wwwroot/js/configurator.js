@@ -268,52 +268,109 @@ var handleVideoWidget = (widget) => {
 }
 
 var handlePdfWidget = (widget) => {
+    scrollable = true;
+    direction = 'x';
+    if (scrollable) {
+        var canvasContainer = handleScrollablePdf(widget, direction);
+        return canvasContainer;
+    } else {
+        const url = '../docs/pdf-doc.pdf';
+
+        var canvas = document.createElement('canvas');
+        var pdfToolbar = createpdfToolbar();
+
+        canvas.id = 'pdf-render';
+        ctx = canvas.getContext('2d');
+
+        let pdfSettings = {
+            pdfToolbar: pdfToolbar,
+            pdfDoc: null,
+            pageNum: 1,
+            pageIsRendering: false,
+            pageNumIsPending: null,
+            scale: 1,
+            myCanvas: canvas,
+            myCtx: ctx
+        }
+
+        pdfjsLib.getDocument(url).promise.then(pdfDoc_ => {
+            pdfSettings.pdfDoc = pdfDoc_;
+            setTimeout(() => {
+
+                // next and previous pdf page buttons
+                document.querySelector('#prev-page').addEventListener('click', () => {
+                    showPrevPage(pdfSettings)
+                });
+                document.querySelector('#next-page').addEventListener('click', () => {
+                    showNextPage(pdfSettings)
+                });
+                document.querySelector('#zoom-out').addEventListener('click', () => {
+                    zoomOutPdf(pdfSettings);
+                });
+                document.querySelector('#zoom-in').addEventListener('click', () => {
+                    zoomInPdf(pdfSettings);
+                });
+                document.querySelector('#all-pages-render').addEventListener('click', () => {
+                    renderAllPdfPages(pdfSettings);
+                });
+
+                renderPdfPage(null, pdfSettings);
+            }, 200);
+        });
+        var pdfContainer = document.createElement("div");
+        pdfSettings.myCanvas.style.margin = "0 auto";
+        pdfSettings.myCanvas.style.display = "block";
+        pdfContainer.appendChild(pdfToolbar);
+        pdfContainer.appendChild(pdfSettings.myCanvas);
+        return pdfContainer;
+    }
+}
+
+var handleScrollablePdf = (widget, direction) => {
+    var canvasContainer = document.createElement('div');
+    canvasContainer.classList.add(direction === 'y' ? 'vertical-pdf-scroll' : 'horizontal-pdf-scroll');
+    canvasContainer.id = "canvas-container";
+    // canvasContainer.style.height = "max-content";
     const url = '../docs/pdf-doc.pdf';
+    options = { scale: 1 };
 
-    var canvas = document.createElement('canvas');
-    var pdfNavbar = createPdfNavbar();
+    var renderScrollablePdfPage = (page) => {
+        var viewPort = page.getViewport(direction === 'y' ? { scale: 1.2 } : { scale: 0.6 });
+        var wrapper = document.createElement('div');
+        wrapper.className = "canvas-wrapper";
+        var canvas = document.createElement('canvas');
+        canvas.className = "canvas-pdf-scrollable";
+        var ctx = canvas.getContext('2d');
+        var renderContext = {
+            canvasContext: ctx,
+            viewport: viewPort
+        };
 
-    canvas.id = 'pdf-render';
-    ctx = canvas.getContext('2d');
+        setTimeout(() => {
+            canvas.height = viewPort.height;
+            canvas.width = viewPort.width;
+            wrapper.appendChild(canvas);
+            canvasContainer.appendChild(wrapper);
+            page.render(renderContext);
+        }, 200)
+    }
 
-    let pdfSettings = {
-        pdfNavbar: pdfNavbar,
-        pdfDoc: null,
-        pageNum: 1,
-        pageIsRendering: false,
-        pageNumIsPending: null,
-        scale: 1,
-        myCanvas: canvas,
-        myCtx: ctx
+    var renderScrollablePdfPages = (pdfDoc) => {
+        for (var num = 1; num <= pdfDoc.numPages; num++) {
+            pdfDoc.getPage(num).then(page => {
+                renderScrollablePdfPage(page);
+            })
+        }
     }
 
     pdfjsLib.getDocument(url).promise.then(pdfDoc_ => {
-        pdfSettings.pdfDoc = pdfDoc_;
         setTimeout(() => {
-
-            // next and previous pdf page buttons
-            document.querySelector('#prev-page').addEventListener('click', () => {
-                showPrevPage(pdfSettings)
-            });
-            document.querySelector('#next-page').addEventListener('click', () => {
-                showNextPage(pdfSettings)
-            });
-            document.querySelector('#zoom-out').addEventListener('click', () => {
-                zoomOutPdf(pdfSettings);
-            });
-            document.querySelector('#zoom-in').addEventListener('click', () => {
-                zoomInPdf(pdfSettings);
-            });
-
-            renderPdfPage(null, pdfSettings);
+            renderScrollablePdfPages(pdfDoc_);
         }, 200);
     });
-    var pdfContainer = document.createElement("div");
-    pdfSettings.myCanvas.style.margin = "0 auto";
-    pdfSettings.myCanvas.style.display = "block";
-    pdfContainer.appendChild(pdfNavbar);
-    pdfContainer.appendChild(pdfSettings.myCanvas);
-    return pdfContainer;
+
+    return canvasContainer;
+
 }
 
 var renderPdfPage = (pagePending = null, pdfSettings) => {
@@ -349,6 +406,12 @@ var renderPdfPage = (pagePending = null, pdfSettings) => {
         // output current page
         document.getElementById('page-num').textContent = pdfSettings.pageNum + ' / ' + pdfSettings.pdfDoc.numPages;
     });
+}
+
+var renderAllPdfPages = (pdfSettings) => {
+    for (var i = 1; i < pdfSettings.pdfDoc.numPages; i++) {
+        renderPdfPage(i, pdfSettings);
+    }
 }
 
 // Checks for pages rendering
@@ -395,38 +458,44 @@ const zoomOutPdf = (pdfSetting) => {
 }
 
 // Create pdf navbar
-var createPdfNavbar = () => {
-    var pdfNavbar = document.createElement('div');
-    pdfNavbar.className = 'pdf-toolbar'
+var createpdfToolbar = () => {
+    var pdfToolbar = document.createElement('div');
+    pdfToolbar.className = 'pdf-toolbar'
     var prevButton = document.createElement('button');
     var nextButton = document.createElement('button');
     var zoomInButton = document.createElement('button');
     var zoomOutButton = document.createElement('button');
+    var renderAllPagesButton = document.createElement('button');
     prevButton.id = 'prev-page';
     nextButton.id = 'next-page';
     zoomInButton.id = 'zoom-in';
     zoomOutButton.id = 'zoom-out';
+    renderAllPagesButton.id = 'all-pages-render';
     var prevIcon = document.createElement('i');
     var nextIcon = document.createElement('i');
     var zoomInIcon = document.createElement('i');
     var zoomOutIcon = document.createElement('i');
+    var allPagesIcons = document.createElement('i');
     prevIcon.className = "fas fa-arrow-circle-left";
     nextIcon.className = "fas fa-arrow-circle-right";
     zoomInIcon.className = "fas fa-plus-circle";
-    zoomOutIcon.className = "fas fa-minus-circle"
+    zoomOutIcon.className = "fas fa-minus-circle";
+    allPagesIcons.className = "fas fa-pagelines";
     prevButton.appendChild(prevIcon);
     nextButton.appendChild(nextIcon);
     zoomInButton.appendChild(zoomInIcon);
     zoomOutButton.appendChild(zoomOutIcon);
+    renderAllPagesButton.appendChild(allPagesIcons);
     var currPage = document.createElement('span');
     currPage.className = "pdf-page-info";
     currPage.id = 'page-num';
-    pdfNavbar.appendChild(prevButton);
-    pdfNavbar.appendChild(nextButton);
-    pdfNavbar.appendChild(currPage);
-    pdfNavbar.appendChild(zoomInButton);
-    pdfNavbar.appendChild(zoomOutButton);
-    return pdfNavbar;
+    pdfToolbar.appendChild(prevButton);
+    pdfToolbar.appendChild(nextButton);
+    pdfToolbar.appendChild(currPage);
+    pdfToolbar.appendChild(zoomInButton);
+    pdfToolbar.appendChild(zoomOutButton);
+    pdfToolbar.appendChild(renderAllPagesButton);
+    return pdfToolbar;
 }
 
 var handleVideo = (widget, video_url, video) => {
