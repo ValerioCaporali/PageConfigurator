@@ -269,12 +269,12 @@ var handleVideoWidget = (widget) => {
 
 var handlePdfWidget = (widget) => {
     scrollable = true;
-    direction = 'x';
+    direction = 'y';
     if (scrollable) {
         var canvasContainer = handleScrollablePdf(widget, direction);
         return canvasContainer;
     } else {
-        const url = '../docs/pdf-doc.pdf';
+        const url = '../docs/pdf.pdf';
 
         var canvas = document.createElement('canvas');
         var pdfToolbar = createpdfToolbar();
@@ -328,14 +328,14 @@ var handlePdfWidget = (widget) => {
 
 var handleScrollablePdf = (widget, direction) => {
     var canvasContainer = document.createElement('div');
-    canvasContainer.classList.add(direction === 'y' ? 'vertical-pdf-scroll' : 'horizontal-pdf-scroll');
+    canvasContainer.classList.add(direction === 'y' ? 'vertical-pdf-scroll-container' : 'horizontal-pdf-scroll');
     canvasContainer.id = "canvas-container";
     // canvasContainer.style.height = "max-content";
-    const url = '../docs/pdf-doc.pdf';
+    const url = '../docs/pdf.pdf';
     options = { scale: 1 };
 
     var renderScrollablePdfPage = (page) => {
-        var viewPort = page.getViewport(direction === 'y' ? { scale: 1.2 } : { scale: 0.6 });
+        var viewPort = calculateViewport(widget, page, canvasContainer);
         var wrapper = document.createElement('div');
         wrapper.className = "canvas-wrapper";
         var canvas = document.createElement('canvas');
@@ -349,10 +349,23 @@ var handleScrollablePdf = (widget, direction) => {
         setTimeout(() => {
             canvas.height = viewPort.height;
             canvas.width = viewPort.width;
-            wrapper.appendChild(canvas);
-            canvasContainer.appendChild(wrapper);
-            page.render(renderContext);
-        }, 200)
+            // wrapper.appendChild(canvas);
+            canvasContainer.appendChild(canvas);
+            page.render(renderContext).promise.then(() => {
+                console.log("PDF PAGE RENDERED");
+            })
+        }, 200);
+    }
+
+    var calculateViewport = (widget, page, canvasContainer) => {
+        var viewPort;
+        if (widget.style.height || widget.style.width)
+            viewPort = page.getViewport({ scale: canvasContainer.clientWidth / page.getViewport({ scale: 1 }).width });
+        else {
+            console.log("default dimensions")
+            viewPort = page.getViewport({scale: 1})
+        }
+        return viewPort;
     }
 
     var renderScrollablePdfPages = (pdfDoc) => {
@@ -361,12 +374,15 @@ var handleScrollablePdf = (widget, direction) => {
                 renderScrollablePdfPage(page);
             })
         }
+        canvasContainer.addEventListener('scroll', (event) => {
+            console.log("scroll");
+        })
     }
 
     pdfjsLib.getDocument(url).promise.then(pdfDoc_ => {
         setTimeout(() => {
             renderScrollablePdfPages(pdfDoc_);
-        }, 200);
+        }, 600);
     });
 
     return canvasContainer;

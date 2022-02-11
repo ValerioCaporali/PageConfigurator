@@ -64,10 +64,12 @@
         display: none;
     }
 
-    .vertical-pdf-scroll {
+    .vertical-pdf-scroll-container {
         position: relative;
         margin: 15px;
-        padding: 8px
+        padding: 8px;
+        width: 100%;
+        overflow-y: scroll;
     }
 
     .horizontal-pdf-scroll {
@@ -75,12 +77,15 @@
         margin: 15px;
         display: flex;
         overflow-x: scroll;
-        background-color: #333;
         padding: 8px;
     }
 
-    .canvas-wrapper > canvas{
+    canvas{
         padding: 6px;
+    }
+
+    .vertical-pdf-scroll-container > canvas {
+        max-width: 100%;
     }
 
     .canvas-pdf-scrollable{
