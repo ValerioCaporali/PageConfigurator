@@ -176,8 +176,8 @@ var handleWidget = (widget) => {
 var handelWidgetType = (widget) => {
     switch (widget.type) {
         case 0:
-            var div = handleTextWidget(widget);
-            return div;
+            var textContainer = handleTextWidget(widget);
+            return textContainer;
             break;
         case 1:
             var galleryContainer = handleGalleryWidget(widget);
@@ -198,12 +198,15 @@ var handelWidgetType = (widget) => {
     }
 }
 
+ /* WIDGET DI TIPO TESTO */
 var handleTextWidget = (widget) => {
     var div = document.createElement("div");
     div.innerHTML = widget.content.text.trim()
     return div;
 }
 
+
+/* WIDGET DI TIPO GALLERIA */
 var handleGalleryWidget = (widget) => {
     var galleryContainer = document.createElement("div");
     var div = document.createElement("div");
@@ -232,10 +235,11 @@ var handleGalleryWidget = (widget) => {
 
             }
         }, 2000)
-        // div.style.maxWidth = "100%";
     return galleryContainer;
 }
 
+
+/* WIDGET DI TIPO VIDEO */
 var handleVideoWidget = (widget) => {
     var videoContainer = document.createElement("div");
     videoContainer.id = "video-container";
@@ -268,46 +272,139 @@ var handleVideoWidget = (widget) => {
     return videoContainer;
 }
 
-var handlePdfWidget = (widget) => {
-    const url = '../docs/pdf.pdf';
-    
-    var canvas = document.createElement('canvas');
-    canvas.id = 'pdf-render';
-    ctx = canvas.getContext('2d');
 
-    let pdfSettings = {
-        pdfDoc: null,
-        pageNum: 1,
-        pageIsRendering: false,
-        pageNumIsPending: null,
-        scale: 1.5,
-        myCanvas: canvas,
-        myCtx: ctx
+/* WIDGET DI TIPO PDF */
+var handlePdfWidget = (widget) => {
+    scrollable = true;
+    direction = 'x';
+    if (scrollable) {
+        var canvasContainer = handleScrollablePdf(widget, direction);
+        return canvasContainer;
+    } else {
+        const url = '../docs/pdf.pdf';
+
+        var canvas = document.createElement('canvas');
+        var pdfToolbar = createpdfToolbar();
+
+        canvas.id = 'pdf-render';
+        ctx = canvas.getContext('2d');
+
+        let pdfSettings = {
+            pdfToolbar: pdfToolbar,
+            pdfDoc: null,
+            pageNum: 1,
+            pageIsRendering: false,
+            pageNumIsPending: null,
+            scale: 1,
+            myCanvas: canvas,
+            myCtx: ctx
+        }
+
+        pdfjsLib.getDocument(url).promise.then(pdfDoc_ => {
+            pdfSettings.pdfDoc = pdfDoc_;
+            setTimeout(() => {
+
+                // next and previous pdf page buttons
+                document.querySelector('#prev-page').addEventListener('click', () => {
+                    showPrevPage(pdfSettings)
+                });
+                document.querySelector('#next-page').addEventListener('click', () => {
+                    showNextPage(pdfSettings)
+                });
+                document.querySelector('#zoom-out').addEventListener('click', () => {
+                    zoomOutPdf(pdfSettings);
+                });
+                document.querySelector('#zoom-in').addEventListener('click', () => {
+                    zoomInPdf(pdfSettings);
+                });
+
+                renderPdfPage(null, pdfSettings);
+            }, 200);
+        });
+        var pdfContainer = document.createElement("div");
+        pdfSettings.myCanvas.style.margin = "0 auto";
+        pdfSettings.myCanvas.style.display = "block";
+        pdfContainer.appendChild(pdfToolbar);
+        pdfContainer.appendChild(pdfSettings.myCanvas);
+        return pdfContainer;
+    }
+}
+
+var handleScrollablePdf = (widget, direction) => {
+    var canvasContainer = document.createElement('div');
+    canvasContainer.classList.add(direction === 'y' ? 'vertical-pdf-scroll-container' : 'horizontal-pdf-scroll');
+    canvasContainer.id = "canvas-container";
+    const url = '../docs/pdf.pdf';
+    options = { scale: 1 };
+
+    var renderScrollablePdfPage = (page) => {
+        var viewPort = calculateViewport(widget, page, canvasContainer);
+        var wrapper = document.createElement('div');
+        wrapper.className = "canvas-wrapper";
+        var canvas = document.createElement('canvas');
+        canvas.className = "canvas-pdf-scrollable";
+        var ctx = canvas.getContext('2d');
+        var renderContext = {
+            canvasContext: ctx,
+            viewport: viewPort
+        };
+
+        setTimeout(() => {
+            canvas.height = viewPort.height;
+            canvas.width = viewPort.width;
+            canvasContainer.appendChild(canvas);
+            page.render(renderContext).promise.then(() => {
+                console.log("PDF PAGE RENDERED");
+            })
+        }, 200);
+    }
+
+    var calculateViewport = (widget, page, canvasContainer) => {
+        var viewPort;
+        if (widget.style.height || widget.style.width)
+            // calcolo le dimensoini in rapporto alla dimensione del div container
+            viewPort = page.getViewport({ scale: canvasContainer.clientWidth / page.getViewport({ scale: 1 }).width });
+        else {
+            // dimensioni di default
+            viewPort = page.getViewport({scale: 1})
+        }
+        return viewPort;
+    }
+
+    var renderScrollablePdfPages = (pdfDoc) => {
+        for (var num = 1; num <= pdfDoc.numPages; num++) {
+            pdfDoc.getPage(num).then(page => {
+                renderScrollablePdfPage(page);
+            })
+        }
+        canvasContainer.addEventListener('scroll', (event) => {
+            console.log("scroll");
+        })
     }
 
     pdfjsLib.getDocument(url).promise.then(pdfDoc_ => {
-        pdfDoc = pdfDoc_;
         setTimeout(() => {
-            renderPdfPage(null, pdfSettings);
-        }, 200);
+            renderScrollablePdfPages(pdfDoc_);
+        }, 600);
     });
-    var pdfContainer = document.createElement("div");
-    pdfSettings.myCanvas.style.margin = "0 auto";
-    pdfSettings.myCanvas.style.display = "block";
-    pdfContainer.appendChild(pdfSettings.myCanvas);
-    return pdfContainer;
+
+    return canvasContainer;
+
 }
 
 var renderPdfPage = (pagePending = null, pdfSettings) => {
     pdfSettings.pageIsRendering = true;
     scale = pdfSettings.scale;
     var pageToRender;
-    if (pagePending != null)
+    if (pagePending) {
         pageToRender = pagePending;
-    else pageToRender = pdfSettings.pageNum;
-    pdfDoc.getPage(pageToRender).then(page => {
+    }
+    else {
+        pageToRender = pdfSettings.pageNum;
+    }
+
+    pdfSettings.pdfDoc.getPage(pageToRender).then(page => {
         var viewport = page.getViewport({ scale });
-        console.log(viewport);
         pdfSettings.myCanvas.height = viewport.height;
         pdfSettings.myCanvas.width = viewport.width;
 
@@ -319,12 +416,104 @@ var renderPdfPage = (pagePending = null, pdfSettings) => {
         page.render(renderCtx).promise.then(() => {
             pdfSettings.pageIsRendering = false;
 
-            if (pdfSettings.pageNumIsPending !== null) {
+            if (pdfSettings.pageNumIsPending) {
                 renderPdfPage(pdfSettings.pageNumIsPending, pdfSettings);
                 pdfSettings.pageNumIsPending = null;
             }
         });
+
+        // output current page
+        document.getElementById('page-num').textContent = pdfSettings.pageNum + ' / ' + pdfSettings.pdfDoc.numPages;
     });
+}
+
+// Checks for pages rendering
+const queueRenderPage = (pdfSettings, num) => {
+    if (pdfSettings.pageIsRendering) {
+        pdfSettings.pageNumIsPending = num;
+    } else {
+        renderPdfPage(num, pdfSettings);
+    }
+}
+
+// Show preview pdf page
+const showPrevPage = (pdfSettings) => {
+    if (pdfSettings.pageNum <= 1)
+        return
+    pdfSettings.pageNum--;
+    queueRenderPage(pdfSettings, pdfSettings.pageNum);
+}
+
+// Show next pdf page
+const showNextPage = (pdfSettings) => {
+    if (pdfSettings.pageNum >= pdfSettings.pdfDoc.numPages)
+        return;
+    pdfSettings.pageNum++;
+    queueRenderPage(pdfSettings, pdfSettings.pageNum);
+}
+
+var displayPage = (pdfSettings) => {
+    pdfSettings.pdfDoc.getPage(pdfSettings.pageNum).then(() => {
+        renderPdfPage(null, pdfSettings);
+    })
+}
+
+const zoomInPdf = (pdfSetting) => {
+    pdfSetting.scale = pdfSetting.scale + 0.25;
+    displayPage(pdfSetting);
+}
+
+const zoomOutPdf = (pdfSetting) => {
+    if (pdfSetting.scale <= 0.25)
+        return;
+    pdfSetting.scale = pdfSetting.scale - 0.25;
+    displayPage(pdfSetting);
+}
+
+// Create pdf navbar
+var createpdfToolbar = () => {
+    var pdfToolbar = document.createElement('div');
+    pdfToolbar.className = 'pdf-toolbar'
+    var prevButton = document.createElement('button');
+    var nextButton = document.createElement('button');
+    var zoomInButton = document.createElement('button');
+    var zoomOutButton = document.createElement('button');
+    var renderAllPagesButton = document.createElement('button');
+    prevButton.id = 'prev-page';
+    nextButton.id = 'next-page';
+    zoomInButton.id = 'zoom-in';
+    zoomOutButton.id = 'zoom-out';
+    renderAllPagesButton.id = 'all-pages-render';
+    var prevIcon = document.createElement('i');
+    var nextIcon = document.createElement('i');
+    var zoomInIcon = document.createElement('i');
+    var zoomOutIcon = document.createElement('i');
+    var allPagesIcons = document.createElement('i');
+    prevIcon.className = "fas fa-arrow-circle-left";
+    nextIcon.className = "fas fa-arrow-circle-right";
+    zoomInIcon.className = "fas fa-plus-circle";
+    zoomOutIcon.className = "fas fa-minus-circle";
+    allPagesIcons.className = "fas fa-pagelines";
+    prevButton.appendChild(prevIcon);
+    nextButton.appendChild(nextIcon);
+    zoomInButton.appendChild(zoomInIcon);
+    zoomOutButton.appendChild(zoomOutIcon);
+    renderAllPagesButton.appendChild(allPagesIcons);
+    var currPage = document.createElement('span');
+    currPage.className = "pdf-page-info";
+    currPage.id = 'page-num';
+    pdfToolbar.appendChild(prevButton);
+    pdfToolbar.appendChild(nextButton);
+    pdfToolbar.appendChild(currPage);
+    pdfToolbar.appendChild(zoomInButton);
+    pdfToolbar.appendChild(zoomOutButton);
+    pdfToolbar.appendChild(renderAllPagesButton);
+    return pdfToolbar;
+}
+
+/* WIDGET DI TIPO MAP */
+var handleTourWidget = () => {
+
 }
 
 var handleVideo = (widget, video_url, video) => {
@@ -336,31 +525,31 @@ var handleVideo = (widget, video_url, video) => {
         video.allow = "autoplay";
     } else {
         if (video_url.searchParams.get('autoplay') != null)
-            video_url.searchParams.set('autoplay', 0)
+            video_url.searchParams.set('autoplay', 0);
         else
-            video_url.searchParams.append('autoplay', 0)
+            video_url.searchParams.append('autoplay', 0);
     }
     if (widget.content.disableControls) {
-        if (video_url.searchParams.get('controls') != null) 
-            video_url.searchParams.set('controls', 0)
+        if (video_url.searchParams.get('controls') != null)
+            video_url.searchParams.set('controls', 0);
         else
-            video_url.searchParams.append('controls', 0)
+            video_url.searchParams.append('controls', 0);
     } else {
-        if (video_url.searchParams.get('controls') != null) 
+        if (video_url.searchParams.get('controls') != null)
             video_url.searchParams.set('controls', 1)
         else
-            video_url.searchParams.append('controls', 1)
+            video_url.searchParams.append('controls', 1);
     }
     if (widget.content.enableLoop) {
         if (video_url.searchParams.get('loop') != null)
-            video_url.searchParams.set('loop', 1)
+            video_url.searchParams.set('loop', 1);
         else
-            video_url.searchParams.append('loop', 1)
+            video_url.searchParams.append('loop', 1);
     } else {
         if (video_url.searchParams.get('loop') != null)
-            video_url.searchParams.set('loop', 0)
+            video_url.searchParams.set('loop', 0);
         else
-            video_url.searchParams.append('loop', 0)
+            video_url.searchParams.append('loop', 0);
     }
 
     return video_url;
@@ -374,96 +563,96 @@ var handleWidgetStyle = (widget, div) => {
     /* PADDING */
     if (widget.style.padding) {
         if (widget.style.padding.top) {
-            div.style.paddingTop = widget.style.padding.top
+            div.style.paddingTop = widget.style.padding.top;
         }
         if (widget.style.padding.right) {
-            div.style.paddingRight = widget.style.padding.right
+            div.style.paddingRight = widget.style.padding.right;
         }
         if (widget.style.padding.bottom) {
-            div.style.paddingBottom = widget.style.padding.bottom
+            div.style.paddingBottom = widget.style.padding.bottom;
         }
         if (widget.style.padding.left) {
-            div.style.paddingLeft = widget.style.padding.left
+            div.style.paddingLeft = widget.style.padding.left;
         }
         if (widget.style.padding.total) {
-            div.style.padding = widget.style.padding.total
+            div.style.padding = widget.style.padding.total;
         }
     }
 
     /* MARGIN */
     if (widget.style.margin) {
         if (widget.style.margin.top) {
-            div.style.marginTop = widget.style.margin.top
+            div.style.marginTop = widget.style.margin.top;
         }
         if (widget.style.margin.right) {
-            div.style.marginRight = widget.style.margin.right
+            div.style.marginRight = widget.style.margin.right;
         }
         if (widget.style.margin.bottom) {
-            div.style.marginBottom = widget.style.margin.bottom
+            div.style.marginBottom = widget.style.margin.bottom;
         }
         if (widget.style.margin.left) {
-            div.style.marginLeft = widget.style.margin.left
+            div.style.marginLeft = widget.style.margin.left;
         }
         if (widget.style.margin.total) {
-            div.style.margin = widget.style.margin.total
+            div.style.margin = widget.style.margin.total;
         }
     }
 
     /* WIDTH */
     if (widget.style.width) {
-        div.style.width = widget.style.width
+        div.style.width = widget.style.width;
     }
 
     /* HEIGHT */
     if (widget.style.height) {
-        div.style.height = widget.style.height
+        div.style.height = widget.style.height;
     }
 
     /* BACKGROUND */
     if (widget.style.background) {
-        div.style.background = widget.style.background
+        div.style.background = widget.style.background;
     }
 
     /* TEXT-COLOR */
     if (widget.style.textColor) {
-        div.style.color = widget.style.textColor
+        div.style.color = widget.style.textColor;
     }
 
     /* FONT-FAMILY */
     if (widget.style.fontFamily) {
-        div.style.fontFamily = widget.style.textColor
+        div.style.fontFamily = widget.style.textColor;
     }
 
     /* FONT-SIZE */
     if (widget.style.fontSize) {
-        div.style.fontSize = widget.style.fontSize
+        div.style.fontSize = widget.style.fontSize;
     }
 
     /* BORDERS */
     if (widget.style.borders) {
         switch (widget.style.borders.type) {
             case 0:
-                div.style.border = widget.style.borders.style
+                div.style.border = widget.style.borders.style;
                 div.style.borderWidth = widget.style.borders.width;
                 div.style.borderColor = widget.style.borders.color;
 
             case 1:
-                div.style.borderLeft = widget.style.borders.style
+                div.style.borderLeft = widget.style.borders.style;
                 div.style.borderWidth = widget.style.borders.width;
                 div.style.borderColor = widget.style.borders.color;
 
             case 2:
-                div.style.borderRight = widget.style.borders.style
+                div.style.borderRight = widget.style.borders.style;
                 div.style.borderWidth = widget.style.borders.width;
                 div.style.borderColor = widget.style.borders.color;
 
             case 3:
-                div.style.borderTop = widget.style.borders.style
+                div.style.borderTop = widget.style.borders.style;
                 div.style.borderWidth = widget.style.borders.width;
                 div.style.borderColor = widget.style.borders.color;
 
             case 4:
-                div.style.borderBottom = widget.style.borders.style
+                div.style.borderBottom = widget.style.borders.style;
                 div.style.borderWidth = widget.style.borders.width;
                 div.style.borderColor = widget.style.borders.color;
         }
