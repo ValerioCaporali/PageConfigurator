@@ -159,7 +159,7 @@ var calculateRows = (widgets) => {
 var calculateColumns = (widgets) => {
     var totCols = 0;
     widgets.forEach((widget) => {
-        var currentSpan = (widget.columnSpan == 0) ? 1 : widget.columnSpan
+        var currentSpan = (widget.columnSpan == 0) ? 1 : widget.columnSpan;
         totCols = ((widget.column + currentSpan) > totCols) ? (widget.column + currentSpan) : totCols
     })
     return (totCols == 0) ? (totCols + 1) : totCols;
@@ -169,6 +169,12 @@ var handleWidget = (widget) => {
     var elem = handelWidgetType(widget);
     if (widget.style != null) {
         elem = handleWidgetStyle(widget, elem);
+    } else {
+        if (widget.type == 5) {
+            elem.classList.add('map-container');
+            elem.style.height = "500px";
+            elem.style.width = "500px";
+        }
     }
     return elem;
 }
@@ -201,7 +207,7 @@ var handelWidgetType = (widget) => {
     }
 }
 
- /* WIDGET DI TIPO TESTO */
+/* WIDGET DI TIPO TESTO */
 var handleTextWidget = (widget) => {
     var div = document.createElement("div");
     div.innerHTML = widget.content.text.trim()
@@ -230,14 +236,14 @@ var handleGalleryWidget = (widget) => {
     }, 1000)
     galleryContainer.appendChild(div);
     setTimeout(() => {
-            if (widget.text) {
-                text = document.createElement("div");
-                text.innerHTML = widget.text.value.trim();
-                handelTextPosition(widget, text);
-                galleryContainer.appendChild(text);
+        if (widget.text) {
+            text = document.createElement("div");
+            text.innerHTML = widget.text.value.trim();
+            handelTextPosition(widget, text);
+            galleryContainer.appendChild(text);
 
-            }
-        }, 2000)
+        }
+    }, 2000)
     return galleryContainer;
 }
 
@@ -365,11 +371,11 @@ var handleScrollablePdf = (widget, direction) => {
     var calculateViewport = (widget, page, canvasContainer) => {
         var viewPort;
         if (widget.style.height || widget.style.width)
-            // calcolo le dimensoini in rapporto alla dimensione del div container
+        // calcolo le dimensoini in rapporto alla dimensione del div container
             viewPort = page.getViewport({ scale: canvasContainer.clientWidth / page.getViewport({ scale: 1 }).width });
         else {
             // dimensioni di default
-            viewPort = page.getViewport({scale: 1})
+            viewPort = page.getViewport({ scale: 1 })
         }
         return viewPort;
     }
@@ -401,8 +407,7 @@ var renderPdfPage = (pagePending = null, pdfSettings) => {
     var pageToRender;
     if (pagePending) {
         pageToRender = pagePending;
-    }
-    else {
+    } else {
         pageToRender = pdfSettings.pageNum;
     }
 
@@ -473,7 +478,7 @@ const zoomOutPdf = (pdfSetting) => {
     displayPage(pdfSetting);
 }
 
-// Create pdf navbar
+// Create pdf toolbar
 var createpdfToolbar = () => {
     var pdfToolbar = document.createElement('div');
     pdfToolbar.className = 'pdf-toolbar'
@@ -481,27 +486,22 @@ var createpdfToolbar = () => {
     var nextButton = document.createElement('button');
     var zoomInButton = document.createElement('button');
     var zoomOutButton = document.createElement('button');
-    var renderAllPagesButton = document.createElement('button');
     prevButton.id = 'prev-page';
     nextButton.id = 'next-page';
     zoomInButton.id = 'zoom-in';
     zoomOutButton.id = 'zoom-out';
-    renderAllPagesButton.id = 'all-pages-render';
     var prevIcon = document.createElement('i');
     var nextIcon = document.createElement('i');
     var zoomInIcon = document.createElement('i');
     var zoomOutIcon = document.createElement('i');
-    var allPagesIcons = document.createElement('i');
     prevIcon.className = "fas fa-arrow-circle-left";
     nextIcon.className = "fas fa-arrow-circle-right";
     zoomInIcon.className = "fas fa-plus-circle";
     zoomOutIcon.className = "fas fa-minus-circle";
-    allPagesIcons.className = "fas fa-pagelines";
     prevButton.appendChild(prevIcon);
     nextButton.appendChild(nextIcon);
     zoomInButton.appendChild(zoomInIcon);
     zoomOutButton.appendChild(zoomOutIcon);
-    renderAllPagesButton.appendChild(allPagesIcons);
     var currPage = document.createElement('span');
     currPage.className = "pdf-page-info";
     currPage.id = 'page-num';
@@ -510,13 +510,28 @@ var createpdfToolbar = () => {
     pdfToolbar.appendChild(currPage);
     pdfToolbar.appendChild(zoomInButton);
     pdfToolbar.appendChild(zoomOutButton);
-    pdfToolbar.appendChild(renderAllPagesButton);
     return pdfToolbar;
 }
 
 /* WIDGET DI TIPO MAP */
 var handleMapWidget = (widget) => {
+    var mapContainer = document.createElement('div');
+    var mapOptions;
+    const position = { lat: widget.content.latitude, lng: widget.content.longitude }
+    mapContainer.id = "map";
+    mapOptions = {
+        center: position,
+        zoom: widget.content.zoom ? widget.content.zoom : 17
+    };
 
+    var map = new google.maps.Map(mapContainer, mapOptions);
+
+    var marker = new google.maps.Marker({
+        position: position,
+        map
+    });
+
+    return mapContainer;
 }
 
 var handleVideo = (widget, video_url, video) => {
