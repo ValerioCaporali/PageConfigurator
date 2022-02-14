@@ -198,12 +198,15 @@ var handelWidgetType = (widget) => {
     }
 }
 
+ /* WIDGET DI TIPO TESTO */
 var handleTextWidget = (widget) => {
     var div = document.createElement("div");
     div.innerHTML = widget.content.text.trim()
     return div;
 }
 
+
+/* WIDGET DI TIPO GALLERIA */
 var handleGalleryWidget = (widget) => {
     var galleryContainer = document.createElement("div");
     var div = document.createElement("div");
@@ -235,6 +238,8 @@ var handleGalleryWidget = (widget) => {
     return galleryContainer;
 }
 
+
+/* WIDGET DI TIPO VIDEO */
 var handleVideoWidget = (widget) => {
     var videoContainer = document.createElement("div");
     videoContainer.id = "video-container";
@@ -267,9 +272,11 @@ var handleVideoWidget = (widget) => {
     return videoContainer;
 }
 
+
+/* WIDGET DI TIPO PDF */
 var handlePdfWidget = (widget) => {
     scrollable = true;
-    direction = 'y';
+    direction = 'x';
     if (scrollable) {
         var canvasContainer = handleScrollablePdf(widget, direction);
         return canvasContainer;
@@ -310,9 +317,6 @@ var handlePdfWidget = (widget) => {
                 document.querySelector('#zoom-in').addEventListener('click', () => {
                     zoomInPdf(pdfSettings);
                 });
-                document.querySelector('#all-pages-render').addEventListener('click', () => {
-                    renderAllPdfPages(pdfSettings);
-                });
 
                 renderPdfPage(null, pdfSettings);
             }, 200);
@@ -330,7 +334,6 @@ var handleScrollablePdf = (widget, direction) => {
     var canvasContainer = document.createElement('div');
     canvasContainer.classList.add(direction === 'y' ? 'vertical-pdf-scroll-container' : 'horizontal-pdf-scroll');
     canvasContainer.id = "canvas-container";
-    // canvasContainer.style.height = "max-content";
     const url = '../docs/pdf.pdf';
     options = { scale: 1 };
 
@@ -349,7 +352,6 @@ var handleScrollablePdf = (widget, direction) => {
         setTimeout(() => {
             canvas.height = viewPort.height;
             canvas.width = viewPort.width;
-            // wrapper.appendChild(canvas);
             canvasContainer.appendChild(canvas);
             page.render(renderContext).promise.then(() => {
                 console.log("PDF PAGE RENDERED");
@@ -360,9 +362,10 @@ var handleScrollablePdf = (widget, direction) => {
     var calculateViewport = (widget, page, canvasContainer) => {
         var viewPort;
         if (widget.style.height || widget.style.width)
+            // calcolo le dimensoini in rapporto alla dimensione del div container
             viewPort = page.getViewport({ scale: canvasContainer.clientWidth / page.getViewport({ scale: 1 }).width });
         else {
-            console.log("default dimensions")
+            // dimensioni di default
             viewPort = page.getViewport({scale: 1})
         }
         return viewPort;
@@ -424,12 +427,6 @@ var renderPdfPage = (pagePending = null, pdfSettings) => {
     });
 }
 
-var renderAllPdfPages = (pdfSettings) => {
-    for (var i = 1; i < pdfSettings.pdfDoc.numPages; i++) {
-        renderPdfPage(i, pdfSettings);
-    }
-}
-
 // Checks for pages rendering
 const queueRenderPage = (pdfSettings, num) => {
     if (pdfSettings.pageIsRendering) {
@@ -457,20 +454,20 @@ const showNextPage = (pdfSettings) => {
 
 var displayPage = (pdfSettings) => {
     pdfSettings.pdfDoc.getPage(pdfSettings.pageNum).then(() => {
-        renderPdfPage(null, pdfSettings)
+        renderPdfPage(null, pdfSettings);
     })
 }
 
 const zoomInPdf = (pdfSetting) => {
     pdfSetting.scale = pdfSetting.scale + 0.25;
-    displayPage(pdfSetting)
+    displayPage(pdfSetting);
 }
 
 const zoomOutPdf = (pdfSetting) => {
     if (pdfSetting.scale <= 0.25)
         return;
     pdfSetting.scale = pdfSetting.scale - 0.25;
-    displayPage(pdfSetting)
+    displayPage(pdfSetting);
 }
 
 // Create pdf navbar
@@ -512,6 +509,11 @@ var createpdfToolbar = () => {
     pdfToolbar.appendChild(zoomOutButton);
     pdfToolbar.appendChild(renderAllPagesButton);
     return pdfToolbar;
+}
+
+/* WIDGET DI TIPO MAP */
+var handleTourWidget = () => {
+
 }
 
 var handleVideo = (widget, video_url, video) => {
@@ -561,96 +563,96 @@ var handleWidgetStyle = (widget, div) => {
     /* PADDING */
     if (widget.style.padding) {
         if (widget.style.padding.top) {
-            div.style.paddingTop = widget.style.padding.top
+            div.style.paddingTop = widget.style.padding.top;
         }
         if (widget.style.padding.right) {
-            div.style.paddingRight = widget.style.padding.right
+            div.style.paddingRight = widget.style.padding.right;
         }
         if (widget.style.padding.bottom) {
-            div.style.paddingBottom = widget.style.padding.bottom
+            div.style.paddingBottom = widget.style.padding.bottom;
         }
         if (widget.style.padding.left) {
-            div.style.paddingLeft = widget.style.padding.left
+            div.style.paddingLeft = widget.style.padding.left;
         }
         if (widget.style.padding.total) {
-            div.style.padding = widget.style.padding.total
+            div.style.padding = widget.style.padding.total;
         }
     }
 
     /* MARGIN */
     if (widget.style.margin) {
         if (widget.style.margin.top) {
-            div.style.marginTop = widget.style.margin.top
+            div.style.marginTop = widget.style.margin.top;
         }
         if (widget.style.margin.right) {
-            div.style.marginRight = widget.style.margin.right
+            div.style.marginRight = widget.style.margin.right;
         }
         if (widget.style.margin.bottom) {
-            div.style.marginBottom = widget.style.margin.bottom
+            div.style.marginBottom = widget.style.margin.bottom;
         }
         if (widget.style.margin.left) {
-            div.style.marginLeft = widget.style.margin.left
+            div.style.marginLeft = widget.style.margin.left;
         }
         if (widget.style.margin.total) {
-            div.style.margin = widget.style.margin.total
+            div.style.margin = widget.style.margin.total;
         }
     }
 
     /* WIDTH */
     if (widget.style.width) {
-        div.style.width = widget.style.width
+        div.style.width = widget.style.width;
     }
 
     /* HEIGHT */
     if (widget.style.height) {
-        div.style.height = widget.style.height
+        div.style.height = widget.style.height;
     }
 
     /* BACKGROUND */
     if (widget.style.background) {
-        div.style.background = widget.style.background
+        div.style.background = widget.style.background;
     }
 
     /* TEXT-COLOR */
     if (widget.style.textColor) {
-        div.style.color = widget.style.textColor
+        div.style.color = widget.style.textColor;
     }
 
     /* FONT-FAMILY */
     if (widget.style.fontFamily) {
-        div.style.fontFamily = widget.style.textColor
+        div.style.fontFamily = widget.style.textColor;
     }
 
     /* FONT-SIZE */
     if (widget.style.fontSize) {
-        div.style.fontSize = widget.style.fontSize
+        div.style.fontSize = widget.style.fontSize;
     }
 
     /* BORDERS */
     if (widget.style.borders) {
         switch (widget.style.borders.type) {
             case 0:
-                div.style.border = widget.style.borders.style
+                div.style.border = widget.style.borders.style;
                 div.style.borderWidth = widget.style.borders.width;
                 div.style.borderColor = widget.style.borders.color;
 
             case 1:
-                div.style.borderLeft = widget.style.borders.style
+                div.style.borderLeft = widget.style.borders.style;
                 div.style.borderWidth = widget.style.borders.width;
                 div.style.borderColor = widget.style.borders.color;
 
             case 2:
-                div.style.borderRight = widget.style.borders.style
+                div.style.borderRight = widget.style.borders.style;
                 div.style.borderWidth = widget.style.borders.width;
                 div.style.borderColor = widget.style.borders.color;
 
             case 3:
-                div.style.borderTop = widget.style.borders.style
+                div.style.borderTop = widget.style.borders.style;
                 div.style.borderWidth = widget.style.borders.width;
                 div.style.borderColor = widget.style.borders.color;
 
             case 4:
-                div.style.borderBottom = widget.style.borders.style
+                div.style.borderBottom = widget.style.borders.style;
                 div.style.borderWidth = widget.style.borders.width;
                 div.style.borderColor = widget.style.borders.color;
         }
