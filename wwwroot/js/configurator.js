@@ -191,6 +191,9 @@ var handelWidgetType = (widget) => {
             var pdfContainer = handlePdfWidget(widget);
             return pdfContainer;
             break;
+        case 5:
+            var mapContainer = handleMapWidget(widget);
+            return mapContainer;
         default:
             var div = document.createElement("div");
             div.innerHTML = "widget to handle";
@@ -512,7 +515,7 @@ var createpdfToolbar = () => {
 }
 
 /* WIDGET DI TIPO MAP */
-var handleTourWidget = () => {
+var handleMapWidget = (widget) => {
 
 }
 
