@@ -517,9 +517,41 @@ var createpdfToolbar = () => {
 }
 
 /* WIDGET DI TIPO TOUR */
-var handleTourWidget = (widget) => {
-    console.log("widget di tipo tour");
+var handleTourWidget =  (widget) => {
+    var tourContainer = document.createElement("div");
+    var tourIframe = document.createElement("iframe");
+    tourIframe.src = "https://my.matterport.com/show/?m=xx7GChUUBii";
+    tourIframe.allowFullscreen = true;
+    tourIframe.style.width = widget.content.width ? widget.content.width : "1000px";
+    tourIframe.style.height = widget.content.height ? widget.content.height : "600px";
+    if (widget.content.responsive)
+        tourIframe.style.width = "100%";
+    tourContainer.appendChild(tourIframe);
+    return tourContainer;
+
+/*    var sdkKey = 'abc123456789';
+    var tourIframe = document.createElement('iframe');
+
+    try {
+        var mpSdk = await window.MP_SDK.connect(
+            tourIframe,
+            sdkKey,
+            ''
+        );
+        onShowcaseConnect(mpSdk);
+    } catch (e) {
+        console.log(e)
+    }*/
 }
+
+/*var onShowcaseConnect = async (mpSdk) => {
+    try {
+        var modeldData = await mpSdk.Model.getData();
+        console.log('Model sid: ' + modeldData.sid);
+    } catch (e) {
+        console.log(e);
+    }
+}*/
 
 /* WIDGET DI TIPO MAP */
 var handleMapWidget = (widget) => {
