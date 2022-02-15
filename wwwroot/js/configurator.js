@@ -23,8 +23,6 @@ let selectedPage;
     console.log(err);
 });
 
-
-// function to populate pages list in sidebar
 var populatePageList = (pageType, pages) => {
     var list;
     if (pageType == "Home") {
@@ -52,8 +50,6 @@ var populatePageList = (pageType, pages) => {
     } else console.log("Unexpected parameter");
 }
 
-
-// use this to get a specific page
 var openPageStream = (index, pageType) => {
     if (pageType == "Home") {
         selectedHomePage = homePages[index];
@@ -64,8 +60,6 @@ var openPageStream = (index, pageType) => {
     }
 }
 
-
-// use this to show page preview (home and normal pages)
 var showPagePreview = (page) => {
     document.getElementById("demo-container").style.display = "block";
     var title = document.getElementById("page-title");
@@ -210,15 +204,12 @@ var handelWidgetType = (widget) => {
     }
 }
 
-/* WIDGET DI TIPO TESTO */
 var handleTextWidget = (widget) => {
     var div = document.createElement("div");
     div.innerHTML = widget.content.text.trim()
     return div;
 }
 
-
-/* WIDGET DI TIPO GALLERIA */
 var handleGalleryWidget = (widget) => {
     var galleryContainer = document.createElement("div");
     var div = document.createElement("div");
@@ -250,11 +241,7 @@ var handleGalleryWidget = (widget) => {
     return galleryContainer;
 }
 
-
-/* WIDGET DI TIPO VIDEO */
 var handleVideoWidget = (widget) => {
-    var videoContainer = document.createElement("div");
-    videoContainer.id = "video-container";
     var video = buildIframe(widget);
     const regExp = "/^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/";
     var src = "https://www.youtube.com/embed/qC0vDKVPCrw";
@@ -270,20 +257,11 @@ var handleVideoWidget = (widget) => {
     } else {
         video.src = video_url;
     }
-    if (widget.content.width)
-        video.style.width = widget.content.width;
-    if (widget.content.height)
-        video.style.height = widget.content.height;
-    if (widget.content.responsive)
-        video.style.width = "100%";
-    videoContainer.appendChild(video);
     return video;
 }
 
-
-/* WIDGET DI TIPO PDF */
 var handlePdfWidget = (widget) => {
-    scrollable = true;
+    scrollable = false;
     direction = 'x';
     if (scrollable) {
         var canvasContainer = handleScrollablePdf(widget, direction);
@@ -311,8 +289,6 @@ var handlePdfWidget = (widget) => {
         pdfjsLib.getDocument(url).promise.then(pdfDoc_ => {
             pdfSettings.pdfDoc = pdfDoc_;
             setTimeout(() => {
-
-                // next and previous pdf page buttons
                 document.querySelector('#prev-page').addEventListener('click', () => {
                     showPrevPage(pdfSettings)
                 });
@@ -365,35 +341,30 @@ var handleScrollablePdf = (widget, direction) => {
                 console.log("PDF PAGE RENDERED");
             })
         }, 200);
-    }
+    };
 
     var calculateViewport = (widget, page, canvasContainer) => {
         var viewPort;
         if (widget.style.height || widget.style.width)
-            // calcolo le dimensoini in rapporto alla dimensione del div container
             viewPort = page.getViewport({scale: canvasContainer.clientWidth / page.getViewport({scale: 1}).width});
         else {
-            // dimensioni di default
             viewPort = page.getViewport({scale: 1})
         }
         return viewPort;
-    }
+    };
 
     var renderScrollablePdfPages = (pdfDoc) => {
         for (var num = 1; num <= pdfDoc.numPages; num++) {
             pdfDoc.getPage(num).then(page => {
                 renderScrollablePdfPage(page);
             })
-        }
-        canvasContainer.addEventListener('scroll', (event) => {
-            console.log("scroll");
-        })
+        };
     }
 
     pdfjsLib.getDocument(url).promise.then(pdfDoc_ => {
         setTimeout(() => {
             renderScrollablePdfPages(pdfDoc_);
-        }, 600);
+        }, 200);
     });
 
     return canvasContainer;
@@ -429,12 +400,10 @@ var renderPdfPage = (pagePending = null, pdfSettings) => {
             }
         });
 
-        // output current page
         document.getElementById('page-num').textContent = pdfSettings.pageNum + ' / ' + pdfSettings.pdfDoc.numPages;
     });
 }
 
-// Checks for pages rendering
 const queueRenderPage = (pdfSettings, num) => {
     if (pdfSettings.pageIsRendering) {
         pdfSettings.pageNumIsPending = num;
@@ -443,7 +412,6 @@ const queueRenderPage = (pdfSettings, num) => {
     }
 }
 
-// Show preview pdf page
 const showPrevPage = (pdfSettings) => {
     if (pdfSettings.pageNum <= 1)
         return
@@ -451,7 +419,6 @@ const showPrevPage = (pdfSettings) => {
     queueRenderPage(pdfSettings, pdfSettings.pageNum);
 }
 
-// Show next pdf page
 const showNextPage = (pdfSettings) => {
     if (pdfSettings.pageNum >= pdfSettings.pdfDoc.numPages)
         return;
@@ -477,22 +444,21 @@ const zoomOutPdf = (pdfSetting) => {
     displayPage(pdfSetting);
 }
 
-// Create pdf toolbar
 var createpdfToolbar = () => {
     var pdfToolbar = document.createElement('div');
-    pdfToolbar.className = 'pdf-toolbar'
-    var prevButton = document.createElement('button');
-    var nextButton = document.createElement('button');
-    var zoomInButton = document.createElement('button');
-    var zoomOutButton = document.createElement('button');
+    pdfToolbar.className = 'pdf-toolbar';
+    var prevButton = document.createElement('button'),
+        nextButton = document.createElement('button'),
+        zoomInButton = document.createElement('button'),
+        zoomOutButton = document.createElement('button');
     prevButton.id = 'prev-page';
     nextButton.id = 'next-page';
     zoomInButton.id = 'zoom-in';
     zoomOutButton.id = 'zoom-out';
-    var prevIcon = document.createElement('i');
-    var nextIcon = document.createElement('i');
-    var zoomInIcon = document.createElement('i');
-    var zoomOutIcon = document.createElement('i');
+    var prevIcon = document.createElement('i'),
+        nextIcon = document.createElement('i'),
+        zoomInIcon = document.createElement('i'),
+        zoomOutIcon = document.createElement('i');
     prevIcon.className = "fas fa-arrow-circle-left";
     nextIcon.className = "fas fa-arrow-circle-right";
     zoomInIcon.className = "fas fa-plus-circle";
@@ -504,15 +470,10 @@ var createpdfToolbar = () => {
     var currPage = document.createElement('span');
     currPage.className = "pdf-page-info";
     currPage.id = 'page-num';
-    pdfToolbar.appendChild(prevButton);
-    pdfToolbar.appendChild(nextButton);
-    pdfToolbar.appendChild(currPage);
-    pdfToolbar.appendChild(zoomInButton);
-    pdfToolbar.appendChild(zoomOutButton);
+    pdfToolbar.append(prevButton, nextButton, currPage, zoomInButton, zoomOutButton);
     return pdfToolbar;
 }
 
-/* WIDGET DI TIPO TOUR */
 var handleTourWidget = (widget) => {
     var sdkKey = 'qeyy42zwyfu5fwkrxas6i6qqd';
     var tourIframe = buildIframe(widget);
@@ -537,18 +498,20 @@ var handleTourWidget = (widget) => {
     return tourIframe;
 }
 
-/* FUNZIONE PER CREARE GLI IFRAME */
 var buildIframe = (widget) => {
+    console.log(widget.type)
     var iframe = document.createElement('iframe');
     iframe.src = "https://my.matterport.com/show/?m=xx7GChUUBii";
     iframe.allowFullscreen = true;
-    iframe.style.width = widget.content.width ? widget.content.width : "100%";
+    iframe.style.width = widget.content.width ? widget.content.width : (widget.type == 2 ? "auto" : "100%");
     iframe.style.height = widget.content.height ? widget.content.height : "600px";
+    if (widget.content.responsive)
+        iframe.style.width = "100%";
     iframe.style.border = "none";
+    console.log(iframe);
     return iframe;
 }
 
-/* WIDGET DI TIPO MAP */
 var handleMapWidget = (widget) => {
     var mapContainer = document.createElement('div');
     var mapOptions;
@@ -613,103 +576,101 @@ var handleWidgetStyle = (widget, div) => {
 
     div.style.position = "relative";
 
-    /* PADDING */
-    if (widget.style.padding) {
-        if (widget.style.padding.top) {
-            div.style.paddingTop = widget.style.padding.top;
-        }
-        if (widget.style.padding.right) {
-            div.style.paddingRight = widget.style.padding.right;
-        }
-        if (widget.style.padding.bottom) {
-            div.style.paddingBottom = widget.style.padding.bottom;
-        }
-        if (widget.style.padding.left) {
-            div.style.paddingLeft = widget.style.padding.left;
-        }
-        if (widget.style.padding.total) {
-            div.style.padding = widget.style.padding.total;
-        }
-    }
+    if (widget.style.padding)
+        div = handlePadding(widget, div);
 
-    /* MARGIN */
-    if (widget.style.margin) {
-        if (widget.style.margin.top) {
-            div.style.marginTop = widget.style.margin.top;
-        }
-        if (widget.style.margin.right) {
-            div.style.marginRight = widget.style.margin.right;
-        }
-        if (widget.style.margin.bottom) {
-            div.style.marginBottom = widget.style.margin.bottom;
-        }
-        if (widget.style.margin.left) {
-            div.style.marginLeft = widget.style.margin.left;
-        }
-        if (widget.style.margin.total) {
-            div.style.margin = widget.style.margin.total;
-        }
-    }
+    if (widget.style.margin)
+        div = handleMargin(widget, div);
 
-    /* WIDTH */
-    if (widget.style.width) {
+    if (widget.style.width)
         div.style.width = widget.style.width;
-    }
 
-    /* HEIGHT */
-    if (widget.style.height) {
+    if (widget.style.height)
         div.style.height = widget.style.height;
-    }
 
-    /* BACKGROUND */
-    if (widget.style.background) {
+    if (widget.style.background)
         div.style.background = widget.style.background;
-    }
 
-    /* TEXT-COLOR */
-    if (widget.style.textColor) {
+    if (widget.style.textColor)
         div.style.color = widget.style.textColor;
-    }
 
-    /* FONT-FAMILY */
-    if (widget.style.fontFamily) {
+    if (widget.style.fontFamily)
         div.style.fontFamily = widget.style.textColor;
-    }
 
-    /* FONT-SIZE */
-    if (widget.style.fontSize) {
+    if (widget.style.fontSize)
         div.style.fontSize = widget.style.fontSize;
+
+
+    if (widget.style.borders)
+        div = handelBorders(widget, div);
+
+    return div;
+}
+
+var handlePadding = (widget, div) => {
+    if (widget.style.padding.top) {
+        div.style.paddingTop = widget.style.padding.top;
     }
+    if (widget.style.padding.right) {
+        div.style.paddingRight = widget.style.padding.right;
+    }
+    if (widget.style.padding.bottom) {
+        div.style.paddingBottom = widget.style.padding.bottom;
+    }
+    if (widget.style.padding.left) {
+        div.style.paddingLeft = widget.style.padding.left;
+    }
+    if (widget.style.padding.total) {
+        div.style.padding = widget.style.padding.total;
+    }
+    return div;
+}
 
-    /* BORDERS */
-    if (widget.style.borders) {
-        switch (widget.style.borders.type) {
-            case 0:
-                div.style.border = widget.style.borders.style;
-                div.style.borderWidth = widget.style.borders.width;
-                div.style.borderColor = widget.style.borders.color;
+var handleMargin = (widget, div) => {
+    if (widget.style.margin.top) {
+        div.style.marginTop = widget.style.margin.top;
+    }
+    if (widget.style.margin.right) {
+        div.style.marginRight = widget.style.margin.right;
+    }
+    if (widget.style.margin.bottom) {
+        div.style.marginBottom = widget.style.margin.bottom;
+    }
+    if (widget.style.margin.left) {
+        div.style.marginLeft = widget.style.margin.left;
+    }
+    if (widget.style.margin.total) {
+        div.style.margin = widget.style.margin.total;
+    }
+    return div;
+}
 
-            case 1:
-                div.style.borderLeft = widget.style.borders.style;
-                div.style.borderWidth = widget.style.borders.width;
-                div.style.borderColor = widget.style.borders.color;
+var handelBorders = (widget, div) => {
+    switch (widget.style.borders.type) {
+        case 0:
+            div.style.border = widget.style.borders.style;
+            div.style.borderWidth = widget.style.borders.width;
+            div.style.borderColor = widget.style.borders.color;
 
-            case 2:
-                div.style.borderRight = widget.style.borders.style;
-                div.style.borderWidth = widget.style.borders.width;
-                div.style.borderColor = widget.style.borders.color;
+        case 1:
+            div.style.borderLeft = widget.style.borders.style;
+            div.style.borderWidth = widget.style.borders.width;
+            div.style.borderColor = widget.style.borders.color;
 
-            case 3:
-                div.style.borderTop = widget.style.borders.style;
-                div.style.borderWidth = widget.style.borders.width;
-                div.style.borderColor = widget.style.borders.color;
+        case 2:
+            div.style.borderRight = widget.style.borders.style;
+            div.style.borderWidth = widget.style.borders.width;
+            div.style.borderColor = widget.style.borders.color;
 
-            case 4:
-                div.style.borderBottom = widget.style.borders.style;
-                div.style.borderWidth = widget.style.borders.width;
-                div.style.borderColor = widget.style.borders.color;
-        }
+        case 3:
+            div.style.borderTop = widget.style.borders.style;
+            div.style.borderWidth = widget.style.borders.width;
+            div.style.borderColor = widget.style.borders.color;
 
+        case 4:
+            div.style.borderBottom = widget.style.borders.style;
+            div.style.borderWidth = widget.style.borders.width;
+            div.style.borderColor = widget.style.borders.color;
     }
 
     return div;
