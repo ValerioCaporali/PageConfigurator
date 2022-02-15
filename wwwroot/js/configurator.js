@@ -5,7 +5,7 @@ let pages;
 let selectedHomePage;
 let selectedPage;
 
-(async() => {
+(async () => {
     var response = await fetch(base_url + 'HomePages');
     homePages = await response.json();
     document.getElementById('home-pages-number').innerHTML = homePages.length;
@@ -14,7 +14,7 @@ let selectedPage;
     console.log(err);
 });
 
-(async() => {
+(async () => {
     var response = await fetch(base_url + 'Pages');
     pages = await response.json();
     document.getElementById('pages-number').innerHTML = pages.length;
@@ -90,7 +90,7 @@ var createOptions = (selectId, currentValue) => {
     }
     var select = document.getElementById(selectId);
     if (selectId == "language") {
-        languages.forEach(async function(language) {
+        languages.forEach(async function (language) {
             var option = document.createElement("option");
             option.text = language;
             if (currentValue == language && currentValue != false) {
@@ -100,7 +100,7 @@ var createOptions = (selectId, currentValue) => {
         });
     }
     if (selectId == "default") {
-        isDefault.forEach(async function(value) {
+        isDefault.forEach(async function (value) {
             var option = document.createElement("option");
             option.text = value;
             if (currentValue == value) {
@@ -117,7 +117,7 @@ var fillPage = (widgets) => {
     var totCols = calculateColumns(widgets)
     var rows = new Array();
     var cols = new Array();
-    var object = { ratio: 1 };
+    var object = {ratio: 1};
     for (var i = 0; i < totRows; i++) {
         rows.push(object);
     }
@@ -197,6 +197,9 @@ var handelWidgetType = (widget) => {
             var pdfContainer = handlePdfWidget(widget);
             return pdfContainer;
             break;
+        case 4:
+            var tourContainer = handleTourWidget(widget);
+            return tourContainer;
         case 5:
             var mapContainer = handleMapWidget(widget);
             return mapContainer;
@@ -344,7 +347,7 @@ var handleScrollablePdf = (widget, direction) => {
     canvasContainer.classList.add(direction === 'y' ? 'vertical-pdf-scroll-container' : 'horizontal-pdf-scroll');
     canvasContainer.id = "canvas-container";
     const url = '../docs/pdf.pdf';
-    options = { scale: 1 };
+    options = {scale: 1};
 
     var renderScrollablePdfPage = (page) => {
         var viewPort = calculateViewport(widget, page, canvasContainer);
@@ -371,11 +374,11 @@ var handleScrollablePdf = (widget, direction) => {
     var calculateViewport = (widget, page, canvasContainer) => {
         var viewPort;
         if (widget.style.height || widget.style.width)
-        // calcolo le dimensoini in rapporto alla dimensione del div container
-            viewPort = page.getViewport({ scale: canvasContainer.clientWidth / page.getViewport({ scale: 1 }).width });
+            // calcolo le dimensoini in rapporto alla dimensione del div container
+            viewPort = page.getViewport({scale: canvasContainer.clientWidth / page.getViewport({scale: 1}).width});
         else {
             // dimensioni di default
-            viewPort = page.getViewport({ scale: 1 })
+            viewPort = page.getViewport({scale: 1})
         }
         return viewPort;
     }
@@ -412,7 +415,7 @@ var renderPdfPage = (pagePending = null, pdfSettings) => {
     }
 
     pdfSettings.pdfDoc.getPage(pageToRender).then(page => {
-        var viewport = page.getViewport({ scale });
+        var viewport = page.getViewport({scale});
         pdfSettings.myCanvas.height = viewport.height;
         pdfSettings.myCanvas.width = viewport.width;
 
@@ -513,11 +516,42 @@ var createpdfToolbar = () => {
     return pdfToolbar;
 }
 
+/* WIDGET DI TIPO TOUR */
+var handleTourWidget = (widget) => {
+    var sdkKey = 'qeyy42zwyfu5fwkrxas6i6qqd';
+    var tourIframe = document.createElement('iframe');
+    tourIframe.src = "https://my.matterport.com/show/?m=xx7GChUUBii";
+    tourIframe.allow = "xr-spatial-tracking";
+    tourIframe.allowFullscreen = true;
+    tourIframe.style.width = widget.content.width ? widget.content.width : "100%";
+    // tourIframe.style.height = widget.content.height ? widget.content.height : "300px";
+    tourIframe.style.border = "none";
+    if (widget.content.responsive)
+        tourIframe.style.width = "100%";
+
+    setTimeout(() => {
+        tourIframe.addEventListener('load', async function () {
+            let sdk;
+            try {
+                sdk = await tourIframe.contentWindow.MP_SDK.connect(
+                    tourIframe,
+                    'qeyy42zwyfu5fwkrxas6i6qqd',
+                    '3.8'
+                );
+            } catch (e) {
+                console.log(e)
+            }
+        }, 1000)
+    });
+
+    return tourIframe;
+}
+
 /* WIDGET DI TIPO MAP */
 var handleMapWidget = (widget) => {
     var mapContainer = document.createElement('div');
     var mapOptions;
-    const position = { lat: widget.content.latitude, lng: widget.content.longitude }
+    const position = {lat: widget.content.latitude, lng: widget.content.longitude};
     mapContainer.id = "map";
     mapOptions = {
         center: position,

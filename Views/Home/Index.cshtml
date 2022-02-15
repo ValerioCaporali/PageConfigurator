@@ -13,10 +13,6 @@
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-
-    @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous">*@
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <link href="~/css/Sidebar.css" rel="stylesheet" />
     <link href="~/css/style.css" rel="stylesheet" />
@@ -293,84 +289,10 @@
                         <select name="default" id="default"></select>
                     </div>
                 </div>
-                @* <div>
-                    <label class="switch">
-                    <input type="checkbox">
-                    <span class="slider round"></span>
-                    </label>
-                    </div> *@
             </div>
             <div class="demo-container" id="demo-container" style="display: none;">
                 <div id="page" class="page">
                     <div id="responsive-box">
-                        @* <div class="header" data-options="dxItem: {
-                    location: [{
-                        row: 0,
-                        col: 0,
-                        colspan: 3,
-                        screen: 'lg'
-                    }, {
-                        row: 0,
-                        col: 0,
-                        colspan: 2,
-                        screen: 'sm'
-                    }]
-                }">
-                            <p>Header</p>
-                        </div>
-                        <div class="content" data-options="dxItem: {
-                    location: [{
-                        row: 1,
-                        col: 1,
-                        screen: 'lg'
-                    }, {
-                        row: 1,
-                        col: 0,
-                        colspan: 2,
-                        screen: 'sm'
-                    }]
-                }">
-                            <p>Content</p>
-                        </div>
-                        <div class="left-side-bar" data-options="dxItem: {
-                    location: [{
-                        row: 1,
-                        col: 0,
-                        screen: 'lg'
-                    }, {
-                        row: 2,
-                        col: 0,
-                        screen: 'sm'
-                    }]
-                }">
-                            <p>Left Bar</p>
-                        </div>
-                        <div class="right-side-bar" data-options="dxItem: {
-                    location: [{
-                        row: 1,
-                        col: 2,
-                        screen: 'lg'
-                    }, {
-                        row: 2,
-                        col: 1,
-                        screen: 'sm' }]
-                    }">
-                            <p>Right Bar</p>
-                        </div>
-                        <div class="page-footer" data-options="dxItem: {
-                    location: [{
-                        row: 2,
-                        col: 0,
-                        colspan: 3,
-                        screen: 'lg'
-                    }, {
-                        row: 2,
-                        col: 0,
-                        colspan: 2,
-                        screen: 'sm' }]
-                    }">
-                            <p>Footer</p>
-                        </div> *@
                     </div>
                 </div>
             </div>
@@ -382,38 +304,15 @@
 </html>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCowLFqzzxbC6fbqqoWeJb97MeAi3Hvqqo" async></script>
+<script src='https://static.matterport.com/showcase-sdk/latest.js'>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
 <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.12.313/build/pdf.min.js"></script>
 <script src="~/js/configurator.js" asp-append-version="true"></script>
-@* <script>window.jQuery || document.write(decodeURIComponent('%3Cscript
-    src="js/jquery.min.js"%3E%3C/script%3E'))</script> *@
 <script src="https://cdn3.devexpress.com/jslib/21.2.4/js/dx.all.js"></script>
 <script>
-    @* $(() => {
-        $('#responsive-box').dxResponsiveBox({
-            rows: [
-                { ratio: 1 },
-                { ratio: 2 },
-                { ratio: 2, screen: 'xs' },
-                { ratio: 1 },
-            ],
-            cols: [
-                { ratio: 1 },
-                { ratio: 2, screen: 'lg' },
-                { ratio: 1 },
-            ],
-            singleColumnScreen: 'sm',
-            screenByWidth(width) {
-                return (width < 700) ? 'sm' : 'lg';
-            },
-        });
-    }); *@
-
-
-
     $(".sidebar-dropdown > a").click(function () {
         $(".sidebar-submenu").slideUp(200);
         if (
@@ -454,4 +353,3 @@
     });
 
 </script>
-@* @RenderSection("Scripts", required: false) *@

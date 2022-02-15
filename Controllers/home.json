@@ -9094,7 +9094,7 @@
             "Type": 5,
             "Content": {
                 "Latitude": 45.480422,
-                    "Longitude": 9.386593
+                "Longitude": 9.386593
             }
         }, {
             "Row": 2,
@@ -9115,7 +9115,74 @@
             "Column": 0,
             "Type": 0,
             "Content": {
-            "Text": "<img src='https://api.conti-srl.com/api/v1/server/resources/conti/dove-siamo.jpg' style='max-height:250px;object-fit:scale-down;'>"
+                "Text": "<img src='https://api.conti-srl.com/api/v1/server/resources/conti/dove-siamo.jpg' style='max-height:250px;object-fit:scale-down;'>"
+            }
+        }, {
+            "Row": 3,
+            "Column": 1,
+            "Type": 0,
+            "Content": {
+                "Text": "<div style='font-size:20px;padding:10px 0;font-weight:bold;'>Orario di apertura</div><div style='font-size:18px;'>Dal lunedì al venerdì dalle 8:30 alla 12:30 e dalle 13:30 alle 17:30</div><div style='font-size:20px;padding:15px 0;font-weight:bold;'>ESPOSIZIONE / MAGAZZINO</div><div style='font-size:18px;padding-bottom:5px;'><img src='https://api.conti-srl.com/api/v1/server/resources/conti/office.jpg' width='20px'>Via Buozzi, 2 - 20050 Liscate (MI) ITALIA</div><div style='font-size:18px;padding-bottom:5px;'><img src='https://api.conti-srl.com/api/v1/server/resources/conti/office_phone.jpg' width='20px'><a href='tel:+390295350392' style='text-decoration:none;font-size:18px;color:#333;'>+ 39 02 95350392</a></div><div style='font-size:18px;'><img src='https://api.conti-srl.com/api/v1/server/resources/conti/fax.jpg' width='20px'>+ 39 02 95350354</div>"
+            }
+        }, {
+            "Row": 3,
+            "Column": 2,
+            "Type": 0,
+            "Content": {
+                "Text": "<img src='https://api.conti-srl.com/api/v1/server/resources/conti/magazzino.png' style='max-height:250px;object-fit:scale-down;'>"
+            }
+        }]
+    },
+    {
+        "kind": 0,
+        "name": "Pagina prova tour",
+        "default": false,
+        "customerGroupValueOid": null,
+        "widgets": [{
+            "Row": 0,
+            "Column": 0,
+            "ColumnSpan": 3,
+            "Type": 0,
+            "Content": {
+                "Text": "<b>Dove siamo</b>"
+            },
+            "Style": {
+                "Margin": {
+                    "Total": "20px"
+                },
+                "FontSize": "40px"
+            }
+        }, {
+            "Row": 1,
+            "Column": 0,
+            "ColumnSpan": 3,
+            "Type": 4,
+            "Content": {
+                "ShowcaseId": 1
+            },
+            "Style": {
+                "Height": "800px"
+            }
+        }, {
+            "Row": 2,
+            "Column": 0,
+            "ColumnSpan": 3,
+            "Type": 0,
+            "Content": {
+                "Text": "<i>Zona industriale Liscate | Brebemi (A35) uscita Liscate | Teem (A58) uscita Liscate</i>"
+            },
+            "Style": {
+                "Margin": {
+                    "Bottom": "30px"
+                },
+                "FontSize": "16px"
+            }
+        }, {
+            "Row": 3,
+            "Column": 0,
+            "Type": 0,
+            "Content": {
+                "Text": "<img src='https://api.conti-srl.com/api/v1/server/resources/conti/dove-siamo.jpg' style='max-height:250px;object-fit:scale-down;'>"
             }
         }, {
             "Row": 3,
