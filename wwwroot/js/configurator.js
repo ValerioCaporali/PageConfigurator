@@ -107,11 +107,11 @@ var createOptions = (selectId, currentValue) => {
 
 
 var fillPage = (widgets) => {
-    var totRows = calculateRows(widgets)
-    var totCols = calculateColumns(widgets)
-    var rows = new Array();
-    var cols = new Array();
-    var object = {ratio: 1};
+    var totRows = calculateRows(widgets),
+        totCols = calculateColumns(widgets),
+        rows = new Array(),
+        cols = new Array(),
+        object = {ratio: 1};
     for (var i = 0; i < totRows; i++) {
         rows.push(object);
     }
@@ -197,6 +197,9 @@ var handelWidgetType = (widget) => {
         case 5:
             var mapContainer = handleMapWidget(widget);
             return mapContainer;
+        case 102:
+            var gridGalleryContainer = handleGridGalleryWidget(widget);
+            return gridGalleryContainer;
         default:
             var div = document.createElement("div");
             div.innerHTML = "widget to handle";
@@ -498,20 +501,6 @@ var handleTourWidget = (widget) => {
     return tourIframe;
 }
 
-var buildIframe = (widget) => {
-    console.log(widget.type)
-    var iframe = document.createElement('iframe');
-    iframe.src = "https://my.matterport.com/show/?m=xx7GChUUBii";
-    iframe.allowFullscreen = true;
-    iframe.style.width = widget.content.width ? widget.content.width : (widget.type == 2 ? "auto" : "100%");
-    iframe.style.height = widget.content.height ? widget.content.height : "600px";
-    if (widget.content.responsive)
-        iframe.style.width = "100%";
-    iframe.style.border = "none";
-    console.log(iframe);
-    return iframe;
-}
-
 var handleMapWidget = (widget) => {
     var mapContainer = document.createElement('div');
     var mapOptions;
@@ -530,6 +519,22 @@ var handleMapWidget = (widget) => {
     });
 
     return mapContainer;
+}
+
+var handleGridGalleryWidget = (widget) => {
+    var gridGalleryContainer = document.createElement('div');
+    gridGalleryContainer.classList.add('grid-gallery');
+    if (widget.content.source) {
+        widget.content.source.forEach(source => {
+            var imageContainer = document.createElement('div'),
+                img = document.createElement('img');
+            imageContainer.classList.add('image-item');
+            img.src = source;
+            imageContainer.appendChild(img);
+            gridGalleryContainer.appendChild(imageContainer);
+        })
+    }
+    return gridGalleryContainer;
 }
 
 var handleVideo = (widget, video_url, video) => {
@@ -569,6 +574,20 @@ var handleVideo = (widget, video_url, video) => {
     }
 
     return video_url;
+}
+
+var buildIframe = (widget) => {
+    console.log(widget.type)
+    var iframe = document.createElement('iframe');
+    iframe.src = "https://my.matterport.com/show/?m=xx7GChUUBii";
+    iframe.allowFullscreen = true;
+    iframe.style.width = widget.content.width ? widget.content.width : (widget.type == 2 ? "auto" : "100%");
+    iframe.style.height = widget.content.height ? widget.content.height : "600px";
+    if (widget.content.responsive)
+        iframe.style.width = "100%";
+    iframe.style.border = "none";
+    console.log(iframe);
+    return iframe;
 }
 
 
