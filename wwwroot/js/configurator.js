@@ -525,7 +525,7 @@ var handleTourWidget = (widget) => {
 var handleMapWidget = (widget) => {
     var mapContainer = document.createElement('div');
     var mapOptions;
-    const position = { lat: widget.content.latitude, lng: widget.content.longitude }
+    const position = { lat: widget.content.latitude, lng: widget.content.longitude };
     mapContainer.id = "map";
     mapOptions = {
         center: position,
