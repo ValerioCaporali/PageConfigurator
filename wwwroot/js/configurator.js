@@ -255,14 +255,10 @@ var handleGalleryWidget = (widget) => {
 var handleVideoWidget = (widget) => {
     var videoContainer = document.createElement("div");
     videoContainer.id = "video-container";
-    var video = document.createElement("iframe");
-    const regExp = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
-    // vimeo: https://player.vimeo.com/video/76979871
-    // youtube: https://www.youtube.com/embed/qC0vDKVPCrw
+    var video = buildIframe(widget);
+    const regExp = "/^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/";
     var src = "https://www.youtube.com/embed/qC0vDKVPCrw";
     var video_url = new URL(src);
-    var youtubeUrl = "";
-    var vimeoUrl = "";
     if (src.match(regExp) || src.indexOf("www.youtube-nocookie") != -1) {
         video.allowFullscreen = "true";
         var youtube_video = handleVideo(widget, video_url, video);
@@ -281,7 +277,7 @@ var handleVideoWidget = (widget) => {
     if (widget.content.responsive)
         video.style.width = "100%";
     videoContainer.appendChild(video);
-    return videoContainer;
+    return video;
 }
 
 
@@ -519,13 +515,7 @@ var createpdfToolbar = () => {
 /* WIDGET DI TIPO TOUR */
 var handleTourWidget = (widget) => {
     var sdkKey = 'qeyy42zwyfu5fwkrxas6i6qqd';
-    var tourIframe = document.createElement('iframe');
-    tourIframe.src = "https://my.matterport.com/show/?m=xx7GChUUBii";
-    tourIframe.allow = "xr-spatial-tracking";
-    tourIframe.allowFullscreen = true;
-    tourIframe.style.width = widget.content.width ? widget.content.width : "100%";
-    // tourIframe.style.height = widget.content.height ? widget.content.height : "300px";
-    tourIframe.style.border = "none";
+    var tourIframe = buildIframe(widget);
     if (widget.content.responsive)
         tourIframe.style.width = "100%";
 
@@ -535,7 +525,7 @@ var handleTourWidget = (widget) => {
             try {
                 sdk = await tourIframe.contentWindow.MP_SDK.connect(
                     tourIframe,
-                    'qeyy42zwyfu5fwkrxas6i6qqd',
+                    sdkKey,
                     '3.8'
                 );
             } catch (e) {
@@ -545,6 +535,17 @@ var handleTourWidget = (widget) => {
     });
 
     return tourIframe;
+}
+
+/* FUNZIONE PER CREARE GLI IFRAME */
+var buildIframe = (widget) => {
+    var iframe = document.createElement('iframe');
+    iframe.src = "https://my.matterport.com/show/?m=xx7GChUUBii";
+    iframe.allowFullscreen = true;
+    iframe.style.width = widget.content.width ? widget.content.width : "100%";
+    iframe.style.height = widget.content.height ? widget.content.height : "600px";
+    iframe.style.border = "none";
+    return iframe;
 }
 
 /* WIDGET DI TIPO MAP */
