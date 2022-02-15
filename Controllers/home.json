@@ -9159,6 +9159,9 @@
             "Type": 4,
             "Content": {
                 "ShowcaseId": 1
+            },
+            "Style": {
+                "Height": "800px"
             }
         }, {
             "Row": 2,
