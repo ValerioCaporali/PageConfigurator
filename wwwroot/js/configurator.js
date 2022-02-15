@@ -197,6 +197,9 @@ var handelWidgetType = (widget) => {
             var pdfContainer = handlePdfWidget(widget);
             return pdfContainer;
             break;
+        case 4:
+            var tourContainer = handleTourWidget(widget);
+            return tourContainer;
         case 5:
             var mapContainer = handleMapWidget(widget);
             return mapContainer;
@@ -511,6 +514,11 @@ var createpdfToolbar = () => {
     pdfToolbar.appendChild(zoomInButton);
     pdfToolbar.appendChild(zoomOutButton);
     return pdfToolbar;
+}
+
+/* WIDGET DI TIPO TOUR */
+var handleTourWidget = (widget) => {
+    console.log("widget di tipo tour");
 }
 
 /* WIDGET DI TIPO MAP */
