@@ -8,3 +8,7 @@ bin/
 obj/
 
 resources/Models/.DS_Store
+
+resources/Models/horizontal-scroll-gallery/horizontal-scroll-gallery.component.html
+
+resources/Models/horizontal-scroll-gallery/horizontal-scroll-gallery.component.scss

@@ -4,8 +4,9 @@ let homePages;
 let pages;
 let selectedHomePage;
 let selectedPage;
+let generatedId = [];
 
-(async () => {
+(async() => {
     var response = await fetch(base_url + 'HomePages');
     homePages = await response.json();
     document.getElementById('home-pages-number').innerHTML = homePages.length;
@@ -14,7 +15,7 @@ let selectedPage;
     console.log(err);
 });
 
-(async () => {
+(async() => {
     var response = await fetch(base_url + 'Pages');
     pages = await response.json();
     document.getElementById('pages-number').innerHTML = pages.length;
@@ -84,7 +85,7 @@ var createOptions = (selectId, currentValue) => {
     }
     var select = document.getElementById(selectId);
     if (selectId == "language") {
-        languages.forEach(async function (language) {
+        languages.forEach(async function(language) {
             var option = document.createElement("option");
             option.text = language;
             if (currentValue == language && currentValue != false) {
@@ -94,7 +95,7 @@ var createOptions = (selectId, currentValue) => {
         });
     }
     if (selectId == "default") {
-        isDefault.forEach(async function (value) {
+        isDefault.forEach(async function(value) {
             var option = document.createElement("option");
             option.text = value;
             if (currentValue == value) {
@@ -111,7 +112,7 @@ var fillPage = (widgets) => {
         totCols = calculateColumns(widgets),
         rows = new Array(),
         cols = new Array(),
-        object = {ratio: 1};
+        object = { ratio: 1 };
     for (var i = 0; i < totRows; i++) {
         rows.push(object);
     }
@@ -197,6 +198,9 @@ var handelWidgetType = (widget) => {
         case 5:
             var mapContainer = handleMapWidget(widget);
             return mapContainer;
+        case 101:
+            var horizontalScrollGallery = handleHorizontalScrollGallery(widget);
+            return horizontalScrollGallery;
         case 102:
             var gridGalleryContainer = handleGridGalleryWidget(widget);
             return gridGalleryContainer;
@@ -214,13 +218,14 @@ var handleTextWidget = (widget) => {
 }
 
 var handleGalleryWidget = (widget) => {
+    var baseId = "g";
     var galleryContainer = document.createElement("div");
     var div = document.createElement("div");
     galleryContainer.classList.add("gallery-container");
-    var randomId = Math.floor(Math.random() * 1000000)
-    div.id = "gallery" + randomId
+    var id = generateId(baseId)
+    div.id = id;
     setTimeout(() => {
-        $('#gallery' + randomId).dxGallery({
+        $("#" + id).dxGallery({
             dataSource: widget.content.source,
             height: "auto",
             width: "inherit",
@@ -236,7 +241,7 @@ var handleGalleryWidget = (widget) => {
         if (widget.text) {
             text = document.createElement("div");
             text.innerHTML = widget.text.value.trim();
-            handelTextPosition(widget, text);
+            handleTextPosition(widget, text);
             galleryContainer.appendChild(text);
 
         }
@@ -264,7 +269,7 @@ var handleVideoWidget = (widget) => {
 }
 
 var handlePdfWidget = (widget) => {
-    scrollable = false;
+    scrollable = true;
     direction = 'x';
     if (scrollable) {
         var canvasContainer = handleScrollablePdf(widget, direction);
@@ -322,7 +327,7 @@ var handleScrollablePdf = (widget, direction) => {
     canvasContainer.classList.add(direction === 'y' ? 'vertical-pdf-scroll-container' : 'horizontal-pdf-scroll');
     canvasContainer.id = "canvas-container";
     const url = '../docs/pdf.pdf';
-    options = {scale: 1};
+    options = { scale: 1 };
 
     var renderScrollablePdfPage = (page) => {
         var viewPort = calculateViewport(widget, page, canvasContainer);
@@ -341,7 +346,7 @@ var handleScrollablePdf = (widget, direction) => {
             canvas.width = viewPort.width;
             canvasContainer.appendChild(canvas);
             page.render(renderContext).promise.then(() => {
-                console.log("PDF PAGE RENDERED");
+
             })
         }, 200);
     };
@@ -349,9 +354,9 @@ var handleScrollablePdf = (widget, direction) => {
     var calculateViewport = (widget, page, canvasContainer) => {
         var viewPort;
         if (widget.style.height || widget.style.width)
-            viewPort = page.getViewport({scale: canvasContainer.clientWidth / page.getViewport({scale: 1}).width});
+            viewPort = page.getViewport({ scale: canvasContainer.clientWidth / page.getViewport({ scale: 1 }).width });
         else {
-            viewPort = page.getViewport({scale: 1})
+            viewPort = page.getViewport({ scale: 1 })
         }
         return viewPort;
     };
@@ -385,7 +390,7 @@ var renderPdfPage = (pagePending = null, pdfSettings) => {
     }
 
     pdfSettings.pdfDoc.getPage(pageToRender).then(page => {
-        var viewport = page.getViewport({scale});
+        var viewport = page.getViewport({ scale });
         pdfSettings.myCanvas.height = viewport.height;
         pdfSettings.myCanvas.width = viewport.width;
 
@@ -484,7 +489,7 @@ var handleTourWidget = (widget) => {
         tourIframe.style.width = "100%";
 
     setTimeout(() => {
-        tourIframe.addEventListener('load', async function () {
+        tourIframe.addEventListener('load', async function() {
             let sdk;
             try {
                 sdk = await tourIframe.contentWindow.MP_SDK.connect(
@@ -504,7 +509,7 @@ var handleTourWidget = (widget) => {
 var handleMapWidget = (widget) => {
     var mapContainer = document.createElement('div');
     var mapOptions;
-    const position = {lat: widget.content.latitude, lng: widget.content.longitude};
+    const position = { lat: widget.content.latitude, lng: widget.content.longitude };
     mapContainer.id = "map";
     mapOptions = {
         center: position,
@@ -529,12 +534,51 @@ var handleGridGalleryWidget = (widget) => {
             var imageContainer = document.createElement('div'),
                 img = document.createElement('img');
             imageContainer.classList.add('image-item');
-            img.src = source;
+            img.src = 'https://www.w3schools.com/w3images/nature.jpg';
             imageContainer.appendChild(img);
             gridGalleryContainer.appendChild(imageContainer);
         })
     }
     return gridGalleryContainer;
+}
+
+var handleHorizontalScrollGallery = (widget) => {
+    var base_id = "horizontal-gallery";
+    var gallery = document.createElement('div'),
+        galleryWrapper = document.createElement('div');
+    gallery.classList.add('gallery');
+    galleryWrapper.classList.add('gallery-container');
+    galleryWrapper.id = generateId(base_id);;
+    widget.content.source.forEach(source => {
+        var itemWrapper = document.createElement('div');
+        itemWrapper.classList.add('item-gallery-image');
+        var item = document.createElement('img');
+        item.src = 'https://www.w3schools.com/w3images/nature.jpg';
+        itemWrapper.appendChild(item);
+        galleryWrapper.appendChild(itemWrapper);
+    });
+
+    var navigationButton = createGalleryNavButtons(galleryWrapper.id);
+    gallery.append(galleryWrapper, navigationButton);
+    return gallery;
+}
+
+var createGalleryNavButtons = (galleryId) => {
+    var span = document.createElement('span');
+    var leftArrow = document.createElement('i'),
+        rightArrow = document.createElement('i');
+    leftArrow.className = 'fas fa-xl fa-angle-left left-icon';
+    rightArrow.className = 'fas fa-xl fa-angle-right right-icon';
+    rightArrow.onclick = () => {
+        document.getElementById(galleryId).scrollLeft += 300;
+        console.log(galleryId)
+    }
+    leftArrow.onclick = () => {
+        document.getElementById(galleryId).scrollLeft -= 300;
+        console.log(galleryId);
+    }
+    span.append(leftArrow, rightArrow);
+    return span;
 }
 
 var handleVideo = (widget, video_url, video) => {
@@ -585,6 +629,8 @@ var buildIframe = (widget) => {
     iframe.style.height = widget.content.height ? widget.content.height : "600px";
     if (widget.content.responsive)
         iframe.style.width = "100%";
+    if (widget.type == 2)
+        iframe.style.width = "auto";
     iframe.style.border = "none";
     console.log(iframe);
     return iframe;
@@ -621,7 +667,7 @@ var handleWidgetStyle = (widget, div) => {
 
 
     if (widget.style.borders)
-        div = handelBorders(widget, div);
+        div = handleBorders(widget, div);
 
     return div;
 }
@@ -664,7 +710,7 @@ var handleMargin = (widget, div) => {
     return div;
 }
 
-var handelBorders = (widget, div) => {
+var handleBorders = (widget, div) => {
     switch (widget.style.borders.type) {
         case 0:
             div.style.border = widget.style.borders.style;
@@ -695,7 +741,7 @@ var handelBorders = (widget, div) => {
     return div;
 }
 
-var handelTextPosition = (widget, text) => {
+var handleTextPosition = (widget, text) => {
     if (widget.text.position.type == 0) {
         text.style.position = "absolute";
         text.style.display = "flex";
@@ -711,4 +757,13 @@ var handelTextPosition = (widget, text) => {
         text.style.bottom = widget.text.position.bottom;
         text.style.left = widget.text.position.left;
     }
+}
+
+var generateId = (id) => {
+    while (generatedId.indexOf(id) > -1) {
+        console.log("generare id galleria")
+        id = id + Math.floor((Math.random() * (10000 + 1 - 1)) + 1).toString();
+    };
+    generatedId.push(id);
+    return id;
 }

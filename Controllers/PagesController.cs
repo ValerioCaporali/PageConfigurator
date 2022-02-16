@@ -56,16 +56,16 @@ namespace Pages_configurator.Controllers
 
         // use this to save all home pages
         [HttpPost("SaveHomePages")]
-        public string SaveHomePages()
+        public async Task<ActionResult> SaveHomePages()
         {
-            return "Home pages saved !";
+            return Ok("Home pages salvate correttamente !");
         }
 
         // use this to save all pages
         [HttpPost("SavePages")]
-        public string SavePages()
+        public async Task<ActionResult> SavePages()
         {
-            return "Pages Saved !";
+            return Ok("Pagine salvate correttamente !");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
