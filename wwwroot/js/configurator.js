@@ -571,11 +571,9 @@ var createGalleryNavButtons = (galleryId) => {
     rightArrow.className = 'fas fa-xl fa-angle-right right-icon';
     rightArrow.onclick = () => {
         document.getElementById(galleryId).scrollLeft += 300;
-        console.log(galleryId)
     }
     leftArrow.onclick = () => {
         document.getElementById(galleryId).scrollLeft -= 300;
-        console.log(galleryId);
     }
     span.append(leftArrow, rightArrow);
     return span;
@@ -621,7 +619,6 @@ var handleVideo = (widget, video_url, video) => {
 }
 
 var buildIframe = (widget) => {
-    console.log(widget.type)
     var iframe = document.createElement('iframe');
     iframe.src = "https://my.matterport.com/show/?m=xx7GChUUBii";
     iframe.allowFullscreen = true;
@@ -632,7 +629,6 @@ var buildIframe = (widget) => {
     if (widget.type == 2)
         iframe.style.width = "auto";
     iframe.style.border = "none";
-    console.log(iframe);
     return iframe;
 }
 
@@ -761,7 +757,6 @@ var handleTextPosition = (widget, text) => {
 
 var generateId = (id) => {
     while (generatedId.indexOf(id) > -1) {
-        console.log("generare id galleria")
         id = id + Math.floor((Math.random() * (10000 + 1 - 1)) + 1).toString();
     };
     generatedId.push(id);
