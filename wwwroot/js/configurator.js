@@ -346,7 +346,7 @@ var handleScrollablePdf = (widget, direction) => {
             canvas.width = viewPort.width;
             canvasContainer.appendChild(canvas);
             page.render(renderContext).promise.then(() => {
-                console.log("PDF PAGE RENDERED");
+
             })
         }, 200);
     };
@@ -561,7 +561,6 @@ var handleHorizontalScrollGallery = (widget) => {
     var navigationButton = createGalleryNavButtons(galleryWrapper.id);
     gallery.append(galleryWrapper, navigationButton);
     return gallery;
-
 }
 
 var createGalleryNavButtons = (galleryId) => {
@@ -630,6 +629,8 @@ var buildIframe = (widget) => {
     iframe.style.height = widget.content.height ? widget.content.height : "600px";
     if (widget.content.responsive)
         iframe.style.width = "100%";
+    if (widget.type == 2)
+        iframe.style.width = "auto";
     iframe.style.border = "none";
     console.log(iframe);
     return iframe;
