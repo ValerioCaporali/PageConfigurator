@@ -4,6 +4,7 @@ let homePages;
 let pages;
 let selectedHomePage;
 let selectedPage;
+let generatedId = [];
 
 (async() => {
     var response = await fetch(base_url + 'HomePages');
@@ -217,13 +218,14 @@ var handleTextWidget = (widget) => {
 }
 
 var handleGalleryWidget = (widget) => {
+    var baseId = "g";
     var galleryContainer = document.createElement("div");
     var div = document.createElement("div");
     galleryContainer.classList.add("gallery-container");
-    var randomId = Math.floor(Math.random() * 1000000)
-    div.id = "gallery" + randomId
+    var id = generateId(baseId)
+    div.id = id;
     setTimeout(() => {
-        $('#gallery' + randomId).dxGallery({
+        $("#" + id).dxGallery({
             dataSource: widget.content.source,
             height: "auto",
             width: "inherit",
@@ -541,10 +543,12 @@ var handleGridGalleryWidget = (widget) => {
 }
 
 var handleHorizontalScrollGallery = (widget) => {
+    var base_id = "horizontal-gallery";
     var gallery = document.createElement('div'),
         galleryWrapper = document.createElement('div');
     gallery.classList.add('gallery');
     galleryWrapper.classList.add('gallery-container');
+    galleryWrapper.id = generateId(base_id);;
     widget.content.source.forEach(source => {
         var itemWrapper = document.createElement('div');
         itemWrapper.classList.add('item-gallery-image');
@@ -554,18 +558,26 @@ var handleHorizontalScrollGallery = (widget) => {
         galleryWrapper.appendChild(itemWrapper);
     });
 
-    var navigationButton = createGalleryNavButtons();
+    var navigationButton = createGalleryNavButtons(galleryWrapper.id);
     gallery.append(galleryWrapper, navigationButton);
     return gallery;
 
 }
 
-var createGalleryNavButtons = () => {
+var createGalleryNavButtons = (galleryId) => {
     var span = document.createElement('span');
     var leftArrow = document.createElement('i'),
         rightArrow = document.createElement('i');
     leftArrow.className = 'fas fa-xl fa-angle-left left-icon';
     rightArrow.className = 'fas fa-xl fa-angle-right right-icon';
+    rightArrow.onclick = () => {
+        document.getElementById(galleryId).scrollLeft += 300;
+        console.log(galleryId)
+    }
+    leftArrow.onclick = () => {
+        document.getElementById(galleryId).scrollLeft -= 300;
+        console.log(galleryId);
+    }
     span.append(leftArrow, rightArrow);
     return span;
 }
@@ -744,4 +756,13 @@ var handleTextPosition = (widget, text) => {
         text.style.bottom = widget.text.position.bottom;
         text.style.left = widget.text.position.left;
     }
+}
+
+var generateId = (id) => {
+    while (generatedId.indexOf(id) > -1) {
+        console.log("generare id galleria")
+        id = id + Math.floor((Math.random() * (10000 + 1 - 1)) + 1).toString();
+    };
+    generatedId.push(id);
+    return id;
 }
