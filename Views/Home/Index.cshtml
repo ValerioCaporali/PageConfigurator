@@ -212,6 +212,83 @@
         color: white;
     }
 
+     .gallery {
+    	 display: flex;
+    	 flex-direction: row;
+    	 height: 100%;
+    	 overflow: hidden;
+    }
+     .gallery .gallery-container {
+    	 display: flex;
+    	 flex-direction: row;
+    	 height: 100%;
+    	 flex: 1 1 auto;
+    	 padding: 24px 0;
+    	 overflow-x: scroll;
+    	 -ms-overflow-style: none;
+    	/* IE and Edge */
+    	 scrollbar-width: none;
+    	/* Firefox */
+    }
+     .gallery .gallery-container .item-gallery-image {
+    	 height: 100%;
+    	 width: auto;
+    	 margin: 0 3px;
+    	 position: relative;
+    	 display: block;
+    	 cursor: pointer;
+    }
+     .gallery .gallery-container .item-gallery-image img {
+    	 height: 100%;
+    	 object-fit: contain;
+    	 display: block;
+    }
+     .gallery .gallery-container .item-gallery-image:first-of-type {
+    	 margin-left: 0;
+    }
+     .gallery .gallery-container .item-gallery-image:last-of-type {
+    	 margin-right: 0;
+    }
+     .gallery .gallery-container .item-gallery-image:hover {
+    	 transform: scale(1.1);
+    	 z-index: 100;
+    }
+     .gallery .gallery-container .item-gallery-image:hover .actions-panel {
+    	 opacity: 1;
+    }
+     .gallery .gallery-container .disable-scale:hover {
+    	 transform: scale(1) !important;
+    	 z-index: 0;
+    }
+     .gallery .gallery-container .disable-scale:hover .actions-panel {
+    	 display: none;
+    }
+     .gallery .gallery-container::-webkit-scrollbar {
+    	 display: none;
+    }
+     .gallery .navigation-arrow {
+    	 height: 100%;
+    	 display: flex;
+    	 align-items: center;
+    	 flex: 0 0 56px;
+    }
+     .gallery .navigation-arrow svg-icon {
+    	 width: 40px;
+    	 height: 40px;
+    	 border-radius: 20px;
+    	 margin: 8px;
+    	 fill: white;
+    	 padding: 4px;
+    	 cursor: pointer;
+    	 background-color: rgba(0, 0, 0, 0.7);
+    }
+     .gallery .navigation-arrow svg-icon:hover {
+    	 background-color: rgba(0, 0, 0, 0.9);
+    }
+     .gallery .left-arrow {
+    	 transform: rotateZ(180deg);
+    }
+
     .page {
     max-width: 80%;
     margin-left: 0;

@@ -5,7 +5,7 @@ let pages;
 let selectedHomePage;
 let selectedPage;
 
-(async () => {
+(async() => {
     var response = await fetch(base_url + 'HomePages');
     homePages = await response.json();
     document.getElementById('home-pages-number').innerHTML = homePages.length;
@@ -14,7 +14,7 @@ let selectedPage;
     console.log(err);
 });
 
-(async () => {
+(async() => {
     var response = await fetch(base_url + 'Pages');
     pages = await response.json();
     document.getElementById('pages-number').innerHTML = pages.length;
@@ -84,7 +84,7 @@ var createOptions = (selectId, currentValue) => {
     }
     var select = document.getElementById(selectId);
     if (selectId == "language") {
-        languages.forEach(async function (language) {
+        languages.forEach(async function(language) {
             var option = document.createElement("option");
             option.text = language;
             if (currentValue == language && currentValue != false) {
@@ -94,7 +94,7 @@ var createOptions = (selectId, currentValue) => {
         });
     }
     if (selectId == "default") {
-        isDefault.forEach(async function (value) {
+        isDefault.forEach(async function(value) {
             var option = document.createElement("option");
             option.text = value;
             if (currentValue == value) {
@@ -111,7 +111,7 @@ var fillPage = (widgets) => {
         totCols = calculateColumns(widgets),
         rows = new Array(),
         cols = new Array(),
-        object = {ratio: 1};
+        object = { ratio: 1 };
     for (var i = 0; i < totRows; i++) {
         rows.push(object);
     }
@@ -197,6 +197,9 @@ var handelWidgetType = (widget) => {
         case 5:
             var mapContainer = handleMapWidget(widget);
             return mapContainer;
+        case 101:
+            var horizontalScrollGallery = handleHorizontalScrollGallery(widget);
+            return horizontalScrollGallery;
         case 102:
             var gridGalleryContainer = handleGridGalleryWidget(widget);
             return gridGalleryContainer;
@@ -236,7 +239,7 @@ var handleGalleryWidget = (widget) => {
         if (widget.text) {
             text = document.createElement("div");
             text.innerHTML = widget.text.value.trim();
-            handelTextPosition(widget, text);
+            handleTextPosition(widget, text);
             galleryContainer.appendChild(text);
 
         }
@@ -264,7 +267,7 @@ var handleVideoWidget = (widget) => {
 }
 
 var handlePdfWidget = (widget) => {
-    scrollable = false;
+    scrollable = true;
     direction = 'x';
     if (scrollable) {
         var canvasContainer = handleScrollablePdf(widget, direction);
@@ -322,7 +325,7 @@ var handleScrollablePdf = (widget, direction) => {
     canvasContainer.classList.add(direction === 'y' ? 'vertical-pdf-scroll-container' : 'horizontal-pdf-scroll');
     canvasContainer.id = "canvas-container";
     const url = '../docs/pdf.pdf';
-    options = {scale: 1};
+    options = { scale: 1 };
 
     var renderScrollablePdfPage = (page) => {
         var viewPort = calculateViewport(widget, page, canvasContainer);
@@ -349,9 +352,9 @@ var handleScrollablePdf = (widget, direction) => {
     var calculateViewport = (widget, page, canvasContainer) => {
         var viewPort;
         if (widget.style.height || widget.style.width)
-            viewPort = page.getViewport({scale: canvasContainer.clientWidth / page.getViewport({scale: 1}).width});
+            viewPort = page.getViewport({ scale: canvasContainer.clientWidth / page.getViewport({ scale: 1 }).width });
         else {
-            viewPort = page.getViewport({scale: 1})
+            viewPort = page.getViewport({ scale: 1 })
         }
         return viewPort;
     };
@@ -385,7 +388,7 @@ var renderPdfPage = (pagePending = null, pdfSettings) => {
     }
 
     pdfSettings.pdfDoc.getPage(pageToRender).then(page => {
-        var viewport = page.getViewport({scale});
+        var viewport = page.getViewport({ scale });
         pdfSettings.myCanvas.height = viewport.height;
         pdfSettings.myCanvas.width = viewport.width;
 
@@ -484,7 +487,7 @@ var handleTourWidget = (widget) => {
         tourIframe.style.width = "100%";
 
     setTimeout(() => {
-        tourIframe.addEventListener('load', async function () {
+        tourIframe.addEventListener('load', async function() {
             let sdk;
             try {
                 sdk = await tourIframe.contentWindow.MP_SDK.connect(
@@ -504,7 +507,7 @@ var handleTourWidget = (widget) => {
 var handleMapWidget = (widget) => {
     var mapContainer = document.createElement('div');
     var mapOptions;
-    const position = {lat: widget.content.latitude, lng: widget.content.longitude};
+    const position = { lat: widget.content.latitude, lng: widget.content.longitude };
     mapContainer.id = "map";
     mapOptions = {
         center: position,
@@ -535,6 +538,36 @@ var handleGridGalleryWidget = (widget) => {
         })
     }
     return gridGalleryContainer;
+}
+
+var handleHorizontalScrollGallery = (widget) => {
+    var horizontalScrollGallery = document.createElement('div'),
+        horizontalScrollGalleryContainer = document.createElement('div'),
+        rightArrow = document.createElement('div'),
+        leftArrow = document.createElement('div'),
+        icon = document.createElement('image');
+    icon.src = "";
+    icon.classList.add('left-arrow')
+    leftArrow.appendChild(icon);
+    horizontalScrollGallery.classList.add('gallery');
+    horizontalScrollGalleryContainer.id = 'galleryContainer';
+    horizontalScrollGalleryContainer.classList.add('gallery-container');
+
+    console.log(leftArrow)
+
+    horizontalScrollGallery.append(leftArrow, horizontalScrollGalleryContainer);
+
+    widget.content.source.forEach(source => {
+        var itemContainer = document.createElement('div');
+        itemContainer.classList.add('item-gallery-image');
+        var img = document.createElement('img');
+        img.src = source;
+        itemContainer.appendChild(img);
+        horizontalScrollGalleryContainer.appendChild(itemContainer);
+    })
+
+    return horizontalScrollGallery;
+
 }
 
 var handleVideo = (widget, video_url, video) => {
@@ -621,7 +654,7 @@ var handleWidgetStyle = (widget, div) => {
 
 
     if (widget.style.borders)
-        div = handelBorders(widget, div);
+        div = handleBorders(widget, div);
 
     return div;
 }
@@ -664,7 +697,7 @@ var handleMargin = (widget, div) => {
     return div;
 }
 
-var handelBorders = (widget, div) => {
+var handleBorders = (widget, div) => {
     switch (widget.style.borders.type) {
         case 0:
             div.style.border = widget.style.borders.style;
@@ -695,7 +728,7 @@ var handelBorders = (widget, div) => {
     return div;
 }
 
-var handelTextPosition = (widget, text) => {
+var handleTextPosition = (widget, text) => {
     if (widget.text.position.type == 0) {
         text.style.position = "absolute";
         text.style.display = "flex";
