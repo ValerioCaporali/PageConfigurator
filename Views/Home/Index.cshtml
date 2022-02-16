@@ -76,17 +76,17 @@
         padding: 8px;
     }
 
-    canvas{
+    canvas {
         padding: 6px;
     }
 
-    .vertical-pdf-scroll-container > canvas {
+    .vertical-pdf-scroll-container>canvas {
         max-width: 100%;
     }
 
-    .canvas-pdf-scrollable{
-      margin: 0 auto;
-      display: block;
+    .canvas-pdf-scrollable {
+        margin: 0 auto;
+        display: block;
     }
 
     .switch {
@@ -155,12 +155,16 @@
         display: flex;
     }
 
-    #prev-page, #next-page, #zoom-in, #zoom-out {
+    #prev-page,
+    #next-page,
+    #zoom-in,
+    #zoom-out {
         background-color: transparent;
         border: none;
     }
 
-    #zoom-in, #zoom-out {
+    #zoom-in,
+    #zoom-out {
         float: right;
     }
 
@@ -174,7 +178,10 @@
         width: 100% !important;
     }
 
-    #prev-page > .fas, #next-page > .fas, #zoom-in > .fas, #zoom-out > .fas {
+    #prev-page>.fas,
+    #next-page>.fas,
+    #zoom-in>.fas,
+    #zoom-out>.fas {
         line-height: 2 !important;
         color: white;
     }
@@ -186,24 +193,24 @@
         align-items: center;
     }
 
-    .grid-gallery > .image-item:hover .actions-panel {
+    .grid-gallery>.image-item:hover .actions-panel {
         opacity: 1;
     }
 
-    .grid-gallery > .image-item {
+    .grid-gallery>.image-item {
         width: calc(25% - 16px);
         margin: 8px;
         position: relative;
     }
 
-    .image-item > img {
+    .image-item>img {
         width: 100%;
         max-height: 450px;
         object-fit: contain;
         display: block;
     }
 
-    .grid-gallery > .selectable {
+    .grid-gallery>.selectable {
         cursor: pointer;
     }
 
@@ -212,88 +219,131 @@
         color: white;
     }
 
-     .gallery {
-    	 display: flex;
-    	 flex-direction: row;
-    	 height: 100%;
-    	 overflow: hidden;
+    .gallery {
+        display: flex;
+        flex-direction: row;
+        height: 100%;
+        overflow: hidden;
     }
-     .gallery .gallery-container {
-    	 display: flex;
-    	 flex-direction: row;
-    	 height: 100%;
-    	 flex: 1 1 auto;
-    	 padding: 24px 0;
-    	 overflow-x: scroll;
-    	 -ms-overflow-style: none;
-    	/* IE and Edge */
-    	 scrollbar-width: none;
-    	/* Firefox */
+
+    .gallery .gallery-container {
+        display: flex;
+        flex-direction: row;
+        height: 100%;
+        flex: 1 1 auto;
+        padding: 24px 0;
+        overflow-x: scroll;
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
     }
-     .gallery .gallery-container .item-gallery-image {
-    	 height: 100%;
-    	 width: auto;
-    	 margin: 0 3px;
-    	 position: relative;
-    	 display: block;
-    	 cursor: pointer;
+
+    .gallery .gallery-container .item-gallery-image {
+        height: 100%;
+        width: auto;
+        margin: 0 3px;
+        position: relative;
+        display: block;
+        cursor: pointer;
     }
-     .gallery .gallery-container .item-gallery-image img {
-    	 height: 100%;
-    	 object-fit: contain;
-    	 display: block;
+
+    .gallery .gallery-container .item-gallery-image img {
+        height: 100%;
+        object-fit: contain;
+        display: block;
     }
-     .gallery .gallery-container .item-gallery-image:first-of-type {
-    	 margin-left: 0;
+
+    .gallery .gallery-container .item-gallery-image:first-of-type {
+        margin-left: 0;
     }
-     .gallery .gallery-container .item-gallery-image:last-of-type {
-    	 margin-right: 0;
+
+    .gallery .gallery-container .item-gallery-image:last-of-type {
+        margin-right: 0;
     }
-     .gallery .gallery-container .item-gallery-image:hover {
-    	 transform: scale(1.1);
-    	 z-index: 100;
+
+    .gallery .gallery-container .item-gallery-image:hover {
+        transform: scale(1.1);
+        z-index: 100;
     }
-     .gallery .gallery-container .item-gallery-image:hover .actions-panel {
-    	 opacity: 1;
+
+    .gallery .gallery-container .item-gallery-image:hover .actions-panel {
+        opacity: 1;
     }
-     .gallery .gallery-container .disable-scale:hover {
-    	 transform: scale(1) !important;
-    	 z-index: 0;
+
+    .gallery .gallery-container .disable-scale:hover {
+        transform: scale(1) !important;
+        z-index: 0;
     }
-     .gallery .gallery-container .disable-scale:hover .actions-panel {
-    	 display: none;
+
+    .gallery .gallery-container .disable-scale:hover .actions-panel {
+        display: none;
     }
-     .gallery .gallery-container::-webkit-scrollbar {
-    	 display: none;
+
+    .gallery .gallery-container::-webkit-scrollbar {
+        display: none;
     }
-     .gallery .navigation-arrow {
-    	 height: 100%;
-    	 display: flex;
-    	 align-items: center;
-    	 flex: 0 0 56px;
+
+    .gallery .navigation-arrow {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        flex: 0 0 56px;
     }
-     .gallery .navigation-arrow svg-icon {
-    	 width: 40px;
-    	 height: 40px;
-    	 border-radius: 20px;
-    	 margin: 8px;
-    	 fill: white;
-    	 padding: 4px;
-    	 cursor: pointer;
-    	 background-color: rgba(0, 0, 0, 0.7);
+
+    .gallery .navigation-arrow svg-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 20px;
+        margin: 8px;
+        fill: white;
+        padding: 4px;
+        cursor: pointer;
+        background-color: rgba(0, 0, 0, 0.7);
     }
-     .gallery .navigation-arrow svg-icon:hover {
-    	 background-color: rgba(0, 0, 0, 0.9);
+
+    .gallery .navigation-arrow svg-icon:hover {
+        background-color: rgba(0, 0, 0, 0.9);
     }
-     .gallery .left-arrow {
-    	 transform: rotateZ(180deg);
+
+    .gallery .left-arrow {
+        transform: rotateZ(180deg);
+    }
+
+    .horizontal-scroll-wrapper {
+        position: absolute;
+        display: flex;
+        top: 0;
+        left: 0;
+        width: auto;
+        margin: 0;
+        overflow-y: auto;
+        overflow-x: auto;
+    }
+
+    .left-icon {
+        left: 0;
+        position: absolute;
+        top: 50%;
+        margin-left: 20px;
+    }
+
+    .right-icon {
+        right: 0;
+        position: absolute;
+        top: 50%;
+        margin-right: 20px;
+    }
+
+    .left-icon, .right-icon {
+        color: white;
+        font-size: 2.33333em;
+        z-index: 101;
     }
 
     .page {
-    max-width: 80%;
-    margin-left: 0;
-    margin-right: 0;
-    margin: auto;
+        max-width: 80%;
+        margin-left: 0;
+        margin-right: 0;
+        margin: auto;
     }
 
     #page {
@@ -410,7 +460,7 @@
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCowLFqzzxbC6fbqqoWeJb97MeAi3Hvqqo" async></script>
 <script src='https://static.matterport.com/showcase-sdk/latest.js'>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
@@ -420,33 +470,33 @@
 <script>
     $(".sidebar-dropdown > a").click(function () {
         $(".sidebar-submenu").slideUp(200);
-        if (
-            $(this)
-                .parent()
-                .hasClass("active")
-        ) {
-            $(".sidebar-dropdown").removeClass("active");
-            $(this)
-                .parent()
-                .removeClass("active");
+    if (
+    $(this)
+    .parent()
+    .hasClass("active")
+    ) {
+        $(".sidebar-dropdown").removeClass("active");
+    $(this)
+    .parent()
+    .removeClass("active");
         } else {
-            $(".sidebar-dropdown").removeClass("active");
-            $(this)
-                .next(".sidebar-submenu")
-                .slideDown(200);
-            $(this)
-                .parent()
-                .addClass("active");
+        $(".sidebar-dropdown").removeClass("active");
+    $(this)
+    .next(".sidebar-submenu")
+    .slideDown(200);
+    $(this)
+    .parent()
+    .addClass("active");
         }
     });
 
     $("#close-sidebar").click(function () {
         $(".page-wrapper").removeClass("toggled");
-        $(".page-content").addClass("myPadding");
+    $(".page-content").addClass("myPadding");
     });
     $("#show-sidebar").click(function () {
         $(".page-wrapper").addClass("toggled");
-        $(".page-content").removeClass("myPadding");
+    $(".page-content").removeClass("myPadding");
     });
 
     $('#page-title').click(function () {

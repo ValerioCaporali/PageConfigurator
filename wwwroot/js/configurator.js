@@ -532,7 +532,7 @@ var handleGridGalleryWidget = (widget) => {
             var imageContainer = document.createElement('div'),
                 img = document.createElement('img');
             imageContainer.classList.add('image-item');
-            img.src = source;
+            img.src = 'https://www.w3schools.com/w3images/nature.jpg';
             imageContainer.appendChild(img);
             gridGalleryContainer.appendChild(imageContainer);
         })
@@ -541,33 +541,33 @@ var handleGridGalleryWidget = (widget) => {
 }
 
 var handleHorizontalScrollGallery = (widget) => {
-    var horizontalScrollGallery = document.createElement('div'),
-        horizontalScrollGalleryContainer = document.createElement('div'),
-        rightArrow = document.createElement('div'),
-        leftArrow = document.createElement('div'),
-        icon = document.createElement('image');
-    icon.src = "";
-    icon.classList.add('left-arrow')
-    leftArrow.appendChild(icon);
-    horizontalScrollGallery.classList.add('gallery');
-    horizontalScrollGalleryContainer.id = 'galleryContainer';
-    horizontalScrollGalleryContainer.classList.add('gallery-container');
-
-    console.log(leftArrow)
-
-    horizontalScrollGallery.append(leftArrow, horizontalScrollGalleryContainer);
-
+    var gallery = document.createElement('div'),
+        galleryWrapper = document.createElement('div');
+    gallery.classList.add('gallery');
+    galleryWrapper.classList.add('gallery-container');
     widget.content.source.forEach(source => {
-        var itemContainer = document.createElement('div');
-        itemContainer.classList.add('item-gallery-image');
-        var img = document.createElement('img');
-        img.src = source;
-        itemContainer.appendChild(img);
-        horizontalScrollGalleryContainer.appendChild(itemContainer);
-    })
+        var itemWrapper = document.createElement('div');
+        itemWrapper.classList.add('item-gallery-image');
+        var item = document.createElement('img');
+        item.src = 'https://www.w3schools.com/w3images/nature.jpg';
+        itemWrapper.appendChild(item);
+        galleryWrapper.appendChild(itemWrapper);
+    });
 
-    return horizontalScrollGallery;
+    var navigationButton = createGalleryNavButtons();
+    gallery.append(galleryWrapper, navigationButton);
+    return gallery;
 
+}
+
+var createGalleryNavButtons = () => {
+    var span = document.createElement('span');
+    var leftArrow = document.createElement('i'),
+        rightArrow = document.createElement('i');
+    leftArrow.className = 'fas fa-xl fa-angle-left left-icon';
+    rightArrow.className = 'fas fa-xl fa-angle-right right-icon';
+    span.append(leftArrow, rightArrow);
+    return span;
 }
 
 var handleVideo = (widget, video_url, video) => {
