@@ -548,7 +548,6 @@ var handleGridGalleryWidget = (widget) => {
 var handleWebPageWidget = (widget) => {
     var webPageIframe = buildIframe(widget);
     webPageIframe.src = 'https://it.wikipedia.org/wiki/Pagina_principale';
-    webPageIframe.style.height = '100vh';
     return webPageIframe;
 }
 
