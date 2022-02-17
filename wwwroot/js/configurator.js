@@ -5,6 +5,7 @@ let pages;
 let selectedHomePage;
 let selectedPage;
 let generatedId = [];
+var showingStructure = false;
 
 (async() => {
     var response = await fetch(base_url + 'HomePages');
@@ -62,7 +63,11 @@ var openPageStream = (index, pageType) => {
 }
 
 var showPagePreview = (page) => {
+    showingStructure = false;
+    document.getElementById('structure-icon').classList.remove('fa-eye-slash');
     document.getElementById("demo-container").style.display = "block";
+    var structureButton = document.getElementById('structure-button');
+    structureButton.style.display = 'block';
     var title = document.getElementById("page-title");
     title.innerHTML = "";
     title.appendChild(document.createTextNode(page.name));
@@ -164,9 +169,13 @@ var handleWidget = (widget) => {
     var [container, elem, editButton] = [document.createElement('div'), handelWidgetType(widget), document.createElement('i')];
     if (widget.style != null)
         elem = handleWidgetStyle(widget, elem);
-    else elem = applyDefaultStyle(widget, elem);
+    else
+        elem = applyDefaultStyle(widget, elem);
+    elem.classList.add("widget");
     editButton.className = 'fas fa-wrench edit-icon fa-lg';
     container.append(editButton, elem);
+    container.addEventListener('mouseover', () => { editButton.style.display = 'block'; });
+    container.addEventListener('mouseout', () => { editButton.style.display = 'none'; });
     return container;
 }
 
@@ -249,6 +258,7 @@ var handleGalleryWidget = (widget) => {
 }
 
 var handleVideoWidget = (widget) => {
+    var videoContainer = document.createElement('div');
     var video = buildIframe(widget);
     const regExp = "/^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/";
     var src = "https://www.youtube.com/embed/qC0vDKVPCrw";
@@ -264,7 +274,8 @@ var handleVideoWidget = (widget) => {
     } else {
         video.src = video_url;
     }
-    return video;
+    videoContainer.appendChild(video);
+    return videoContainer;
 }
 
 var handlePdfWidget = (widget) => {
@@ -623,12 +634,16 @@ var buildIframe = (widget) => {
     var iframe = document.createElement('iframe');
     iframe.src = "https://my.matterport.com/show/?m=xx7GChUUBii";
     iframe.allowFullscreen = true;
-    iframe.style.width = widget.content.width ? widget.content.width : (widget.type == 2 ? "auto" : "100%");
-    iframe.style.height = widget.content.height ? widget.content.height : (widget.type == 6 ? "100vh" : "600px");
+    if (widget.type == 2) {
+        iframe.style.width = widget.content.width ? widget.content.width : "100%";
+        iframe.style.height = widget.content.height ? widget.content.height : "600px";
+        console.log(iframe)
+    } else {
+        iframe.style.width = widget.style.width ? widget.style.width : "100%";
+        iframe.style.height = widget.style.height ? widget.style.height : (widget.type == 6 ? "100vh" : "600px");
+    }
     if (widget.content.responsive)
         iframe.style.width = "100%";
-    if (widget.type == 2)
-        iframe.style.width = "auto";
     iframe.style.border = "none";
     return iframe;
 }
@@ -762,12 +777,30 @@ var applyDefaultStyle = (widget, div) => {
             div.classList.add('map-container');
             div.style.height = '500px';
             div.style.width = '500px';
-            return div
+            return div;
             break;
 
         default:
             return div;
             break;
+    }
+}
+
+var pageStructure = () => {
+    var widgets = document.querySelectorAll(".widget");
+    var structureIcon = document.getElementById('structure-icon');
+    if (showingStructure) {
+        [].forEach.call(widgets, (widget) => {
+            widget.classList.remove('structure');
+        });
+        structureIcon.classList.remove('fa-eye-slash');
+        showingStructure = false;
+    } else {
+        [].forEach.call(widgets, (widget) => {
+            widget.classList.add('structure');
+        })
+        structureIcon.classList.add('fa-eye-slash');
+        showingStructure = true;
     }
 }
 

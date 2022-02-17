@@ -341,6 +341,13 @@
 
     .edit-icon {
         padding: 10px;
+        display: none;
+    }
+
+    .structure {
+        margin: 10px;
+        padding: 10px;
+        border: dotted;
     }
 
     .page {
@@ -446,6 +453,9 @@
                     <div id="page-default" style="display: none;">
                         <label for="">Default: </label>
                         <select name="default" id="default"></select>
+                    </div>
+                    <div id="structure-button" style="display: none; margin-left: 20px;">
+                        <i id="structure-icon" class="fas fa-eye fa-lg" onclick="pageStructure()"></i>
                     </div>
                 </div>
             </div>
