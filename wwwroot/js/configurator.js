@@ -64,6 +64,12 @@ var openPageStream = (index, pageType) => {
 
 var showPagePreview = (page) => {
     showingStructure = false;
+    var editIcon = document.querySelectorAll('.edit-icon');
+    if (editIcon) {
+        editIcon.forEach((icon) => {
+            icon.style.display = 'none';
+        })
+    }
     document.getElementById('structure-icon').classList.remove('fa-eye-slash');
     document.getElementById("demo-container").style.display = "block";
     var structureButton = document.getElementById('structure-button');
@@ -151,7 +157,7 @@ var calculateRows = (widgets) => {
     var totRows = 0;
     widgets.forEach((widget) => {
         var currentSpan = (widget.rowSpan == 0) ? 1 : widget.rowSpan
-        totRows = ((widget.row + currentSpan) > totRows) ? (widget.row + currentSpan) : totRows
+        totRows = ((widget.row + currentSpan) > totRows) ? (widget.row + currentSpan) : totRows;
     })
     return (totRows == 0) ? (totRows + 1) : totRows;
 }
@@ -160,22 +166,25 @@ var calculateColumns = (widgets) => {
     var totCols = 0;
     widgets.forEach((widget) => {
         var currentSpan = (widget.columnSpan == 0) ? 1 : widget.columnSpan;
-        totCols = ((widget.column + currentSpan) > totCols) ? (widget.column + currentSpan) : totCols
+        totCols = ((widget.column + currentSpan) > totCols) ? (widget.column + currentSpan) : totCols;
     })
     return (totCols == 0) ? (totCols + 1) : totCols;
 }
 
 var handleWidget = (widget) => {
-    var [container, elem, editButton] = [document.createElement('div'), handelWidgetType(widget), document.createElement('i')];
+    var [container, elem, editButton, editButtonContainer] = [document.createElement('div'), handelWidgetType(widget), document.createElement('i'), document.createElement('div')];
     if (widget.style != null)
         elem = handleWidgetStyle(widget, elem);
     else
         elem = applyDefaultStyle(widget, elem);
     elem.classList.add("widget");
+    editButtonContainer.classList.add('edit-button-container');
+    editButtonContainer.appendChild(editButton);
     editButton.className = 'fas fa-wrench edit-icon fa-lg';
-    container.append(editButton, elem);
-    container.addEventListener('mouseover', () => { editButton.style.display = 'block'; });
-    container.addEventListener('mouseout', () => { editButton.style.display = 'none'; });
+    editButton.addEventListener('click', () => {
+        openModifyPanel(widget);
+    })
+    container.append(editButtonContainer, elem);
     return container;
 }
 
@@ -786,22 +795,34 @@ var applyDefaultStyle = (widget, div) => {
     }
 }
 
-var pageStructure = () => {
+var changeMode = () => {
     var widgets = document.querySelectorAll(".widget");
     var structureIcon = document.getElementById('structure-icon');
     if (showingStructure) {
         [].forEach.call(widgets, (widget) => {
             widget.classList.remove('structure');
         });
+        changeEditIconsVisibility('none')
         structureIcon.classList.remove('fa-eye-slash');
         showingStructure = false;
     } else {
         [].forEach.call(widgets, (widget) => {
             widget.classList.add('structure');
-        })
+        });
+        changeEditIconsVisibility('block');
         structureIcon.classList.add('fa-eye-slash');
         showingStructure = true;
     }
+}
+
+var changeEditIconsVisibility = (displayMode) => {
+    document.querySelectorAll('.edit-icon').forEach(editIcon => {
+        editIcon.style.display = displayMode;
+    })
+}
+
+var openModifyPanel = (widget) => {
+    console.log(widget);
 }
 
 var generateId = (id) => {

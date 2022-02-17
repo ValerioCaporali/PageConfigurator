@@ -342,18 +342,30 @@
     .edit-icon {
         padding: 10px;
         display: none;
+        width: fit-content;
+        right: 0;
+        left: 0;
+        margin: auto;
+        cursor: pointer;
     }
 
     .structure {
         margin: 10px;
         padding: 10px;
-        border: dotted;
+        border: 2.2px dashed #312d2d;
     }
 
     .page {
         max-width: 80%;
         margin-left: 0;
         margin-right: 0;
+        margin: auto;
+    }
+
+    .edit-button-container {
+        width: 20%;
+        right: 0;
+        left: 0;
         margin: auto;
     }
 
@@ -455,7 +467,7 @@
                         <select name="default" id="default"></select>
                     </div>
                     <div id="structure-button" style="display: none; margin-left: 20px;">
-                        <i id="structure-icon" class="fas fa-eye fa-lg" onclick="pageStructure()"></i>
+                        <i id="structure-icon" class="fas fa-eye fa-lg" onclick="changeMode()"></i>
                     </div>
                 </div>
             </div>
