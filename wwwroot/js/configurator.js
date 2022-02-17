@@ -198,6 +198,9 @@ var handelWidgetType = (widget) => {
         case 5:
             var mapContainer = handleMapWidget(widget);
             return mapContainer;
+        case 6:
+            var webPageContainer = handleWebPageWidget(widget);
+            return webPageContainer;
         case 101:
             var horizontalScrollGallery = handleHorizontalScrollGallery(widget);
             return horizontalScrollGallery;
@@ -542,6 +545,13 @@ var handleGridGalleryWidget = (widget) => {
     return gridGalleryContainer;
 }
 
+var handleWebPageWidget = (widget) => {
+    var webPageIframe = buildIframe(widget);
+    webPageIframe.src = 'https://it.wikipedia.org/wiki/Pagina_principale';
+    webPageIframe.style.height = '100vh';
+    return webPageIframe;
+}
+
 var handleHorizontalScrollGallery = (widget) => {
     var base_id = "horizontal-gallery";
     var [gallery, galleryWrapper] = [document.createElement('div'), document.createElement('div')];
@@ -619,7 +629,7 @@ var buildIframe = (widget) => {
     iframe.src = "https://my.matterport.com/show/?m=xx7GChUUBii";
     iframe.allowFullscreen = true;
     iframe.style.width = widget.content.width ? widget.content.width : (widget.type == 2 ? "auto" : "100%");
-    iframe.style.height = widget.content.height ? widget.content.height : "600px";
+    iframe.style.height = widget.content.height ? widget.content.height : (widget.type == 6 ? "100vh" : "600px");
     if (widget.content.responsive)
         iframe.style.width = "100%";
     if (widget.type == 2)
