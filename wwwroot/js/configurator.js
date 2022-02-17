@@ -161,17 +161,13 @@ var calculateColumns = (widgets) => {
 }
 
 var handleWidget = (widget) => {
-    var elem = handelWidgetType(widget);
-    if (widget.style != null) {
+    var [container, elem, editButton] = [document.createElement('div'), handelWidgetType(widget), document.createElement('i')];
+    if (widget.style != null)
         elem = handleWidgetStyle(widget, elem);
-    } else {
-        if (widget.type == 5) {
-            elem.classList.add('map-container');
-            elem.style.height = "500px";
-            elem.style.width = "500px";
-        }
-    }
-    return elem;
+    else elem = applyDefaultStyle(widget, elem);
+    editButton.className = 'fas fa-wrench edit-icon fa-lg';
+    container.append(editButton, elem);
+    return container;
 }
 
 var handelWidgetType = (widget) => {
@@ -248,7 +244,7 @@ var handleGalleryWidget = (widget) => {
             galleryContainer.appendChild(text);
 
         }
-    }, 2000)
+    }, 300)
     return galleryContainer;
 }
 
@@ -757,6 +753,21 @@ var handleTextPosition = (widget, text) => {
         text.style.right = widget.text.position.right;
         text.style.bottom = widget.text.position.bottom;
         text.style.left = widget.text.position.left;
+    }
+}
+
+var applyDefaultStyle = (widget, div) => {
+    switch (widget.type) {
+        case 5:
+            div.classList.add('map-container');
+            div.style.height = '500px';
+            div.style.width = '500px';
+            return div
+            break;
+
+        default:
+            return div;
+            break;
     }
 }
 
