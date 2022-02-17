@@ -544,15 +544,13 @@ var handleGridGalleryWidget = (widget) => {
 
 var handleHorizontalScrollGallery = (widget) => {
     var base_id = "horizontal-gallery";
-    var gallery = document.createElement('div'),
-        galleryWrapper = document.createElement('div');
+    var [gallery, galleryWrapper] = [document.createElement('div'), document.createElement('div')];
     gallery.classList.add('gallery');
     galleryWrapper.classList.add('gallery-container');
     galleryWrapper.id = generateId(base_id);;
     widget.content.source.forEach(source => {
-        var itemWrapper = document.createElement('div');
+        var [itemWrapper, item] = [document.createElement('div'), document.createElement('img')];
         itemWrapper.classList.add('item-gallery-image');
-        var item = document.createElement('img');
         item.src = 'https://www.w3schools.com/w3images/nature.jpg';
         itemWrapper.appendChild(item);
         galleryWrapper.appendChild(itemWrapper);
@@ -564,9 +562,7 @@ var handleHorizontalScrollGallery = (widget) => {
 }
 
 var createGalleryNavButtons = (galleryId) => {
-    var span = document.createElement('span');
-    var leftArrow = document.createElement('i'),
-        rightArrow = document.createElement('i');
+    var [span, leftArrow, rightArrow] = [document.createElement('span'), document.createElement('i'), document.createElement('i')];
     leftArrow.className = 'fas fa-xl fa-angle-left left-icon';
     rightArrow.className = 'fas fa-xl fa-angle-right right-icon';
     rightArrow.onclick = () => {
