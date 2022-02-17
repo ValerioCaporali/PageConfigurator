@@ -9199,5 +9199,43 @@
                 "Text": "<img src='https://api.conti-srl.com/api/v1/server/resources/conti/magazzino.png' style='max-height:250px;object-fit:scale-down;'>"
             }
         }]
+    },
+    {
+        "kind": 0,
+        "name": "Pagina prova web-page",
+        "language": "it",
+        "default": false,
+        "customerGroupValueOid": null,
+        "widgets": [{
+            "id": null,
+            "row": 0,
+            "mobileRow": 0,
+            "rowSpan": 0,
+            "column": 0,
+            "columnSpan": 0,
+            "type": 6,
+            "content": {
+                "text": null,
+                "source": null,
+                "enableLoop": null,
+                "slideShowDelay": 0,
+                "serverSideScalingEnabled": null,
+                "cacheEnabled": null,
+                "showIndicator": false,
+                "showNavButtons": false,
+                "showcaseId": null,
+                "options": null,
+                "enableAutoplay": false,
+                "disableControls": false,
+                "responsive": false,
+                "width": null,
+                "height": null
+            },
+            "text": null,
+            "clickAction": null,
+            "style": null,
+            "mobileStyle": null,
+            "hover": null
+        }]
     }
 ]
