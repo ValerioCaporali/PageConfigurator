@@ -1,3 +1,5 @@
+import Methods from "./handler.js";
+
 const Http = new XMLHttpRequest();
 const base_url = 'api/Pages/';
 let homePages;
@@ -7,25 +9,27 @@ let selectedPage;
 let generatedId = [];
 var showingStructure = false;
 
+var methods;
+
 (async() => {
     var response = await fetch(base_url + 'HomePages');
     homePages = await response.json();
     document.getElementById('home-pages-number').innerHTML = homePages.length;
-    populatePageList("Home", homePages);
+    (async() => {
+        var response = await fetch(base_url + 'Pages');
+        pages = await response.json();
+        document.getElementById('pages-number').innerHTML = pages.length;
+        methods = new Methods(homePages, pages);
+        methods.populatePageList("Home");
+        methods.populatePageList("Pages");
+    })().catch(err => {
+        console.log(err);
+    });
 })().catch(err => {
     console.log(err);
 });
 
-(async() => {
-    var response = await fetch(base_url + 'Pages');
-    pages = await response.json();
-    document.getElementById('pages-number').innerHTML = pages.length;
-    populatePageList("Pages", pages);
-})().catch(err => {
-    console.log(err);
-});
-
-var populatePageList = (pageType, pages) => {
+/* var populatePageList = (pageType, pages) => {
     var list;
     if (pageType == "Home") {
         list = document.getElementById('home-pages-list');
@@ -35,6 +39,9 @@ var populatePageList = (pageType, pages) => {
             a.href = "#";
             a.appendChild(document.createTextNode(pages[i].name));
             li.appendChild(a);
+            li.addEventListener('click', () => {
+                methods.open
+            })
             li.setAttribute('onclick', 'openPageStream(' + i + ', "Home")');
             list.appendChild(li);
         }
@@ -50,8 +57,9 @@ var populatePageList = (pageType, pages) => {
             list.appendChild(li);
         }
     } else console.log("Unexpected parameter");
-}
+} */
 
+/*
 var openPageStream = (index, pageType) => {
     if (pageType == "Home") {
         selectedHomePage = homePages[index];
@@ -845,4 +853,4 @@ var generateId = (id) => {
     };
     generatedId.push(id);
     return id;
-}
+} */

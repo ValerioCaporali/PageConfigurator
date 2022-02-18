@@ -1,0 +1,1 @@
+import { configurator } from './configurator.js'
