@@ -63,17 +63,7 @@ var openPageStream = (index, pageType) => {
 }
 
 var showPagePreview = (page) => {
-    showingStructure = false;
-    var editIcon = document.querySelectorAll('.edit-icon');
-    if (editIcon) {
-        editIcon.forEach((icon) => {
-            icon.style.display = 'none';
-        })
-    }
-    document.getElementById('structure-icon').classList.remove('fa-eye-slash');
-    document.getElementById("demo-container").style.display = "block";
-    var structureButton = document.getElementById('structure-button');
-    structureButton.style.display = 'block';
+    setDefaultMode();
     var title = document.getElementById("page-title");
     title.innerHTML = "";
     title.appendChild(document.createTextNode(page.name));
@@ -181,6 +171,8 @@ var handleWidget = (widget) => {
     editButtonContainer.classList.add('edit-button-container');
     editButtonContainer.appendChild(editButton);
     editButton.className = 'fas fa-wrench edit-icon fa-lg';
+    $(editButton).attr("data-toggle", "modal");
+    $(editButton).attr("data-target", "#edit-modal");
     editButton.addEventListener('click', () => {
         openModifyPanel(widget);
     })
@@ -503,6 +495,7 @@ var createpdfToolbar = () => {
 
 var handleTourWidget = (widget) => {
     var sdkKey = 'qeyy42zwyfu5fwkrxas6i6qqd';
+    var tourContainer = document.createElement('div');
     var tourIframe = buildIframe(widget);
     if (widget.content.responsive)
         tourIframe.style.width = "100%";
@@ -522,7 +515,8 @@ var handleTourWidget = (widget) => {
         }, 1000)
     });
 
-    return tourIframe;
+    tourContainer.appendChild(tourIframe);
+    return tourContainer;
 }
 
 var handleMapWidget = (widget) => {
@@ -562,9 +556,11 @@ var handleGridGalleryWidget = (widget) => {
 }
 
 var handleWebPageWidget = (widget) => {
+    var webPageContainer = document.createElement('div');
     var webPageIframe = buildIframe(widget);
     webPageIframe.src = 'https://it.wikipedia.org/wiki/Pagina_principale';
-    return webPageIframe;
+    webPageContainer.appendChild(webPageIframe);
+    return webPageContainer;
 }
 
 var handleHorizontalScrollGallery = (widget) => {
@@ -646,13 +642,10 @@ var buildIframe = (widget) => {
     if (widget.type == 2) {
         iframe.style.width = widget.content.width ? widget.content.width : "100%";
         iframe.style.height = widget.content.height ? widget.content.height : "600px";
-        console.log(iframe)
     } else {
-        iframe.style.width = widget.style.width ? widget.style.width : "100%";
-        iframe.style.height = widget.style.height ? widget.style.height : (widget.type == 6 ? "100vh" : "600px");
+        iframe.style.width = '100%';
+        iframe.style.height = '100%';
     }
-    if (widget.content.responsive)
-        iframe.style.width = "100%";
     iframe.style.border = "none";
     return iframe;
 }
@@ -782,23 +775,42 @@ var handleTextPosition = (widget, text) => {
 
 var applyDefaultStyle = (widget, div) => {
     switch (widget.type) {
+        case 2:
+            div.classList.add('video-container-default');
+            return div;
         case 5:
-            div.classList.add('map-container');
-            div.style.height = '500px';
-            div.style.width = '500px';
+            div.classList.add('map-container-default');
             return div;
             break;
-
+        case 6:
+            div.classList.add('web-page-container-default');
+            return div;
         default:
             return div;
             break;
     }
 }
 
+var setDefaultMode = () => {
+    showingStructure = false;
+    var editIcon = document.querySelectorAll('.edit-icon');
+    if (editIcon) {
+        editIcon.forEach((icon) => {
+            icon.style.display = 'none';
+        })
+    }
+    document.getElementById('page').classList.remove('page-structure');
+    document.getElementById('structure-icon').classList.remove('fa-eye-slash');
+    document.getElementById("demo-container").style.display = "block";
+    var structureButton = document.getElementById('structure-button');
+    structureButton.style.display = 'block';
+}
+
 var changeMode = () => {
     var widgets = document.querySelectorAll(".widget");
     var structureIcon = document.getElementById('structure-icon');
     if (showingStructure) {
+        document.getElementById('page').classList.remove('page-structure');
         [].forEach.call(widgets, (widget) => {
             widget.classList.remove('structure');
         });
@@ -806,6 +818,7 @@ var changeMode = () => {
         structureIcon.classList.remove('fa-eye-slash');
         showingStructure = false;
     } else {
+        document.getElementById('page').classList.add('page-structure');
         [].forEach.call(widgets, (widget) => {
             widget.classList.add('structure');
         });
@@ -822,7 +835,8 @@ var changeEditIconsVisibility = (displayMode) => {
 }
 
 var openModifyPanel = (widget) => {
-    console.log(widget);
+    var a = document.getElementById('edit-panel');
+    a.style.display = 'block';
 }
 
 var generateId = (id) => {

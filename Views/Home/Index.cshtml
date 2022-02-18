@@ -173,9 +173,20 @@
         border-radius: 20px;
     }
 
-    .map-container {
+    .map-container-default {
         margin: auto;
         width: 100% !important;
+        height: 500px;
+    }
+
+    .web-page-container-default {
+        width: auto;
+        height: 100vh;
+    }
+
+    .video-container-default {
+        width: auto;
+        height: 600px;
     }
 
     #prev-page>.fas,
@@ -349,6 +360,10 @@
         cursor: pointer;
     }
 
+    .page-structure {
+        border: 1px dashed;
+    }
+
     .structure {
         margin: 10px;
         padding: 10px;
@@ -360,6 +375,24 @@
         margin-left: 0;
         margin-right: 0;
         margin: auto;
+    }
+
+    .edit-panel {
+        display: none;
+        width: 50%;
+        height: 800px;
+        margin: auto;
+        background-color: #f0f0f0;
+        top: 0;
+        bottom: 0;
+        position: absolute;
+        right: 0;
+        left: 0;
+        border-radius: 20px;
+    }
+
+    .edit-panel-container {
+
     }
 
     .edit-button-container {
@@ -477,8 +510,33 @@
                     </div>
                 </div>
             </div>
+            @* <div class="edit-panel-container">
+                <div id="edit-panel" class="edit-panel">
+
+                </div>
+            </div> *@
         </main>
-    </div>
+
+
+        <div class="modal fade" id="edit-modal" role="dialog" style="backdrop-filter: blur(3px);">
+            <div class="modal-dialog modal-xl" style="margin-top: 12rem;">
+            
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Modifica widget</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                  <p>Some text in the modal.</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+
+            </div>
+        </div>
 
 </body>
 
