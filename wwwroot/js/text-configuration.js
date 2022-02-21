@@ -1,3 +1,0 @@
-class TextWidget {
-    text = "";
-}

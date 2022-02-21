@@ -1,3 +1,4 @@
+import Modifier from "./modifier.js";
 export default class Methods {
 
     homePages;
@@ -9,7 +10,10 @@ export default class Methods {
 
     constructor(homePages, pages) {
         this.homePages = JSON.parse(JSON.stringify(homePages));
-        this.pages = JSON.parse(JSON.stringify(pages));;
+        this.pages = JSON.parse(JSON.stringify(pages));
+        document.getElementById('structure-icon').addEventListener("click", () => {
+            this.changeMode();
+        })
     }
 
 
@@ -45,10 +49,7 @@ export default class Methods {
     }
 
     openPageStream = (index, pageType) => {
-        console.log(index)
         if (pageType == "Home") {
-            console.log("tutte ", JSON.parse(JSON.stringify(this.homePages)))
-            console.log("la prima ", this.homePages[33])
             this.selectedHomePage = this.homePages[index];
             this.showPagePreview(this.selectedHomePage);
         } else if (pageType == "Page") {
@@ -58,7 +59,6 @@ export default class Methods {
     }
 
     showPagePreview = (page) => {
-        console.log(page)
         this.setDefaultMode();
         var title = document.getElementById("page-title");
         title.innerHTML = "";
@@ -158,11 +158,6 @@ export default class Methods {
     }
 
     handleWidget = (widget) => {
-        let structurueButton = document.getElementById('structure-button');
-
-        structurueButton.addEventListener("click", () => {
-            this.changeMode();
-        }, false)
         var [container, elem, editButton, editButtonContainer] = [document.createElement('div'), this.handelWidgetType(widget), document.createElement('i'), document.createElement('div')];
         if (widget.style != null)
             elem = this.handleWidgetStyle(widget, elem);
@@ -249,9 +244,9 @@ export default class Methods {
         galleryContainer.appendChild(div);
         setTimeout(() => {
             if (widget.text) {
-                text = document.createElement("div");
+                let text = document.createElement("div");
                 text.innerHTML = widget.text.value.trim();
-                handleTextPosition(widget, text);
+                this.handleTextPosition(widget, text);
                 galleryContainer.appendChild(text);
 
             }
@@ -793,7 +788,6 @@ export default class Methods {
     }
 
     setDefaultMode = () => {
-        console.log(this.showingStructure)
         var editIcon = document.querySelectorAll('.edit-icon');
         if (editIcon) {
             editIcon.forEach((icon) => {
@@ -801,14 +795,16 @@ export default class Methods {
             })
         }
         document.getElementById('page').classList.remove('page-structure');
-        document.getElementById('structure-icon').classList.remove('fa-eye-slash');
+        document.getElementById('structure-icon').classList.remove('fa-eye');
+        document.getElementById('structure-icon').classList.add('fa-pen-square');
         document.getElementById("demo-container").style.display = "block";
         var structureButton = document.getElementById('structure-button');
         structureButton.style.display = 'block';
+        this.showingStructure = false;
     }
 
     changeMode = () => {
-        console.log("click");
+        console.log("change mode")
         var widgets = document.querySelectorAll(".widget");
         var structureIcon = document.getElementById('structure-icon');
         if (this.showingStructure) {
@@ -817,30 +813,30 @@ export default class Methods {
                 widget.classList.remove('structure');
             });
             this.changeEditIconsVisibility('none')
-            structureIcon.classList.remove('fa-eye-slash');
+            structureIcon.classList.remove('fa-eye');
+            structureIcon.classList.add('fa-pen-square');
             this.showingStructure = false;
         } else {
+            console.log("prova")
             document.getElementById('page').classList.add('page-structure');
             [].forEach.call(widgets, (widget) => {
-                console.log(widget)
                 widget.classList.add('structure');
             });
             this.changeEditIconsVisibility('block');
-            structureIcon.classList.add('fa-eye-slash');
+            structureIcon.classList.add('fa-eye');
+            structureIcon.classList.remove('fa-pen-square');
             this.showingStructure = true;
         }
     }
 
     changeEditIconsVisibility = (displayMode) => {
         document.querySelectorAll('.edit-icon').forEach(editIcon => {
-            console.log(editIcon);
             editIcon.style.display = displayMode;
         })
     }
 
     openModifyPanel = (widget) => {
-        var a = document.getElementById('edit-panel');
-        a.style.display = 'block';
+        var modifier = new Modifier(widget);
     }
 
     generateId = (id) => {
