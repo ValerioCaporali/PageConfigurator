@@ -5,4 +5,10 @@ export default class GalleryWidget {
     slideShowDelay;
     serverSideScalingEnabled;
     cacheEnabled;
+
+    constructor() {}
+
+    prova = () => {
+        console.log("l'import della classe funziona");
+    }
 }

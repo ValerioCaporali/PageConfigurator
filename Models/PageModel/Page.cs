@@ -14,6 +14,3 @@ namespace Model.PageModel
         public List<Widget> Widgets { get; set; }
     }
 }
-
-
-// prendo il risultato json in stringa -> poi lo deserializzo nel modello che ho creato

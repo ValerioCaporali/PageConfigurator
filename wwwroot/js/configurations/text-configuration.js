@@ -1,3 +1,8 @@
 export default class TextWidget {
-    text = "";
+    widgetName = "Testo";
+    widget;
+
+    constructor(widget) {
+        this.widget = widget;
+    }
 }

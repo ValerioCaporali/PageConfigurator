@@ -28,7 +28,7 @@ export interface PageWidget {
 
     ClickAction?: BaseClickAction;
 
-    Text?: PageWidgetText;
+    readonlyText?: PageWidgetText;
 
     Style?: Style;
 
@@ -42,10 +42,10 @@ export interface PageWidget {
 export enum WidgetType {
     Text = 0,
     Gallery = 1,
-    Video = 2, //
+    Video = 2,
     Pdf = 3,
-    Tour = 4, //
-    Map = 5, //
+    Tour = 4,
+    Map = 5,
     WebPage = 6,
     HorizontalScrollGallery = 101, // Custom widget used for Falc marketing section
     GridGallery = 102

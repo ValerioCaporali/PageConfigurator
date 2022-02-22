@@ -1,5 +1,5 @@
-import Modifier from "./modifier.js";
-export default class Methods {
+import Modifier from './modifier.js'
+export default class Render {
 
     homePages;
     pages;
@@ -651,6 +651,9 @@ export default class Methods {
 
         div.style.position = "relative";
 
+        if (widget.type == 5 && !widget.style.height)
+            div.style.height = '500px';
+
         if (widget.style.padding)
             div = this.handlePadding(widget, div);
 
@@ -804,7 +807,6 @@ export default class Methods {
     }
 
     changeMode = () => {
-        console.log("change mode")
         var widgets = document.querySelectorAll(".widget");
         var structureIcon = document.getElementById('structure-icon');
         if (this.showingStructure) {
@@ -817,7 +819,6 @@ export default class Methods {
             structureIcon.classList.add('fa-pen-square');
             this.showingStructure = false;
         } else {
-            console.log("prova")
             document.getElementById('page').classList.add('page-structure');
             [].forEach.call(widgets, (widget) => {
                 widget.classList.add('structure');
@@ -836,7 +837,7 @@ export default class Methods {
     }
 
     openModifyPanel = (widget) => {
-        var modifier = new Modifier(widget);
+        let modifier = new Modifier(widget);
     }
 
     generateId = (id) => {

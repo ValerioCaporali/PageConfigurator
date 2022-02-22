@@ -41,7 +41,7 @@ namespace Pages_configurator.Controllers
         public async Task<ActionResult<List<Page>>> GetHomePages()
         {
             var homePagesJson = await System.IO.File.ReadAllTextAsync("Controllers/home.json");
-            var homePages = JsonConvert.DeserializeObject<List<Page>>(homePagesJson);
+            List<Page> homePages = JsonConvert.DeserializeObject<List<Page>>(homePagesJson);
             return homePages;
         }
 
@@ -50,13 +50,13 @@ namespace Pages_configurator.Controllers
         public async Task<ActionResult<List<Page>>> GetPages()
         {
             var pagesJson = await System.IO.File.ReadAllTextAsync("Controllers/pages.json");
-            var pages = JsonConvert.DeserializeObject<List<Page>>(pagesJson);
+            List<Page> pages = JsonConvert.DeserializeObject<List<Page>>(pagesJson);
             return pages;
         }
 
         // use this to save all home pages
         [HttpPost("SaveHomePages")]
-        public async Task<ActionResult> SaveHomePages()
+        public async Task<ActionResult> SaveHomePages() // To-Do
         {
             return Ok("Home pages salvate correttamente !");
         }
