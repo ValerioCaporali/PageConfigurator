@@ -40,7 +40,7 @@ namespace Pages_configurator.Controllers
         [HttpGet("HomePages")]
         public async Task<ActionResult<List<Page>>> GetHomePages()
         {
-            var homePagesJson = await System.IO.File.ReadAllTextAsync("Controllers/home.json");
+            var homePagesJson = await System.IO.File.ReadAllTextAsync("Pages/home.json");
             List<Page> homePages = JsonConvert.DeserializeObject<List<Page>>(homePagesJson);
             return homePages;
         }
@@ -49,7 +49,7 @@ namespace Pages_configurator.Controllers
         [HttpGet("Pages")]
         public async Task<ActionResult<List<Page>>> GetPages()
         {
-            var pagesJson = await System.IO.File.ReadAllTextAsync("Controllers/pages.json");
+            var pagesJson = await System.IO.File.ReadAllTextAsync("Pages/pages.json");
             List<Page> pages = JsonConvert.DeserializeObject<List<Page>>(pagesJson);
             return pages;
         }

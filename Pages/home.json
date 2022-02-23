@@ -48,7 +48,12 @@
                     "fontFamily": null,
                     "fontSize": null,
                     "padding": null,
-                    "borders": null
+                    "borders": [{
+                        "type": 0,
+                        "style": "boh",
+                        "width": "2px",
+                        "color": "#FF0000"
+                    }]
                 },
                 "mobileStyle": null,
                 "hover": null

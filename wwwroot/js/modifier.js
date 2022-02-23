@@ -15,9 +15,9 @@ export default class Modifier {
         6: 'Pagina web',
         101: 'Galleria orizzontale',
         102: 'Galleria a griglia'
-    }
-
+    };
     widget;
+
     constructor(widget) {
         this.widget = widget;
         this.initPanel(this.widget);
@@ -42,8 +42,100 @@ export default class Modifier {
     }
 
     initCommonSettingsPanel = (widget) => {
-        document.getElementById('widget-type').value = widget.type;
-        if (widget.id) document.getElementById('widget-id').value = widget.id;
+        for (const [key, value] of Object.entries(widget)) {
+            switch (key) {
+                case "style":
+                    if (widget.style) {
+                        for (const [key, value] of Object.entries(widget.style)) {
+                            if (key == "margin" && widget.style.margin) {
+                                for (const [key, value] of Object.entries(widget.style.margin)) {
+                                    if (key == "total" && value) {
+                                        document.getElementById("m-top").value = value;
+                                        document.getElementById("m-right").value = value;
+                                        document.getElementById("m-bottom").value = value;
+                                        document.getElementById("m-left").value = value;
+                                    }
+                                    if (key != "total" && value) {
+                                        document.getElementById("m-" + key.toString()).value = value;
+                                    }
+                                }
+                            }
+                            if (key == "padding" && widget.style.padding) {
+                                for (const [key, value] of Object.entries(widget.style.padding)) {
+                                    if (key == "total" && value) {
+                                        document.getElementById("p-top").value = value;
+                                        document.getElementById("p-right").value = value;
+                                        document.getElementById("p-bottom").value = value;
+                                        document.getElementById("p-left").value = value;
+                                    }
+                                    if (key != "total" && value) {
+                                        document.getElementById("p-" + key).value = value;
+                                    }
+                                }
+                            }
+
+                            if (key == "borders" && widget.style.borders) {
+                                for (let i = 0; i < widget.style.borders.length; i++) {
+                                    for (const [key, value] of Object.entries(widget.style.borders[i])) {
+                                        document.getElementById("b-" + key).value = value;
+                                    }
+                                }
+                            }
+
+                            if (key != "margin" && key != "padding" && key != "borders" && value) {
+                                console.log(key, document.getElementById(key))
+                                document.getElementById(key).value = value;
+                            }
+                        }
+                    }
+                    break;
+
+                case "mobileStyle":
+                    if (widget.mobileStyle) {
+                        for (const [key, value] of Object.entries(widget.mobileStyle)) {
+                            if (key == "margin" && widget.mobileStyle.margin) {
+                                for (const [key, value] of Object.entries(widget.mobileStyle.margin)) {
+                                    if (key == "total" && value) {
+                                        document.getElementById("mobile-m-top").value = value;
+                                        document.getElementById("mobile-m-right").value = value;
+                                        document.getElementById("mobile-m-bottom").value = value;
+                                        document.getElementById("mobile-m-left").value = value;
+                                    }
+                                    if (key != "total" && value) {
+                                        document.getElementById("mobile-m-" + key).value = value;
+                                    }
+                                }
+                            }
+                            if (key == "padding" && widget.mobileStyle.padding) {
+                                for (const [key, value] of Object.entries(widget.mobileStyle.padding)) {
+                                    if (key == "total" && value) {
+                                        document.getElementById("mobile-p-top").value = value;
+                                        document.getElementById("mobile-p-right").value = value;
+                                        document.getElementById("mobile-p-bottom").value = value;
+                                        document.getElementById("mobile-p-left").value = value;
+                                    }
+                                    if (key != "total" && value) {
+                                        document.getElementById("mobile-p-" + key).value = value;
+                                    }
+                                }
+                            }
+                            if (key != "margin" && key != "padding" && key != "borders" && value) {
+                                document.getElementById(key).value = value;
+                            }
+                        }
+                    }
+                    break;
+
+                default:
+                    if (key != "content" && key != "clickAction") {
+                        if (document.getElementById(key)) {
+                            document.getElementById(key).value = value;
+                        }
+                    }
+                    break;
+            }
+
+        }
     }
 
     resetPanel = () => {

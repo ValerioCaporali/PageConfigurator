@@ -26,8 +26,8 @@ namespace Pages_configurator.Controllers
 
         public async Task<IActionResult> Index()
         {
-            string homePagesJson = await System.IO.File.ReadAllTextAsync("Controllers/home.json"),
-                pagesJson = await System.IO.File.ReadAllTextAsync("Controllers/pages.json");
+            string homePagesJson = await System.IO.File.ReadAllTextAsync("Pages/home.json"),
+                pagesJson = await System.IO.File.ReadAllTextAsync("Pages/pages.json");
             List<Page> homePages = JsonConvert.DeserializeObject<List<Page>>(homePagesJson),
                        pages = JsonConvert.DeserializeObject<List<Page>>(pagesJson);
             int homePagesNumber = homePages.Count(), 

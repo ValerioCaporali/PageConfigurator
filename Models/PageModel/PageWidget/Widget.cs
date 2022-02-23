@@ -15,7 +15,7 @@ namespace Model.PageModel.PageWidget
         public int ColumnSpan { get; set; }
         public WidgetType Type { get; set; }
         public Content Content { get; set; }
-        public Text Text { get; set; }
+        public Text ReadonlyText { get; set; }
         public BaseClickAction ClickAction { get; set; }
         public Style Style { get; set; }
         public Style MobileStyle { get; set; }

@@ -551,14 +551,14 @@
                                 <div class="tab-pane active" id="property-pane">
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <label for="widget-id">Id</label>
-                                            <input id="widget-id" type="number" min="0" class="form-control"
+                                            <label for="id">Id</label>
+                                            <input id="id" type="number" min="0" class="form-control"
                                                    placeholder="null">
                                         </div>
                                         <div class="col-md-3">
-                                            <label for="widget-type">Tipo</label>
-                                            <input id="widget-type" type="number" min="0" class="form-control"
-                                                   placeholder="0">
+                                            <label for="type">Tipo</label>
+                                            <input id="type" type="number" min="0" class="form-control"
+                                                   placeholder="">
                                         </div>
                                     </div>
                                 </div>
@@ -566,16 +566,16 @@
                                 <div class="tab-pane" id="text-pane">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <label for="widget-text-value">Testo</label>
-                                            <textarea id="widget-text-value" type="text" class="form-control"
-                                                      placeholder="Lorem ipsum..."></textarea>
+                                            <label for="text">Testo</label>
+                                            <textarea id="text" type="text" class="form-control"
+                                                      placeholder=""></textarea>
                                         </div>
                                     </div>
                                     <span style="display: block; margin-top: 22px;"></span>
-                                    <label for="widget-text-position">Posizione</label>
+                                    <label for="position">Posizione</label>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <select id="widget-text-position" class="form-select">
+                                            <select id="position" class="form-select">
                                                 <option value="0">Centrato</option>
                                                 <option value="1">Assoluto</option>
                                             </select>
@@ -586,19 +586,19 @@
                                         <label>Posizionamento</label>
                                         <div id="text-position" class="row">
                                             <div class="col-md-3">
-                                                <input id="text-position-top" type="text" class="form-control"
+                                                <input id="top" type="text" class="form-control"
                                                        placeholder="Sopra">
                                             </div>
                                             <div class="col-md-3">
-                                                <input id="text-position-right" type="text" class="form-control"
+                                                <input id="right" type="text" class="form-control"
                                                        placeholder="Destra">
                                             </div>
                                             <div class="col-md-3">
-                                                <input id="text-position-bottom" type="text" class="form-control"
+                                                <input id="bottom" type="text" class="form-control"
                                                        placeholder="Sotto">
                                             </div>
                                             <div class="col-md-3">
-                                                <input id="text-position-left" type="text" class="form-control"
+                                                <input id="left" type="text" class="form-control"
                                                        placeholder="Sinistra">
                                             </div>
                                         </div>
@@ -609,7 +609,7 @@
                                     <label>Hover</label>
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <select id="widget-hover-property" class="form-select">
+                                            <select id="hover" class="form-select">
                                                 <option value="0">None</option>
                                                 <option value="1">Default</option>
                                                 <option value="2">Underline</option>
@@ -623,8 +623,8 @@
 
                                     @* TEXT CONTENT *@
                                     <div class="row" id="0" style="display: none;">
-                                        <label for="0-text">Text</label>
-                                        <textarea type="text" class="form-control" placeholder="<p>Testo</p>"
+                                        <label for="0-text">Testo</label>
+                                        <textarea type="text" class="form-control" placeholder="e.g. <p>Esempio</p>"
                                                   id="0-text"></textarea>
                                     </div>
 
@@ -844,28 +844,33 @@
                                 <div class="tab-pane" id="position-pane">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <input type="number" min="0" class="form-control" placeholder="Riga"
+                                            <label for="row">Riga:</label>
+                                            <input type="number" min="0" class="form-control"
                                                    id="row">
                                         </div>
                                         <div class="col-md-6">
+                                            <label for="rowSpan">Espansione Riga:</label>
                                             <input type="number" min="0" class="form-control"
-                                                   placeholder="Espansione Riga" id="row-span">
+                                                   id="rowSpan">
                                         </div>
                                     </div>
                                     <div class="row" style="margin-top: 2%;">
                                         <div class="col-md-6">
-                                            <input type="number" min="0" class="form-control" placeholder="Colonna"
-                                                   id="col">
+                                            <label for="column">Colonna:</label>
+                                            <input type="number" min="0" class="form-control"
+                                                   id="column">
                                         </div>
                                         <div class="col-md-6">
+                                            <label for="columnSpan">Espansione colonna:</label>
                                             <input type="number" min="0" class="form-control"
-                                                   placeholder="Espansione colonna" id="col-span">
+                                                   id="columnSpan">
                                         </div>
                                     </div>
                                     <div class="row" style="margin-top: 2%;">
                                         <div class="col-md-6">
+                                            <label for="mobileRow">Riga per mobile:</label>
                                             <input type="number" min="0" class="form-control"
-                                                   placeholder="Riga per mobile" id="mobile-row">
+                                                   id="mobileRow">
                                         </div>
                                     </div>
                                 </div>
@@ -876,6 +881,8 @@
                         <div class="container">
                             <h5 style="font-weight: 700;">Stile</h5>
                         </div>
+
+                        @* TAB DIMENSIONI *@
 
                         <div id="style-tab" class="container">
                             <ul class="nav nav-tabs">
@@ -890,20 +897,23 @@
                                     <div class="row g-2">
                                         <div class="col-md">
                                             <div class="form-floating">
-                                                <label for="HeightSelectGrid">Altezza</label>
-                                                <input type="text" class="form-control" id="HeightSelectGrid"
-                                                    placeholder="100%">
+                                                <label for="height">Altezza</label>
+                                                <input type="text" class="form-control" id="height"
+                                                    placeholder="">
                                             </div>
                                         </div>
                                         <div class="col-md">
                                             <div class="form-floating">
-                                                <label for="WidthSelectGrid">Larghezza</label>
-                                                <input type="text" class="form-control" id="WidthSelectGrid"
-                                                    placeholder="100%">
+                                                <label for="width">Larghezza</label>
+                                                <input type="text" class="form-control" id="width"
+                                                    placeholder="">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
+                                @* TAB SPACING *@
+
                                 <div class="tab-pane" id="space-pane">
                                     <label>Margine</label>
                                     <div class="row">
@@ -937,6 +947,9 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                @* TAB PERSONALIZZAZIONE *@
+
                                 <div class="tab-pane" id="customization-pane">
                                     <div class="row">
                                         <div class="col-md-10">
@@ -944,22 +957,42 @@
                                             <input id="background" type="text" class="form-control" placeholder="">
                                         </div>
                                         <div class="col-md-2">
-                                            <label for="text-color">Colore del testo</label>
-                                            <input id="text-color" type="color" class="form-control"
+                                            <label for="textColor">Colore del testo</label>
+                                            <input id="textColor" type="color" class="form-control"
                                                 placeholder="Colore del testo">
                                         </div>
                                     </div>
                                     <span style="margin-top: 20px; display: block;"></span>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label for="font-family">Font</label>
-                                            <input id="font-family" type="text" class="form-control"
-                                                placeholder="Consolas">
+                                            <label for="fontFamily">Font</label>
+                                            <input id="fontFamily" type="text" class="form-control"
+                                                placeholder="">
                                         </div>
                                         <div class="col-md-6">
-                                            <label for="font-size">Grandezza del font</label>
-                                            <input id="font-size" type="text" class="form-control"
+                                            <label for="fontSize">Grandezza del font</label>
+                                            <input id="fontSize" type="text" class="form-control"
                                                 placeholder="smal, medium, large...">
+                                        </div>
+                                    </div>
+                                    <span style="margin-top: 20px; display: block;"></span>
+                                    <label for="">Bordi</label>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label for="b-type">Tipo di bordo</label>
+                                            <input id="b-type" type="text" class="form-control">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="b-style">Stile bordo</label>
+                                            <input id="b-style" type="text" class="form-control">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="b-width">Larghezza bordo</label>
+                                            <input id="b-width" type="text" class="form-control">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="b-color">Colore bordo</label>
+                                            <input id="b-color" type="color" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -983,16 +1016,16 @@
                                     <div class="row g-2">
                                         <div class="col-md">
                                             <div class="form-floating">
-                                                <label for="HeightSelectGrid">Altezza</label>
-                                                <input type="text" class="form-control" id="HeightSelectGrid"
-                                                    placeholder="100%">
+                                                <label for="m-height">Altezza</label>
+                                                <input type="text" class="form-control" id="m-height"
+                                                    placeholder="">
                                             </div>
                                         </div>
                                         <div class="col-md">
                                             <div class="form-floating">
-                                                <label for="WidthSelectGrid">Larghezza</label>
-                                                <input type="text" class="form-control" id="WidthSelectGrid"
-                                                    placeholder="100%">
+                                                <label for="m-width">Larghezza</label>
+                                                <input type="text" class="form-control" id="m-width"
+                                                    placeholder="">
                                             </div>
                                         </div>
                                     </div>
@@ -1046,21 +1079,21 @@
                                                 placeholder="">
                                         </div>
                                         <div class="col-md-2">
-                                            <label for="mobile-text-color">Colore del testo</label>
-                                            <input id="mobile-text-color" type="color" class="form-control"
+                                            <label for="mobile-textColor">Colore del testo</label>
+                                            <input id="mobile-textColor" type="color" class="form-control"
                                                 placeholder="Colore del testo">
                                         </div>
                                     </div>
                                     <span style="margin-top: 20px; display: block;"></span>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label for="mobile-font-family">Font</label>
-                                            <input id="mobile-font-family" type="text" class="form-control"
-                                                placeholder="Consolas">
+                                            <label for="mobile-fontFamily">Font</label>
+                                            <input id="mobile-fontFamily" type="text" class="form-control"
+                                                placeholder="">
                                         </div>
                                         <div class="col-md-6">
-                                            <label for="mobile-font-size">Grandezza del font</label>
-                                            <input id="mobile-font-size" type="text" class="form-control"
+                                            <label for="mobile-fontSize">Grandezza del font</label>
+                                            <input id="mobile-fontSize" type="text" class="form-control"
                                                 placeholder="smal, medium, large...">
                                         </div>
                                     </div>
