@@ -218,7 +218,7 @@ export default class Render {
 
     handleTextWidget = (widget) => {
         var div = document.createElement("div");
-        div.innerHTML = widget.content.text.trim()
+        div.innerHTML = widget.content.text;
         return div;
     }
 
@@ -799,7 +799,7 @@ export default class Render {
         }
         document.getElementById('page').classList.remove('page-structure');
         document.getElementById('structure-icon').classList.remove('fa-eye');
-        document.getElementById('structure-icon').classList.add('fa-pen-square');
+        document.getElementById('structure-icon').classList.add('fa-pen-to-square');
         document.getElementById("demo-container").style.display = "block";
         var structureButton = document.getElementById('structure-button');
         structureButton.style.display = 'block';
@@ -816,7 +816,7 @@ export default class Render {
             });
             this.changeEditIconsVisibility('none')
             structureIcon.classList.remove('fa-eye');
-            structureIcon.classList.add('fa-pen-square');
+            structureIcon.classList.add('fa-pen-to-square');
             this.showingStructure = false;
         } else {
             document.getElementById('page').classList.add('page-structure');
@@ -825,7 +825,7 @@ export default class Render {
             });
             this.changeEditIconsVisibility('block');
             structureIcon.classList.add('fa-eye');
-            structureIcon.classList.remove('fa-pen-square');
+            structureIcon.classList.remove('fa-pen-to-square');
             this.showingStructure = true;
         }
     }

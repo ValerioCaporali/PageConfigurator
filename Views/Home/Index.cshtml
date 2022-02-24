@@ -11,9 +11,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    @* <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> *@
     <link rel="stylesheet" href="~/css/site.css" />
-    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="~/css/Sidebar.css" rel="stylesheet" />
     <link href="~/css/style.css" rel="stylesheet" />
     <link href="~/css/configurator-style.css" rel="stylesheet" />
@@ -52,8 +55,11 @@
         border-radius: 5px;
     }
 
+    h4 {
+        margin-bottom: 0 !important;
+    }
+
     .edit-title-icon {
-        margin-top: auto;
         margin-bottom: auto;
         margin-left: 15px;
         cursor: pointer;
@@ -414,6 +420,28 @@
     #page {
         text-align: center;
     }
+
+    .form-select {
+        display: block;
+        width: 100%;
+        padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+        -moz-padding-start: calc(0.75rem - 3px);
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #212529;
+        background-color: #fff;
+        background-image: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e);
+        background-repeat: no-repeat;
+        background-position: right 0.75rem center;
+        background-size: 16px 12px;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
 </style>
 
 <body>
@@ -452,7 +480,7 @@
                         <li class="header-menu">
                             <span>General</span>
                         </li>
-                        @if (@ViewBag.HomePagesNumber > 0)  
+                        @if (@ViewBag.HomePagesNumber > 0)
                         {
                             <li class="sidebar-dropdown">
                                 <a href="#">
@@ -469,7 +497,7 @@
                         }
                         @if (@ViewBag.PagesNumber == 0)
                         {
-                            
+
                         }
 
                         <li class="sidebar-dropdown">
@@ -493,23 +521,23 @@
 
         <main class="page-content" id="main">
             <div class="row">
-                <h4 id="page-title" contenteditable="true" style="display:block;"></h4>
+                <h4 id="page-title" contenteditable="true" style="display:block; height: 100%;"></h4>
                 <span id="editButton" class="edit-title-icon">
                     <i class="fas fa-pencil-alt" style="font-size: 15px;"></i>
                 </span>
                 <div class="page-options">
                     <div id="page-language" style="display: none;">
                         <label for="language">Lingua: </label>
-                        <select name="language" id="language">
+                        <select name="language" class="form-select" id="language">
 
                         </select>
                     </div>
                     <div id="page-default" style="display: none;">
                         <label for="default">Default: </label>
-                        <select name="default" id="default"></select>
+                        <select name="default" class="form-select" id="default"></select>
                     </div>
                     <div id="structure-button" style="display: none; margin-left: 20px;">
-                        <i id="structure-icon" class="fas fa-pen-square fa-lg"></i>
+                        <i id="structure-icon" class="fa-solid fa-pen-to-square fa-xl"></i>
                     </div>
                 </div>
             </div>
@@ -551,14 +579,25 @@
                                 <div class="tab-pane active" id="property-pane">
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <label for="id">Id</label>
+                                            <label for="id">Id:</label>
                                             <input id="id" type="number" min="0" class="form-control"
-                                                   placeholder="null">
+                                                placeholder="null">
                                         </div>
                                         <div class="col-md-3">
-                                            <label for="type">Tipo</label>
-                                            <input id="type" type="number" min="0" class="form-control"
-                                                   placeholder="">
+                                            <label for="type">Tipo:</label>
+                                            <select id="type" class="form-select" data-style="btn-primary">
+                                                <option value="0">Testo</option>
+                                                <option value="1">Gallery</option>
+                                                <option value="2">video</option>
+                                                <option value="3">Pdf</option>
+                                                <option value="4">Showcase</option>
+                                                <option value="5">Mappa</option>
+                                                <option value="6">Pagina Web</option>
+                                                <option value="101">Galleria orizzontale</option>
+                                                <option value="5">Galleria griglia</option>
+                                            </select>
+                                            @* <input id="type" type="number" min="0" class="form-control"
+                                                placeholder=""> *@
                                         </div>
                                     </div>
                                 </div>
@@ -566,13 +605,13 @@
                                 <div class="tab-pane" id="text-pane">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <label for="text">Testo</label>
+                                            <label for="text">Testo:</label>
                                             <textarea id="text" type="text" class="form-control"
-                                                      placeholder=""></textarea>
+                                                placeholder=""></textarea>
                                         </div>
                                     </div>
                                     <span style="display: block; margin-top: 22px;"></span>
-                                    <label for="position">Posizione</label>
+                                    <label for="position">Posizione:</label>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <select id="position" class="form-select">
@@ -583,30 +622,27 @@
                                     </div>
                                     <span style="display: block; margin-top: 22px;"></span>
                                     <span id="text-position-wrapper" style="display: none;">
-                                        <label>Posizionamento</label>
+                                        <label>Posizionamento:</label>
                                         <div id="text-position" class="row">
                                             <div class="col-md-3">
-                                                <input id="top" type="text" class="form-control"
-                                                       placeholder="Sopra">
+                                                <input id="top" type="text" class="form-control" placeholder="Sopra">
                                             </div>
                                             <div class="col-md-3">
-                                                <input id="right" type="text" class="form-control"
-                                                       placeholder="Destra">
+                                                <input id="right" type="text" class="form-control" placeholder="Destra">
                                             </div>
                                             <div class="col-md-3">
-                                                <input id="bottom" type="text" class="form-control"
-                                                       placeholder="Sotto">
+                                                <input id="bottom" type="text" class="form-control" placeholder="Sotto">
                                             </div>
                                             <div class="col-md-3">
                                                 <input id="left" type="text" class="form-control"
-                                                       placeholder="Sinistra">
+                                                    placeholder="Sinistra">
                                             </div>
                                         </div>
                                     </span>
                                 </div>
 
-                                <div class="tab-pane active" id="event-pane">
-                                    <label>Hover</label>
+                                <div class="tab-pane" id="event-pane">
+                                    <label>Hover:</label>
                                     <div class="row">
                                         <div class="col-md-4">
                                             <select id="hover" class="form-select">
@@ -623,61 +659,62 @@
 
                                     @* TEXT CONTENT *@
                                     <div class="row" id="0" style="display: none;">
-                                        <label for="0-text">Testo</label>
+                                        <label for="0-text">Testo:</label>
                                         <textarea type="text" class="form-control" placeholder="e.g. <p>Esempio</p>"
-                                                  id="0-text"></textarea>
+                                            id="0-text"></textarea>
                                     </div>
 
                                     @* GALLERY CONTENT *@
                                     <div id="1" style="display: none;">
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <label for="1-showIndicators">Indicatori</label>
+                                                <label for="1-showIndicators">Indicatori:</label>
                                                 <input id="1-showIndicators" type="checkbox" data-toggle="toggle"
-                                                       data-width="100">
+                                                    data-width="100">
                                             </div>
                                             <div class="col-md-4">
-                                                <label for="1-showNavButtons">Pulsanti</label>
+                                                <label for="1-showNavButtons">Pulsanti:</label>
                                                 <input id="1-showNavButtons" type="checkbox" data-toggle="toggle"
-                                                       data-width="100">
+                                                    data-width="100">
                                             </div>
                                             <div class="col-md-4">
-                                                <label for="1-enableLoop">Loop</label>
-                                                <input id="1-enableLoop" type="checkbox" data-toggle="toggle" data-width="100">
+                                                <label for="1-enableLoop">Loop:</label>
+                                                <input id="1-enableLoop" type="checkbox" data-toggle="toggle"
+                                                    data-width="100">
                                             </div>
                                         </div>
                                         <span style="margin-top: 22px;"></span>
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <label for="1-slideShowDelay">Delay scorrimento</label>
+                                                <label for="1-slideShowDelay">Delay scorrimento:</label>
                                                 <div class="input-group input-group-sm mb-3">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"
-                                                              id="inputGroup-sizing-sm">ms</span>
+                                                            id="inputGroup-sizing-sm">ms</span>
                                                     </div>
                                                     <input id="1-slideShowDelay" type="number" class="form-control"
-                                                           aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                                                        aria-label="Small" aria-describedby="inputGroup-sizing-sm">
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <label for="1-serverSideScalingEnabled">Scalatura abilitata</label>
+                                                <label for="1-serverSideScalingEnabled">Scalatura abilitata:</label>
                                                 <input id="1-serverSideScalingEnabled" type="checkbox"
-                                                       data-toggle="toggle" data-width="100">
+                                                    data-toggle="toggle" data-width="100">
                                             </div>
                                             <div class="col-md-4">
-                                                <label for="1-cacheEnabled">Cache abilitato</label>
+                                                <label for="1-cacheEnabled">Cache abilitato:</label>
                                                 <input id="1-cacheEnabled" type="checkbox" data-toggle="toggle"
-                                                       data-width="100">
+                                                    data-width="100">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <label for="1-source">
                                                     Risorse (se più di una separare andando a
-                                                    capo)
+                                                    capo):
                                                 </label>
                                                 <textarea class="form-control rounded-0" id="1-source"
-                                                          rows="6"></textarea>
+                                                    rows="6"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -687,50 +724,50 @@
                                         <div class="row">
                                             <div class="col-md">
                                                 <div class="form-floating">
-                                                    <label for="2-height">Altezza video</label>
+                                                    <label for="2-height">Altezza video:</label>
                                                     <input type="text" class="form-control" id="2-height"
-                                                           placeholder="Default 100%">
+                                                        placeholder="Default 100%">
                                                 </div>
                                             </div>
                                             <div class="col-md">
                                                 <div class="form-floating">
-                                                    <label for="2-width">Larghezza video</label>
+                                                    <label for="2-width">Larghezza video:</label>
                                                     <input type="text" class="form-control" id="2-width"
-                                                           placeholder="Default 100%">
+                                                        placeholder="Default 100%">
                                                 </div>
                                             </div>
                                         </div>
                                         <span style="margin-top: 22px; display: block;"></span>
                                         <div class="row">
                                             <div class="col-md-3">
-                                                <label for="2-enableLoop">Loop abilitato</label>
+                                                <label for="2-enableLoop">Loop abilitato:</label>
                                                 <input id="2-enableLoop" type="checkbox" data-toggle="toggle"
-                                                       data-width="100">
+                                                    data-width="100">
                                             </div>
                                             <div class="col-md-3">
-                                                <label for="2-enableAutoplay">Autoplay abilitato</label>
+                                                <label for="2-enableAutoplay">Autoplay abilitato:</label>
                                                 <input id="2-enableAutoplay" type="checkbox" data-toggle="toggle"
-                                                       data-width="100">
+                                                    data-width="100">
                                             </div>
                                             <div class="col-md-3">
-                                                <label for="2-disableControls">Disabilita controlli</label>
+                                                <label for="2-disableControls">Disabilita controlli:</label>
                                                 <input id="2-disableControls" type="checkbox" data-toggle="toggle"
-                                                       data-width="100">
+                                                    data-width="100">
                                             </div>
                                             <div class="col-md-3">
-                                                <label for="2-responsive">Responsive</label>
+                                                <label for="2-responsive">Responsive:</label>
                                                 <input id="2-responsive" type="checkbox" data-toggle="toggle"
-                                                       data-width="100">
+                                                    data-width="100">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <label for="2-source">
                                                     Risorse (se più di una separare andando a
-                                                    capo)
+                                                    capo):
                                                 </label>
                                                 <textarea class="form-control rounded-0" id="3-source"
-                                                          rows="6"></textarea>
+                                                    rows="6"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -740,10 +777,9 @@
                                         <div class="col-md-12">
                                             <label for="pdf-sources">
                                                 Risorse (se più di una separare andando a
-                                                capo)
+                                                capo):
                                             </label>
-                                            <textarea class="form-control rounded-0" id="3-source"
-                                                      rows="6"></textarea>
+                                            <textarea class="form-control rounded-0" id="3-source" rows="6"></textarea>
                                         </div>
                                     </div>
 
@@ -751,14 +787,14 @@
                                     <div id="4" style="display: none;">
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label for="4-showcasdeId">Id showcase *</label>
+                                                <label for="4-showcasdeId">Id showcase:</label>
                                                 <input class="form-control" type="text" placeholder="null"
-                                                       id="4-showcasdeId">
+                                                    id="4-showcasdeId">
                                             </div>
                                             <div class="col-md-6">
-                                                <label for="4-options">Opzioni showcase</label>
+                                                <label for="4-options">Opzioni showcase:</label>
                                                 <input class="form-control" type="text" placeholder="null"
-                                                       id="4-options">
+                                                    id="4-options">
                                             </div>
                                         </div>
                                         <span style="display: block; margin-top: 22px;"></span>
@@ -766,10 +802,10 @@
                                             <div class="col-md-12">
                                                 <label for="showcase-sources">
                                                     Risorse (se più di una separare andando a
-                                                    capo)
+                                                    capo):
                                                 </label>
                                                 <textarea class="form-control rounded-0" id="4-source"
-                                                          rows="6"></textarea>
+                                                    rows="6"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -778,29 +814,29 @@
                                     <div id="5" style="display: none;">
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <label for="5-latitude">Latitudine</label>
+                                                <label for="5-latitude">Latitudine:</label>
                                                 <input class="form-control" type="number" placeholder="e.g 40.2123"
-                                                       id="5-latitude">
+                                                    id="5-latitude">
                                             </div>
                                             <div class="col-md-4">
-                                                <label for="5-longitude">Longitudine</label>
+                                                <label for="5-longitude">Longitudine:</label>
                                                 <input class="form-control" type="number" placeholder="e.g 60.8970"
-                                                       id="5-longitude">
+                                                    id="5-longitude">
                                             </div>
                                             <div class="col-md-4">
-                                                <label for="5-zoom">zoom</label>
+                                                <label for="5-zoom">zoom:</label>
                                                 <input class="form-control" type="number" placeholder="e.g 3"
-                                                       id="5-zoom">
+                                                    id="5-zoom">
                                             </div>
                                         </div>
                                         <span style="display: block; margin-top: 22px;"></span>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label for="5-style">Stile</label>
+                                                <label for="5-style">Stile:</label>
                                                 <input class="form-control" type="text" placeholder="" id="5-style">
                                             </div>
                                             <div class="col-md-6">
-                                                <label for="5-icon">Icon</label>
+                                                <label for="5-icon">Icon:</label>
                                                 <input class="form-control" type="text" placeholder="" id="5-icon">
                                             </div>
                                         </div>
@@ -809,9 +845,9 @@
                                     @* WEBPAGE CONTENT *@
                                     <div class="row" id="6" style="display: none;">
                                         <div class="col-md-12">
-                                            <label for="6-source">Risorse (se più di una separare andando a capo)</label>
-                                            <textarea class="form-control rounded-0" id="6-source"
-                                                      rows="6"></textarea>
+                                            <label for="6-source">Risorse (se più di una separare andando a
+                                                capo):</label>
+                                            <textarea class="form-control rounded-0" id="6-source" rows="6"></textarea>
                                         </div>
                                     </div>
 
@@ -820,10 +856,10 @@
                                         <div class="col-md-12">
                                             <label for="101-source">
                                                 Risorse (se più di una
-                                                separare andando a capo)
+                                                separare andando a capo):
                                             </label>
-                                            <textarea class="form-control rounded-0"
-                                                      id="101-source" rows="6"></textarea>
+                                            <textarea class="form-control rounded-0" id="101-source"
+                                                rows="6"></textarea>
                                         </div>
                                     </div>
 
@@ -832,10 +868,10 @@
                                         <div class="col-md-12">
                                             <label for="102-source">
                                                 Risorse (se più di una separare andando a
-                                                capo)
+                                                capo):
                                             </label>
                                             <textarea class="form-control rounded-0" id="102-source"
-                                                      rows="6"></textarea>
+                                                rows="6"></textarea>
                                         </div>
                                     </div>
 
@@ -845,32 +881,27 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label for="row">Riga:</label>
-                                            <input type="number" min="0" class="form-control"
-                                                   id="row">
+                                            <input type="number" min="0" class="form-control" id="row">
                                         </div>
                                         <div class="col-md-6">
                                             <label for="rowSpan">Espansione Riga:</label>
-                                            <input type="number" min="0" class="form-control"
-                                                   id="rowSpan">
+                                            <input type="number" min="0" class="form-control" id="rowSpan">
                                         </div>
                                     </div>
                                     <div class="row" style="margin-top: 2%;">
                                         <div class="col-md-6">
                                             <label for="column">Colonna:</label>
-                                            <input type="number" min="0" class="form-control"
-                                                   id="column">
+                                            <input type="number" min="0" class="form-control" id="column">
                                         </div>
                                         <div class="col-md-6">
                                             <label for="columnSpan">Espansione colonna:</label>
-                                            <input type="number" min="0" class="form-control"
-                                                   id="columnSpan">
+                                            <input type="number" min="0" class="form-control" id="columnSpan">
                                         </div>
                                     </div>
                                     <div class="row" style="margin-top: 2%;">
                                         <div class="col-md-6">
                                             <label for="mobileRow">Riga per mobile:</label>
-                                            <input type="number" min="0" class="form-control"
-                                                   id="mobileRow">
+                                            <input type="number" min="0" class="form-control" id="mobileRow">
                                         </div>
                                     </div>
                                 </div>
@@ -898,15 +929,13 @@
                                         <div class="col-md">
                                             <div class="form-floating">
                                                 <label for="height">Altezza</label>
-                                                <input type="text" class="form-control" id="height"
-                                                    placeholder="">
+                                                <input type="text" class="form-control" id="height" placeholder="">
                                             </div>
                                         </div>
                                         <div class="col-md">
                                             <div class="form-floating">
                                                 <label for="width">Larghezza</label>
-                                                <input type="text" class="form-control" id="width"
-                                                    placeholder="">
+                                                <input type="text" class="form-control" id="width" placeholder="">
                                             </div>
                                         </div>
                                     </div>
@@ -915,7 +944,7 @@
                                 @* TAB SPACING *@
 
                                 <div class="tab-pane" id="space-pane">
-                                    <label>Margine</label>
+                                    <label>Margine:</label>
                                     <div class="row">
                                         <div class="col-md-3">
                                             <input id="m-top" type="text" class="form-control" placeholder="Sopra">
@@ -931,7 +960,7 @@
                                         </div>
                                     </div>
                                     <span style="margin-top: 20px; display: block;"></span>
-                                    <label>Padding (rientranza)</label>
+                                    <label>Padding (rientranza):</label>
                                     <div class="row">
                                         <div class="col-md-3">
                                             <input id="p-top" type="text" class="form-control" placeholder="Sopra">
@@ -953,11 +982,11 @@
                                 <div class="tab-pane" id="customization-pane">
                                     <div class="row">
                                         <div class="col-md-10">
-                                            <label for="background">Sfondo</label>
+                                            <label for="background">Sfondo:</label>
                                             <input id="background" type="text" class="form-control" placeholder="">
                                         </div>
                                         <div class="col-md-2">
-                                            <label for="textColor">Colore del testo</label>
+                                            <label for="textColor">Colore del testo:</label>
                                             <input id="textColor" type="color" class="form-control"
                                                 placeholder="Colore del testo">
                                         </div>
@@ -965,33 +994,34 @@
                                     <span style="margin-top: 20px; display: block;"></span>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label for="fontFamily">Font</label>
-                                            <input id="fontFamily" type="text" class="form-control"
-                                                placeholder="">
+                                            <label for="fontFamily">Font:</label>
+                                            <input id="fontFamily" type="text" class="form-control" placeholder="">
                                         </div>
                                         <div class="col-md-6">
-                                            <label for="fontSize">Grandezza del font</label>
+                                            <label for="fontSize">Grandezza del font:</label>
                                             <input id="fontSize" type="text" class="form-control"
                                                 placeholder="smal, medium, large...">
                                         </div>
                                     </div>
                                     <span style="margin-top: 20px; display: block;"></span>
+
                                     <label for="">Bordi</label>
+                                    <i class="fa-solid fa-border-bottom-right"></i>
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <label for="b-type">Tipo di bordo</label>
+                                            <label for="b-type">Tipo di bordo:</label>
                                             <input id="b-type" type="text" class="form-control">
                                         </div>
                                         <div class="col-md-3">
-                                            <label for="b-style">Stile bordo</label>
+                                            <label for="b-style">Stile bordo:</label>
                                             <input id="b-style" type="text" class="form-control">
                                         </div>
                                         <div class="col-md-3">
-                                            <label for="b-width">Larghezza bordo</label>
+                                            <label for="b-width">Larghezza bordo:</label>
                                             <input id="b-width" type="text" class="form-control">
                                         </div>
                                         <div class="col-md-3">
-                                            <label for="b-color">Colore bordo</label>
+                                            <label for="b-color">Colore bordo:</label>
                                             <input id="b-color" type="color" class="form-control">
                                         </div>
                                     </div>
@@ -1006,32 +1036,30 @@
                         <div id="style-tab" class="container">
                             <ul class="nav nav-tabs">
                                 <a class="nav-item active nav-link" href="#mobile-dimension-pane"
-                                    data-toggle="tab">Dimensioni</a>
-                                <a class="nav-item nav-link" href="#mobile-space-pane" data-toggle="tab">Spaziatura</a>
+                                    data-toggle="tab">Dimensioni:</a>
+                                <a class="nav-item nav-link" href="#mobile-space-pane" data-toggle="tab">Spaziatura:</a>
                                 <a class="nav-item nav-link" href="#mobile-customization-pane"
-                                    data-toggle="tab">Personalizzazione</a>
+                                    data-toggle="tab">Personalizzazione:</a>
                             </ul>
                             <div class="tab-content" style="padding: 2%;">
                                 <div class="tab-pane active" id="mobile-dimension-pane">
                                     <div class="row g-2">
                                         <div class="col-md">
                                             <div class="form-floating">
-                                                <label for="m-height">Altezza</label>
-                                                <input type="text" class="form-control" id="m-height"
-                                                    placeholder="">
+                                                <label for="m-height">Altezza:</label>
+                                                <input type="text" class="form-control" id="m-height" placeholder="">
                                             </div>
                                         </div>
                                         <div class="col-md">
                                             <div class="form-floating">
-                                                <label for="m-width">Larghezza</label>
-                                                <input type="text" class="form-control" id="m-width"
-                                                    placeholder="">
+                                                <label for="m-width">Larghezza:</label>
+                                                <input type="text" class="form-control" id="m-width" placeholder="">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="tab-pane" id="mobile-space-pane">
-                                    <label>Margine</label>
+                                    <label>Margine:</label>
                                     <div class="row">
                                         <div class="col-md-3">
                                             <input id="mobile-m-top" type="text" class="form-control"
@@ -1051,7 +1079,7 @@
                                         </div>
                                     </div>
                                     <span style="margin-top: 20px; display: block;"></span>
-                                    <label>Padding (rientranza)</label>
+                                    <label>Padding (rientranza):</label>
                                     <div class="row">
                                         <div class="col-md-3">
                                             <input id="mobile-p-top" type="text" class="form-control"
@@ -1074,12 +1102,12 @@
                                 <div class="tab-pane" id="mobile-customization-pane">
                                     <div class="row">
                                         <div class="col-md-10">
-                                            <label for="mobile-background">Sfondo</label>
+                                            <label for="mobile-background">Sfondo:</label>
                                             <input id="mobile-background" type="text" class="form-control"
                                                 placeholder="">
                                         </div>
                                         <div class="col-md-2">
-                                            <label for="mobile-textColor">Colore del testo</label>
+                                            <label for="mobile-textColor">Colore del testo:</label>
                                             <input id="mobile-textColor" type="color" class="form-control"
                                                 placeholder="Colore del testo">
                                         </div>
@@ -1087,7 +1115,7 @@
                                     <span style="margin-top: 20px; display: block;"></span>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label for="mobile-fontFamily">Font</label>
+                                            <label for="mobile-fontFamily">Font:</label>
                                             <input id="mobile-fontFamily" type="text" class="form-control"
                                                 placeholder="">
                                         </div>
@@ -1102,7 +1130,6 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-danger">Elimina Widget</button>
                         <button id="save-widget-changes-button" type="button" class="btn btn-success">Salva</button>
                     </div>
@@ -1111,9 +1138,6 @@
         </div>
 
 </body>
-
-<hr>
-</hr>
 
 </html>
 
@@ -1126,7 +1150,7 @@
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
 <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.12.313/build/pdf.min.js"></script>
-<script type="module" src="~/js/configurator.js" asp-append-version="true"></script> 
+<script type="module" src="~/js/requests.js" asp-append-version="true"></script>
 <script src="https://cdn3.devexpress.com/jslib/21.2.4/js/dx.all.js"></script>
 <script>
     $(".sidebar-dropdown > a").click(function () {

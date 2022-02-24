@@ -1,10 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
+// using Converter;
 using Model.PageModel.ClickAction;
 using Model.PageModel.PageStyle;
 
 namespace Model.PageModel.PageWidget
 {
+
+    // [JsonConverter(typeof(ContentConverter))]
     public class Widget
     {
         public string Id { get; set; }

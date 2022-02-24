@@ -36,7 +36,6 @@ namespace Pages_configurator.Controllers
             return View();
         }
 
-        // use this to return to javascript the json with home pages
         [HttpGet("HomePages")]
         public async Task<ActionResult<List<Page>>> GetHomePages()
         {
@@ -45,7 +44,6 @@ namespace Pages_configurator.Controllers
             return homePages;
         }
 
-        // use this to return to javascript the json with normal pages
         [HttpGet("Pages")]
         public async Task<ActionResult<List<Page>>> GetPages()
         {
@@ -54,16 +52,14 @@ namespace Pages_configurator.Controllers
             return pages;
         }
 
-        // use this to save all home pages
         [HttpPost("SaveHomePages")]
-        public async Task<ActionResult> SaveHomePages() // To-Do
+        public ActionResult SaveHomePages() // To-Do
         {
             return Ok("Home pages salvate correttamente !");
         }
 
-        // use this to save all pages
         [HttpPost("SavePages")]
-        public async Task<ActionResult> SavePages()
+        public ActionResult SavePages()
         {
             return Ok("Pagine salvate correttamente !");
         }

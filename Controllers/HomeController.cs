@@ -8,9 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Pages_configurator.Models;
-// using Model.Root;
 using Model.PageModel;
-// using Model.PageModel.PageWidget.WidgetCont;
 using Model.PageModel.PageWidget.WidgetContent;
 
 namespace Pages_configurator.Controllers

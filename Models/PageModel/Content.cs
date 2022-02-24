@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
+// using Converter;
 
 namespace Model.PageModel
 {
@@ -25,5 +27,6 @@ namespace Model.PageModel
         public int Zoom { get; set; }
         public string Styles { get; set; }
         public string Icon { get; set; }
+
     }
 }
