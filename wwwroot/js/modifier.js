@@ -31,14 +31,21 @@ export default class Modifier {
             toolbar: 'a11ycheck addcomment showcomments casechange checklist code export formatpainter pageembed permanentpen table',
             toolbar_mode: 'floating',
             tinycomments_mode: 'embedded',
-            tinycomments_author: 'Author name',
             height: "400",
             content_css: "../css/configurator-style.css",
         });
     }
 
+    restHtmlEditors = () => {
+        if (tinymce.get('0-text'))
+            tinymce.get('0-text').setContent('');
+        if (tinymce.get('value'))
+            tinymce.get('value').setContent('');
+    }
+
     initPanel = (widget) => {
         this.resetPanel();
+        this.restHtmlEditors();
         this.initCommonSettingsPanel(widget);
         document.getElementById('modify-modal-title').innerHTML = this.widgetIndex[widget.type];
         document.getElementById(widget.type).style.display = "block";
@@ -46,6 +53,7 @@ export default class Modifier {
             if (key.toString() == "text" && value) {
                 this.initHtmlEditors('0-text');
                 tinymce.get('0-text').setContent(value);
+
             }
             if (document.getElementById(widget.type.toString() + "-" + key.toString()) && value) {
                 if (value == true || value == false) {
@@ -53,7 +61,6 @@ export default class Modifier {
                 }
                 document.getElementById(widget.type.toString() + "-" + key.toString()).value = value;
             }
-
         }
     }
 

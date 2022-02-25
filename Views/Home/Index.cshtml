@@ -566,7 +566,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title" id="modify-modal-title">Modifica widget</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <button id="close-modal-button" type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
 
@@ -616,7 +616,7 @@
                                     @* TEXT CONTENT *@
                                     <div class="row" id="0" style="display: none;">
                                         <label for="0-text">Testo:</label>
-                                        <textarea type="text" class="form-control" placeholder="e.g. <p>Esempio</p>"
+                                        <textarea type="text" class="form-control" placeholder="<p>Esempio</p>"
                                             id="0-text"></textarea>
                                     </div>
 
@@ -1125,6 +1125,7 @@
 <script type="module" src="~/js/requests.js" asp-append-version="true"></script>
 <script src="https://cdn3.devexpress.com/jslib/21.2.4/js/dx.all.js"></script>
 <script>
+
     $(".sidebar-dropdown > a").click(function () {
             $(".sidebar-submenu").slideUp(200);
         if (
