@@ -11,12 +11,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
+    <script src="https://cdn.tiny.cloud/1/y10y7it4cblpazpalsphbcrlyoz7xtuyid9skocdb0bw6l5a/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     @* <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> *@
     <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="~/css/Sidebar.css" rel="stylesheet" />
     <link href="~/css/style.css" rel="stylesheet" />
     <link href="~/css/configurator-style.css" rel="stylesheet" />
@@ -421,6 +424,10 @@
         text-align: center;
     }
 
+    input[type='checkbox'] {
+        cursor: pointer;
+    }
+
     .form-select {
         display: block;
         width: 100%;
@@ -517,6 +524,7 @@
 
                 </div>
         </nav>
+
         <!-- sidebar-wrapper  -->
 
         <main class="page-content" id="main">
@@ -574,6 +582,9 @@
                                 <a class="nav-item nav-link" href="#text-pane" data-toggle="tab">Testo</a>
                                 <a class="nav-item nav-link" href="#event-pane" data-toggle="tab">Eventi</a>
                                 <a class="nav-item nav-link" href="#position-pane" data-toggle="tab">Posizionamento</a>
+                                <a class="nav-item nav-link" href="#style-pane" data-toggle="tab">Stile</a>
+                                <a class="nav-item nav-link" href="#mobile-style-pane" data-toggle="tab">Stile
+                                    Mobile</a>
                             </ul>
                             <div class="tab-content" style="padding: 2%;">
                                 <div class="tab-pane active" id="property-pane">
@@ -581,7 +592,7 @@
                                         <div class="col-md-3">
                                             <label for="id">Id:</label>
                                             <input id="id" type="number" min="0" class="form-control"
-                                                placeholder="null">
+                                                placeholder="Selezionare">
                                         </div>
                                         <div class="col-md-3">
                                             <label for="type">Tipo:</label>
@@ -595,61 +606,6 @@
                                                 <option value="6">Pagina Web</option>
                                                 <option value="101">Galleria orizzontale</option>
                                                 <option value="5">Galleria griglia</option>
-                                            </select>
-                                            @* <input id="type" type="number" min="0" class="form-control"
-                                                placeholder=""> *@
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="tab-pane" id="text-pane">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <label for="text">Testo:</label>
-                                            <textarea id="text" type="text" class="form-control"
-                                                placeholder=""></textarea>
-                                        </div>
-                                    </div>
-                                    <span style="display: block; margin-top: 22px;"></span>
-                                    <label for="position">Posizione:</label>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <select id="position" class="form-select">
-                                                <option value="0">Centrato</option>
-                                                <option value="1">Assoluto</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <span style="display: block; margin-top: 22px;"></span>
-                                    <span id="text-position-wrapper" style="display: none;">
-                                        <label>Posizionamento:</label>
-                                        <div id="text-position" class="row">
-                                            <div class="col-md-3">
-                                                <input id="top" type="text" class="form-control" placeholder="Sopra">
-                                            </div>
-                                            <div class="col-md-3">
-                                                <input id="right" type="text" class="form-control" placeholder="Destra">
-                                            </div>
-                                            <div class="col-md-3">
-                                                <input id="bottom" type="text" class="form-control" placeholder="Sotto">
-                                            </div>
-                                            <div class="col-md-3">
-                                                <input id="left" type="text" class="form-control"
-                                                    placeholder="Sinistra">
-                                            </div>
-                                        </div>
-                                    </span>
-                                </div>
-
-                                <div class="tab-pane" id="event-pane">
-                                    <label>Hover:</label>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <select id="hover" class="form-select">
-                                                <option value="0">None</option>
-                                                <option value="1">Default</option>
-                                                <option value="2">Underline</option>
-                                                <option value="3">Expand</option>
                                             </select>
                                         </div>
                                     </div>
@@ -722,6 +678,17 @@
                                     @* VIDEO CONTENT *@
                                     <div id="2" style="display: none;">
                                         <div class="row">
+                                            <div class="col-md-12">
+                                                <label for="2-source">
+                                                    Risorse (se più di una separare andando a
+                                                    capo):
+                                                </label>
+                                                <textarea class="form-control rounded-0" id="3-source"
+                                                    rows="6"></textarea>
+                                            </div>
+                                        </div>
+                                        <span style="margin-top: 22px; display: block;"></span>
+                                        <div class="row">
                                             <div class="col-md">
                                                 <div class="form-floating">
                                                     <label for="2-height">Altezza video:</label>
@@ -758,16 +725,6 @@
                                                 <label for="2-responsive">Responsive:</label>
                                                 <input id="2-responsive" type="checkbox" data-toggle="toggle"
                                                     data-width="100">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <label for="2-source">
-                                                    Risorse (se più di una separare andando a
-                                                    capo):
-                                                </label>
-                                                <textarea class="form-control rounded-0" id="3-source"
-                                                    rows="6"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -877,6 +834,62 @@
 
                                 </div>
 
+                                @* TAB EVENTI *@
+                                <div class="tab-pane" id="event-pane">
+                                    <label>Hover:</label>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <select id="hover" class="form-select">
+                                                <option value="0">None</option>
+                                                <option value="1">Default</option>
+                                                <option value="2">Underline</option>
+                                                <option value="3">Expand</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @* TAB TESRO *@
+                                <div class="tab-pane" id="text-pane">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label for="text">Testo:</label>
+                                            <textarea id="value" type="text" class="form-control"
+                                                placeholder=""></textarea>
+                                        </div>
+                                    </div>
+                                    <span style="display: block; margin-top: 22px;"></span>
+                                    <label for="position">Posizione:</label>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <select id="position" class="form-select">
+                                                <option value="0">Centrato</option>
+                                                <option value="1">Assoluto</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <span style="display: block; margin-top: 22px;"></span>
+                                    <span id="text-position-wrapper" style="display: none;">
+                                        <label>Posizionamento:</label>
+                                        <div id="text-position" class="row">
+                                            <div class="col-md-3">
+                                                <input id="top" type="text" class="form-control" placeholder="Sopra">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <input id="right" type="text" class="form-control" placeholder="Destra">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <input id="bottom" type="text" class="form-control" placeholder="Sotto">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <input id="left" type="text" class="form-control"
+                                                    placeholder="Sinistra">
+                                            </div>
+                                        </div>
+                                    </span>
+                                </div>
+
+                                @* TAB POSIZIONAMENTO *@
                                 <div class="tab-pane" id="position-pane">
                                     <div class="row">
                                         <div class="col-md-6">
@@ -905,26 +918,9 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
 
-
-                        <div class="container">
-                            <h5 style="font-weight: 700;">Stile</h5>
-                        </div>
-
-                        @* TAB DIMENSIONI *@
-
-                        <div id="style-tab" class="container">
-                            <ul class="nav nav-tabs">
-                                <a class="nav-item active nav-link" href="#dimension-pane"
-                                    data-toggle="tab">Dimensioni</a>
-                                <a class="nav-item nav-link" href="#space-pane" data-toggle="tab">Spaziatura</a>
-                                <a class="nav-item nav-link" href="#customization-pane"
-                                    data-toggle="tab">Personalizzazione</a>
-                            </ul>
-                            <div class="tab-content" style="padding: 2%;">
-                                <div class="tab-pane active" id="dimension-pane">
+                                @* TAB STILE *@
+                                <div class="tab-pane" id="style-pane">
                                     <div class="row g-2">
                                         <div class="col-md">
                                             <div class="form-floating">
@@ -939,11 +935,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-
-                                @* TAB SPACING *@
-
-                                <div class="tab-pane" id="space-pane">
+                                    <span style="margin-top: 20px; display: block;"></span>
                                     <label>Margine:</label>
                                     <div class="row">
                                         <div class="col-md-3">
@@ -975,11 +967,7 @@
                                             <input id="p-left" type="text" class="form-control" placeholder="Sinistra">
                                         </div>
                                     </div>
-                                </div>
-
-                                @* TAB PERSONALIZZAZIONE *@
-
-                                <div class="tab-pane" id="customization-pane">
+                                    <span style="margin-top: 20px; display: block;"></span>
                                     <div class="row">
                                         <div class="col-md-10">
                                             <label for="background">Sfondo:</label>
@@ -1026,23 +1014,9 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
 
-                        <div class="container">
-                            <h5 style="font-weight: 700;">Stile Mobile</h5>
-                        </div>
-
-                        <div id="style-tab" class="container">
-                            <ul class="nav nav-tabs">
-                                <a class="nav-item active nav-link" href="#mobile-dimension-pane"
-                                    data-toggle="tab">Dimensioni:</a>
-                                <a class="nav-item nav-link" href="#mobile-space-pane" data-toggle="tab">Spaziatura:</a>
-                                <a class="nav-item nav-link" href="#mobile-customization-pane"
-                                    data-toggle="tab">Personalizzazione:</a>
-                            </ul>
-                            <div class="tab-content" style="padding: 2%;">
-                                <div class="tab-pane active" id="mobile-dimension-pane">
+                                @* TAB STILE MOBILE *@
+                                <div class="tab-pane" id="mobile-style-pane">
                                     <div class="row g-2">
                                         <div class="col-md">
                                             <div class="form-floating">
@@ -1057,8 +1031,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="tab-pane" id="mobile-space-pane">
+                                    <span style="margin-top: 20px; display: block;"></span>
                                     <label>Margine:</label>
                                     <div class="row">
                                         <div class="col-md-3">
@@ -1098,8 +1071,7 @@
                                                 placeholder="Sinistra">
                                         </div>
                                     </div>
-                                </div>
-                                <div class="tab-pane" id="mobile-customization-pane">
+                                    <span style="margin-top: 20px; display: block;"></span>
                                     <div class="row">
                                         <div class="col-md-10">
                                             <label for="mobile-background">Sfondo:</label>
@@ -1127,15 +1099,15 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger">Elimina Widget</button>
-                        <button id="save-widget-changes-button" type="button" class="btn btn-success">Salva</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger">Elimina Widget</button>
+                            <button id="save-widget-changes-button" type="button" class="btn btn-success">Salva</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
 </body>
 

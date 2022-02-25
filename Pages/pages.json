@@ -1,10 +1,8 @@
-[
-    {
+[{
         "Name": "Public Home",
         "Id": "home",
         "Language": "en",
-        "Widgets": [
-            {
+        "Widgets": [{
                 "Row": 0,
                 "Column": 0,
                 "ColumnSpan": 12,
@@ -410,8 +408,7 @@
         "Name": "Public Home",
         "Id": "home",
         "Language": "it",
-        "Widgets": [
-            {
+        "Widgets": [{
                 "Row": 0,
                 "Column": 0,
                 "ColumnSpan": 12,
@@ -814,8 +811,7 @@
         "Name": "Condizioni Generali di Vendita",
         "Id": "cgv",
         "Language": "it",
-        "Widgets": [
-            {
+        "Widgets": [{
                 "Row": 0,
                 "Column": 0,
                 "Type": 0,
@@ -898,8 +894,7 @@
         "Name": "Condizioni Generali di Vendita",
         "Id": "cgv",
         "Language": "en",
-        "Widgets": [
-            {
+        "Widgets": [{
                 "Row": 0,
                 "Column": 0,
                 "Type": 0,
@@ -981,8 +976,7 @@
     {
         "Name": "Cookie Policy",
         "Id": "cookie",
-        "Widgets": [
-            {
+        "Widgets": [{
                 "Row": 0,
                 "Column": 0,
                 "Type": 0,
@@ -1036,8 +1030,7 @@
     {
         "Name": "Privacy Policy",
         "Id": "privacy",
-        "Widgets": [
-            {
+        "Widgets": [{
                 "Row": 0,
                 "Column": 0,
                 "Type": 0,
@@ -1232,8 +1225,7 @@
         "Name": "About",
         "Id": "about",
         "Language": "it",
-        "Widgets": [
-            {
+        "Widgets": [{
                 "Row": 0,
                 "Column": 0,
                 "Type": 0,
@@ -1304,8 +1296,7 @@
         "Name": "About",
         "Id": "about",
         "Language": "en",
-        "Widgets": [
-            {
+        "Widgets": [{
                 "Row": 0,
                 "Column": 0,
                 "Type": 0,
@@ -1378,8 +1369,7 @@
         "Name": "Contacts",
         "Id": "contacts",
         "Language": "it",
-        "Widgets": [
-            {
+        "Widgets": [{
                 "Row": 0,
                 "Column": 0,
                 "Type": 0,
@@ -1456,8 +1446,7 @@
         "Name": "Contacts",
         "Id": "contacts",
         "Language": "en",
-        "Widgets": [
-            {
+        "Widgets": [{
                 "Row": 0,
                 "Column": 0,
                 "Type": 0,
@@ -1534,162 +1523,146 @@
         "Name": "Candice Cooper marketing tools",
         "Id": "cc-marketing-tools",
         "VisibilityRule": 1,
-        "Widgets": [
-            {
-                "Row": 0,
-                "Column": 0,
-                "Type": 3,
-                "Content": {
-                    "Source": [
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/marketing_tools_2022.pdf"
-                    ]
-                },
-                "Style": {
-                    "Height": "750px"
-                }
+        "Widgets": [{
+            "Row": 0,
+            "Column": 0,
+            "Type": 3,
+            "Content": {
+                "Source": [
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/candice-cooper/marketing_tools_2022.pdf"
+                ]
+            },
+            "Style": {
+                "Height": "750px"
             }
-        ]
+        }]
     },
     {
         "Name": "Voile Blance marketing tools",
         "Id": "vb-marketing-tools",
         "VisibilityRule": 1,
-        "Widgets": [
-            {
-                "Row": 0,
-                "Column": 0,
-                "Type": 3,
-                "Content": {
-                    "Source": [
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/marketing_tools_2022.pdf"
-                    ]
-                },
-                "Style": {
-                    "Height": "750px"
-                }
+        "Widgets": [{
+            "Row": 0,
+            "Column": 0,
+            "Type": 3,
+            "Content": {
+                "Source": [
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/voile-blanche/marketing_tools_2022.pdf"
+                ]
+            },
+            "Style": {
+                "Height": "750px"
             }
-        ]
+        }]
     },
     {
         "Name": "Flower mountain marketing tools",
         "Id": "fm-marketing-tools",
         "VisibilityRule": 1,
-        "Widgets": [
-            {
-                "Row": 0,
-                "Column": 0,
-                "Type": 3,
-                "Content": {
-                    "Source": [
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/marketing_tools_2022.pdf"
-                    ]
-                },
-                "Style": {
-                    "Height": "750px"
-                }
+        "Widgets": [{
+            "Row": 0,
+            "Column": 0,
+            "Type": 3,
+            "Content": {
+                "Source": [
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flower-mountain/marketing_tools_2022.pdf"
+                ]
+            },
+            "Style": {
+                "Height": "750px"
             }
-        ]
+        }]
     },
     {
         "Name": "W6YZ marketing tools",
         "Id": "w6yz-marketing-tools",
         "VisibilityRule": 1,
-        "Widgets": [
-            {
-                "Row": 0,
-                "Column": 0,
-                "Type": 3,
-                "Content": {
-                    "Source": [
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/MARKETING-TOOLS-W6YZ-2021.pdf"
-                    ]
-                },
-                "Style": {
-                    "Height": "750px"
-                }
+        "Widgets": [{
+            "Row": 0,
+            "Column": 0,
+            "Type": 3,
+            "Content": {
+                "Source": [
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz/MARKETING-TOOLS-W6YZ-2021.pdf"
+                ]
+            },
+            "Style": {
+                "Height": "750px"
             }
-        ]
+        }]
     },
     {
         "Name": "W6YZ Junior marketing tools",
         "Id": "w6yz-junior-marketing-tools",
         "VisibilityRule": 1,
-        "Widgets": [
-            {
-                "Row": 0,
-                "Column": 0,
-                "Type": 3,
-                "Content": {
-                    "Source": [
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/MARKETING-TOOLS-W6YZ-JUNIOR-2021.pdf"
-                    ]
-                },
-                "Style": {
-                    "Height": "750px"
-                }
+        "Widgets": [{
+            "Row": 0,
+            "Column": 0,
+            "Type": 3,
+            "Content": {
+                "Source": [
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/w6yz-junior/MARKETING-TOOLS-W6YZ-JUNIOR-2021.pdf"
+                ]
+            },
+            "Style": {
+                "Height": "750px"
             }
-        ]
+        }]
     },
     {
         "Name": "FM for Naturino marketing tools",
         "Id": "fmnaturino-marketing-tools",
         "VisibilityRule": 1,
-        "Widgets": [
-            {
-                "Row": 0,
-                "Column": 0,
-                "Type": 3,
-                "Content": {
-                    "Source": [
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/MARKETING-TOOLS-FLOWER-MOUNTAIN-FOR-NATURINO.pdf"
-                    ]
-                },
-                "Style": {
-                    "Height": "750px"
-                }
+        "Widgets": [{
+            "Row": 0,
+            "Column": 0,
+            "Type": 3,
+            "Content": {
+                "Source": [
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/flm-for-naturino/MARKETING-TOOLS-FLOWER-MOUNTAIN-FOR-NATURINO.pdf"
+                ]
+            },
+            "Style": {
+                "Height": "750px"
             }
-        ]
+        }]
     },
     {
         "Name": "Naturino marketing tools",
         "Id": "naturino-marketing-tools",
         "VisibilityRule": 1,
-        "Widgets": [
-            {
-                "Row": 0,
-                "Column": 0,
-                "Type": 3,
-                "Content": {
-                    "Source": [
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/marketing_tools_2022.pdf"
-                    ]
-                },
-                "Style": {
-                    "Height": "750px"
-                }
+        "Widgets": [{
+            "Row": 0,
+            "Column": 0,
+            "Type": 3,
+            "Content": {
+                "Source": [
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/marketing_tools_2022.pdf"
+                ]
+            },
+            "Style": {
+                "Height": "750px"
             }
-        ]
+        }]
     },
     {
         "Name": "Falcotto marketing tools",
         "Id": "falcotto-marketing-tools",
         "VisibilityRule": 1,
-        "Widgets": [
-            {
-                "Row": 0,
-                "Column": 0,
-                "Type": 3,
-                "Content": {
-                    "Source": [
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/marketing_tools_2022.pdf"
-                    ],
-                    "Options": "{ \"Page\": 2 }"
-                },
-                "Style": {
-                    "Height": "750px"
-                }
+        "Widgets": [{
+            "Row": 0,
+            "Column": 0,
+            "Type": 3,
+            "Content": {
+                "Source": [
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/falcotto/marketing_tools_2022.pdf"
+                ],
+                "Options": "{ \"Page\": 2 }"
+            },
+            "Style": {
+                "Height": "750px"
             }
-        ]
+        }]
     },
 
 
@@ -1699,21 +1672,19 @@
         "Name": "test",
         "Id": "test",
         "VisibilityRule": 1,
-        "Widgets": [
-            {
-                "Row": 0,
-                "Column": 0,
-                "Type": 3,
-                "Content": {
-                    "Source": [
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/test/naturino_marketing_tool.pdf"
-                    ]
-                },
-                "Style": {
-                    "Height": "750px"
-                }
+        "Widgets": [{
+            "Row": 0,
+            "Column": 0,
+            "Type": 3,
+            "Content": {
+                "Source": [
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/test/naturino_marketing_tool.pdf"
+                ]
+            },
+            "Style": {
+                "Height": "750px"
             }
-        ]
+        }]
     },
 
 
@@ -1724,113 +1695,109 @@
         "Name": "Naturino Marketing Settembre 2021",
         "Id": "naturino_2021_09",
         "VisibilityRule": 1,
-        "Widgets": [
-            {
-                "Row": 0,
-                "Column": 0,
-                "Type": 102,
-                "Content": {
-                    "Source": [
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/09-24-1.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/09-24-2.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/09-24-3.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/09-24-4.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/09-24-5.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/09-27-1.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/09-27-2.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/09-29-1.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/09-29-2.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/09-29-3.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/09-29-4.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/10-01-3.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/10-12-1.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/13-1.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/13-2.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/13-3.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/14-4.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/17-1.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/17-2.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/19-1.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/22-1.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/22-2.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/26-1.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/26-2.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/26-3.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/32-1.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/36-1.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/37-1.jpg"
-                    ]
-                }
+        "Widgets": [{
+            "Row": 0,
+            "Column": 0,
+            "Type": 102,
+            "Content": {
+                "Source": [
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/09-24-1.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/09-24-2.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/09-24-3.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/09-24-4.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/09-24-5.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/09-27-1.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/09-27-2.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/09-29-1.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/09-29-2.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/09-29-3.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/09-29-4.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/10-01-3.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/10-12-1.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/13-1.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/13-2.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/13-3.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/14-4.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/17-1.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/17-2.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/19-1.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/22-1.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/22-2.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/26-1.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/26-2.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/26-3.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/32-1.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/36-1.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/09/37-1.jpg"
+                ]
             }
-        ]
+        }]
     },
     {
         "Name": "Naturino Marketing Dicembre 2021",
         "Id": "naturino_2021_12",
         "VisibilityRule": 1,
-        "Widgets": [
-            {
-                "Row": 0,
-                "Column": 0,
-                "Type": 102,
-                "Content": {
-                    "Source": [
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-01.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-03-1.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-03-2.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-05.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-06.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-10.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-12.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-14-1.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-14-2.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-17.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-19.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-21.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-24.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01.24.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-06.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-07.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-08.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-09-1.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-09-2.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-10-1.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-10-2.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-11.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-13-1.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-13-2.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-14.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-15-1.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-15-2.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-16-1.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-16-2.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-17.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-18.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-20-1.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-20-2.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-21-1.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-21-2.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-22.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-23.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-24-1.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-24-2.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-27.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-28.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-29.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-30-1.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-30-2.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-30-3.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/facebook_cover.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/Naturino_4.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/Naturino_6.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/Naturino_25.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/Naturino_5.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/Naturino_26.jpg",
-                        "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/Naturino_27.jpg"
-                    ]
-                }
+        "Widgets": [{
+            "Row": 0,
+            "Column": 0,
+            "Type": 102,
+            "Content": {
+                "Source": [
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-01.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-03-1.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-03-2.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-05.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-06.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-10.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-12.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-14-1.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-14-2.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-17.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-19.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-21.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01-24.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/01.24.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-06.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-07.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-08.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-09-1.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-09-2.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-10-1.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-10-2.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-11.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-13-1.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-13-2.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-14.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-15-1.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-15-2.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-16-1.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-16-2.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-17.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-18.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-20-1.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-20-2.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-21-1.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-21-2.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-22.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-23.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-24-1.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-24-2.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-27.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-28.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-29.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-30-1.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-30-2.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/12-30-3.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/facebook_cover.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/Naturino_4.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/Naturino_6.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/Naturino_25.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/Naturino_5.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/Naturino_26.jpg",
+                    "https://newb2bapi.falc.biz/api/v1/media/{mediaToken}/blobs/marketing/naturino/2021/12/Naturino_27.jpg"
+                ]
             }
-        ]
+        }]
     }
 
 ]
