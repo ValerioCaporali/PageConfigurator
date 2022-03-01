@@ -581,7 +581,6 @@
                                 <a class="nav-item nav-link" href="#content-pane" data-toggle="tab">Contenuto</a>
                                 <a class="nav-item nav-link" href="#text-pane" data-toggle="tab">Testo</a>
                                 <a class="nav-item nav-link" href="#event-pane" data-toggle="tab">Eventi</a>
-                                <a class="nav-item nav-link" href="#position-pane" data-toggle="tab">Posizionamento</a>
                                 <a class="nav-item nav-link" href="#style-pane" data-toggle="tab">Stile</a>
                                 <a class="nav-item nav-link" href="#mobile-style-pane" data-toggle="tab">Stile
                                     Mobile</a>
@@ -609,6 +608,34 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <span style="margin-top: 20px; display: block;"></span>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="row">Riga:</label>
+                                            <input type="number" min="0" class="form-control" id="row">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="rowSpan">Espansione Riga:</label>
+                                            <input type="number" min="0" class="form-control" id="rowSpan">
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top: 2%;">
+                                        <div class="col-md-6">
+                                            <label for="column">Colonna:</label>
+                                            <input type="number" min="0" class="form-control" id="column">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="columnSpan">Espansione colonna:</label>
+                                            <input type="number" min="0" class="form-control" id="columnSpan">
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top: 2%;">
+                                        <div class="col-md-6">
+                                            <label for="mobileRow">Riga per mobile:</label>
+                                            <input type="number" min="0" class="form-control" id="mobileRow">
+                                        </div>
+                                    </div>
+                                    <div id="properties"></div>
                                 </div>
 
                                 <div class="tab-pane" id="content-pane">
@@ -889,36 +916,6 @@
                                     </span>
                                 </div>
 
-                                @* TAB POSIZIONAMENTO *@
-                                <div class="tab-pane" id="position-pane">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label for="row">Riga:</label>
-                                            <input type="number" min="0" class="form-control" id="row">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="rowSpan">Espansione Riga:</label>
-                                            <input type="number" min="0" class="form-control" id="rowSpan">
-                                        </div>
-                                    </div>
-                                    <div class="row" style="margin-top: 2%;">
-                                        <div class="col-md-6">
-                                            <label for="column">Colonna:</label>
-                                            <input type="number" min="0" class="form-control" id="column">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="columnSpan">Espansione colonna:</label>
-                                            <input type="number" min="0" class="form-control" id="columnSpan">
-                                        </div>
-                                    </div>
-                                    <div class="row" style="margin-top: 2%;">
-                                        <div class="col-md-6">
-                                            <label for="mobileRow">Riga per mobile:</label>
-                                            <input type="number" min="0" class="form-control" id="mobileRow">
-                                        </div>
-                                    </div>
-                                </div>
-
                                 @* TAB STILE *@
                                 <div class="tab-pane" id="style-pane">
                                     <div class="row g-2">
@@ -994,23 +991,21 @@
                                     <span style="margin-top: 20px; display: block;"></span>
 
                                     <label for="">Bordi</label>
-                                    <i class="fa-solid fa-border-bottom-right"></i>
+                                    <div id="border-selection"></div>
+
+                                    <span style="margin-top: 20px; display: block;"></span>
                                     <div class="row">
-                                        <div class="col-md-3">
-                                            <label for="b-type">Tipo di bordo:</label>
-                                            <input id="b-type" type="text" class="form-control">
+                                        <div class="col-md-4">
+                                            <label for="">Stile bordo:</label>
+                                            <input id="border-style" class="form-control" type="text">
                                         </div>
-                                        <div class="col-md-3">
-                                            <label for="b-style">Stile bordo:</label>
-                                            <input id="b-style" type="text" class="form-control">
+                                        <div class="col-md-4">
+                                            <label for="">Larghezza bordo:</label>
+                                            <input id="border-width" class="form-control" type="text">
                                         </div>
-                                        <div class="col-md-3">
-                                            <label for="b-width">Larghezza bordo:</label>
-                                            <input id="b-width" type="text" class="form-control">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label for="b-color">Colore bordo:</label>
-                                            <input id="b-color" type="color" class="form-control">
+                                        <div class="col-md-4">
+                                            <label for="">Colore bordo:</label>
+                                            <input id="border-color" class="form-control" type="color">
                                         </div>
                                     </div>
                                 </div>
@@ -1125,6 +1120,10 @@
 <script type="module" src="~/js/requests.js" asp-append-version="true"></script>
 <script src="https://cdn3.devexpress.com/jslib/21.2.4/js/dx.all.js"></script>
 <script>
+
+    $('#edit-modal').on('hidden.bs.modal', function () {
+        $(this).find(":input").val('');
+    })
 
     $(".sidebar-dropdown > a").click(function () {
             $(".sidebar-submenu").slideUp(200);

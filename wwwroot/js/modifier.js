@@ -1,78 +1,107 @@
-import GalleryWidget from '../js/configurations/gallery-configuration.js';
-import ShowcaseWidget from '../js/configurations/showcase-configuration.js';
-import MapWidget from '../js/configurations/map-configuration.js';
-import TextWidget from '../js/configurations/text-configuration.js';
-import VideoWidget from '../js/configurations/video-configuration.js';
+import FormData from "./configurations/formData.js";
 export default class Modifier {
-
     widgetIndex = {
-        0: 'Testo',
-        1: 'Galleria',
-        2: 'Video',
-        3: 'Pdf',
-        4: 'Tour',
-        5: 'Mappa',
-        6: 'Pagina web',
-        101: 'Galleria orizzontale',
-        102: 'Galleria a griglia'
+        0: "Testo",
+        1: "Galleria",
+        2: "Video",
+        3: "Pdf",
+        4: "Tour",
+        5: "Mappa",
+        6: "Pagina web",
+        101: "Galleria orizzontale",
+        102: "Galleria a griglia",
     };
+    borders = [
+        {
+            icon: "arrowup",
+            style: "arrowup",
+            hint: "Bordo alto",
+        },
+        {
+            icon: "arrowright",
+            style: "arrowright",
+            hint: "Bordo destro",
+        },
+        {
+            icon: "arrowdown",
+            style: "arrowdown",
+            hint: "Bordo basso",
+        },
+        {
+            icon: "arrowleft",
+            style: "arrowleft",
+            hint: "Bordo sinistro",
+        },
+    ];
     widget;
 
     constructor(widget) {
         this.widget = widget;
         this.initPanel(this.widget);
-        document.getElementById('save-widget-changes-button').addEventListener('click', () => { this.saveWidget(this.widget) });
+        document.getElementById("save-widget-changes-button").addEventListener("click", () => {
+            this.saveWidget(this.widget);
+        });
     }
 
-    initHtmlEditors = (selector) => {
+    initHtmlEditors(selector) {
         tinymce.init({
-            selector: '#' + selector,
-            plugins: 'a11ychecker advcode casechange export formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker',
-            toolbar: 'a11ycheck addcomment showcomments casechange checklist code export formatpainter pageembed permanentpen table',
-            toolbar_mode: 'floating',
-            tinycomments_mode: 'embedded',
+            selector: "#" + selector,
+            plugins:
+                "a11ychecker advcode casechange export formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker",
+            toolbar:
+                "a11ycheck addcomment showcomments casechange checklist code export formatpainter pageembed permanentpen table",
+            toolbar_mode: "floating",
+            tinycomments_mode: "embedded",
             height: "400",
             content_css: "../css/configurator-style.css",
         });
     }
 
-    restHtmlEditors = () => {
-        if (tinymce.get('0-text'))
-            tinymce.get('0-text').setContent('');
-        if (tinymce.get('value'))
-            tinymce.get('value').setContent('');
+    restHtmlEditors() {
+        if (tinymce.get("0-text")) tinymce.get("0-text").setContent("");
+        if (tinymce.get("value")) tinymce.get("value").setContent("");
     }
 
-    initPanel = (widget) => {
+    initPanel(widget) {
         this.resetPanel();
         this.restHtmlEditors();
+        this.resetBordersButton();
         this.initCommonSettingsPanel(widget);
-        document.getElementById('modify-modal-title').innerHTML = this.widgetIndex[widget.type];
+        document.getElementById("modify-modal-title").innerHTML = this.widgetIndex[widget.type];
         document.getElementById(widget.type).style.display = "block";
         for (const [key, value] of Object.entries(widget.content)) {
             if (key.toString() == "text" && value) {
-                this.initHtmlEditors('0-text');
-                tinymce.get('0-text').setContent(value);
-
+                this.initHtmlEditors("0-text");
+                tinymce.get("0-text").setContent(value);
             }
-            if (document.getElementById(widget.type.toString() + "-" + key.toString()) && value) {
+            if (
+                document.getElementById(
+                    widget.type.toString() + "-" + key.toString()
+                ) &&
+                value
+            ) {
                 if (value == true || value == false) {
-                    document.getElementById(widget.type.toString() + "-" + key.toString()).checked = value;
+                    document.getElementById(
+                        widget.type.toString() + "-" + key.toString()
+                    ).checked = value;
                 }
-                document.getElementById(widget.type.toString() + "-" + key.toString()).value = value;
+                document.getElementById(
+                    widget.type.toString() + "-" + key.toString()
+                ).value = value;
             }
         }
     }
 
-    initCommonSettingsPanel = (widget) => {
+    initCommonSettingsPanel(widget) {
+        this.initBordersButton();
         for (const [key, value] of Object.entries(widget)) {
             switch (key) {
                 case "text":
-                    this.initHtmlEditors('value');
+                    this.initHtmlEditors("value");
                     if (value) {
                         for (const [key, value] of Object.entries(widget.text)) {
                             if (key == "position" && value) {
-                                for (const [position_key, positoin_value] of Object.entries(value)) {
+                                for   (const [position_key, positoin_value] of Object.entries(value)) {
                                     if (position_key == "type" && positoin_value == 1)
                                         document.getElementById("text-position-wrapper").style.display = "block";
                                     document.getElementById(position_key).value = positoin_value;
@@ -116,13 +145,32 @@ export default class Modifier {
                             if (key == "borders" && widget.style.borders) {
                                 for (let i = 0; i < widget.style.borders.length; i++) {
                                     for (const [key, value] of Object.entries(widget.style.borders[i])) {
-                                        document.getElementById("b-" + key).value = value;
+                                        console.log(key, value);
+                                        if (key == "type" && value == 1 && value) {
+                                            $("#border-selection").dxButtonGroup({
+                                                selectedItemKeys: ['arrowleft']
+                                            });
+                                        } else if (key == "type" && value == 2 && value) {
+                                            $("#border-selection").dxButtonGroup({
+                                                selectedItemKeys: ['arrowright']
+                                            });
+                                        } else if (key == "type" && value == 3 && value) {
+                                            $("#border-selection").dxButtonGroup({
+                                                selectedItemKeys: ['arrowtop']
+                                            });
+                                        } else if (key == "type" && value == 4 && value) {
+                                            $("#border-selection").dxButtonGroup({
+                                                selectedItemKeys: ['arrowbottom']
+                                            });
+                                        } else if (value) {
+                                            document.getElementById('border-' + key).value = value;
+                                        }
                                     }
                                 }
                             }
 
                             if (key != "margin" && key != "padding" && key != "borders" && value) {
-                                console.log(key, document.getElementById(key))
+                                console.log(key, document.getElementById(key));
                                 document.getElementById(key).value = value;
                             }
                         }
@@ -165,6 +213,10 @@ export default class Modifier {
                     }
                     break;
 
+                case "clickAction":
+                    console.log("init click action");
+                    break;
+
                 default:
                     if (key != "content" && key != "clickAction") {
                         if (document.getElementById(key)) {
@@ -173,19 +225,41 @@ export default class Modifier {
                     }
                     break;
             }
-
         }
     }
 
-    resetPanel = () => {
+    initBordersButton() {
+        $("#border-selection").dxButtonGroup({
+            items: this.borders,
+            keyExpr: "style",
+            stylingMode: "outlined",
+            selectionMode: "multiple",
+            onItemClick(e) {
+                DevExpress.ui.notify(
+                    {
+                        message: `The "${e.itemData.hint}" button was clicked`,
+                        width: 320,
+                    },
+                    "success",
+                    1000
+                );
+            },
+        });
+    }
+
+    resetBordersButton() {
+        $("#border-selection").dxButtonGroup({
+            selectedItemKeys: []
+        });
+    }
+
+    resetPanel() {
         for (const [key, value] of Object.entries(this.widgetIndex)) {
             document.getElementById(key.toString()).style.display = "none";
         }
     }
 
-    saveWidget = () => {
+    saveWidget() {
         // salvataggio del widget (in locale)
     }
-
-
 }

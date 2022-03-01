@@ -49,7 +49,7 @@
                     "fontSize": null,
                     "padding": null,
                     "borders": [{
-                        "type": 0,
+                        "type": 2,
                         "style": "boh",
                         "width": "2px",
                         "color": "#FF0000"
