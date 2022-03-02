@@ -37,6 +37,7 @@ export default class Modifier {
 
     constructor(widget) {
         this.widget = widget;
+        this.resetHtmlEditors();
         this.initPanel(this.widget);
         document.getElementById("save-widget-changes-button").addEventListener("click", () => {
             this.saveWidget(this.widget);
@@ -54,178 +55,436 @@ export default class Modifier {
             tinycomments_mode: "embedded",
             height: "400",
             content_css: "../css/configurator-style.css",
+            strict_loading_mode : true
         });
     }
 
-    restHtmlEditors() {
-        if (tinymce.get("0-text")) tinymce.get("0-text").setContent("");
-        if (tinymce.get("value")) tinymce.get("value").setContent("");
+    resetHtmlEditors() {
+        if (tinymce.get("value")) 
+            tinymce.get("value").setContent("");
     }
 
     initPanel(widget) {
         this.resetPanel();
-        this.restHtmlEditors();
         this.resetBordersButton();
-        this.initCommonSettingsPanel(widget);
-        document.getElementById("modify-modal-title").innerHTML = this.widgetIndex[widget.type];
-        document.getElementById(widget.type).style.display = "block";
-        for (const [key, value] of Object.entries(widget.content)) {
-            if (key.toString() == "text" && value) {
-                this.initHtmlEditors("0-text");
-                tinymce.get("0-text").setContent(value);
-            }
-            if (
-                document.getElementById(
-                    widget.type.toString() + "-" + key.toString()
-                ) &&
-                value
-            ) {
-                if (value == true || value == false) {
-                    document.getElementById(
-                        widget.type.toString() + "-" + key.toString()
-                    ).checked = value;
+        var formData = new FormData(widget);
+
+        /* Properties Tab */
+        $(() => {
+            let items = [];
+            $.each( formData.propertyTab, function( key, value ) {
+                if (key == "Riga" || key == "Colonna")
+                    items.push({dataField: key.toString(), validationRules: [{type: "required"}]})
+                else if (key == "Tipo")
+                    items.push({dataField: "Tipo", editorType: 'dxSelectBox', editorOptions: {items: formData.Type, value: formData.Type[value]}, validationRules: [{type: "required"}]});
+                else items.push({dataField: key.toString()})
+            },),
+            $('#properties').dxForm({
+              colCount: 2,
+              formData: formData.propertyTab,
+              items: items,
+              labelLocation: "top",
+            });  
+        });
+
+        /* Text Tab */
+        $(() => {
+            let items = [];
+            $.each( formData.textTab, function( key, value ) {
+                (key != "TipoPosizione") ? items.push({dataField: key}) : items.push({dataField: key, editorType: 'dxSelectBox', editorOptions: {items: formData.TextPosition, value: formData.TextPosition[value]}})
+            },),
+            $('#text').dxForm({
+              colCount: 2,
+              formData: formData.textTab,
+              items: items,
+              labelLocation: "top",
+            });
+        });
+
+        if (this.widget.text?.value) {
+            if (!tinymce.get("value")) {
+                document.getElementById("value").innerHTML = this.widget.text?.value.toString();
+                this.initHtmlEditors("value");   
+            } else tinymce.get("value").setContent(this.widget.text?.value.toString());
+        } else {
+            if (!tinymce.get("value")) {
+                document.getElementById("value").innerHTML = "";
+                this.initHtmlEditors("value");   
+            } else tinymce.get("value").setContent("");
+        }
+
+        
+
+        /* Events Tab */
+        $(() => {
+            let items = [];
+            $.each( formData.eventsTab, function( key, value ) {
+                items.push({dataField: key, editorType: 'dxSelectBox', editorOptions: {items: formData.Hover, value: formData.Hover[value]}});
+            },),
+            $('#events').dxForm({
+              colCount: 2, 
+              formData: formData.eventsTab,
+              items: items,
+              labelLocation: "top",
+            });
+        });
+        // to-do: handle click action
+        /* ---------------- */
+
+        /* Style Tab */
+        $(() => {
+            let items = [];
+            $.each( formData.styleTab, function( key, value ) {
+                if (key == "Altezza" || key == "Larghezza")
+                items.push({dataField: key});
+            },),
+            $('#dimensions').dxForm({
+              colCount: 2, 
+              formData: formData.styleTab,
+              items: items,
+              labelLocation: "top",
+            });
+        });
+        $(() => {
+            let items = [];
+            $.each( formData.styleTab, function( key, value ) {
+                if (key.indexOf("Margine") != -1)
+                    items.push({dataField: key});
+            },),
+            $('#margin').dxForm({
+              colCount: 5, 
+              formData: formData.styleTab,
+              items: items,
+              labelLocation: "top",
+            });
+        });
+        $(() => {
+            let items = [];
+            $.each( formData.styleTab, function( key, value ) {
+                if (key.indexOf("Padding") != -1)
+                    items.push({dataField: key});
+            },),
+            $('#padding').dxForm({
+              colCount: 5, 
+              formData: formData.styleTab,
+              items: items,
+              labelLocation: "top",
+            });
+        });
+        $(() => {
+            let items = [];
+            $.each( formData.styleTab, function( key, value ) {
+                if (key == "Background")
+                    items.push({dataField: key});
+                else if(key == "TextColor") {
+                    items.push({dataField: key, editorType: "dxColorBox"});
                 }
-                document.getElementById(
-                    widget.type.toString() + "-" + key.toString()
-                ).value = value;
-            }
-        }
-    }
+            },),
+            $('#more').dxForm({
+              colCount: 2, 
+              formData: formData.styleTab,
+              items: items,
+              labelLocation: "top",
+            });
+        });
+        $(() => {
+            let items = [];
+            $.each( formData.styleTab, function( key, value ) {
+                if (key.indexOf("Font") != -1)
+                    items.push({dataField: key});
+            },),
+            $('#font').dxForm({
+              colCount: 2, 
+              formData: formData.styleTab,
+              items: items,
+              labelLocation: "top",
+            });
+        });
 
-    initCommonSettingsPanel(widget) {
+
+        /* Mobile Style Tab */
+        $(() => {
+            let items = [];
+            $.each( formData.mobileStyleTab, function( key, value ) {
+                if (key == "Altezza" || key == "Larghezza")
+                items.push({dataField: key});
+            },),
+            $('#mobile-dimensions').dxForm({
+              colCount: 2, 
+              formData: formData.mobileStyleTab,
+              items: items,
+              labelLocation: "top",
+            });
+        });
+        $(() => {
+            let items = [];
+            $.each( formData.mobileStyleTab, function( key, value ) {
+                if (key.indexOf("Margine") != -1)
+                    items.push({dataField: key});
+            },),
+            $('#mobile-margin').dxForm({
+              colCount: 5, 
+              formData: formData.mobileStyleTab,
+              items: items,
+              labelLocation: "top",
+            });
+        });
+        $(() => {
+            let items = [];
+            $.each( formData.mobileStyleTab, function( key, value ) {
+                if (key.indexOf("Padding") != -1)
+                    items.push({dataField: key});
+            },),
+            $('#mobile-padding').dxForm({
+              colCount: 5, 
+              formData: formData.mobileStyleTab,
+              items: items,
+              labelLocation: "top",
+            });
+        });
+        $(() => {
+            let items = [];
+            $.each( formData.mobileStyleTab, function( key, value ) {
+                if (key == "Background")
+                    items.push({dataField: key});
+                else if(key == "TextColor") {
+                    items.push({dataField: key, editorType: "dxColorBox"});
+                }
+            },),
+            $('#mobile-more').dxForm({
+              colCount: 2, 
+              formData: formData.mobileStyleTab,
+              items: items,
+              labelLocation: "top",
+            });
+        });
+        $(() => {
+            let items = [];
+            $.each( formData.mobileStyleTab, function( key, value ) {
+                if (key.indexOf("Font") != -1)
+                    items.push({dataField: key});
+            },),
+            $('#mobile-font').dxForm({
+              colCount: 2, 
+              formData: formData.mobileStyleTab,
+              items: items,
+              labelLocation: "top",
+            });
+        });
+
         this.initBordersButton();
-        for (const [key, value] of Object.entries(widget)) {
-            switch (key) {
-                case "text":
-                    this.initHtmlEditors("value");
-                    if (value) {
-                        for (const [key, value] of Object.entries(widget.text)) {
-                            if (key == "position" && value) {
-                                for   (const [position_key, positoin_value] of Object.entries(value)) {
-                                    if (position_key == "type" && positoin_value == 1)
-                                        document.getElementById("text-position-wrapper").style.display = "block";
-                                    document.getElementById(position_key).value = positoin_value;
-                                }
-                            } else {
-                                tinymce.get(key).setContent(value.toString());
-                            }
-                        }
-                    }
-                    break;
-                case "style":
-                    if (widget.style) {
-                        for (const [key, value] of Object.entries(widget.style)) {
-                            if (key == "margin" && widget.style.margin) {
-                                for (const [key, value] of Object.entries(widget.style.margin)) {
-                                    if (key == "total" && value) {
-                                        document.getElementById("m-top").value = value;
-                                        document.getElementById("m-right").value = value;
-                                        document.getElementById("m-bottom").value = value;
-                                        document.getElementById("m-left").value = value;
-                                    }
-                                    if (key != "total" && value) {
-                                        document.getElementById("m-" + key.toString()).value = value;
-                                    }
-                                }
-                            }
-                            if (key == "padding" && widget.style.padding) {
-                                for (const [key, value] of Object.entries(widget.style.padding)) {
-                                    if (key == "total" && value) {
-                                        document.getElementById("p-top").value = value;
-                                        document.getElementById("p-right").value = value;
-                                        document.getElementById("p-bottom").value = value;
-                                        document.getElementById("p-left").value = value;
-                                    }
-                                    if (key != "total" && value) {
-                                        document.getElementById("p-" + key).value = value;
-                                    }
-                                }
-                            }
 
-                            if (key == "borders" && widget.style.borders) {
-                                for (let i = 0; i < widget.style.borders.length; i++) {
-                                    for (const [key, value] of Object.entries(widget.style.borders[i])) {
-                                        console.log(key, value);
-                                        if (key == "type" && value == 1 && value) {
-                                            $("#border-selection").dxButtonGroup({
-                                                selectedItemKeys: ['arrowleft']
-                                            });
-                                        } else if (key == "type" && value == 2 && value) {
-                                            $("#border-selection").dxButtonGroup({
-                                                selectedItemKeys: ['arrowright']
-                                            });
-                                        } else if (key == "type" && value == 3 && value) {
-                                            $("#border-selection").dxButtonGroup({
-                                                selectedItemKeys: ['arrowtop']
-                                            });
-                                        } else if (key == "type" && value == 4 && value) {
-                                            $("#border-selection").dxButtonGroup({
-                                                selectedItemKeys: ['arrowbottom']
-                                            });
-                                        } else if (value) {
-                                            document.getElementById('border-' + key).value = value;
-                                        }
-                                    }
-                                }
-                            }
-
-                            if (key != "margin" && key != "padding" && key != "borders" && value) {
-                                console.log(key, document.getElementById(key));
-                                document.getElementById(key).value = value;
-                            }
-                        }
-                    }
-                    break;
-
-                case "mobileStyle":
-                    if (widget.mobileStyle) {
-                        for (const [key, value] of Object.entries(widget.mobileStyle)) {
-                            if (key == "margin" && widget.mobileStyle.margin) {
-                                for (const [key, value] of Object.entries(widget.mobileStyle.margin)) {
-                                    if (key == "total" && value) {
-                                        document.getElementById("mobile-m-top").value = value;
-                                        document.getElementById("mobile-m-right").value = value;
-                                        document.getElementById("mobile-m-bottom").value = value;
-                                        document.getElementById("mobile-m-left").value = value;
-                                    }
-                                    if (key != "total" && value) {
-                                        document.getElementById("mobile-m-" + key).value = value;
-                                    }
-                                }
-                            }
-                            if (key == "padding" && widget.mobileStyle.padding) {
-                                for (const [key, value] of Object.entries(widget.mobileStyle.padding)) {
-                                    if (key == "total" && value) {
-                                        document.getElementById("mobile-p-top").value = value;
-                                        document.getElementById("mobile-p-right").value = value;
-                                        document.getElementById("mobile-p-bottom").value = value;
-                                        document.getElementById("mobile-p-left").value = value;
-                                    }
-                                    if (key != "total" && value) {
-                                        document.getElementById("mobile-p-" + key).value = value;
-                                    }
-                                }
-                            }
-                            if (key != "margin" && key != "padding" && key != "borders" && value) {
-                                document.getElementById(key).value = value;
-                            }
-                        }
-                    }
-                    break;
-
-                case "clickAction":
-                    console.log("init click action");
-                    break;
-
-                default:
-                    if (key != "content" && key != "clickAction") {
-                        if (document.getElementById(key)) {
-                            document.getElementById(key).value = value;
-                        }
-                    }
-                    break;
-            }
+        // Content Tab
+        if (this.widget.type == 0) {
+            document.getElementById(this.widget.type).style.display = "block";
+            if (!tinymce.get("0-text")) {
+                console.log("html");
+                document.getElementById("0-text").innerHTML = this.widget.content.text;
+                this.initHtmlEditors("0-text");   
+            } else tinymce.get("0-text").setContent(this.widget.content.text);
+        } else {
+            if (!tinymce.get("0-text")) {
+                document.getElementById("0-text").innerHTML = "";
+                this.initHtmlEditors("0-text");   
+            } else tinymce.get("0-text").setContent("");
         }
+
+        switch (this.widget.type) {
+            case 1:
+                $(() => {
+                    let items = [];
+                    $.each( formData.galleryConfiguration, function( key, value ) {
+                        if (key == "source") {
+                            items.push({dataField: key, editorType: "dxTextArea"});
+                        }
+                    },),
+                    $('#gallery-source').dxForm({
+                      colCount: 1,
+                      formData: formData.galleryConfiguration,
+                      items: items,
+                      labelLocation: "top",
+                    });
+                });
+                $(() => {
+                    let items = [];
+                    $.each( formData.galleryConfiguration, function( key, value ) {
+                        if (key != "slideShowDelay" && key != "source")
+                            items.push({dataField: key, editorType: "dxCheckBox"});
+                        else if(key == "slideShowDelay") items.push({dataField: key});
+                    },),
+                    $('#gallery-content').dxForm({
+                      colCount: 4,
+                      formData: formData.galleryConfiguration,
+                      items: items,
+                      labelLocation: "left",
+                    });
+                });
+                break;
+
+            case 2:
+                $(() => {
+                    let items = [];
+                    $.each( formData.videoConfiguration, function( key, value ) {
+                        if (key == "source") {
+                            items.push({dataField: key, editorType: "dxTextArea"});
+                        }
+                    },),
+                    $('#video-source').dxForm({
+                      colCount: 1,
+                      formData: formData.videoConfiguration,
+                      items: items,
+                      labelLocation: "top",
+                    });
+                });
+                $(() => {
+                    let items = [];
+                    $.each( formData.videoConfiguration, function( key, value ) {
+                        if (key != "width" && key != "height" && key != "source")
+                            items.push({dataField: key, editorType: "dxCheckBox"});
+                        else if(key != "content") items.push({dataField: key});
+                    },),
+                    $('#video-content').dxForm({
+                      colCount: 4,
+                      formData: formData.videoConfiguration,
+                      items: items,
+                      labelLocation: "left",
+                    });
+                });
+                break;
+
+            case 3:
+                $(() => {
+                    let items = [];
+                    $.each( formData.pdfConfiguration, function( key, value ) {
+                        items.push({dataField: key, editorType: "dxTextArea"});
+                    },),
+                    $('#pdf-source').dxForm({
+                      colCount: 1,
+                      formData: formData.pdfConfiguration,
+                      items: items,
+                      labelLocation: "top",
+                    });
+                });
+                break;
+            case 4:
+                $(() => {
+                    let items = [];
+                    $.each( formData.showcaseConfiguration, function( key, value ) {
+                        if (key == "source")
+                            items.push({dataField: key, editorType: "dxTextArea"});
+                    },),
+                    $('#showcase-source').dxForm({
+                      colCount: 1,
+                      formData: formData.showcaseConfiguration,
+                      items: items,
+                      labelLocation: "top",
+                    });
+                });
+                $(() => {
+                    let items = [];
+                    $.each( formData.showcaseConfiguration, function( key, value ) {
+                        if (key != "source")
+                            items.push({dataField: key});
+                    },),
+                    $('#showcase-content').dxForm({
+                      colCount: 2,
+                      formData: formData.showcaseConfiguration,
+                      items: items,
+                      labelLocation: "top",
+                    });
+                });
+                break;
+            case 5:
+                $(() => {
+                    let items = [];
+                    $.each( formData.mapConfiguration, function( key, value ) {
+                        items.push({dataField: key, editorType: "dxTextArea"});
+                    },),
+                    $('#map-content').dxForm({
+                      colCount: 2,
+                      formData: formData.mapConfiguration,
+                      items: items,
+                      labelLocation: "top",
+                    });
+                });
+                break;
+            case 6:
+                $(() => {
+                    let items = [];
+                    $.each( formData.webPageConfiguration, function( key, value ) {
+                        items.push({dataField: key, editorType: "dxTextArea"});
+                    },),
+                    $('#webpage-source').dxForm({
+                      colCount: 1,
+                      formData: formData.webPageConfiguration,
+                      items: items,
+                      labelLocation: "top",
+                    });
+                });
+                break;
+            case 101:
+                $(() => {
+                    let items = [];
+                    $.each( formData.horizontalScrollGalleryConfiguration, function( key, value ) {
+                        items.push({dataField: key, editorType: "dxTextArea"});
+                    },),
+                    $('#horizontalScrollGallery-source').dxForm({
+                      colCount: 1,
+                      formData: formData.horizontalScrollGalleryConfiguration,
+                      items: items,
+                      labelLocation: "top",
+                    });
+                });
+                break;
+            case 102:
+                $(() => {
+                    let items = [];
+                    $.each( formData.gridGalleryConfiguration, function( key, value ) {
+                        items.push({dataField: key, editorType: "dxTextArea"});
+                    },),
+                    $('#gridGallery-source').dxForm({
+                      colCount: 1,
+                      formData: formData.gridGalleryConfiguration,
+                      items: items,
+                      labelLocation: "top",
+                    });
+                });
+                break;
+            default:
+                break;
+        }
+
+
+
+
+
+        // this.resetPanel();
+        // this.restHtmlEditors();
+        // this.resetBordersButton();
+        // this.initCommonSettingsPanel(widget);
+        // document.getElementById("modify-modal-title").innerHTML = this.widgetIndex[widget.type];
+        // document.getElementById(widget.type).style.display = "block";
+        // for (const [key, value] of Object.entries(widget.content)) {
+        //     if (key.toString() == "text" && value) {
+        //         this.initHtmlEditors("0-text");
+        //         tinymce.get("0-text").setContent(value);
+        //     }
+        //     if (
+        //         document.getElementById(
+        //             widget.type.toString() + "-" + key.toString()
+        //         ) &&
+        //         value
+        //     ) {
+        //         if (value == true || value == false) {
+        //             document.getElementById(
+        //                 widget.type.toString() + "-" + key.toString()
+        //             ).checked = value;
+        //         }
+        //         document.getElementById(
+        //             widget.type.toString() + "-" + key.toString()
+        //         ).value = value;
+        //     }
+        // }
     }
 
     initBordersButton() {
@@ -257,6 +516,7 @@ export default class Modifier {
         for (const [key, value] of Object.entries(this.widgetIndex)) {
             document.getElementById(key.toString()).style.display = "none";
         }
+        document.getElementById(this.widget.type.toString()).style.display = "block";
     }
 
     saveWidget() {

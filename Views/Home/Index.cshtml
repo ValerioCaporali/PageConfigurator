@@ -2,7 +2,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-@using Newtonsoft.Json;
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -582,12 +582,12 @@
                                 <a class="nav-item nav-link" href="#text-pane" data-toggle="tab">Testo</a>
                                 <a class="nav-item nav-link" href="#event-pane" data-toggle="tab">Eventi</a>
                                 <a class="nav-item nav-link" href="#style-pane" data-toggle="tab">Stile</a>
-                                <a class="nav-item nav-link" href="#mobile-style-pane" data-toggle="tab">Stile
-                                    Mobile</a>
+                                <a class="nav-item nav-link" href="#mobile-style-pane" data-toggle="tab">Stile Mobile</a>
                             </ul>
                             <div class="tab-content" style="padding: 2%;">
+                                @* TAB PROPRIETA' *@
                                 <div class="tab-pane active" id="property-pane">
-                                    <div class="row">
+                                    @* <div class="row">
                                         <div class="col-md-3">
                                             <label for="id">Id:</label>
                                             <input id="id" type="number" min="0" class="form-control"
@@ -634,7 +634,7 @@
                                             <label for="mobileRow">Riga per mobile:</label>
                                             <input type="number" min="0" class="form-control" id="mobileRow">
                                         </div>
-                                    </div>
+                                    </div> *@
                                     <div id="properties"></div>
                                 </div>
 
@@ -643,13 +643,15 @@
                                     @* TEXT CONTENT *@
                                     <div class="row" id="0" style="display: none;">
                                         <label for="0-text">Testo:</label>
-                                        <textarea type="text" class="form-control" placeholder="<p>Esempio</p>"
-                                            id="0-text"></textarea>
+                                        <textarea type="text" class="form-control" id="0-text"></textarea>
                                     </div>
 
                                     @* GALLERY CONTENT *@
                                     <div id="1" style="display: none;">
-                                        <div class="row">
+                                        <div id="gallery-source"></div>
+                                        <span style="margin-top: 22px; display: block;"></span>
+                                        <div id="gallery-content"></div>
+                                        @* <div class="row">
                                             <div class="col-md-4">
                                                 <label for="1-showIndicators">Indicatori:</label>
                                                 <input id="1-showIndicators" type="checkbox" data-toggle="toggle"
@@ -699,12 +701,15 @@
                                                 <textarea class="form-control rounded-0" id="1-source"
                                                     rows="6"></textarea>
                                             </div>
-                                        </div>
+                                        </div> *@
                                     </div>
 
                                     @* VIDEO CONTENT *@
                                     <div id="2" style="display: none;">
-                                        <div class="row">
+                                        <div id="video-source"></div>
+                                        <span style="margin-top: 22px; display: block;"></span>
+                                        <div id="video-content"></div>
+                                        @* <div class="row">
                                             <div class="col-md-12">
                                                 <label for="2-source">
                                                     Risorse (se più di una separare andando a
@@ -753,23 +758,27 @@
                                                 <input id="2-responsive" type="checkbox" data-toggle="toggle"
                                                     data-width="100">
                                             </div>
-                                        </div>
+                                        </div> *@
                                     </div>
 
                                     @* PDF CONTENT *@
                                     <div class="row" id="3" style="display: none;">
-                                        <div class="col-md-12">
+                                        <div id="pdf-source"></div>
+                                        @* <div class="col-md-12">
                                             <label for="pdf-sources">
                                                 Risorse (se più di una separare andando a
                                                 capo):
                                             </label>
                                             <textarea class="form-control rounded-0" id="3-source" rows="6"></textarea>
-                                        </div>
+                                        </div> *@
                                     </div>
 
                                     @* SHOWCASE CONTENT *@
                                     <div id="4" style="display: none;">
-                                        <div class="row">
+                                        <div id="showcase-source"></div>
+                                        <span style="margin-top: 22px; display: block;"></span>
+                                        <div id="showcase-content"></div>
+                                        @* <div class="row">
                                             <div class="col-md-6">
                                                 <label for="4-showcasdeId">Id showcase:</label>
                                                 <input class="form-control" type="text" placeholder="null"
@@ -791,12 +800,13 @@
                                                 <textarea class="form-control rounded-0" id="4-source"
                                                     rows="6"></textarea>
                                             </div>
-                                        </div>
+                                        </div> *@
                                     </div>
 
                                     @* MAP CONTENT *@
                                     <div id="5" style="display: none;">
-                                        <div class="row">
+                                        <div id="map-content"></div>
+                                        @* <div class="row">
                                             <div class="col-md-4">
                                                 <label for="5-latitude">Latitudine:</label>
                                                 <input class="form-control" type="number" placeholder="e.g 40.2123"
@@ -823,47 +833,51 @@
                                                 <label for="5-icon">Icon:</label>
                                                 <input class="form-control" type="text" placeholder="" id="5-icon">
                                             </div>
-                                        </div>
+                                        </div> *@
                                     </div>
 
                                     @* WEBPAGE CONTENT *@
                                     <div class="row" id="6" style="display: none;">
-                                        <div class="col-md-12">
+                                        <div id="webpage-source"></div>
+                                        @* <div class="col-md-12">
                                             <label for="6-source">Risorse (se più di una separare andando a
                                                 capo):</label>
                                             <textarea class="form-control rounded-0" id="6-source" rows="6"></textarea>
-                                        </div>
+                                        </div> *@
                                     </div>
 
                                     @* HORIZONTAL SCROLL GALLERY CONTENT *@
                                     <div class="row" id="101" style="display: none;">
-                                        <div class="col-md-12">
+                                        <div id="horizontalScrollGallery-source"></div>
+                                        @* <div class="col-md-12">
                                             <label for="101-source">
                                                 Risorse (se più di una
                                                 separare andando a capo):
                                             </label>
                                             <textarea class="form-control rounded-0" id="101-source"
                                                 rows="6"></textarea>
-                                        </div>
+                                        </div> *@
                                     </div>
 
                                     @* GRID GALLERY CONTENT *@
                                     <div class="row" id="102" style="display: none;">
-                                        <div class="col-md-12">
+                                        <div id="gridGallery-source"></div>
+                                        @* <div class="col-md-12">
                                             <label for="102-source">
                                                 Risorse (se più di una separare andando a
                                                 capo):
                                             </label>
                                             <textarea class="form-control rounded-0" id="102-source"
                                                 rows="6"></textarea>
-                                        </div>
+                                        </div> *@
                                     </div>
 
                                 </div>
 
                                 @* TAB EVENTI *@
                                 <div class="tab-pane" id="event-pane">
-                                    <label>Hover:</label>
+                                    <div id="events"></div>
+                                    @* <label>Hover:</label>
                                     <div class="row">
                                         <div class="col-md-4">
                                             <select id="hover" class="form-select">
@@ -873,12 +887,21 @@
                                                 <option value="3">Expand</option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> *@
                                 </div>
 
-                                @* TAB TESRO *@
+                                @* TAB TESTO *@
                                 <div class="tab-pane" id="text-pane">
                                     <div class="row">
+                                        <div class="col-md-12">
+                                            <label for="text">Testo:</label>
+                                            <textarea id="value" type="text" class="form-control"
+                                                placeholder=""></textarea>
+                                        </div>
+                                    </div>
+                                    <span style="margin-top: 20px; display: block;"></span>
+                                    <div id="text"></div>
+                                    @* <div class="row">
                                         <div class="col-md-12">
                                             <label for="text">Testo:</label>
                                             <textarea id="value" type="text" class="form-control"
@@ -913,12 +936,24 @@
                                                     placeholder="Sinistra">
                                             </div>
                                         </div>
-                                    </span>
+                                    </span> *@
                                 </div>
 
                                 @* TAB STILE *@
                                 <div class="tab-pane" id="style-pane">
-                                    <div class="row g-2">
+                                    <div id="dimensions"></div>
+                                    <span style="margin-top: 20px; display: block;"></span>
+                                    <div id="margin"></div>
+                                    <span style="margin-top: 20px; display: block;"></span>
+                                    <div id="padding"></div>
+                                    <span style="margin-top: 20px; display: block;"></span>
+                                    <div id="more"></div>
+                                    <span style="margin-top: 20px; display: block;"></span>
+                                    <div id="font"></div>
+                                    <span style="margin-top: 20px; display: block;"></span>
+                                    <label for="">Bordi</label>
+                                    <div id="border-selection"></div>
+                                    @* <div class="row g-2">
                                         <div class="col-md">
                                             <div class="form-floating">
                                                 <label for="height">Altezza</label>
@@ -1007,12 +1042,21 @@
                                             <label for="">Colore bordo:</label>
                                             <input id="border-color" class="form-control" type="color">
                                         </div>
-                                    </div>
+                                    </div> *@
                                 </div>
 
                                 @* TAB STILE MOBILE *@
                                 <div class="tab-pane" id="mobile-style-pane">
-                                    <div class="row g-2">
+                                    <div id="mobile-dimensions"></div>
+                                    <span style="margin-top: 20px; display: block;"></span>
+                                    <div id="mobile-margin"></div>
+                                    <span style="margin-top: 20px; display: block;"></span>
+                                    <div id="mobile-padding"></div>
+                                    <span style="margin-top: 20px; display: block;"></span>
+                                    <div id="mobile-more"></div>
+                                    <span style="margin-top: 20px; display: block;"></span>
+                                    <div id="mobile-font"></div>
+                                    @* <div class="row g-2">
                                         <div class="col-md">
                                             <div class="form-floating">
                                                 <label for="m-height">Altezza:</label>
@@ -1091,13 +1135,13 @@
                                             <input id="mobile-fontSize" type="text" class="form-control"
                                                 placeholder="smal, medium, large...">
                                         </div>
-                                    </div>
+                                    </div> *@
                                 </div>
                             </div>
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger">Elimina Widget</button>
+                            <button type="button" id="delete" class="btn btn-danger">Elimina Widget</button>
                             <button id="save-widget-changes-button" type="button" class="btn btn-success">Salva</button>
                         </div>
                     </div>
