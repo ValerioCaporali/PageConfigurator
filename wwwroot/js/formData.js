@@ -99,7 +99,9 @@ export default class FormData {
      };
 
      htmlConfiguration = {
+
          text: null
+
      };
 
      galleryConfiguration = {
@@ -252,7 +254,7 @@ export default class FormData {
 
         switch (this.widget.type) {
             case 0:
-                this.htmlConfiguration.Testo = this.widget.content.text;
+                this.htmlConfiguration.text = this.widget.content.text;
                 break;
             case 1:
                 for (const [key, value] of Object.entries(this.widget.content))

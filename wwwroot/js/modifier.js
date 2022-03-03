@@ -1,4 +1,5 @@
-import FormData from "./configurations/formData.js";
+import FormData from "./formData.js";
+import Widget from "./widget.js";
 export default class Modifier {
     widgetIndex = {
         0: "Testo",
@@ -39,9 +40,6 @@ export default class Modifier {
         this.widget = widget;
         this.resetHtmlEditors();
         this.initPanel(this.widget);
-        document.getElementById("save-widget-changes-button").addEventListener("click", () => {
-            this.saveWidget(this.widget);
-        });
     }
 
     initHtmlEditors(selector) {
@@ -453,6 +451,10 @@ export default class Modifier {
             default:
                 break;
         }
+
+        document.getElementById("save-widget-changes-button").addEventListener("click", () => {
+            let modifiedWidget = new Widget(formData);
+        });
 
 
 
