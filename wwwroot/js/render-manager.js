@@ -1,5 +1,5 @@
-import Modifier from './modifier.js'
-export default class Render {
+import ModifyManager from './modify-manager.js'
+export default class RenderManager {
 
     homePages;
     pages;
@@ -7,6 +7,7 @@ export default class Render {
     selectedPage;
     generatedId = [];
     showingStructure = false;
+    filterPageParameters;
 
     constructor(homePages, pages) {
         this.homePages = JSON.parse(JSON.stringify(homePages));
@@ -51,9 +52,14 @@ export default class Render {
     openPageStream = (index, pageType) => {
         if (pageType == "Home") {
             this.selectedHomePage = this.homePages[index];
+            this.filterPageParameters = { id: this.selectedHomePage.id, language: this.selectedHomePage.language }
+            console.log(this.filterPageParameters);
             this.showPagePreview(this.selectedHomePage);
         } else if (pageType == "Page") {
             this.selectedPage = this.pages[index];
+            console.log(this.selectedPage)
+            this.filterPageParameters = { id: this.selectedPage.id, language: this.selectedPage.language }
+            console.log(this.filterPageParameters);
             this.showPagePreview(this.selectedPage);
         }
     }
@@ -837,7 +843,7 @@ export default class Render {
     }
 
     openModifyPanel = (widget) => {
-        let modifier = new Modifier(widget);
+        let modifier = new ModifyManager(widget);
     }
 
     generateId = (id) => {

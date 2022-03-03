@@ -1,6 +1,6 @@
 import FormData from "./formData.js";
 import Widget from "./widget.js";
-export default class Modifier {
+export default class ModifyManager {
     widgetIndex = {
         0: "Testo",
         1: "Galleria",
@@ -35,6 +35,7 @@ export default class Modifier {
         },
     ];
     widget;
+    page;
 
     constructor(widget) {
         this.widget = widget;
@@ -68,13 +69,14 @@ export default class Modifier {
         var formData = new FormData(widget);
 
         /* Properties Tab */
-        $(() => {
+
+        $(() => {;
             let items = [];
             $.each( formData.propertyTab, function( key, value ) {
-                if (key == "Riga" || key == "Colonna")
+                if (key == "row" || key == "column")
                     items.push({dataField: key.toString(), validationRules: [{type: "required"}]})
-                else if (key == "Tipo")
-                    items.push({dataField: "Tipo", editorType: 'dxSelectBox', editorOptions: {items: formData.Type, value: formData.Type[value]}, validationRules: [{type: "required"}]});
+                else if (key == "type")
+                    items.push({dataField: "type", editorType: 'dxSelectBox', editorOptions: {items: formData.Type, value: formData.Type[value].value, valueExpr: 'value', displayExpr: 'name'}, validationRules: [{type: "required"}]});
                 else items.push({dataField: key.toString()})
             },),
             $('#properties').dxForm({
@@ -89,7 +91,7 @@ export default class Modifier {
         $(() => {
             let items = [];
             $.each( formData.textTab, function( key, value ) {
-                (key != "TipoPosizione") ? items.push({dataField: key}) : items.push({dataField: key, editorType: 'dxSelectBox', editorOptions: {items: formData.TextPosition, value: formData.TextPosition[value]}})
+                (key != "positionType") ? items.push({dataField: key}) : items.push({dataField: "positionType", editorType: 'dxSelectBox', editorOptions: {items: formData.TextPosition, value: (value ? formData.TextPosition[value].value : null), valueExpr: 'value', displayExpr: 'name'}})
             },),
             $('#text').dxForm({
               colCount: 2,
@@ -117,7 +119,7 @@ export default class Modifier {
         $(() => {
             let items = [];
             $.each( formData.eventsTab, function( key, value ) {
-                items.push({dataField: key, editorType: 'dxSelectBox', editorOptions: {items: formData.Hover, value: formData.Hover[value]}});
+                items.push({dataField: key, editorType: 'dxSelectBox', editorOptions: {items: formData.Hover, value: (value ? formData.Hover[value]?.value : ""), valueExpr: 'value', displayExpr: 'name'}});
             },),
             $('#events').dxForm({
               colCount: 2, 
@@ -133,7 +135,7 @@ export default class Modifier {
         $(() => {
             let items = [];
             $.each( formData.styleTab, function( key, value ) {
-                if (key == "Altezza" || key == "Larghezza")
+                if (key == "height" || key == "width")
                 items.push({dataField: key});
             },),
             $('#dimensions').dxForm({
@@ -146,7 +148,7 @@ export default class Modifier {
         $(() => {
             let items = [];
             $.each( formData.styleTab, function( key, value ) {
-                if (key.indexOf("Margine") != -1)
+                if (key.indexOf("margin") != -1)
                     items.push({dataField: key});
             },),
             $('#margin').dxForm({
@@ -159,7 +161,7 @@ export default class Modifier {
         $(() => {
             let items = [];
             $.each( formData.styleTab, function( key, value ) {
-                if (key.indexOf("Padding") != -1)
+                if (key.indexOf("padding") != -1)
                     items.push({dataField: key});
             },),
             $('#padding').dxForm({
@@ -172,9 +174,9 @@ export default class Modifier {
         $(() => {
             let items = [];
             $.each( formData.styleTab, function( key, value ) {
-                if (key == "Background")
+                if (key == "background")
                     items.push({dataField: key});
-                else if(key == "TextColor") {
+                else if(key == "textColor") {
                     items.push({dataField: key, editorType: "dxColorBox"});
                 }
             },),
@@ -188,7 +190,7 @@ export default class Modifier {
         $(() => {
             let items = [];
             $.each( formData.styleTab, function( key, value ) {
-                if (key.indexOf("Font") != -1)
+                if (key.indexOf("font") != -1)
                     items.push({dataField: key});
             },),
             $('#font').dxForm({
@@ -204,7 +206,7 @@ export default class Modifier {
         $(() => {
             let items = [];
             $.each( formData.mobileStyleTab, function( key, value ) {
-                if (key == "Altezza" || key == "Larghezza")
+                if (key == "height" || key == "width")
                 items.push({dataField: key});
             },),
             $('#mobile-dimensions').dxForm({
@@ -217,7 +219,7 @@ export default class Modifier {
         $(() => {
             let items = [];
             $.each( formData.mobileStyleTab, function( key, value ) {
-                if (key.indexOf("Margine") != -1)
+                if (key.indexOf("margin") != -1)
                     items.push({dataField: key});
             },),
             $('#mobile-margin').dxForm({
@@ -230,7 +232,7 @@ export default class Modifier {
         $(() => {
             let items = [];
             $.each( formData.mobileStyleTab, function( key, value ) {
-                if (key.indexOf("Padding") != -1)
+                if (key.indexOf("padding") != -1)
                     items.push({dataField: key});
             },),
             $('#mobile-padding').dxForm({
@@ -243,9 +245,9 @@ export default class Modifier {
         $(() => {
             let items = [];
             $.each( formData.mobileStyleTab, function( key, value ) {
-                if (key == "Background")
+                if (key == "background")
                     items.push({dataField: key});
-                else if(key == "TextColor") {
+                else if(key == "textColor") {
                     items.push({dataField: key, editorType: "dxColorBox"});
                 }
             },),
@@ -259,7 +261,7 @@ export default class Modifier {
         $(() => {
             let items = [];
             $.each( formData.mobileStyleTab, function( key, value ) {
-                if (key.indexOf("Font") != -1)
+                if (key.indexOf("font") != -1)
                     items.push({dataField: key});
             },),
             $('#mobile-font').dxForm({
@@ -276,7 +278,6 @@ export default class Modifier {
         if (this.widget.type == 0) {
             document.getElementById(this.widget.type).style.display = "block";
             if (!tinymce.get("0-text")) {
-                console.log("html");
                 document.getElementById("0-text").innerHTML = this.widget.content.text;
                 this.initHtmlEditors("0-text");   
             } else tinymce.get("0-text").setContent(this.widget.content.text);
@@ -453,43 +454,17 @@ export default class Modifier {
         }
 
         document.getElementById("save-widget-changes-button").addEventListener("click", () => {
-            let modifiedWidget = new Widget(formData);
+
+            let widget = new Widget(formData);
+            let modifiedWidget = widget.widgetBinding();
+            
+
         });
 
-
-
-
-
-        // this.resetPanel();
-        // this.restHtmlEditors();
-        // this.resetBordersButton();
-        // this.initCommonSettingsPanel(widget);
-        // document.getElementById("modify-modal-title").innerHTML = this.widgetIndex[widget.type];
-        // document.getElementById(widget.type).style.display = "block";
-        // for (const [key, value] of Object.entries(widget.content)) {
-        //     if (key.toString() == "text" && value) {
-        //         this.initHtmlEditors("0-text");
-        //         tinymce.get("0-text").setContent(value);
-        //     }
-        //     if (
-        //         document.getElementById(
-        //             widget.type.toString() + "-" + key.toString()
-        //         ) &&
-        //         value
-        //     ) {
-        //         if (value == true || value == false) {
-        //             document.getElementById(
-        //                 widget.type.toString() + "-" + key.toString()
-        //             ).checked = value;
-        //         }
-        //         document.getElementById(
-        //             widget.type.toString() + "-" + key.toString()
-        //         ).value = value;
-        //     }
-        // }
     }
 
     initBordersButton() {
+
         $("#border-selection").dxButtonGroup({
             items: this.borders,
             keyExpr: "style",
@@ -506,19 +481,24 @@ export default class Modifier {
                 );
             },
         });
+
     }
 
     resetBordersButton() {
+
         $("#border-selection").dxButtonGroup({
             selectedItemKeys: []
         });
+
     }
 
     resetPanel() {
+
         for (const [key, value] of Object.entries(this.widgetIndex)) {
             document.getElementById(key.toString()).style.display = "none";
         }
         document.getElementById(this.widget.type.toString()).style.display = "block";
+
     }
 
     saveWidget() {

@@ -8,52 +8,79 @@ export default class FormData {
     }
 
     Type = [
-        "Testo",
-        "Galleria",
-        "Video",
-        "Pdf",
-        "Tour",
-        "Mappa",
-        "Pagina web",
-        "Galleria orizzontale",
-        "Galleria a griglia",
-    ];
 
-    PosizioneTesto = [
-        "Centrato",
-        "Assoluto"
-    ];
+        { name: "Testo", value: 0 },
+
+        { name: "Galleria", value: 1 },
+
+        { name: "Video", value: 2 },
+
+        { name: "Pdf", value: 3 },
+
+        { name: "Tour", value: 4 },
+
+        { name: "Mappa", value: 5 },
+
+        { name: "Pagina Web", value: 6 },
+
+        { name: "Galleria orrizzontale", value: 101 },
+
+        { name: "Galleria a griglia", value: 102 }
+
+    ]
 
     TextPosition = [
-        "Centrato",
-        "Assoluto"
-    ];
+
+        { name: "Centrato", value: 0 },
+
+        { name: "Assoluto", value: 1}
+
+    ]
 
     Hover = [
-        "none",
-        "default",
-        "underline",
-        "expand"
-    ];
+
+        { name: "none", value: 0 },
+
+        { name: "default", value: 1 },
+
+        { name: "underline", value: 2 },
+
+        { name: "expand", value: 3 }
+
+    ]
 
     propertyTab = {
-        Tipo: null,
-        Id: null,
-        Riga: null,
-        Colonna: null,
-        EspansioneRiga: null,
-        EspansioneColonna: null,
-        RigaMobile: null,
+
+        type: null,
+
+        id: null,
+
+        row: null,
+
+        column: null,
+
+        rowSpan: null,
+
+        columnnSpan: null,
+
+        mobileRow: null,
+
     };
 
     contenuto = {};
 
     textTab = {
-        TipoPosizione: null,
-        Sopra: null,
-        Sotto: null,
-        Destra: null,
-        Sinistra: null
+
+        positionType: null,
+
+        top: null,
+
+        bottom: null,
+
+        right: null,
+
+        left: null
+
     };
 
     eventsTab = {
@@ -61,41 +88,75 @@ export default class FormData {
     };
 
     styleTab = {
-        Altezza: null,
-        Larghezza: null,
-        MargineTotale: null,
-        MargineSopra: null,
-        MargineDestra: null,
-        MargineSotto: null,
-        MargineSinistra: null,
-        Background: null,
-        TextColor: null,
-        FontFamily: null,
-        FontSize: null,
-        PaddingTotale: null,
-        PaddingSopra: null,
-        PaddingDestra: null,
-        PaddingSotto: null,
-        PaddingSinistra: null 
+        
+        height: null,
+        
+        width: null,
+        
+        marginTotal: null,
+        
+        marginTop: null,
+        
+        marginRight: null,
+        
+        marginBottom: null,
+        
+        marginLeft: null,
+        
+        background: null,
+        
+        textColor: null,
+        
+        fontFamily: null,
+        
+        fontSize: null,
+        
+        paddingTotal: null,
+        
+        paddingTop: null,
+        
+        paddingRight: null,
+        
+        paddingBottom: null,
+        
+        paddingLeft: null
+        
     };
 
     mobileStyleTab = {
-        Altezza: null,
-        Larghezza: null,
-        MargineTotale: null,
-        MargineSopra: null,
-        MargineDestra: null,
-        MargineSotto: null,
-        MargineSinistra: null,
-        Background: null,
-        TextColor: null,
-        FontFamily: null,
-        FontSize: null,
-        PaddingTotale: null,
-        PaddingSopra: null,
-        PaddingDestra: null,
-        PaddingSotto: null,
-        PaddingSinistra: null
+
+        height: null,
+
+        width: null,
+
+        marginTotal: null,
+
+        marginTop: null,
+
+        marginRight: null,
+
+        marginBottom: null,
+
+        marginLeft: null,
+
+        background: null,
+
+        textColor: null,
+
+        fontFamily: null,
+
+        fontSize: null,
+
+        paddingTotal: null,
+
+        paddingTop: null,
+
+        paddingRight: null,
+
+        paddingBottom: null,
+
+        paddingLeft: null
+
      };
 
      htmlConfiguration = {
@@ -192,102 +253,109 @@ export default class FormData {
         source: null
 
    }
-
-   
     
      bindData() {
-        this.propertyTab.Id = this.widget.id ? this.widget.id : "";
-        this.propertyTab.Riga = this.widget.row;
-        this.propertyTab.Colonna = this.widget.column;
-        this.propertyTab.EspansioneRiga = this.widget.rowSpan;
-        this.propertyTab.EspansioneColonna = this.widget.columnSpan;
-        this.propertyTab.Tipo = this.widget.type;
-        this.propertyTab.RigaMobile = this.widget.mobileRow;
+        this.propertyTab.id = this.widget.id ? this.widget.id : "";
+        this.propertyTab.row = this.widget.row;
+        this.propertyTab.column = this.widget.column;
+        this.propertyTab.rowSpan = this.widget.rowSpan;
+        this.propertyTab.columnSpan = this.widget.columnSpan;
+        this.propertyTab.type = this.widget.type;
+        this.propertyTab.mobileRow = this.widget.mobileRow;
 
 
-        this.textTab.TipoPosizione = (this.widget.text?.position?.type != null) ? this.widget.text.position.type : null;
-        this.textTab.Sopra = (this.widget.text?.position?.top != null) ? this.widget.text.position.top : null;
-        this.textTab.Sotto = (this.widget.text?.position?.bottom != null) ? this.widget.text.position.bottom : null;
-        this.textTab.Destra = (this.widget.text?.position?.right != null) ? this.widget.text.position.right : null;
-        this.textTab.Sinistra = (this.widget.text?.position?.left != null) ? this.widget.text.position.left : null;
+        this.textTab.positionType = (this.widget.text?.position?.type != null) ? this.widget.text.position.type : null;
+        this.textTab.top = (this.widget.text?.position?.top != null) ? this.widget.text.position.top : null;
+        this.textTab.bottom = (this.widget.text?.position?.bottom != null) ? this.widget.text.position.bottom : null;
+        this.textTab.right = (this.widget.text?.position?.right != null) ? this.widget.text.position.right : null;
+        this.textTab.left = (this.widget.text?.position?.left != null) ? this.widget.text.position.left : null;
 
 
         this.eventsTab.Hover = this.widget.Hover ? this.widget.Hover : null;
 
 
-        this.styleTab.Larghezza = this.widget.style?.width ? this.widget.style?.width : null; 
-        this.styleTab.Altezza = this.widget.style?.height ? this.widget.style?.height : null; 
-        this.styleTab.MargineTotale = this.widget.style?.margin?.total ? this.widget.style?.margin?.total : null; 
-        this.styleTab.MargineSopra = this.widget.style?.margin?.top ? this.widget.style?.margin?.top : null;
-        this.styleTab.MargineDestra = this.widget.style?.margin?.right ? this.widget.style?.margin?.right : null;
-        this.styleTab.MargineSotto = this.widget.style?.margin?.bottom ? this.widget.style?.margin?.bottom : null;
-        this.styleTab.MargineSinistra = this.widget.style?.margin?.left ? this.widget.style?.margin?.left : null;
-        this.styleTab.PaddingTotale = this.widget.style?.padding?.total ? this.widget.style?.padding?.total : null; 
-        this.styleTab.PaddingSopra = this.widget.style?.padding?.top ? this.widget.style?.padding?.top : null; 
-        this.styleTab.PaddingDestra = this.widget.style?.padding?.right ? this.widget.style?.padding?.right : null; 
-        this.styleTab.PaddingSotto = this.widget.style?.padding?.bottom ? this.widget.style?.padding?.bottom : null; 
-        this.styleTab.PaddingSinistra = this.widget.style?.padding?.left ? this.widget.style?.padding?.left : null; 
-        this.styleTab.Background = this.widget.style?.background ? this.widget.style?.background : null;
-        this.styleTab.TextColor = this.widget.style?.textColor ? this.widget.style?.textColor : null;
-        this.styleTab.FontFamily = this.widget.style?.fontFamily ? this.widget.style?.fontFamily : null;
-        this.styleTab.FontSize = this.widget.style?.fontSize ? this.widget.style?.fontSize : null;
+        this.styleTab.width = this.widget.style?.width ? this.widget.style?.width : null; 
+        this.styleTab.height = this.widget.style?.height ? this.widget.style?.height : null; 
+        this.styleTab.marginTotal = this.widget.style?.margin?.total ? this.widget.style?.margin?.total : null; 
+        this.styleTab.marginTop = this.widget.style?.margin?.top ? this.widget.style?.margin?.top : null;
+        this.styleTab.marginRight = this.widget.style?.margin?.right ? this.widget.style?.margin?.right : null;
+        this.styleTab.marginLeft = this.widget.style?.margin?.left ? this.widget.style?.margin?.left : null;
+        this.styleTab.paddingTotal = this.widget.style?.padding?.total ? this.widget.style?.padding?.total : null;
+        this.styleTab.paddingTop = this.widget.style?.padding?.top ? this.widget.style?.padding?.top : null;
+        this.styleTab.paddingRight = this.widget.style?.padding?.right ? this.widget.style?.padding?.right : null;
+        this.styleTab.paddingBottom = this.widget.style?.padding?.bottom ? this.widget.style?.padding?.bottom : null;
+        this.styleTab.paddingLeft = this.widget.style?.padding?.left ? this.widget.style?.padding?.left : null;
+        this.styleTab.background = this.widget.style?.background ? this.widget.style?.background : null;
+        this.styleTab.textColor = this.widget.style?.textColor ? this.widget.style?.textColor : null;
+        this.styleTab.fontFamily = this.widget.style?.fontFamily ? this.widget.style?.fontFamily : null;
+        this.styleTab.fontSize = this.widget.style?.fontSize ? this.widget.style?.fontSize : null;
 
 
 
-        this.mobileStyleTab.Larghezza = this.widget.style?.width ? this.widget.style?.width : null; 
-        this.mobileStyleTab.Altezza = this.widget.style?.height ? this.widget.style?.height : null; 
-        this.mobileStyleTab.MargineTotale = this.widget.style?.margin?.total ? this.widget.style?.margin?.total : null; 
-        this.mobileStyleTab.MargineSopra = this.widget.style?.margin?.top ? this.widget.style?.margin?.top : null;
-        this.mobileStyleTab.MargineDestra = this.widget.style?.margin?.right ? this.widget.style?.margin?.right : null;
-        this.mobileStyleTab.MargineSotto = this.widget.style?.margin?.bottom ? this.widget.style?.margin?.bottom : null;
-        this.mobileStyleTab.MargineSinistra = this.widget.style?.margin?.left ? this.widget.style?.margin?.left : null;
-        this.mobileStyleTab.PaddingTotale = this.widget.style?.padding?.total ? this.widget.style?.padding?.total : null; 
-        this.mobileStyleTab.PaddingSopra = this.widget.style?.padding?.top ? this.widget.style?.padding?.top : null; 
-        this.mobileStyleTab.PaddingDestra = this.widget.style?.padding?.right ? this.widget.style?.padding?.right : null; 
-        this.mobileStyleTab.PaddingSotto = this.widget.style?.padding?.bottom ? this.widget.style?.padding?.bottom : null; 
-        this.mobileStyleTab.PaddingSinistra = this.widget.style?.padding?.left ? this.widget.style?.padding?.left : null; 
-        this.mobileStyleTab.Background = this.widget.style?.background ? this.widget.style?.background : null;
-        this.mobileStyleTab.TextColor = this.widget.style?.textColor ? this.widget.style?.textColor : null;
-        this.mobileStyleTab.FontFamily = this.widget.style?.fontFamily ? this.widget.style?.fontFamily : null;
-        this.mobileStyleTab.FontSize = this.widget.style?.fontSize ? this.widget.style?.fontSize : null;
+        this.mobileStyleTab.width = this.widget.style?.width ? this.widget.style?.width : null;
+        this.mobileStyleTab.height = this.widget.style?.height ? this.widget.style?.height : null;
+        this.mobileStyleTab.marginTotal = this.widget.style?.margin?.total ? this.widget.style?.margin?.total : null;
+        this.mobileStyleTab.marginTop = this.widget.style?.margin?.top ? this.widget.style?.margin?.top : null;
+        this.mobileStyleTab.marginRight = this.widget.style?.margin?.right ? this.widget.style?.margin?.right : null;
+        this.mobileStyleTab.marginBottom = this.widget.style?.margin?.bottom ? this.widget.style?.margin?.bottom : null;
+        this.mobileStyleTab.marginLeft = this.widget.style?.margin?.left ? this.widget.style?.margin?.left : null;
+        this.mobileStyleTab.paddingTotal = this.widget.style?.padding?.total ? this.widget.style?.padding?.total : null;
+        this.mobileStyleTab.paddingTop = this.widget.style?.padding?.top ? this.widget.style?.padding?.top : null;
+        this.mobileStyleTab.paddingRight = this.widget.style?.padding?.right ? this.widget.style?.padding?.right : null;
+        this.mobileStyleTab.paddingBottom = this.widget.style?.padding?.bottom ? this.widget.style?.padding?.bottom : null;
+        this.mobileStyleTab.paddingLeft = this.widget.style?.padding?.left ? this.widget.style?.padding?.left : null;
+        this.mobileStyleTab.background = this.widget.style?.background ? this.widget.style?.background : null;
+        this.mobileStyleTab.textColor = this.widget.style?.textColor ? this.widget.style?.textColor : null;
+        this.mobileStyleTab.fontFamily = this.widget.style?.fontFamily ? this.widget.style?.fontFamily : null;
+        this.mobileStyleTab.fontSize = this.widget.style?.fontSize ? this.widget.style?.fontSize : null;
 
 
         switch (this.widget.type) {
+            
             case 0:
                 this.htmlConfiguration.text = this.widget.content.text;
                 break;
+                
             case 1:
                 for (const [key, value] of Object.entries(this.widget.content))
                 if (key == "showIndicator" || key == "showNavButtons" || key == "enableLoop" || key == "slideShowDelay" || key == "serverSideScalingEnabled" || key == "cacheEnabled" || key == "source")
                     this.galleryConfiguration[key.toString()] = value;
                 break;
+                
             case 2:
                 for (const [key, value] of Object.entries(this.widget.content))
                 if (key == "width" || key == "height" || key == "enableLoop" || key == "enableAutoplay" || key == "disableControls" || key == "responsive" || key == "source")
                     this.videoConfiguration[key] = value;
                 break;
+                
             case 3:
                 this.pdfConfiguration.source = this.widget.content.source ? this.widget.content.source : null; 
                 break;
+                
             case 4:
                 for (const [key, value] of Object.entries(this.widget.content))
                 if (key == "showCaseId" || key == "options" || key == "source")
                     this.showcaseConfiguration[key] = value;
                 break;
+
             case 5:
                 for (const [key, value] of Object.entries(this.widget.content))
                 if (key == "latitude" || key == "longitude" || key == "zoom" || key == "styles" || key == "icon" || key == "responsive")
                     this.mapConfiguration[key] = value;
                 break;
+                
             case 6:
                 this.webPageConfiguration.source = this.widget.content.source ? this.widget.content.source : null;
                 break;
+                
             case 101:
                 this.horizontalScrollGalleryConfiguration.source = this.widget.content.source ? this.widget.content.source : null;
                 break;
+                
             case 102:
                 this.gridGalleryConfiguration.source = this.widget.content.source ? this.widget.content.source : null;
                 break;
+                
             default:
                 break;
         }

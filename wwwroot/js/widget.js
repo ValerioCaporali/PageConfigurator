@@ -1,11 +1,13 @@
+import SaveManager from "./saver.js";
+
 export default class Widget {
     
     formData;
 
     constructor(formData) {
+
         this.formData = formData;
-        console.log(formData);
-        this.widgetBinding();
+        
     }
 
     position = {
@@ -193,58 +195,62 @@ export default class Widget {
     }
 
     widgetBinding() {
+
         this.widget.id = this.formData.propertyTab.Id;
-        this.widget.type = this.formData.propertyTab.Tipo;
-        this.widget.row = this.formData.propertyTab.Riga;
-        this.widget.column = this.formData.propertyTab.Colonna;
-        this.widget.rowSpan = this.formData.propertyTab.EspansioneRiga;
-        this.widget.columnSpan = this.formData.propertyTab.EspansioneColonna;
-        this.widget.mobileRow = this.formData.propertyTab.RigaMobile;
+        this.widget.type = this.formData.propertyTab.type;
+        this.widget.row = this.formData.propertyTab.row;
+        this.widget.column = this.formData.propertyTab.column;
+        this.widget.rowSpan = this.formData.propertyTab.rowSpan;
+        this.widget.columnSpan = this.formData.propertyTab.columnSpan;
+        this.widget.mobileRow = this.formData.propertyTab.mobileRow;
 
-        this.style.height = this.formData.styleTab?.Altezza ? this.formData.styleTab.Altezza : null
-        this.style.width = this.formData.styleTab.Larghezza ? this.formData.styleTab.Larghezza : null
-        this.margin.total = this.formData.styleTab.MargineTotale ? this.formData.styleTab.MargineTotale : null
-        this.margin.top = this.formData.styleTab.MargineSopra ? this.formData.styleTab.MargineSopra : null
-        this.margin.right = this.formData.styleTab.MargineDestra ? this.formData.styleTab.MargineDestra : null
-        this.margin.bottom = this.formData.styleTab.MargineSotto ? this.formData.styleTab.MargineSotto : null
-        this.margin.left = this.formData.styleTab.MargineSinistra ? this.formData.styleTab.MargineSinistra : null
-        this.style.background = this.formData.styleTab.Background ? this.formData.styleTab.Background : null
-        this.style.textColor = this.formData.styleTab.TextColor ? this.formData.styleTab.TextColor : null
-        this.style.fontFamily = this.formData.styleTab.FontFamily ? this.formData.styleTab.FontFamily : null
-        this.style.fontSize = this.formData.styleTab.FontSize ? this.formData.styleTab.FontSize : null
-        this.padding.total = this.formData.styleTab.PaddingTotale ? this.formData.styleTab.PaddingTotale : null
-        this.padding.top = this.formData.styleTab.PaddingSopra ? this.formData.styleTab.PaddingSopra : null
-        this.padding.right = this.formData.styleTab.PaddingDestra ? this.formData.styleTab.PaddingDestra : null
-        this.padding.bottom = this.formData.styleTab.PaddingSotto ? this.formData.styleTab.PaddingSotto : null
-        this.padding.left = this.formData.styleTab.PaddingSinistra ? this.formData.styleTab.PaddingSinistra : null
+        this.style.height = this.formData.styleTab?.height;
+        this.style.width = this.formData.styleTab.width;
+        this.margin.total = this.formData.styleTab.marginTotal;
+        this.margin.top = this.formData.styleTab.marginTop;
+        this.margin.right = this.formData.styleTab.marginRight;
+        this.margin.bottom = this.formData.styleTab.marginBottom;
+        this.margin.left = this.formData.styleTab.marginLeft;
+        this.style.background = this.formData.styleTab.Background;
+        this.style.textColor = this.formData.styleTab.TextColor;
+        this.style.fontFamily = this.formData.styleTab.FontFamily;
+        this.style.fontSize = this.formData.styleTab.FontSize;
+        this.padding.total = this.formData.styleTab.paddingTotal;
+        this.padding.top = this.formData.styleTab.paddingTop;
+        this.padding.right = this.formData.styleTab.paddingRight;
+        this.padding.bottom = this.formData.styleTab.paddingBottom;
+        this.padding.left = this.formData.styleTab.paddingLeft;
 
-        this.mobileStyle.height = this.formData.mobileStyleTab.Altezza ? this.formData.mobileStyleTab.Altezza : null
-        this.mobileStyle.width = this.formData.mobileStyleTab.Larghezza ? this.formData.mobileStyleTab.Larghezza : null
-        this.mobileMargin.total = this.formData.mobileStyleTab.MargineTotale ? this.formData.mobileStyleTab.MargineTotale : null
-        this.mobileMargin.top = this.formData.mobileStyleTab.MargineSopra ? this.formData.mobileStyleTab.MargineSopra : null
-        this.mobileMargin.right = this.formData.mobileStyleTab.MargineDestra ? this.formData.mobileStyleTab.MargineDestra : null
-        this.mobileMargin.bottom = this.formData.mobileStyleTab.MargineSotto ? this.formData.mobileStyleTab.MargineSotto : null
-        this.mobileMargin.left = this.formData.mobileStyleTab.MargineSinistra ? this.formData.mobileStyleTab.MargineSinistra : null
-        this.mobileStyle.background = this.formData.mobileStyleTab.Background ? this.formData.mobileStyleTab.Background : null
-        this.mobileStyle.textColor = this.formData.mobileStyleTab.TextColor ? this.formData.mobileStyleTab.TextColor : null
-        this.mobileStyle.fontFamily = this.formData.mobileStyleTab.FontFamily ? this.formData.mobileStyleTab.FontFamily : null
-        this.mobileStyle.fontSize = this.formData.mobileStyleTab.FontSize ? this.formData.mobileStyleTab.FontSize : null
-        this.mobilePadding.total = this.formData.mobileStyleTab.PaddingTotale ? this.formData.mobileStyleTab.PaddingTotale : null
-        this.mobilePadding.top = this.formData.mobileStyleTab.PaddingSopra ? this.formData.mobileStyleTab.PaddingSopra : null
-        this.mobilePadding.right = this.formData.mobileStyleTab.PaddingDestra ? this.formData.mobileStyleTab.PaddingDestra : null
-        this.mobilePadding.bottom = this.formData.mobileStyleTab.PaddingSotto ? this.formData.mobileStyleTab.PaddingSotto : null
-        this.mobilePadding.left = this.formData.mobileStyleTab.PaddingSinistra ? this.formData.mobileStyleTab.PaddingSinistra : null
+        this.mobileStyle.height = this.formData.mobileStyleTab.height;
+        this.mobileStyle.width = this.formData.mobileStyleTab.width;
+        this.mobileMargin.total = this.formData.mobileStyleTab.marginTotal;
+        this.mobileMargin.top = this.formData.mobileStyleTab.marginTop;
+        this.mobileMargin.right = this.formData.mobileStyleTab.marginRight;
+        this.mobileMargin.bottom = this.formData.mobileStyleTab.marginBottom;
+        this.mobileMargin.left = this.formData.mobileStyleTab.marginLeft;
+        this.mobileStyle.background = this.formData.mobileStyleTab.Background;
+        this.mobileStyle.textColor = this.formData.mobileStyleTab.TextColor;
+        this.mobileStyle.fontFamily = this.formData.mobileStyleTab.FontFamily;
+        this.mobileStyle.fontSize = this.formData.mobileStyleTab.FontSize;
+        this.mobilePadding.total = this.formData.mobileStyleTab.paddingTotal;
+        this.mobilePadding.top = this.formData.mobileStyleTab.paddingTop;
+        this.mobilePadding.right = this.formData.mobileStyleTab.paddingRight;
+        this.mobilePadding.bottom = this.formData.mobileStyleTab.paddingBottom;
+        this.mobilePadding.left = this.formData.mobileStyleTab.paddingLeft;
         
-        this.widget.hover = this.formData.eventsTab.Hover ? this.formData.eventsTab.Hover : null
+        this.widget.hover = this.formData.eventsTab.Hover;
 
         this.text.value = tinymce.get("value").getContent({format : 'raw'}).toString();
-        this.position.type = this.formData.textTab.TipoPosizione ? this.formData.textTab.TipoPosizione : null;
-        this.position.top = this.formData.textTab.Sopra ? this.formData.textTab.Sopra : null;
-        this.position.right = this.formData.textTab.Destra ? this.formData.textTab.Destra : null;
-        this.position.bottom = this.formData.textTab.Sotto ? this.formData.textTab.Sotto : null;
-        this.position.left = this.formData.textTab.Sinistra ? this.formData.textTab.Sinistra : null;
+        this.position.type = this.formData.textTab.positionType;
+        this.position.top = this.formData.textTab.top ? this.formData.textTab.top : null;
+        this.position.right = this.formData.textTab.right ? this.formData.textTab.right : null;
+        this.position.bottom = this.formData.textTab.bottom ? this.formData.textTab.bottom : null;
+        this.position.left = this.formData.textTab.left ? this.formData.textTab.left : null;
 
-        switch (this.formData.propertyTab.Tipo) {
+        if (typeof this.formData.propertyTab.type === 'string')
+            console.log("stringa")
+
+        switch (this.formData.propertyTab.type) {
             case 0:
                 this.formData.htmlConfiguration.text = tinymce.get("0-text").getContent({format : 'raw'}).toString();
                 this.widget.content = this.formData.htmlConfiguration;
@@ -261,20 +267,20 @@ export default class Widget {
                 this.widget.content = this.formData.videoConfiguration;
                 break;
             case 3:
-                this.widget.content = this.formData.pdfConfiguration
+                this.widget.content = this.formData.pdfConfiguration;
                 break;
             case 4:
                 let showcaseSource = this.formData.showcaseConfiguration.source.toString().split(/\r?\n/);
                 this.formData.showcaseConfiguration.source = showcaseSource;
                 this.widget.content = this.formData.showcaseConfiguration;
                 break;
-                case 5:
+            case 5:
                 this.widget.content = this.formData.mapConfiguration;
                 break;
             case 6:
-                let webpageSource = this.formData.webpageConfiguration.source.toString().split(/\r?\n/);
-                this.formData.webpageConfiguration.source = webpageSource;
-                this.widget.content = this.webpageConfiguration;
+                let webpageSource = this.formData.webPageConfiguration.source.toString().split(/\r?\n/);
+                this.formData.webPageConfiguration.source = webpageSource;
+                this.widget.content = this.formData.webPageConfiguration;
                 break;
             case 101:
                 let horizontalScrollGallerySource = this.formData.horizontalScrollGalleryConfiguration.source.toString().split(/\r?\n/);
@@ -285,7 +291,8 @@ export default class Widget {
                 break;
         }
 
-        console.log(this.widget);
-
+        return this.widget;
+        
     }
+
 }

@@ -1,4 +1,4 @@
-import Render from "./renderer.js";
+import Render from "./render-manager.js";
 
 const base_url = 'api/Pages/';
 let homePages;
