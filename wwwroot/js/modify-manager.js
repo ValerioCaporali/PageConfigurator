@@ -1,4 +1,6 @@
+import RenderManager from "./render-manager.js";
 import FormData from "./formData.js";
+import SaveManager from "./save-manager.js"
 import Widget from "./widget.js";
 export default class ModifyManager {
     widgetIndex = {
@@ -35,12 +37,11 @@ export default class ModifyManager {
         },
     ];
     widget;
-    page;
+    selectedPage;
 
-    constructor(widget) {
+    constructor(widget, selectedPage) {
         this.widget = widget;
-        this.resetHtmlEditors();
-        this.initPanel(this.widget);
+        this.selectedPage = selectedPage;
     }
 
     initHtmlEditors(selector) {
@@ -63,14 +64,15 @@ export default class ModifyManager {
             tinymce.get("value").setContent("");
     }
 
-    initPanel(widget) {
+    initPanel() {
+        var widget = this.widget
         this.resetPanel();
         this.resetBordersButton();
         var formData = new FormData(widget);
 
         /* Properties Tab */
 
-        $(() => {;
+        $(() => {
             let items = [];
             $.each( formData.propertyTab, function( key, value ) {
                 if (key == "row" || key == "column")
@@ -455,10 +457,13 @@ export default class ModifyManager {
 
         document.getElementById("save-widget-changes-button").addEventListener("click", () => {
 
+            let initialWidget = this.widget;
             let widget = new Widget(formData);
             let modifiedWidget = widget.widgetBinding();
-            
-
+            let saveManager = new SaveManager(modifiedWidget, initialWidget, this.selectedPage);
+            let updatedPage = saveManager.saveWidget();
+            let renderManager = new RenderManager({}, {});
+            renderManager.showPagePreview(updatedPage);
         });
 
     }

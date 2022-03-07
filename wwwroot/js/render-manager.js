@@ -53,13 +53,11 @@ export default class RenderManager {
         if (pageType == "Home") {
             this.selectedHomePage = this.homePages[index];
             this.filterPageParameters = { id: this.selectedHomePage.id, language: this.selectedHomePage.language }
-            console.log(this.filterPageParameters);
             this.showPagePreview(this.selectedHomePage);
         } else if (pageType == "Page") {
             this.selectedPage = this.pages[index];
             console.log(this.selectedPage)
             this.filterPageParameters = { id: this.selectedPage.id, language: this.selectedPage.language }
-            console.log(this.filterPageParameters);
             this.showPagePreview(this.selectedPage);
         }
     }
@@ -843,7 +841,8 @@ export default class RenderManager {
     }
 
     openModifyPanel = (widget) => {
-        let modifier = new ModifyManager(widget);
+        let modifyManager = new ModifyManager(widget, this.selectedPage);
+        modifyManager.initPanel();
     }
 
     generateId = (id) => {

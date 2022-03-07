@@ -1,5 +1,3 @@
-import SaveManager from "./saver.js";
-
 export default class Widget {
     
     formData;
@@ -196,7 +194,7 @@ export default class Widget {
 
     widgetBinding() {
 
-        this.widget.id = this.formData.propertyTab.Id;
+        this.widget.id = this.formData.propertyTab.id;
         this.widget.type = this.formData.propertyTab.type;
         this.widget.row = this.formData.propertyTab.row;
         this.widget.column = this.formData.propertyTab.column;
@@ -246,9 +244,6 @@ export default class Widget {
         this.position.right = this.formData.textTab.right ? this.formData.textTab.right : null;
         this.position.bottom = this.formData.textTab.bottom ? this.formData.textTab.bottom : null;
         this.position.left = this.formData.textTab.left ? this.formData.textTab.left : null;
-
-        if (typeof this.formData.propertyTab.type === 'string')
-            console.log("stringa")
 
         switch (this.formData.propertyTab.type) {
             case 0:
