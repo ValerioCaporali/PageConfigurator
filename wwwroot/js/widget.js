@@ -1,10 +1,14 @@
 export default class Widget {
     
     formData;
+    text_content_id;
+    text_id;
 
-    constructor(formData) {
+    constructor(formData, text_content_id, text_id) {
 
         this.formData = formData;
+        this.text_content_id = text_content_id;
+        this.text_id = text_id;
         
     }
 
@@ -238,7 +242,7 @@ export default class Widget {
         
         this.widget.hover = this.formData.eventsTab.Hover;
 
-        this.text.value = tinymce.get("value").getContent({format : 'raw'}).toString();
+        this.text.value = tinymce.get(this.text_id).getContent({format : 'raw'}).toString();
         this.position.type = this.formData.textTab.positionType;
         this.position.top = this.formData.textTab.top ? this.formData.textTab.top : null;
         this.position.right = this.formData.textTab.right ? this.formData.textTab.right : null;
@@ -247,7 +251,7 @@ export default class Widget {
 
         switch (this.formData.propertyTab.type) {
             case 0:
-                this.formData.htmlConfiguration.text = tinymce.get("0-text").getContent({format : 'raw'}).toString();
+                this.formData.htmlConfiguration.text = tinymce.get(this.text_content_id).getContent({format : 'raw'}).toString();
                 this.widget.content = this.formData.htmlConfiguration;
                 break;
             case 1: 

@@ -38,10 +38,15 @@ export default class ModifyManager {
     ];
     widget;
     selectedPage;
+    text_content_id;
+    text_id;
+    newFormData;
 
-    constructor(widget, selectedPage) {
+    constructor(widget, selectedPage, text_content_id, text_id) {
         this.widget = widget;
         this.selectedPage = selectedPage;
+        this.text_content_id = text_content_id;
+        this.text_id = text_id;
     }
 
     initHtmlEditors(selector) {
@@ -68,6 +73,7 @@ export default class ModifyManager {
         var widget = this.widget
         this.resetPanel();
         this.resetBordersButton();
+        tinymce.remove();
         var formData = new FormData(widget);
 
         /* Properties Tab */
@@ -103,19 +109,14 @@ export default class ModifyManager {
             });
         });
 
-        if (this.widget.text?.value) {
-            if (!tinymce.get("value")) {
-                document.getElementById("value").innerHTML = this.widget.text?.value.toString();
-                this.initHtmlEditors("value");   
-            } else tinymce.get("value").setContent(this.widget.text?.value.toString());
-        } else {
-            if (!tinymce.get("value")) {
-                document.getElementById("value").innerHTML = "";
-                this.initHtmlEditors("value");   
-            } else tinymce.get("value").setContent("");
-        }
+            let textareaa = document.createElement("textarea");
+            textareaa.id = this.text_id;
+            document.getElementById("text-editor-container-12").appendChild(textareaa);
+            setTimeout(() => {
+                textareaa.innerHTML = this.widget.text?.value ? this.widget.text.value : "";
+                this.initHtmlEditors(this.text_id);
+            }, 200)
 
-        
 
         /* Events Tab */
         $(() => {
@@ -123,7 +124,7 @@ export default class ModifyManager {
             $.each( formData.eventsTab, function( key, value ) {
                 items.push({dataField: key, editorType: 'dxSelectBox', editorOptions: {items: formData.Hover, value: (value ? formData.Hover[value]?.value : ""), valueExpr: 'value', displayExpr: 'name'}});
             },),
-            $('#events').dxForm({
+            $('#events-checkbox').dxForm({
               colCount: 2, 
               formData: formData.eventsTab,
               items: items,
@@ -279,15 +280,21 @@ export default class ModifyManager {
         // Content Tab
         if (this.widget.type == 0) {
             document.getElementById(this.widget.type).style.display = "block";
-            if (!tinymce.get("0-text")) {
-                document.getElementById("0-text").innerHTML = this.widget.content.text;
-                this.initHtmlEditors("0-text");   
-            } else tinymce.get("0-text").setContent(this.widget.content.text);
+            let textarea = document.createElement("textarea");
+            textarea.id = this.text_content_id;
+            document.getElementById("0").appendChild(textarea);
+            setTimeout(() => {
+                textarea.innerHTML = this.widget.content.text;
+                this.initHtmlEditors(this.text_content_id);
+            }, 200)
         } else {
-            if (!tinymce.get("0-text")) {
-                document.getElementById("0-text").innerHTML = "";
-                this.initHtmlEditors("0-text");   
-            } else tinymce.get("0-text").setContent("");
+            let textarea = document.createElement("textarea");
+            textarea.id = this.text_content_id;
+            document.getElementById("0").appendChild(textarea);
+            setTimeout(() => {
+                textarea.innerHTML = this.widget.content.text;
+                this.initHtmlEditors(this.text_content_id);
+            }, 200)
         }
 
         switch (this.widget.type) {
@@ -455,16 +462,7 @@ export default class ModifyManager {
                 break;
         }
 
-        document.getElementById("save-widget-changes-button").addEventListener("click", () => {
-
-            let initialWidget = this.widget;
-            let widget = new Widget(formData);
-            let modifiedWidget = widget.widgetBinding();
-            let saveManager = new SaveManager(modifiedWidget, initialWidget, this.selectedPage);
-            let updatedPage = saveManager.saveWidget();
-            let renderManager = new RenderManager({}, {});
-            renderManager.showPagePreview(updatedPage);
-        });
+        this.newFormData = formData;
 
     }
 
@@ -504,6 +502,18 @@ export default class ModifyManager {
         }
         document.getElementById(this.widget.type.toString()).style.display = "block";
 
+    }
+
+    getUpdatedPage() {
+
+        let initialWidget = this.widget;
+        let widget = new Widget(this.newFormData, this.text_content_id, this.text_id);
+        let modifiedWidget = widget.widgetBinding();
+        let saveManager = new SaveManager(modifiedWidget, initialWidget, this.selectedPage);
+        let updatedPage = saveManager.updatePage();
+        if (updatedPage)
+            return updatedPage;
+        
     }
 
     saveWidget() {

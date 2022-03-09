@@ -428,6 +428,14 @@
         cursor: pointer;
     }
 
+    textarea {
+        display: none;
+    }
+
+    #history-container *, #structure-icon:hover {
+        cursor: pointer;
+    }
+
     .form-select {
         display: block;
         width: 100%;
@@ -449,37 +457,25 @@
         -moz-appearance: none;
         appearance: none;
     }
+
+    .dx-toast-content {
+      min-width: 300px;
+      max-width: 400px;
+      background-color: #d01e1e;
+    }
 </style>
 
 <body>
-    <div class="page-wrapper chiller-theme toggled" style="height: 100%;">
+    <div id="wrapper" class="page-wrapper chiller-theme toggled" style="height: 100%;">
         <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
             <i class="fas fa-bars"></i>
         </a>
         <nav id="sidebar" class="sidebar-wrapper">
             <div class="sidebar-content">
                 <div class="sidebar-brand">
-                    <a href="#">pro sidebar</a>
+                    <a href="#">configuratore</a>
                     <div id="close-sidebar" onclick="reloadGalleries()">
                         <i class="fas fa-times"></i>
-                    </div>
-                </div>
-                <div class="sidebar-header">
-                    <div class="user-pic">
-                        <img class="img-responsive img-rounded"
-                            src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
-                            alt="User picture">
-                    </div>
-                    <div class="user-info">
-                        <span class="user-name">
-                            Jhon
-                            <strong>Smith</strong>
-                        </span>
-                        <span class="user-role">Administrator</span>
-                        <span class="user-status">
-                            <i class="fa fa-circle"></i>
-                            <span>Online</span>
-                        </span>
                     </div>
                 </div>
                 <div class="sidebar-menu">
@@ -528,12 +524,18 @@
         <!-- sidebar-wrapper  -->
 
         <main class="page-content" id="main">
+            <div class="spinner-container" style="display: block; height: 100%; width: 100%;">
+                <div class="loadpanel"></div>
+            </div>
             <div class="row">
                 <h4 id="page-title" contenteditable="true" style="display:block; height: 100%;"></h4>
                 <span id="editButton" class="edit-title-icon">
                     <i class="fas fa-pencil-alt" style="font-size: 15px;"></i>
                 </span>
                 <div class="page-options">
+                    <div id="history-container" style="display: block; margin-right: 60px">
+                        <i id="prev-page" class="fa-solid fa-rotate-left fa-xl" style="display:none; margin-right: 20px;"></i>
+                    </div>
                     <div id="page-language" style="display: none;">
                         <label for="language">Lingua: </label>
                         <select name="language" class="form-select" id="language">
@@ -587,54 +589,6 @@
                             <div class="tab-content" style="padding: 2%;">
                                 @* TAB PROPRIETA' *@
                                 <div class="tab-pane active" id="property-pane">
-                                    @* <div class="row">
-                                        <div class="col-md-3">
-                                            <label for="id">Id:</label>
-                                            <input id="id" type="number" min="0" class="form-control"
-                                                placeholder="Selezionare">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label for="type">Tipo:</label>
-                                            <select id="type" class="form-select" data-style="btn-primary">
-                                                <option value="0">Testo</option>
-                                                <option value="1">Gallery</option>
-                                                <option value="2">video</option>
-                                                <option value="3">Pdf</option>
-                                                <option value="4">Showcase</option>
-                                                <option value="5">Mappa</option>
-                                                <option value="6">Pagina Web</option>
-                                                <option value="101">Galleria orizzontale</option>
-                                                <option value="5">Galleria griglia</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <span style="margin-top: 20px; display: block;"></span>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label for="row">Riga:</label>
-                                            <input type="number" min="0" class="form-control" id="row">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="rowSpan">Espansione Riga:</label>
-                                            <input type="number" min="0" class="form-control" id="rowSpan">
-                                        </div>
-                                    </div>
-                                    <div class="row" style="margin-top: 2%;">
-                                        <div class="col-md-6">
-                                            <label for="column">Colonna:</label>
-                                            <input type="number" min="0" class="form-control" id="column">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="columnSpan">Espansione colonna:</label>
-                                            <input type="number" min="0" class="form-control" id="columnSpan">
-                                        </div>
-                                    </div>
-                                    <div class="row" style="margin-top: 2%;">
-                                        <div class="col-md-6">
-                                            <label for="mobileRow">Riga per mobile:</label>
-                                            <input type="number" min="0" class="form-control" id="mobileRow">
-                                        </div>
-                                    </div> *@
                                     <div id="properties"></div>
                                 </div>
 
@@ -643,7 +597,7 @@
                                     @* TEXT CONTENT *@
                                     <div class="row" id="0" style="display: none;">
                                         <label for="0-text">Testo:</label>
-                                        <textarea type="text" class="form-control" id="0-text"></textarea>
+                                        @* <textarea type="text" class="form-control" id="0-text"></textarea> *@
                                     </div>
 
                                     @* GALLERY CONTENT *@
@@ -651,57 +605,6 @@
                                         <div id="gallery-source"></div>
                                         <span style="margin-top: 22px; display: block;"></span>
                                         <div id="gallery-content"></div>
-                                        @* <div class="row">
-                                            <div class="col-md-4">
-                                                <label for="1-showIndicators">Indicatori:</label>
-                                                <input id="1-showIndicators" type="checkbox" data-toggle="toggle"
-                                                    data-width="100">
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label for="1-showNavButtons">Pulsanti:</label>
-                                                <input id="1-showNavButtons" type="checkbox" data-toggle="toggle"
-                                                    data-width="100">
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label for="1-enableLoop">Loop:</label>
-                                                <input id="1-enableLoop" type="checkbox" data-toggle="toggle"
-                                                    data-width="100">
-                                            </div>
-                                        </div>
-                                        <span style="margin-top: 22px;"></span>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <label for="1-slideShowDelay">Delay scorrimento:</label>
-                                                <div class="input-group input-group-sm mb-3">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text"
-                                                            id="inputGroup-sizing-sm">ms</span>
-                                                    </div>
-                                                    <input id="1-slideShowDelay" type="number" class="form-control"
-                                                        aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label for="1-serverSideScalingEnabled">Scalatura abilitata:</label>
-                                                <input id="1-serverSideScalingEnabled" type="checkbox"
-                                                    data-toggle="toggle" data-width="100">
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label for="1-cacheEnabled">Cache abilitato:</label>
-                                                <input id="1-cacheEnabled" type="checkbox" data-toggle="toggle"
-                                                    data-width="100">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <label for="1-source">
-                                                    Risorse (se più di una separare andando a
-                                                    capo):
-                                                </label>
-                                                <textarea class="form-control rounded-0" id="1-source"
-                                                    rows="6"></textarea>
-                                            </div>
-                                        </div> *@
                                     </div>
 
                                     @* VIDEO CONTENT *@
@@ -709,68 +612,11 @@
                                         <div id="video-source"></div>
                                         <span style="margin-top: 22px; display: block;"></span>
                                         <div id="video-content"></div>
-                                        @* <div class="row">
-                                            <div class="col-md-12">
-                                                <label for="2-source">
-                                                    Risorse (se più di una separare andando a
-                                                    capo):
-                                                </label>
-                                                <textarea class="form-control rounded-0" id="3-source"
-                                                    rows="6"></textarea>
-                                            </div>
-                                        </div>
-                                        <span style="margin-top: 22px; display: block;"></span>
-                                        <div class="row">
-                                            <div class="col-md">
-                                                <div class="form-floating">
-                                                    <label for="2-height">Altezza video:</label>
-                                                    <input type="text" class="form-control" id="2-height"
-                                                        placeholder="Default 100%">
-                                                </div>
-                                            </div>
-                                            <div class="col-md">
-                                                <div class="form-floating">
-                                                    <label for="2-width">Larghezza video:</label>
-                                                    <input type="text" class="form-control" id="2-width"
-                                                        placeholder="Default 100%">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <span style="margin-top: 22px; display: block;"></span>
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <label for="2-enableLoop">Loop abilitato:</label>
-                                                <input id="2-enableLoop" type="checkbox" data-toggle="toggle"
-                                                    data-width="100">
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label for="2-enableAutoplay">Autoplay abilitato:</label>
-                                                <input id="2-enableAutoplay" type="checkbox" data-toggle="toggle"
-                                                    data-width="100">
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label for="2-disableControls">Disabilita controlli:</label>
-                                                <input id="2-disableControls" type="checkbox" data-toggle="toggle"
-                                                    data-width="100">
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label for="2-responsive">Responsive:</label>
-                                                <input id="2-responsive" type="checkbox" data-toggle="toggle"
-                                                    data-width="100">
-                                            </div>
-                                        </div> *@
                                     </div>
 
                                     @* PDF CONTENT *@
                                     <div class="row" id="3" style="display: none;">
                                         <div id="pdf-source"></div>
-                                        @* <div class="col-md-12">
-                                            <label for="pdf-sources">
-                                                Risorse (se più di una separare andando a
-                                                capo):
-                                            </label>
-                                            <textarea class="form-control rounded-0" id="3-source" rows="6"></textarea>
-                                        </div> *@
                                     </div>
 
                                     @* SHOWCASE CONTENT *@
@@ -778,165 +624,46 @@
                                         <div id="showcase-source"></div>
                                         <span style="margin-top: 22px; display: block;"></span>
                                         <div id="showcase-content"></div>
-                                        @* <div class="row">
-                                            <div class="col-md-6">
-                                                <label for="4-showcasdeId">Id showcase:</label>
-                                                <input class="form-control" type="text" placeholder="null"
-                                                    id="4-showcasdeId">
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label for="4-options">Opzioni showcase:</label>
-                                                <input class="form-control" type="text" placeholder="null"
-                                                    id="4-options">
-                                            </div>
-                                        </div>
-                                        <span style="display: block; margin-top: 22px;"></span>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <label for="showcase-sources">
-                                                    Risorse (se più di una separare andando a
-                                                    capo):
-                                                </label>
-                                                <textarea class="form-control rounded-0" id="4-source"
-                                                    rows="6"></textarea>
-                                            </div>
-                                        </div> *@
                                     </div>
 
                                     @* MAP CONTENT *@
                                     <div id="5" style="display: none;">
                                         <div id="map-content"></div>
-                                        @* <div class="row">
-                                            <div class="col-md-4">
-                                                <label for="5-latitude">Latitudine:</label>
-                                                <input class="form-control" type="number" placeholder="e.g 40.2123"
-                                                    id="5-latitude">
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label for="5-longitude">Longitudine:</label>
-                                                <input class="form-control" type="number" placeholder="e.g 60.8970"
-                                                    id="5-longitude">
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label for="5-zoom">zoom:</label>
-                                                <input class="form-control" type="number" placeholder="e.g 3"
-                                                    id="5-zoom">
-                                            </div>
-                                        </div>
-                                        <span style="display: block; margin-top: 22px;"></span>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label for="5-style">Stile:</label>
-                                                <input class="form-control" type="text" placeholder="" id="5-style">
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label for="5-icon">Icon:</label>
-                                                <input class="form-control" type="text" placeholder="" id="5-icon">
-                                            </div>
-                                        </div> *@
                                     </div>
 
                                     @* WEBPAGE CONTENT *@
                                     <div class="row" id="6" style="display: none;">
                                         <div id="webpage-source"></div>
-                                        @* <div class="col-md-12">
-                                            <label for="6-source">Risorse (se più di una separare andando a
-                                                capo):</label>
-                                            <textarea class="form-control rounded-0" id="6-source" rows="6"></textarea>
-                                        </div> *@
                                     </div>
 
                                     @* HORIZONTAL SCROLL GALLERY CONTENT *@
                                     <div class="row" id="101" style="display: none;">
                                         <div id="horizontalScrollGallery-source"></div>
-                                        @* <div class="col-md-12">
-                                            <label for="101-source">
-                                                Risorse (se più di una
-                                                separare andando a capo):
-                                            </label>
-                                            <textarea class="form-control rounded-0" id="101-source"
-                                                rows="6"></textarea>
-                                        </div> *@
                                     </div>
 
                                     @* GRID GALLERY CONTENT *@
                                     <div class="row" id="102" style="display: none;">
                                         <div id="gridGallery-source"></div>
-                                        @* <div class="col-md-12">
-                                            <label for="102-source">
-                                                Risorse (se più di una separare andando a
-                                                capo):
-                                            </label>
-                                            <textarea class="form-control rounded-0" id="102-source"
-                                                rows="6"></textarea>
-                                        </div> *@
                                     </div>
 
                                 </div>
 
                                 @* TAB EVENTI *@
                                 <div class="tab-pane" id="event-pane">
-                                    <div id="events"></div>
-                                    @* <label>Hover:</label>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <select id="hover" class="form-select">
-                                                <option value="0">None</option>
-                                                <option value="1">Default</option>
-                                                <option value="2">Underline</option>
-                                                <option value="3">Expand</option>
-                                            </select>
-                                        </div>
-                                    </div> *@
+                                    <div id="events-checkbox"></div>
                                 </div>
 
                                 @* TAB TESTO *@
                                 <div class="tab-pane" id="text-pane">
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-12" id="text-editor-container-12">
                                             <label for="text">Testo:</label>
-                                            <textarea id="value" type="text" class="form-control"
-                                                placeholder=""></textarea>
+                                            @* <textarea id="value" type="text" class="form-control"
+                                                placeholder=""></textarea> *@
                                         </div>
                                     </div>
                                     <span style="margin-top: 20px; display: block;"></span>
                                     <div id="text"></div>
-                                    @* <div class="row">
-                                        <div class="col-md-12">
-                                            <label for="text">Testo:</label>
-                                            <textarea id="value" type="text" class="form-control"
-                                                placeholder=""></textarea>
-                                        </div>
-                                    </div>
-                                    <span style="display: block; margin-top: 22px;"></span>
-                                    <label for="position">Posizione:</label>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <select id="position" class="form-select">
-                                                <option value="0">Centrato</option>
-                                                <option value="1">Assoluto</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <span style="display: block; margin-top: 22px;"></span>
-                                    <span id="text-position-wrapper" style="display: none;">
-                                        <label>Posizionamento:</label>
-                                        <div id="text-position" class="row">
-                                            <div class="col-md-3">
-                                                <input id="top" type="text" class="form-control" placeholder="Sopra">
-                                            </div>
-                                            <div class="col-md-3">
-                                                <input id="right" type="text" class="form-control" placeholder="Destra">
-                                            </div>
-                                            <div class="col-md-3">
-                                                <input id="bottom" type="text" class="form-control" placeholder="Sotto">
-                                            </div>
-                                            <div class="col-md-3">
-                                                <input id="left" type="text" class="form-control"
-                                                    placeholder="Sinistra">
-                                            </div>
-                                        </div>
-                                    </span> *@
                                 </div>
 
                                 @* TAB STILE *@
@@ -953,96 +680,6 @@
                                     <span style="margin-top: 20px; display: block;"></span>
                                     <label for="">Bordi</label>
                                     <div id="border-selection"></div>
-                                    @* <div class="row g-2">
-                                        <div class="col-md">
-                                            <div class="form-floating">
-                                                <label for="height">Altezza</label>
-                                                <input type="text" class="form-control" id="height" placeholder="">
-                                            </div>
-                                        </div>
-                                        <div class="col-md">
-                                            <div class="form-floating">
-                                                <label for="width">Larghezza</label>
-                                                <input type="text" class="form-control" id="width" placeholder="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <span style="margin-top: 20px; display: block;"></span>
-                                    <label>Margine:</label>
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <input id="m-top" type="text" class="form-control" placeholder="Sopra">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input id="m-right" type="text" class="form-control" placeholder="Destra">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input id="m-bottom" type="text" class="form-control" placeholder="Sotto">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input id="m-left" type="text" class="form-control" placeholder="Sinistra">
-                                        </div>
-                                    </div>
-                                    <span style="margin-top: 20px; display: block;"></span>
-                                    <label>Padding (rientranza):</label>
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <input id="p-top" type="text" class="form-control" placeholder="Sopra">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input id="p-right" type="text" class="form-control" placeholder="Destra">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input id="p-bottom" type="text" class="form-control" placeholder="Sotto">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input id="p-left" type="text" class="form-control" placeholder="Sinistra">
-                                        </div>
-                                    </div>
-                                    <span style="margin-top: 20px; display: block;"></span>
-                                    <div class="row">
-                                        <div class="col-md-10">
-                                            <label for="background">Sfondo:</label>
-                                            <input id="background" type="text" class="form-control" placeholder="">
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label for="textColor">Colore del testo:</label>
-                                            <input id="textColor" type="color" class="form-control"
-                                                placeholder="Colore del testo">
-                                        </div>
-                                    </div>
-                                    <span style="margin-top: 20px; display: block;"></span>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label for="fontFamily">Font:</label>
-                                            <input id="fontFamily" type="text" class="form-control" placeholder="">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="fontSize">Grandezza del font:</label>
-                                            <input id="fontSize" type="text" class="form-control"
-                                                placeholder="smal, medium, large...">
-                                        </div>
-                                    </div>
-                                    <span style="margin-top: 20px; display: block;"></span>
-
-                                    <label for="">Bordi</label>
-                                    <div id="border-selection"></div>
-
-                                    <span style="margin-top: 20px; display: block;"></span>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <label for="">Stile bordo:</label>
-                                            <input id="border-style" class="form-control" type="text">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label for="">Larghezza bordo:</label>
-                                            <input id="border-width" class="form-control" type="text">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label for="">Colore bordo:</label>
-                                            <input id="border-color" class="form-control" type="color">
-                                        </div>
-                                    </div> *@
                                 </div>
 
                                 @* TAB STILE MOBILE *@
@@ -1056,86 +693,6 @@
                                     <div id="mobile-more"></div>
                                     <span style="margin-top: 20px; display: block;"></span>
                                     <div id="mobile-font"></div>
-                                    @* <div class="row g-2">
-                                        <div class="col-md">
-                                            <div class="form-floating">
-                                                <label for="m-height">Altezza:</label>
-                                                <input type="text" class="form-control" id="m-height" placeholder="">
-                                            </div>
-                                        </div>
-                                        <div class="col-md">
-                                            <div class="form-floating">
-                                                <label for="m-width">Larghezza:</label>
-                                                <input type="text" class="form-control" id="m-width" placeholder="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <span style="margin-top: 20px; display: block;"></span>
-                                    <label>Margine:</label>
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <input id="mobile-m-top" type="text" class="form-control"
-                                                placeholder="Sopra">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input id="mobile-m-right" type="text" class="form-control"
-                                                placeholder="Destra">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input id="mobile-m-bottom" type="text" class="form-control"
-                                                placeholder="Sotto">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input id="mobile-m-left" type="text" class="form-control"
-                                                placeholder="Sinistra">
-                                        </div>
-                                    </div>
-                                    <span style="margin-top: 20px; display: block;"></span>
-                                    <label>Padding (rientranza):</label>
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <input id="mobile-p-top" type="text" class="form-control"
-                                                placeholder="Sopra">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input id="mobile-p-right" type="text" class="form-control"
-                                                placeholder="Destra">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input id="mobile-p-bottom" type="text" class="form-control"
-                                                placeholder="Sotto">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input id="mobile-p-left" type="text" class="form-control"
-                                                placeholder="Sinistra">
-                                        </div>
-                                    </div>
-                                    <span style="margin-top: 20px; display: block;"></span>
-                                    <div class="row">
-                                        <div class="col-md-10">
-                                            <label for="mobile-background">Sfondo:</label>
-                                            <input id="mobile-background" type="text" class="form-control"
-                                                placeholder="">
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label for="mobile-textColor">Colore del testo:</label>
-                                            <input id="mobile-textColor" type="color" class="form-control"
-                                                placeholder="Colore del testo">
-                                        </div>
-                                    </div>
-                                    <span style="margin-top: 20px; display: block;"></span>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label for="mobile-fontFamily">Font:</label>
-                                            <input id="mobile-fontFamily" type="text" class="form-control"
-                                                placeholder="">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="mobile-fontSize">Grandezza del font</label>
-                                            <input id="mobile-fontSize" type="text" class="form-control"
-                                                placeholder="smal, medium, large...">
-                                        </div>
-                                    </div> *@
                                 </div>
                             </div>
 
@@ -1168,6 +725,10 @@
     $('#edit-modal').on('hidden.bs.modal', function () {
         $(this).find(":input").val('');
     })
+
+    $('body').on('hidden.bs.modal', '.modal', function () {
+        $(this).removeData('bs.modal');
+      });
 
     $(".sidebar-dropdown > a").click(function () {
             $(".sidebar-submenu").slideUp(200);

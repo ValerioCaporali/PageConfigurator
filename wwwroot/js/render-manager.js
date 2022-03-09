@@ -1,4 +1,5 @@
 import ModifyManager from './modify-manager.js'
+import HistoryManager from './history-manager.js';
 export default class RenderManager {
 
     homePages;
@@ -6,8 +7,10 @@ export default class RenderManager {
     selectedHomePage;
     selectedPage;
     generatedId = [];
+    contentTextareaId = [];
     showingStructure = false;
     filterPageParameters;
+    historyManager = new HistoryManager();
 
     constructor(homePages, pages) {
         this.homePages = JSON.parse(JSON.stringify(homePages));
@@ -29,25 +32,45 @@ export default class RenderManager {
                 a.appendChild(document.createTextNode(this.homePages[i].name));
                 li.appendChild(a);
                 li.addEventListener('click', () => {
-                    this.openPageStream(i, "Home");
-                })
+                    this.loadPanel.show();
+                    setTimeout(() => {
+                        this.loadPanel.hide();
+                        this.openPageStream(i, "Home");
+                    }, 600);
+                    })
                 list.appendChild(li);
             }
         } else if (pageType == "Pages") {
             list = document.getElementById('pages-list');
             for (let i = 0; i < this.pages.length; i++) {
                 var li = document.createElement("li");
+                li.classList.add('option');
+                this.spinner;
                 var a = document.createElement("a");
                 a.href = "#";
                 a.appendChild(document.createTextNode(this.pages[i].name));
                 li.appendChild(a);
                 li.addEventListener('click', () => {
+                this.loadPanel.show();
+                setTimeout(() => {
+                    this.loadPanel.hide();
                     this.openPageStream(i, "Page");
+                }, 600);
                 })
                 list.appendChild(li);
             }
         } else console.log("Unexpected parameter");
     }
+
+    loadPanel = $('.loadpanel').dxLoadPanel({
+        shadingColor: 'rgba(0,0,0,0.4)',
+        position: { of: '#spinner-container' },
+        visible: false,
+        showIndicator: true,
+        showPane: true,
+        shading: true,
+        closeOnOutsideClick: false,
+      }).dxLoadPanel('instance');
 
     openPageStream = (index, pageType) => {
         if (pageType == "Home") {
@@ -56,13 +79,15 @@ export default class RenderManager {
             this.showPagePreview(this.selectedHomePage);
         } else if (pageType == "Page") {
             this.selectedPage = this.pages[index];
-            console.log(this.selectedPage)
             this.filterPageParameters = { id: this.selectedPage.id, language: this.selectedPage.language }
             this.showPagePreview(this.selectedPage);
         }
+        this.historyManager = new HistoryManager();
+        this.initHistoryButton();
     }
 
     showPagePreview = (page) => {
+        let prev_button = document.getElementById("prev-page");
         this.setDefaultMode();
         var title = document.getElementById("page-title");
         title.innerHTML = "";
@@ -244,7 +269,7 @@ export default class RenderManager {
                 showNavButtons: (widget.content.showNavButtons) ? widget.content.showNavButtons : false,
                 showIndicator: (widget.content.showIndicator) ? widget.content.showIndicator : false,
             }).dxGallery('instance');
-        }, 1000)
+        }, 100)
         galleryContainer.appendChild(div);
         setTimeout(() => {
             if (widget.text) {
@@ -801,6 +826,7 @@ export default class RenderManager {
                 icon.style.display = 'none';
             })
         }
+        document.getElementById("history-container").style.display = "block";
         document.getElementById('page').classList.remove('page-structure');
         document.getElementById('structure-icon').classList.remove('fa-eye');
         document.getElementById('structure-icon').classList.add('fa-pen-to-square');
@@ -840,16 +866,49 @@ export default class RenderManager {
         })
     }
 
+    initHistoryButton() {
+
+        document.getElementById('prev-page').addEventListener('click', () => {
+            this.renderPreviousPage();
+        })
+
+    }
+
+    renderPreviousPage() {
+        if (this.historyManager.isHistoryEmpty())
+            $(() => {
+                DevExpress.ui.notify("Non sono state apportate delle modifiche")
+            })
+        else this.showPagePreview(this.historyManager.getPreviousPage());
+    }
+
     openModifyPanel = (widget) => {
-        let modifyManager = new ModifyManager(widget, this.selectedPage);
+        let text_content_id = this.generateId("0-ta-");
+        let text_id = this.generateId("value-")
+        let temp_selected_page = JSON.parse(JSON.stringify(this.selectedPage));
+        let modifyManager = new ModifyManager(widget, JSON.parse(JSON.stringify(this.selectedPage)), text_content_id, text_id);
         modifyManager.initPanel();
+
+        document.getElementById("save-widget-changes-button").addEventListener("click", () => {
+
+            let modifiedPage = modifyManager.getUpdatedPage();
+            if (modifiedPage) {
+                console.log(this.selectedPage)
+                if (this.historyManager.isHistoryEmpty())
+                    this.historyManager.updateHistory(this.selectedPage);
+                this.historyManager.updateHistory(modifiedPage);
+                this.selectedPage = this.historyManager.getLastPage();
+                this.showPagePreview(this.selectedPage);
+            }
+
+        });
     }
 
     generateId = (id) => {
-        while (this.generatedId.indexOf(id) > -1) {
-            id = id + Math.floor((Math.random() * (10000 + 1 - 1)) + 1).toString();
-        };
-        this.generatedId.push(id);
-        return id;
-    }
+            while (this.generatedId.indexOf(id) > -1) {
+                id = id + Math.floor((Math.random() * (10000 + 1 - 1)) + 1).toString();
+            }
+            this.generatedId.push(id);
+            return id;
+        }
 }
