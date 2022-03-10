@@ -74,9 +74,9 @@ export default class RenderManager {
 
     openPageStream = (index, pageType) => {
         if (pageType == "Home") {
-            this.selectedHomePage = this.homePages[index];
-            this.filterPageParameters = { id: this.selectedHomePage.id, language: this.selectedHomePage.language }
-            this.showPagePreview(this.selectedHomePage);
+            this.selectedPage = this.homePages[index];
+            this.filterPageParameters = { id: this.selectedPage.id, language: this.selectedPage.language }
+            this.showPagePreview(this.selectedPage);
         } else if (pageType == "Page") {
             this.selectedPage = this.pages[index];
             this.filterPageParameters = { id: this.selectedPage.id, language: this.selectedPage.language }
@@ -893,7 +893,6 @@ export default class RenderManager {
 
             let modifiedPage = modifyManager.getUpdatedPage();
             if (modifiedPage) {
-                console.log(this.selectedPage)
                 if (this.historyManager.isHistoryEmpty())
                     this.historyManager.updateHistory(this.selectedPage);
                 this.historyManager.updateHistory(modifiedPage);

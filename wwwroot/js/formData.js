@@ -121,7 +121,13 @@ export default class FormData {
         
         paddingBottom: null,
         
-        paddingLeft: null
+        paddingLeft: null,
+
+        borderStyle: null,
+
+        borderWidth: null,
+
+        borderColor: null
         
     };
 
@@ -157,7 +163,13 @@ export default class FormData {
 
         paddingBottom: null,
 
-        paddingLeft: null
+        paddingLeft: null,
+
+        borderStyle: null,
+
+        borderWidth: null,
+
+        borderColor: null
 
      };
 
@@ -290,6 +302,13 @@ export default class FormData {
         this.styleTab.textColor = this.widget.style?.textColor ? this.widget.style?.textColor : null;
         this.styleTab.fontFamily = this.widget.style?.fontFamily ? this.widget.style?.fontFamily : null;
         this.styleTab.fontSize = this.widget.style?.fontSize ? this.widget.style?.fontSize : null;
+        if (this.widget.style?.borders) {
+            this.widget.style.borders.forEach(border => {
+                this.styleTab.borderStyle = border.style;
+                this.styleTab.borderColor = border.color;
+                this.styleTab.borderWidth = border.width;
+            });
+        }
 
 
 
@@ -309,6 +328,13 @@ export default class FormData {
         this.mobileStyleTab.textColor = this.widget.style?.textColor ? this.widget.style?.textColor : null;
         this.mobileStyleTab.fontFamily = this.widget.style?.fontFamily ? this.widget.style?.fontFamily : null;
         this.mobileStyleTab.fontSize = this.widget.style?.fontSize ? this.widget.style?.fontSize : null;
+        if (this.widget.mobileStyle?.borders) {
+            this.widget.mobileStyle.borders.forEach(border => {
+                this.mobileStyleTab.borderStyle = border.style;
+                this.mobileStyleTab.borderColor = border.color;
+                this.mobileStyleTab.borderWidth = border.width;
+            });
+        }
 
 
         switch (this.widget.type) {

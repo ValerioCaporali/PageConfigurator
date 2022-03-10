@@ -28,7 +28,19 @@
                     "Padding": {
                         "Top": "15px",
                         "Bottom": "15px"
-                    }
+                    },
+                    "Borders": [{
+                        "Type": 1,
+                        "Style": "stile bordo",
+                        "Width": "larghezza bordo",
+                        "Color": "colore bordo"
+                    },
+                    {
+                        "Type": 2,
+                        "Style": "stile bordo",
+                        "Width": "larghezza bordo",
+                        "Color": "colore bordo"
+                    }]
                 }
             },
             {

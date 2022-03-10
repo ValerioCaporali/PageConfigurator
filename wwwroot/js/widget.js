@@ -3,12 +3,16 @@ export default class Widget {
     formData;
     text_content_id;
     text_id;
+    borders;
+    mobileBorders;
 
-    constructor(formData, text_content_id, text_id) {
+    constructor(formData, text_content_id, text_id, borders, mobileBorders) {
 
         this.formData = formData;
         this.text_content_id = text_content_id;
         this.text_id = text_id;
+        this.borders = borders;
+        this.mobileBorders = mobileBorders;
         
     }
 
@@ -140,7 +144,7 @@ export default class Widget {
 
         padding: this.padding,
 
-        borders: this.borderProperty
+        borders: []
 
     }
 
@@ -162,7 +166,7 @@ export default class Widget {
 
         padding: this.mobilePadding,
 
-        borders: this.mobileBorderProperty
+        borders: []
 
     }
 
@@ -223,6 +227,51 @@ export default class Widget {
         this.padding.bottom = this.formData.styleTab.paddingBottom;
         this.padding.left = this.formData.styleTab.paddingLeft;
 
+        // mobileBorderProperty = {
+
+        //     type: null,
+    
+        //     style: null,
+    
+        //     width: null,
+            
+        //     color: null
+            
+        // }
+
+        if (this.borders) {
+            for (let i = 0; i < this.borders.length; i++) {
+                let border = {
+                    type: null,
+                    style: this.formData.styleTab.borderStyle,
+                    width: this.formData.styleTab.borderWidth,
+                    color: this.formData.styleTab.borderColor
+                };
+                switch (this.borders[i]) {
+                    case 'fullscreen':
+                        border.type = 0
+                        break;
+                    case 'arrowleft':
+                        border.type = 1
+                        break;
+                    case 'arrowright':
+                        border.type = 2
+                        break;
+                    case 'arrowtop':
+                        border.type = 3
+                        break;
+                    case 'arrowbottom':
+                        border.type = 4
+                        break;
+                
+                    default:
+                        break;
+                };
+
+                this.style.borders.push(border);
+            }
+        }
+
         this.mobileStyle.height = this.formData.mobileStyleTab.height;
         this.mobileStyle.width = this.formData.mobileStyleTab.width;
         this.mobileMargin.total = this.formData.mobileStyleTab.marginTotal;
@@ -239,6 +288,39 @@ export default class Widget {
         this.mobilePadding.right = this.formData.mobileStyleTab.paddingRight;
         this.mobilePadding.bottom = this.formData.mobileStyleTab.paddingBottom;
         this.mobilePadding.left = this.formData.mobileStyleTab.paddingLeft;
+
+        if (this.mobileBorders) {
+            for (let i = 0; i < this.mobileBorders.length; i++) {
+                let mobileBorder = {
+                    type: null,
+                    style: this.formData.mobileStyleTab.borderStyle,
+                    width: this.formData.mobileStyleTab.borderWidth,
+                    color: this.formData.mobileStyleTab.borderColor
+                };
+                switch (this.mobileBorders[i]) {
+                    case 'fullscreen':
+                        mobileBorder.type = 0
+                        break;
+                    case 'arrowleft':
+                        mobileBorder.type = 1
+                        break;
+                    case 'arrowright':
+                        mobileBorder.type = 2
+                        break;
+                    case 'arrowtop':
+                        mobileBorder.type = 3
+                        break;
+                    case 'arrowbottom':
+                        mobileBorder.type = 4
+                        break;
+                
+                    default:
+                        break;
+                };
+
+                this.mobileStyle.borders.push(mobileBorder);
+            }
+        }
         
         this.widget.hover = this.formData.eventsTab.Hover;
 

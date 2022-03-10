@@ -14,7 +14,12 @@ export default class ModifyManager {
         101: "Galleria orizzontale",
         102: "Galleria a griglia",
     };
-    borders = [
+    borders_config = [
+        {
+            icon: "fullscreen",
+            style: "fullscreen",
+            hint: "Bordo totale",
+        },
         {
             icon: "arrowup",
             style: "arrowup",
@@ -40,6 +45,8 @@ export default class ModifyManager {
     selectedPage;
     text_content_id;
     text_id;
+    borders = [];
+    mobileBorders = [];
     newFormData;
 
     constructor(widget, selectedPage, text_content_id, text_id) {
@@ -203,6 +210,20 @@ export default class ModifyManager {
               labelLocation: "top",
             });
         });
+        var instance = this;
+        $(() => {
+            let items = [];
+            $.each(formData.styleTab, function (key, value) {
+                if (key.indexOf("border") != -1)
+                    items.push({ dataField: key });
+            }),
+                $('#border-properties').dxForm({
+                    colCount: 3,
+                    formData: formData.styleTab,
+                    items: items,
+                    labelLocation: "top",
+                });
+        });
 
 
         /* Mobile Style Tab */
@@ -273,6 +294,19 @@ export default class ModifyManager {
               items: items,
               labelLocation: "top",
             });
+        });
+        $(() => {
+            let items = [];
+            $.each(formData.mobileStyleTab, function (key, value) {
+                if (key.indexOf("border") != -1)
+                    items.push({ dataField: key });
+            }),
+                $('#mobile-border-properties').dxForm({
+                    colCount: 3,
+                    formData: formData.mobileStyleTab,
+                    items: items,
+                    labelLocation: "top",
+                });
         });
 
         this.initBordersButton();
@@ -468,28 +502,131 @@ export default class ModifyManager {
 
     initBordersButton() {
 
+        var that = this;
+
         $("#border-selection").dxButtonGroup({
-            items: this.borders,
+            items: this.borders_config,
             keyExpr: "style",
-            stylingMode: "outlined",
+            stylingMode: "text",
             selectionMode: "multiple",
-            onItemClick(e) {
-                DevExpress.ui.notify(
-                    {
-                        message: `The "${e.itemData.hint}" button was clicked`,
-                        width: 320,
-                    },
-                    "success",
-                    1000
-                );
-            },
+            selectedItemKeys: this.initBorders(),
+            onSelectionChanged: function(e) {
+                if (e.addedItems.length > 0) {
+                    if (e.addedItems[0].style == "fullscreen") {
+                        that.borders = [];
+                    } else if (e.addedItems[0].style && that.borders.indexOf("fullscreen") != -1) {
+                        that.borders = that.borders.filter(border => border != "fullscreen")
+                    }
+                    that.borders.push(e.addedItems[0].style)
+                    $("#border-selection").dxButtonGroup({ 
+                        selectedItemKeys: that.borders
+                    });
+                } else if (e.removedItems.length > 0) {
+                    that.borders = that.borders.filter(border => border != e.removedItems[0].style);
+                    $("#border-selection").dxButtonGroup({ 
+                        selectedItemKeys: that.borders
+                    });
+                }
+            }
         });
+
+        $("#mobile-border-selection").dxButtonGroup({
+            items: this.borders_config,
+            keyExpr: "style",
+            stylingMode: "text",
+            selectionMode: "multiple",
+            selectedItemKeys: this.initMobileBorders(),
+            onSelectionChanged: function(e) {
+                if (e.addedItems.length > 0) {
+                    if (e.addedItems[0].style == "fullscreen") {
+                        that.mobileBorders = [];
+                    } else if (e.addedItems[0].style && that.mobileBorders.indexOf("fullscreen") != -1) {
+                        that.mobileBorders = that.mobileBorders.filter(border => border != "fullscreen")
+                    }
+                    that.mobileBorders.push(e.addedItems[0].style)
+                    $("#mobile-border-selection").dxButtonGroup({ 
+                        selectedItemKeys: that.mobileBorders
+                    });
+                } else if (e.removedItems.length > 0) {
+                    that.mobileBorders = that.mobileBorders.filter(border => border != e.removedItems[0].style);
+                    $("#mobile-border-selection").dxButtonGroup({ 
+                        selectedItemKeys: that.mobileBorders
+                    });
+                }
+            }
+        });
+
+    }
+
+    initBorders() {
+
+        if (this.widget.style?.borders) {
+            this.widget.style.borders.forEach(border => {
+                switch (border.type) {
+                    case 0:
+                        this.borders.push('fullscreen');
+                        break;
+                    case 1:
+                        this.borders.push('arrowleft');
+                        break;
+                    case 2:
+                        this.borders.push('arrowright');
+                        break;
+                    case 3:
+                        this.borders.push('arrowup');
+                        break;
+                    case 4:
+                        this.borders.push('arrowdown');
+                        break;
+                
+                    default:
+                        break;
+                }
+            });
+        }
+    
+    return this.borders;
+
+    }
+
+    initMobileBorders() {
+
+        if (this.widget.mobileStyle?.borders) {
+            this.widget.mobileStyle.borders.forEach(border => {
+                switch (border.type) {
+                    case 0:
+                        this.mobileBorders.push('fullscreen');
+                        break;
+                    case 1:
+                        this.mobileBorders.push('arrowleft');
+                        break;
+                    case 2:
+                        this.mobileBorders.push('arrowright');
+                        break;
+                    case 3:
+                        this.mobileBorders.push('arrowup');
+                        break;
+                    case 4:
+                        this.mobileBorders.push('arrowdown');
+                        break;
+                
+                    default:
+                        break;
+                }
+            });
+        }
+    
+    return this.mobileBorders;
 
     }
 
     resetBordersButton() {
 
         $("#border-selection").dxButtonGroup({
+            selectedItemKeys: []
+        });
+
+        $("#mobile-border-selection").dxButtonGroup({
             selectedItemKeys: []
         });
 
@@ -506,8 +643,11 @@ export default class ModifyManager {
 
     getUpdatedPage() {
 
+        console.log("borders ", this.borders)
+        console.log("mobile borders ", this.mobileBorders)
+
         let initialWidget = this.widget;
-        let widget = new Widget(this.newFormData, this.text_content_id, this.text_id);
+        let widget = new Widget(this.newFormData, this.text_content_id, this.text_id, this.borders, this.mobileBorders);
         let modifiedWidget = widget.widgetBinding();
         let saveManager = new SaveManager(modifiedWidget, initialWidget, this.selectedPage);
         let updatedPage = saveManager.updatePage();
