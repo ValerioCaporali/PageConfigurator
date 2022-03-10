@@ -228,7 +228,6 @@ export default class Widget {
         this.padding.left = this.formData.styleTab.paddingLeft;
 
         if (this.borders) {
-            console.log("borders ", this.borders)
             for (let i = 0; i < this.borders.length; i++) {
                 let border = {
                     type: null,
@@ -327,7 +326,6 @@ export default class Widget {
                 break;
             case 1: 
                 let gallerySource = this.formData.galleryConfiguration.source.toString().split(",");
-                console.log(gallerySource);
                 this.formData.galleryConfiguration.source = gallerySource;
                 this.widget.content = this.formData.galleryConfiguration;
                 break;
@@ -360,8 +358,6 @@ export default class Widget {
             default:
                 break;
         }
-
-        console.log(this.widget)
 
         return this.widget;
         

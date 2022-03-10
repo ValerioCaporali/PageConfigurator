@@ -1,4 +1,3 @@
-import RenderManager from "./render-manager.js";
 import FormData from "./formData.js";
 import SaveManager from "./save-manager.js"
 import Widget from "./widget.js";

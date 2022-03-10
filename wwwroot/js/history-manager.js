@@ -23,8 +23,6 @@ export default class HistoryManager {
         if (this.history.length != 0)
             this.current_index = this.history.length - 1;
 
-        console.log(page);
-
     }
 
     getLastPage() {
