@@ -87,11 +87,12 @@ export default class ModifyManager {
 
         $(() => {
             let items = [];
+            var that = this;
             $.each( formData.propertyTab, function( key, value ) {
                 if (key == "row" || key == "column")
                     items.push({dataField: key.toString(), validationRules: [{type: "required"}]})
                 else if (key == "type")
-                    items.push({dataField: "type", editorType: 'dxSelectBox', editorOptions: {items: formData.Type, value: formData.Type[value].value, valueExpr: 'value', displayExpr: 'name'}, validationRules: [{type: "required"}]});
+                    items.push({dataField: "type", editorType: 'dxSelectBox', editorOptions: {items: formData.Type, value: formData.Type[value].value, valueExpr: 'value', displayExpr: 'name', onSelectionChanged(e) {that.updateContentTab(e.selectedItem.value)}}, validationRules: [{type: "required"}]});
                 else items.push({dataField: key.toString()})
             },),
             $('#properties').dxForm({
@@ -331,8 +332,6 @@ export default class ModifyManager {
             }, 200)
         }
 
-        switch (this.widget.type) {
-            case 1:
                 $(() => {
                     let items = [];
                     $.each( formData.galleryConfiguration, function( key, value ) {
@@ -361,9 +360,6 @@ export default class ModifyManager {
                       labelLocation: "left",
                     });
                 });
-                break;
-
-            case 2:
                 $(() => {
                     let items = [];
                     $.each( formData.videoConfiguration, function( key, value ) {
@@ -392,9 +388,7 @@ export default class ModifyManager {
                       labelLocation: "left",
                     });
                 });
-                break;
 
-            case 3:
                 $(() => {
                     let items = [];
                     $.each( formData.pdfConfiguration, function( key, value ) {
@@ -407,8 +401,7 @@ export default class ModifyManager {
                       labelLocation: "top",
                     });
                 });
-                break;
-            case 4:
+
                 $(() => {
                     let items = [];
                     $.each( formData.showcaseConfiguration, function( key, value ) {
@@ -435,8 +428,7 @@ export default class ModifyManager {
                       labelLocation: "top",
                     });
                 });
-                break;
-            case 5:
+
                 $(() => {
                     let items = [];
                     $.each( formData.mapConfiguration, function( key, value ) {
@@ -449,8 +441,7 @@ export default class ModifyManager {
                       labelLocation: "top",
                     });
                 });
-                break;
-            case 6:
+
                 $(() => {
                     let items = [];
                     $.each( formData.webPageConfiguration, function( key, value ) {
@@ -463,8 +454,7 @@ export default class ModifyManager {
                       labelLocation: "top",
                     });
                 });
-                break;
-            case 101:
+
                 $(() => {
                     let items = [];
                     $.each( formData.horizontalScrollGalleryConfiguration, function( key, value ) {
@@ -477,8 +467,7 @@ export default class ModifyManager {
                       labelLocation: "top",
                     });
                 });
-                break;
-            case 102:
+
                 $(() => {
                     let items = [];
                     $.each( formData.gridGalleryConfiguration, function( key, value ) {
@@ -491,10 +480,6 @@ export default class ModifyManager {
                       labelLocation: "top",
                     });
                 });
-                break;
-            default:
-                break;
-        }
 
         this.newFormData = formData;
 
@@ -632,6 +617,13 @@ export default class ModifyManager {
 
     }
 
+    updateContentTab(type) {
+        for (const [key, value] of Object.entries(this.widgetIndex)) {
+            document.getElementById(key.toString()).style.display = "none";
+        }
+        document.getElementById(type.toString()).style.display = "block";
+    }
+
     resetPanel() {
 
         for (const [key, value] of Object.entries(this.widgetIndex)) {
@@ -642,9 +634,6 @@ export default class ModifyManager {
     }
 
     getUpdatedPage() {
-
-        console.log("borders ", this.borders)
-        console.log("mobile borders ", this.mobileBorders)
 
         let initialWidget = this.widget;
         let widget = new Widget(this.newFormData, this.text_content_id, this.text_id, this.borders, this.mobileBorders);

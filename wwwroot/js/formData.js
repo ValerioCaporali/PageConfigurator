@@ -269,7 +269,7 @@ export default class FormData {
    }
     
      bindData() {
-        this.propertyTab.id = this.widget.id ? this.widget.id : "";
+        this.propertyTab.id = this.widget.id;
         this.propertyTab.row = this.widget.row;
         this.propertyTab.column = this.widget.column;
         this.propertyTab.rowSpan = this.widget.rowSpan;

@@ -217,27 +217,15 @@ export default class Widget {
         this.margin.right = this.formData.styleTab.marginRight;
         this.margin.bottom = this.formData.styleTab.marginBottom;
         this.margin.left = this.formData.styleTab.marginLeft;
-        this.style.background = this.formData.styleTab.Background;
-        this.style.textColor = this.formData.styleTab.TextColor;
-        this.style.fontFamily = this.formData.styleTab.FontFamily;
-        this.style.fontSize = this.formData.styleTab.FontSize;
+        this.style.background = this.formData.styleTab.background;
+        this.style.textColor = this.formData.styleTab.txtColor;
+        this.style.fontFamily = this.formData.styleTab.fontFamily;
+        this.style.fontSize = this.formData.styleTab.fontSize;
         this.padding.total = this.formData.styleTab.paddingTotal;
         this.padding.top = this.formData.styleTab.paddingTop;
         this.padding.right = this.formData.styleTab.paddingRight;
         this.padding.bottom = this.formData.styleTab.paddingBottom;
         this.padding.left = this.formData.styleTab.paddingLeft;
-
-        // mobileBorderProperty = {
-
-        //     type: null,
-    
-        //     style: null,
-    
-        //     width: null,
-            
-        //     color: null
-            
-        // }
 
         if (this.borders) {
             console.log("borders ", this.borders)
@@ -280,10 +268,10 @@ export default class Widget {
         this.mobileMargin.right = this.formData.mobileStyleTab.marginRight;
         this.mobileMargin.bottom = this.formData.mobileStyleTab.marginBottom;
         this.mobileMargin.left = this.formData.mobileStyleTab.marginLeft;
-        this.mobileStyle.background = this.formData.mobileStyleTab.Background;
-        this.mobileStyle.textColor = this.formData.mobileStyleTab.TextColor;
-        this.mobileStyle.fontFamily = this.formData.mobileStyleTab.FontFamily;
-        this.mobileStyle.fontSize = this.formData.mobileStyleTab.FontSize;
+        this.mobileStyle.background = this.formData.mobileStyleTab.background;
+        this.mobileStyle.textColor = this.formData.mobileStyleTab.textColor;
+        this.mobileStyle.fontFamily = this.formData.mobileStyleTab.fontFamily;
+        this.mobileStyle.fontSize = this.formData.mobileStyleTab.fontSize;
         this.mobilePadding.total = this.formData.mobileStyleTab.paddingTotal;
         this.mobilePadding.top = this.formData.mobileStyleTab.paddingTop;
         this.mobilePadding.right = this.formData.mobileStyleTab.paddingRight;
@@ -372,6 +360,8 @@ export default class Widget {
             default:
                 break;
         }
+
+        console.log(this.widget)
 
         return this.widget;
         

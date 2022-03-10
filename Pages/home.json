@@ -47,13 +47,7 @@
                     "textColor": null,
                     "fontFamily": null,
                     "fontSize": null,
-                    "padding": null,
-                    "borders": [{
-                        "type": 2,
-                        "style": "boh",
-                        "width": "2px",
-                        "color": "#FF0000"
-                    }]
+                    "padding": null
                 },
                 "mobileStyle": null,
                 "hover": null

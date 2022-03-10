@@ -1,12 +1,8 @@
-// use this class to save both for local changes and for the api save calls
-import RenderManager from "./render-manager.js";
-
 export default class SaveManager {
 
     widget;
     initialWidget;
     updatedPage;
-    // pageHistory = [];
 
     constructor(widget, initialWidget, selectedPage) {
 
@@ -18,9 +14,7 @@ export default class SaveManager {
 
     updatePage() {
 
-        // this.pageHistory.push(JSON.parse(JSON.stringify(this.selectedPage)));
-
-        let modifiedWidgets = this.updatedPage.widgets.map((currentWidget) => {
+        var modifiedWidgets = this.updatedPage.widgets.map((currentWidget) => {
             if (currentWidget.row == this.initialWidget.row && currentWidget.column == this.initialWidget.column)
                 return this.widget;
             else return currentWidget;
