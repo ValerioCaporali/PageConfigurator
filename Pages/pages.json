@@ -30,16 +30,10 @@
                         "Bottom": "15px"
                     },
                     "Borders": [{
-                        "Type": 1,
-                        "Style": "stile bordo",
-                        "Width": "larghezza bordo",
-                        "Color": "colore bordo"
-                    },
-                    {
                         "Type": 2,
-                        "Style": "stile bordo",
-                        "Width": "larghezza bordo",
-                        "Color": "colore bordo"
+                        "Style": "dotted",
+                        "Width": "2px",
+                        "Color": "red"
                     }]
                 }
             },
@@ -56,7 +50,13 @@
                         "Top": "30px",
                         "Left": "30px",
                         "Bottom": "30px"
-                    }
+                    },
+                    "Borders": [{
+                        "Type": 0,
+                        "Style": "dotted",
+                        "Width": "2px",
+                        "Color": "red"
+                    }]
                 },
                 "MobileStyle": {
                     "Padding": {
@@ -852,7 +852,13 @@
                 "Style": {
                     "Padding": {
                         "Total": "0 5%"
-                    }
+                    },
+                    "Borders": [{
+                        "Type": 0,
+                        "Style": "dotted",
+                        "Width": "2px",
+                        "Color": "red"
+                    }]
                 }
             },
             {

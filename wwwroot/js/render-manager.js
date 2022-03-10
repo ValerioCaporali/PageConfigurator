@@ -708,8 +708,9 @@ export default class RenderManager {
             div.style.fontSize = widget.style.fontSize;
 
 
-        if (widget.style.borders)
+        if (widget.style.borders) {
             div = this.handleBorders(widget, div);
+        }
 
         return div;
     }
@@ -753,32 +754,40 @@ export default class RenderManager {
     }
 
     handleBorders = (widget, div) => {
-        switch (widget.style.borders.type) {
-            case 0:
-                div.style.border = widget.style.borders.style;
-                div.style.borderWidth = widget.style.borders.width;
-                div.style.borderColor = widget.style.borders.color;
-
-            case 1:
-                div.style.borderLeft = widget.style.borders.style;
-                div.style.borderWidth = widget.style.borders.width;
-                div.style.borderColor = widget.style.borders.color;
-
-            case 2:
-                div.style.borderRight = widget.style.borders.style;
-                div.style.borderWidth = widget.style.borders.width;
-                div.style.borderColor = widget.style.borders.color;
-
-            case 3:
-                div.style.borderTop = widget.style.borders.style;
-                div.style.borderWidth = widget.style.borders.width;
-                div.style.borderColor = widget.style.borders.color;
-
-            case 4:
-                div.style.borderBottom = widget.style.borders.style;
-                div.style.borderWidth = widget.style.borders.width;
-                div.style.borderColor = widget.style.borders.color;
-        }
+        widget.style.borders.forEach(border => {
+            console.log(widget, border);
+            switch (border.type) {
+                case 0:
+                    div.style.border = border.style;
+                    div.style.borderWidth = border.width;
+                    div.style.borderColor = border.color;
+                    break;
+    
+                case 1:
+                    div.style.borderLeft = border.style;
+                    div.style.borderWidth = border.width;
+                    div.style.borderColor = border.color;
+                    break;
+    
+                case 2:
+                    div.style.borderRight = border.style;
+                    div.style.borderWidth = border.width;
+                    div.style.borderColor = border.color;
+                    break;
+    
+                case 3:
+                    div.style.borderTop = border.style;
+                    div.style.borderWidth = border.width;
+                    div.style.borderColor = border.color;
+                    break;
+    
+                case 4:
+                    div.style.borderBottom = border.style;
+                    div.style.borderWidth = border.width;
+                    div.style.borderColor = border.color;
+                    break;
+            }
+        })
 
         return div;
     }

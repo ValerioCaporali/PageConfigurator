@@ -240,6 +240,7 @@ export default class Widget {
         // }
 
         if (this.borders) {
+            console.log("borders ", this.borders)
             for (let i = 0; i < this.borders.length; i++) {
                 let border = {
                     type: null,
@@ -257,10 +258,10 @@ export default class Widget {
                     case 'arrowright':
                         border.type = 2
                         break;
-                    case 'arrowtop':
+                    case 'arrowup':
                         border.type = 3
                         break;
-                    case 'arrowbottom':
+                    case 'arrowdown':
                         border.type = 4
                         break;
                 
@@ -307,10 +308,10 @@ export default class Widget {
                     case 'arrowright':
                         mobileBorder.type = 2
                         break;
-                    case 'arrowtop':
+                    case 'arrowup':
                         mobileBorder.type = 3
                         break;
-                    case 'arrowbottom':
+                    case 'arrowdown':
                         mobileBorder.type = 4
                         break;
                 
