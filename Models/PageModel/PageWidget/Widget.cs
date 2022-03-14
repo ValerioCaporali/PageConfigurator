@@ -11,12 +11,12 @@ namespace Model.PageModel.PageWidget
     // [JsonConverter(typeof(ContentConverter))]
     public class Widget
     {
-        public string Id { get; set; }
+        public string? Id { get; set; }
         public int Row { get; set; }
-        public int MobileRow { get; set; }
-        public int RowSpan { get; set; }
+        public int? MobileRow { get; set; }
+        public int? RowSpan { get; set; }
         public int Column { get; set; }
-        public int ColumnSpan { get; set; }
+        public int? ColumnSpan { get; set; }
         public WidgetType Type { get; set; }
         public Content Content { get; set; }
         public Text Text { get; set; }

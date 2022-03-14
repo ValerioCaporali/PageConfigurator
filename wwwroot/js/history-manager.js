@@ -23,6 +23,12 @@ export default class HistoryManager {
 
     }
 
+    getInitialPage() {
+
+        return this.history[0];
+
+    }
+
     getLastPage() {
 
         return this.history[this.history.length - 1];

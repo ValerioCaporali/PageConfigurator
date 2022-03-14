@@ -382,7 +382,7 @@ export default class Widget {
         
         this.widget.hover = this.formData.eventsTab.Hover;
 
-        this.text.value = tinymce.get(this.text_id).getContent({format : 'raw'}).toString();
+        this.text.value = tinymce.get(this.text_id).getContent({format : 'raw'}).toString() != "<p><br data-mce-bogus=\"1\"></p>" ? tinymce.get(this.text_id).getContent({format : 'raw'}).toString() : null;
         this.position.type = this.formData.textTab.positionType;
         this.position.top = this.formData.textTab.top ? this.formData.textTab.top : null;
         this.position.right = this.formData.textTab.right ? this.formData.textTab.right : null;

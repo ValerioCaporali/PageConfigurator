@@ -1,5 +1,7 @@
+
 import ModifyManager from './modify-manager.js'
 import HistoryManager from './history-manager.js';
+import RequestManager from './requests-manager.js';
 export default class RenderManager {
 
     homePages;
@@ -84,6 +86,7 @@ export default class RenderManager {
         }
         this.historyManager = new HistoryManager();
         this.initHistoryButton();
+        this.initSavePageButton();
     }
 
     showPagePreview = (page) => {
@@ -146,12 +149,13 @@ export default class RenderManager {
             cols.push(object);
         }
         let items = widgets.map(w => {
+            console.log(this.rowSpan)
             return {
                 location: [{
                     row: w.row,
                     col: w.column,
-                    colspan: (w.columnSpan != 0) ? w.columnSpan : 1,
-                    rowspan: (w.rowSpan != 0) ? w.rowSpan : 1
+                    colspan: (w.columnSpan) ? w.columnSpan : 1,
+                    rowspan: (w.rowSpan) ? w.rowSpan : 1
                 }],
                 html: this.handleWidget(w)
             }
@@ -171,7 +175,7 @@ export default class RenderManager {
     calculateRows = (widgets) => {
         var totRows = 0;
         widgets.forEach((widget) => {
-            var currentSpan = (widget.rowSpan == 0) ? 1 : widget.rowSpan
+            var currentSpan = (!widget.rowSpan) ? 1 : widget.rowSpan
             totRows = ((widget.row + currentSpan) > totRows) ? (widget.row + currentSpan) : totRows;
         })
         return (totRows == 0) ? (totRows + 1) : totRows;
@@ -180,7 +184,7 @@ export default class RenderManager {
     calculateColumns = (widgets) => {
         var totCols = 0;
         widgets.forEach((widget) => {
-            var currentSpan = (widget.columnSpan == 0) ? 1 : widget.columnSpan;
+            var currentSpan = (!widget.columnSpan) ? 1 : widget.columnSpan;
             totCols = ((widget.column + currentSpan) > totCols) ? (widget.column + currentSpan) : totCols;
         })
         return (totCols == 0) ? (totCols + 1) : totCols;
@@ -883,6 +887,30 @@ export default class RenderManager {
 
     }
 
+    initSavePageButton() {
+
+        $(() => {
+            let that = this;
+            $('#save-page').dxSpeedDialAction({
+              label: 'Save Page',
+              icon: 'save',
+              index: 1,
+              onClick() {
+                if (that.historyManager.isHistoryEmpty())
+                    $(() => {
+                        DevExpress.ui.notify("La pagina non è stata modificata");
+                    })
+                else {
+                    let requstManager = new RequestManager(that.selectedPage, that.historyManager.getInitialPage());
+                    requstManager.savePage();
+                }
+              },
+            }).dxSpeedDialAction('instance');
+          });
+          
+
+    }
+
     renderPreviousPage() {
         if (this.historyManager.isHistoryEmpty())
             $(() => {
@@ -891,7 +919,7 @@ export default class RenderManager {
         else {
             this.selectedPage = this.historyManager.getPreviousPage();
             this.showPagePreview(this.selectedPage);
-        } 
+        }
     }
 
     openModifyPanel = (widget) => {
