@@ -9215,7 +9215,7 @@
             "type": 6,
             "content": {
                 "text": null,
-                "source": null,
+                "source": ["https://it.wikipedia.org/wiki/Pagina_principale"],
                 "enableLoop": null,
                 "slideShowDelay": 0,
                 "serverSideScalingEnabled": null,

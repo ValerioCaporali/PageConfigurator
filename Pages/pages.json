@@ -7,6 +7,19 @@
                 "Column": 0,
                 "ColumnSpan": 12,
                 "Type": 1,
+                "ClickAction": {
+                    "Type": 5,
+                    "Actions": [{
+                        "groupId": "id del gruppo",
+                        "groupValueId": "valore id del gruppo",
+                        "groupValueIds": ["a","b"]
+                    },
+                    {
+                        "groupId": "id del gruppo 2",
+                        "groupValueId": "valore id del gruppo 2",
+                        "groupValueIds": ["c","d"]
+                    }]
+                },
                 "Content": {
                     "Source": [
                         "https://newb2bapi.falc.biz/api/v1/media/public/blobs/public/home/images/2022/banner_1.jpg",

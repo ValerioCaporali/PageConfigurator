@@ -44,6 +44,7 @@ export default class ModifyManager {
     selectedPage;
     text_content_id;
     text_id;
+    groupValueIds;
     borders = [];
     mobileBorders = [];
     newFormData;
@@ -138,7 +139,113 @@ export default class ModifyManager {
               labelLocation: "top",
             });
         });
-        // to-do: handle click action
+        $(() => {
+            let items = [];
+            var that = this;
+            $.each( formData.caType, function( key, value ) {
+                let currValue = (value > 3) ? (value < 1) : value
+                items.push({dataField: key, editorType: 'dxSelectBox', editorOptions: {items: formData.ClickActionType, value: ((currValue || currValue == 0) ? formData.ClickActionType[currValue]?.value : null), valueExpr: 'value', displayExpr: 'name', onSelectionChanged(e) {that.updateClickAction(e.selectedItem?.value)}}});
+            },);
+            $('#ca-type').dxForm({
+              colCount: 2, 
+              formData: formData.caType,
+              items: items,
+              labelLocation: "top",
+            });
+        });
+        $(() => {
+            let items = [];
+            $.each( formData.link, function( key, value ) {
+                if (key == "url")
+                    items.push({dataField: key});
+                else items.push({dataField: key, editorType: "dxCheckBox", value: value});
+            },);
+            $('#ca-0').dxForm({
+              colCount: 2, 
+              formData: formData.link,
+              items: items,
+              labelLocation: "top",
+            });
+        });
+        $(() => {
+            let items = [];
+            $.each( formData.catalog, function( key, value ) {
+                if (key != "groupValueIds")
+                    items.push({dataField: key});
+                else
+                    items.push({dataField: key, editorType: "dxTextArea"})
+            },);
+            $('#ca-1').dxForm({
+              colCount: 1, 
+              formData: formData.catalog,
+              items: items,
+              labelLocation: "top",
+            });
+        });
+        $(() => {
+            let items = [];
+            $.each( formData.salesCampaign, function( key, value ) {
+                items.push({dataField: key});
+            },);
+            $('#ca-2').dxForm({
+              colCount: 2, 
+              formData: formData.salesCampaign,
+              items: items,
+              labelLocation: "top",
+            });
+        });
+        $(() => {
+            let items = [];
+            $.each( formData.scrollToWidget, function( key, value ) {
+                items.push({dataField: key});
+            },);
+            $('#ca-4').dxForm({
+              colCount: 1, 
+              formData: formData.scrollToWidget,
+              items: items,
+              labelLocation: "top",
+            });
+        });
+        $(() => {   
+            let that = this;
+            var a = $('#ca-5').dxDataGrid({
+              dataSource: formData.multipleCatalog.actions,
+              showBorders: false,
+              paging: {
+                enabled: false,
+              },
+              editing: {
+                mode: 'row',
+                allowUpdating: true,
+                allowDeleting: true,
+                allowAdding: true,
+              },
+              columns: [
+                'groupId', 
+                'groupValueId',
+                {
+                  dataField: 'groupValueIds',
+                  width: '50%',
+                }
+              ],
+              onContentReady(e) {
+                  that.groupValueIds = e.component.getDataSource().items();
+              }
+            });
+        });        
+        $(() => {
+            let items = [];
+            $.each( formData.dialog, function( key, value ) {
+                items.push({dataField: key});
+            },);
+            $('#ca-6').dxForm({
+              colCount: 1, 
+              formData: formData.dialog,
+              items: items,
+              labelLocation: "top",
+            });
+        });
+        
         /* ---------------- */
 
         /* Style Tab */
@@ -210,7 +317,6 @@ export default class ModifyManager {
               labelLocation: "top",
             });
         });
-        var instance = this;
         $(() => {
             let items = [];
             $.each(formData.styleTab, function (key, value) {
@@ -349,7 +455,7 @@ export default class ModifyManager {
                     let items = [];
                     $.each( formData.galleryConfiguration, function( key, value ) {
                         if (key != "slideShowDelay" && key != "source")
-                            items.push({dataField: key, editorType: "dxCheckBox"});
+                            items.push({dataField: key, editorType: "dxCheckBox", value: value});
                         else if(key == "slideShowDelay") items.push({dataField: key});
                     },),
                     $('#gallery-content').dxForm({
@@ -377,7 +483,7 @@ export default class ModifyManager {
                     let items = [];
                     $.each( formData.videoConfiguration, function( key, value ) {
                         if (key != "width" && key != "height" && key != "source")
-                            items.push({dataField: key, editorType: "dxCheckBox"});
+                            items.push({dataField: key, editorType: "dxCheckBox", value: value});
                         else if(key != "content") items.push({dataField: key});
                     },),
                     $('#video-content').dxForm({
@@ -600,7 +706,7 @@ export default class ModifyManager {
             });
         }
     
-    return this.mobileBorders;
+        return this.mobileBorders;
 
     }
 
@@ -622,12 +728,31 @@ export default class ModifyManager {
         }
         document.getElementById(type.toString()).style.display = "block";
     }
+    
+    updateClickAction(type) {
+        for (let i = 0; i <= 6; i++) {
+            if (i != 3)
+                document.getElementById("ca-" + i).style.display = "none"
+        }
+        let container = document.getElementById("ca-" + type?.toString());
+        if (container)
+            container.style.display = "block";
+    }
 
     resetPanel() {
 
         for (const [key, value] of Object.entries(this.widgetIndex)) {
             document.getElementById(key.toString()).style.display = "none";
         }
+        
+        for (let i = 0; i <= 6; i++) {
+            if (i != 3)
+                document.getElementById("ca-" + i).style.display = "none"
+        }
+        
+        if (this.widget.clickAction)
+            document.getElementById("ca-" + this.widget.clickAction.type).style.display = "block";
+        
         document.getElementById(this.widget.type.toString()).style.display = "block";
 
     }
@@ -635,7 +760,7 @@ export default class ModifyManager {
     getUpdatedPage() {
 
         let initialWidget = this.widget;
-        let widget = new Widget(this.newFormData, this.text_content_id, this.text_id, this.borders, this.mobileBorders);
+        let widget = new Widget(this.newFormData, this.text_content_id, this.text_id, this.borders, this.mobileBorders, this.groupValueIds);
         let modifiedWidget = widget.widgetBinding();
         let saveManager = new SaveManager(modifiedWidget, initialWidget, this.selectedPage);
         let updatedPage = saveManager.updatePage();

@@ -247,7 +247,7 @@ export default class RenderManager {
 
     handleTextWidget = (widget) => {
         var div = document.createElement("div");
-        div.innerHTML = widget.content.text;
+        div.innerHTML = widget.content.text.trim();
         return div;
     }
 
@@ -274,7 +274,7 @@ export default class RenderManager {
         setTimeout(() => {
             if (widget.text) {
                 let text = document.createElement("div");
-                text.innerHTML = widget.text.value.trim();
+                text.innerHTML = widget.text?.value?.trim();
                 this.handleTextPosition(widget, text);
                 galleryContainer.appendChild(text);
 
@@ -583,7 +583,7 @@ export default class RenderManager {
     handleWebPageWidget = (widget) => {
         var webPageContainer = document.createElement('div');
         var webPageIframe = this.buildIframe(widget);
-        webPageIframe.src = 'https://it.wikipedia.org/wiki/Pagina_principale';
+        webPageIframe.src = widget.content.source[0];
         webPageContainer.appendChild(webPageIframe);
         return webPageContainer;
     }
@@ -876,7 +876,7 @@ export default class RenderManager {
     }
 
     initHistoryButton() {
-
+        
         document.getElementById('prev-page').addEventListener('click', () => {
             this.renderPreviousPage();
         })
@@ -886,9 +886,12 @@ export default class RenderManager {
     renderPreviousPage() {
         if (this.historyManager.isHistoryEmpty())
             $(() => {
-                DevExpress.ui.notify("Non sono state apportate delle modifiche")
+                DevExpress.ui.notify("Non sono state apportate delle modifiche");
             })
-        else this.showPagePreview(this.historyManager.getPreviousPage());
+        else {
+            this.selectedPage = this.historyManager.getPreviousPage();
+            this.showPagePreview(this.selectedPage);
+        } 
     }
 
     openModifyPanel = (widget) => {

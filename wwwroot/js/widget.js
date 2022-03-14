@@ -5,14 +5,16 @@ export default class Widget {
     text_id;
     borders;
     mobileBorders;
+    groupValueIds;
 
-    constructor(formData, text_content_id, text_id, borders, mobileBorders) {
+    constructor(formData, text_content_id, text_id, borders, mobileBorders, groupValueIds) {
 
         this.formData = formData;
         this.text_content_id = text_content_id;
         this.text_id = text_id;
         this.borders = borders;
         this.mobileBorders = mobileBorders;
+        this.groupValueIds = groupValueIds;
         
     }
 
@@ -123,7 +125,7 @@ export default class Widget {
     }
 
     clickAction = {
-
+        
     }
 
     style = {
@@ -188,7 +190,7 @@ export default class Widget {
 
         content: null,
 
-        clickAction: this.clickAction,
+        clickAction: null,
 
         text: this.text,
 
@@ -218,7 +220,7 @@ export default class Widget {
         this.margin.bottom = this.formData.styleTab.marginBottom;
         this.margin.left = this.formData.styleTab.marginLeft;
         this.style.background = this.formData.styleTab.background;
-        this.style.textColor = this.formData.styleTab.txtColor;
+        this.style.textColor = this.formData.styleTab.textColor;
         this.style.fontFamily = this.formData.styleTab.fontFamily;
         this.style.fontSize = this.formData.styleTab.fontSize;
         this.padding.total = this.formData.styleTab.paddingTotal;
@@ -257,6 +259,74 @@ export default class Widget {
                 };
 
                 this.style.borders.push(border);
+            }
+        }
+        
+        if (this.formData.caType.clickActionType == 0 || this.formData.caType.clickActionType) {
+            switch (this.formData.caType.clickActionType) {
+                case 0:
+                    let linkAction = {
+                        type: this.formData.caType.clickActionType,
+                        url: this.formData.link.url,
+                        external: this.formData.link.external
+                    }
+                    this.widget.clickAction = linkAction;
+                    break;
+                    
+                case 1:
+                    let ids = null;
+                    if (this.formData.groupValueIds)
+                        ids = this.formData.groupValueIds.toString().split(',');
+                    let catalogAction = {
+                        type: this.formData.caType.clickActionType,
+                        groupId: this.formData.catalog.groupId,
+                        groupValueId: this.formData.catalog.groupValueId,
+                        groupValueIds: ids
+                    }
+                    this.widget.clickAction = catalogAction;
+                    break;
+                    
+                case 2:
+                    let salesCampaignAction = {
+                        type: this.formData.caType.clickActionType,
+                        salesCampaignId: this.formData.salesCampaign.salesCampaignId
+                    }
+                    this.widget.clickAction = salesCampaignAction;
+                    break;
+                    
+                case 4:
+                    let scrollClickAction = {
+                        type: this.formData.caType.clickActionType,
+                        destinationWidgetId: this.formData.scrollToWidget.destinationWidget
+                    }
+                    this.widget.clickAction = scrollClickAction;
+                    break;
+                
+                case 5:
+                    let multipleCatalogAction = {
+                        type: this.formData.caType.clickActionType,
+                        actions: []
+                    }
+                    this.groupValueIds.forEach(currCatalogAction => {
+                        let ids = currCatalogAction.groupValueIds.toString().split(',');
+                        let groupValueId = {
+                            groupId: currCatalogAction.groupId,
+                            groupValueId: currCatalogAction.groupValueId,
+                            groupValueIds: ids
+                        }
+                        multipleCatalogAction.actions.push(groupValueId);
+                    });
+                    this.widget.clickAction = multipleCatalogAction;
+                    break;
+                    
+                case 6:
+                    let dialogAction = {
+                        type: this.formData.caType.clickActionType,
+                        content: this.formData.dialog.content
+                    }
+                    this.widget.clickAction = dialogAction;
+                    break;
+                    
             }
         }
 
@@ -358,7 +428,7 @@ export default class Widget {
             default:
                 break;
         }
-
+        
         return this.widget;
         
     }

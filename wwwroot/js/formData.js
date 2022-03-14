@@ -48,6 +48,22 @@ export default class FormData {
         { name: "expand", value: 3 }
 
     ]
+    
+    ClickActionType = [
+
+        { name: "Link", value: 0 },
+
+        { name: "Catalog", value: 1 },
+
+        { name: "Sales Campaign", value: 2 },
+
+        { name: "Scroll to widget", value: 4 },
+        
+        { name: "Multiple Catalog", value: 5 },
+        
+        { name: "Dialog", value: 6 }
+
+    ]
 
     propertyTab = {
 
@@ -85,9 +101,57 @@ export default class FormData {
 
     eventsTab = {
 
-        Hover: null
+        Hover: null,        
         
     };
+    
+    caType = {
+        
+        clickActionType: null
+        
+    }
+    
+    link = {
+        
+        url: null,
+        
+        external: null
+        
+    }
+    
+    catalog = {
+        
+        groupId: null,
+        
+        groupValueId: null,
+        
+        groupValueIds: []
+        
+    }
+    
+    salesCampaign = {
+        
+        salesCampaignId: null
+        
+    }
+    
+    scrollToWidget = {
+        
+        destinationWidget: null
+        
+    }
+    
+    multipleCatalog = {
+        
+        actions: []
+
+    }
+    
+    dialog = {
+        
+        content: null
+        
+    }
 
     styleTab = {
         
@@ -183,17 +247,17 @@ export default class FormData {
 
         source: null,
 
-        showIndicator: null,
+        showIndicator: false,
         
-        showNavButtons: null,
+        showNavButtons: false,
         
-        enableLoop: null,
+        enableLoop: false,
         
         slideShowDelay: null,
         
-        serverSideScalingEnabled: null,
+        serverSideScalingEnabled: false,
         
-        cacheEnabled: null
+        cacheEnabled: false
 
    }
 
@@ -309,10 +373,55 @@ export default class FormData {
                 this.styleTab.borderWidth = border.width;
             });
         }
+        if (this.widget.clickAction) {
+            
+            this.caType.clickActionType = this.widget.clickAction.type;
+            
+            switch (this.widget.clickAction.type) {
+
+                case 0:
+                    this.link.url = this.widget.clickAction.url;
+                    this.link.external = this.widget.clickAction.external ? this.widget.clickAction.external : null;
+                    break;
+                    
+                case 1: 
+                    this.catalog.groupId = this.widget.clickAction.groupId;
+                    this.catalog.groupValueId = this.widget.clickAction.groupValueId ? this.widget.clickAction.groupValueId : null;
+                    if (this.widget.clickAction.groupValueIds) {
+                            this.widget.clickAction.groupValueIds.forEach(groupValueId => {
+                                this.catalog.groupValueIds.push(groupValueId);
+                            })
+                    }
+                    break;
+                    
+                case 2:
+                    this.salesCampaign.salesCampaignId = this.widget.clickAction.salesCampaignId ? this.widget.clickAction.salesCampaignId : null;
+                    break;
+                    
+                case 4:
+                    this.scrollToWidget.destinationWidget = this.widget.clickAction.destinationWidgetId;
+                    break;
+                   
+                case 5:
+                    this.widget.clickAction.actions.forEach(current_action => {
+                        let action = {
+                            groupId: current_action.groupId,
+                            groupValueId: current_action.groupValueId ? current_action.groupValueId : null,
+                            groupValueIds: current_action.groupValueIds
+                        }
+                        this.multipleCatalog.actions.push(action);
+                    });
+                    break;
+                                        
+                case 6:
+                    this.dialog.content = this.widget.clickAction.content;
+                    break;
+            }
+        }
 
 
 
-        this.mobileStyleTab.width = this.widget.style?.width ? this.widget.style?.width : null;
+		this.mobileStyleTab.width = this.widget.style?.width ? this.widget.style?.width : null;
         this.mobileStyleTab.height = this.widget.style?.height ? this.widget.style?.height : null;
         this.mobileStyleTab.marginTotal = this.widget.style?.margin?.total ? this.widget.style?.margin?.total : null;
         this.mobileStyleTab.marginTop = this.widget.style?.margin?.top ? this.widget.style?.margin?.top : null;
