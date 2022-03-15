@@ -95,6 +95,11 @@ namespace Pages_configurator.Controllers
 
         }
 
+        // convert json to table
+        public void Convert() {
+
+        }
+
         public Boolean isPageValid(Page page) {
 
             
