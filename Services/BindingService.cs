@@ -23,34 +23,39 @@ namespace API.Service
             _context = context;
         }
 
-        public void BindPagesFromJson(List<Page>homePages, List<Page> pages)
+        public async Task BindPagesFromJsonAsync()
         {
 
             if (_context.Pages.Count() != 0)
                 return;
+                
+            var pagesJson = await System.IO.File.ReadAllTextAsync("Pages/pages.json");
+            List<Page> pages = JsonConvert.DeserializeObject<List<Page>>(pagesJson);
 
+            var homePagesJson = await System.IO.File.ReadAllTextAsync("Pages/home.json");
+            List<Page> homePages = JsonConvert.DeserializeObject<List<Page>>(homePagesJson);
             List<string> riddenPages = new List<string>();
             
             foreach (Page page in homePages)
             {
                 var len = page.Language != null ? page.Language : null;
 
-                if (riddenPages.Contains(page.Id) == false) {
-                    riddenPages.Add(page.Id);
+                if (riddenPages.Contains(page.Name) == false) {
+                    riddenPages.Add(page.Name);
                     List<TableContent> jsonContents = new List<TableContent>();
                     TableContent jsonContent = new TableContent
                     {
-                        Language = page.Language != null ? page.Language : null,
+                        Language = page.Language,
                         Widgets = page.Widgets,
                         Title = page.Name
                     };
     
                     jsonContents.Add(jsonContent);
     
-                    foreach (Page homePageToCompare in pages)
+                    foreach (Page homePageToCompare in homePages)
                     {
-                        var lenToCompare = homePageToCompare.Language != null ? homePageToCompare.Language : null;
-                        if (riddenPages.Contains(homePageToCompare.Id) && len != lenToCompare)
+                        var index = jsonContents.FindIndex(content => content.Title == homePageToCompare.Name && content.Language != homePageToCompare.Language);
+                        if (index != -1)
                         {
                             TableContent sameJsonContent = new TableContent  
                             {
@@ -66,7 +71,6 @@ namespace API.Service
                     var fallbackContent = jsonContents.Where(content => content.Language == null);
                     if (!fallbackContent.Any())
                     {
-                        // var enFallbackContent = jsonContents.Where(content => content.Language == "en");
                         int enContentIndex = jsonContents.FindIndex(content => content.Language == "en");
                         int itContentIndex = jsonContents.FindIndex(content => content.Language == "it");
                         if (enContentIndex != -1)
@@ -86,7 +90,7 @@ namespace API.Service
                     
                     string jsonStringContents = JsonConvert.SerializeObject(jsonContents);
     
-                    TablePage bindedPage = new TablePage
+                    DbPage bindedPage = new DbPage
                     {
                         id = Guid.NewGuid(),
                         type = 0,
@@ -98,13 +102,15 @@ namespace API.Service
                     _context.Pages.Add(bindedPage);
                     }
             }
+
+            riddenPages = new List<string>();
             
             foreach (Page page in pages)
             {
                 var len = page.Language != null ? page.Language : null;
 
-                if (riddenPages.Contains(page.Id) == false) {
-                    riddenPages.Add(page.Id);
+                if (riddenPages.Contains(page.Name) == false) {
+                    riddenPages.Add(page.Name);
                     List<TableContent> jsonContents = new List<TableContent>();
                     TableContent jsonContent = new TableContent
                     {
@@ -118,7 +124,8 @@ namespace API.Service
                     foreach (Page pageToCompare in pages)
                     {
                         var lenToCompare = pageToCompare.Language != null ? pageToCompare.Language : null;
-                        if (riddenPages.Contains(pageToCompare.Id) && len != lenToCompare)
+                        var index = jsonContents.FindIndex(content => content.Title == pageToCompare.Name && content.Language != pageToCompare.Language);
+                        if (index != -1)
                         {
                             TableContent sameJsonContent = new TableContent
                             {
@@ -135,7 +142,6 @@ namespace API.Service
                     var fallbackContent = jsonContents.Where(content => content.Language == null);
                         if (!fallbackContent.Any())
                         {
-                            // var enFallbackContent = jsonContents.Where(content => content.Language == "en");
                             int enContentIndex = jsonContents.FindIndex(content => content.Language == "en");
                             int itContentIndex = jsonContents.FindIndex(content => content.Language == "it");
                             if (enContentIndex != -1)
@@ -150,15 +156,14 @@ namespace API.Service
                             {
                                 jsonContents[0].Language = null;
                             }
-
                         }
                     
                     string jsonStringContents = JsonConvert.SerializeObject(jsonContents);
     
-                    TablePage bindedPage = new TablePage
+                    DbPage bindedPage = new DbPage
                     {
                         id = Guid.NewGuid(),
-                        type = (Model.Page.Type.PageType) 1,
+                        type = (global::Model.Page.Type.PageType)1,
                         visibility = 1,
                         slug = "/" + page.Id,
                         description = page.Name.ToString(),

@@ -9,7 +9,7 @@ namespace Model.PageModel
         public string Id { get; set; }
         public int Kind { get; set; }
         public string Name { get; set; }
-        public string? Language { get; set; }
+        public string Language { get; set; }
         public bool? Default { get; set; }
         public string CustomerGroupValueOid { get; set; }
         public List<Widget> Widgets { get; set; }

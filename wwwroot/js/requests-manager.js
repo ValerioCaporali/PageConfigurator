@@ -65,7 +65,8 @@ var renderer;
 
 (async() => {
     var response = await fetch(base_url + 'get-all');
-    homePages = await response.json();
+    pages = await response.json();
+    console.log("pagine dal database ", pages)
 })().catch(err => {
     console.log(err);
 });

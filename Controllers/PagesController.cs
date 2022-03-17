@@ -12,6 +12,10 @@ using Model.PageModel;
 using Model.PageModel.PageWidget.WidgetContent;
 using API.DTOs;
 using API.Interfaces;
+using API.Data;
+using API.Entities;
+using API.Model;
+using Model.Page.Contents;
 
 namespace Pages_configurator.Controllers
 {
@@ -26,11 +30,13 @@ namespace Pages_configurator.Controllers
         private List<Page> homePages;
         private readonly ILogger<PagesController> _logger;
         private IBindingService _bindingService;
+        private DataContext _context;
 
-        public PagesController(ILogger<PagesController> logger, IBindingService bindingService)
+        public PagesController(ILogger<PagesController> logger, IBindingService bindingService, DataContext context)
         {
             _logger = logger;
             _bindingService = bindingService;
+            _context = context;
         }
 
         public IActionResult Index(int pageIndex)
@@ -63,14 +69,30 @@ namespace Pages_configurator.Controllers
             return pages;
         }
         [HttpGet("get-all")]
-        public async Task GetAll()
+        public async Task<ActionResult<List<TablePage>>> GetAll()
         {
-            var pagesJson = await System.IO.File.ReadAllTextAsync("Pages/pages.json");
-            List<Page> pages = JsonConvert.DeserializeObject<List<Page>>(pagesJson);
-            var homePagesJson = await System.IO.File.ReadAllTextAsync("Pages/home.json");
-            List<Page> homePages = JsonConvert.DeserializeObject<List<Page>>(homePagesJson);
+            await _bindingService.BindPagesFromJsonAsync();
+
+            List<TablePage> finalPages = new List<TablePage>();
+            List<DbPage> dbPages = _context.Pages.ToList();
+            foreach (DbPage dbPage in dbPages)
+            {
+
+                TablePage finalPage = new TablePage
+                {
+                    id = dbPage.id,
+                    type = dbPage.type,
+                    visibility = dbPage.visibility,
+                    slug = dbPage.slug,
+                    description = dbPage.description,
+                    contents = JsonConvert.DeserializeObject<List<TableContent>>(dbPage.contents)
+                };
+
+                finalPages.Add(finalPage);
+
+            }
             
-            _bindingService.BindPagesFromJson(homePages, pages);
+            return finalPages;
         }
 
         

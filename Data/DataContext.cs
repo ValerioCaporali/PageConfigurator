@@ -11,6 +11,6 @@ namespace API.Data
 
         }
 
-        public DbSet<TablePage> Pages { get; set; }
+        public DbSet<DbPage> Pages { get; set; }
     }
 }
