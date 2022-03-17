@@ -18,8 +18,6 @@ export default class HistoryManager {
         this.history.push(page);
         if (this.history.length != 0)
             this.current_index = this.history.length - 1;
-        
-        console.log("history on update ", this.history);
 
     }
 
@@ -41,12 +39,10 @@ export default class HistoryManager {
             document.getElementById("prev-page").style.display = "none";
             this.history.splice(this.current_index);
             this.current_index = 0;
-            console.log("history lenght ", this.history.length)
             return this.history[0];
         }
         else {
             this.history.splice(this.current_index);
-            console.log("history lenght ", this.history.length)
             this.current_index--;
             return this.history[this.current_index];
         }

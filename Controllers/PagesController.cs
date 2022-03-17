@@ -11,21 +11,26 @@ using Pages_configurator.Models;
 using Model.PageModel;
 using Model.PageModel.PageWidget.WidgetContent;
 using API.DTOs;
+using API.Interfaces;
 
 namespace Pages_configurator.Controllers
 {
 
     [ApiController]
     [Route("api/[controller]")]
+
     public class PagesController : Controller
     {
+        private int count = 0;
         private List<Page> pages;
         private List<Page> homePages;
         private readonly ILogger<PagesController> _logger;
+        private IBindingService _bindingService;
 
-        public PagesController(ILogger<PagesController> logger)
+        public PagesController(ILogger<PagesController> logger, IBindingService bindingService)
         {
             _logger = logger;
+            _bindingService = bindingService;
         }
 
         public IActionResult Index(int pageIndex)
@@ -57,6 +62,16 @@ namespace Pages_configurator.Controllers
             this.pages = pages;
             return pages;
         }
+        [HttpGet("get-all")]
+        public async Task GetAll()
+        {
+            var pagesJson = await System.IO.File.ReadAllTextAsync("Pages/pages.json");
+            List<Page> pages = JsonConvert.DeserializeObject<List<Page>>(pagesJson);
+            var homePagesJson = await System.IO.File.ReadAllTextAsync("Pages/home.json");
+            List<Page> homePages = JsonConvert.DeserializeObject<List<Page>>(homePagesJson);
+            
+            _bindingService.BindPagesFromJson(homePages, pages);
+        }
 
         
         [HttpPost("save-page")]
@@ -77,7 +92,8 @@ namespace Pages_configurator.Controllers
             }
 
             if (home_correspondence.Any())
-            {                
+            {
+                // fare qui tutti i controlli                
                 this.homePages.RemoveAll(page => page.Id == saveDto.InitialPage.Id && page.Language == saveDto.InitialPage.Id);
                 this.homePages.Add(saveDto.Page);
                 return Ok("Home salvata correttamente");
@@ -96,14 +112,13 @@ namespace Pages_configurator.Controllers
         }
 
         // convert json to table
-        public void Convert() {
+        public void Convert() 
+        {
 
         }
 
-        public Boolean isPageValid(Page page) {
-
-            
-
+        public Boolean isPageValid(Page page)
+        {
             return false;
         }
 

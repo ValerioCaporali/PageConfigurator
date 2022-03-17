@@ -1,7 +1,5 @@
-
 import ModifyManager from './modify-manager.js'
 import HistoryManager from './history-manager.js';
-import RequestManager from './requests-manager.js';
 export default class RenderManager {
 
     homePages;
@@ -149,7 +147,6 @@ export default class RenderManager {
             cols.push(object);
         }
         let items = widgets.map(w => {
-            console.log(this.rowSpan)
             return {
                 location: [{
                     row: w.row,
@@ -759,7 +756,6 @@ export default class RenderManager {
 
     handleBorders = (widget, div) => {
         widget.style.borders.forEach(border => {
-            console.log(widget, border);
             switch (border.type) {
                 case 0:
                     div.style.border = border.style;
@@ -901,8 +897,7 @@ export default class RenderManager {
                         DevExpress.ui.notify("La pagina non è stata modificata");
                     })
                 else {
-                    let requstManager = new RequestManager(that.selectedPage, that.historyManager.getInitialPage());
-                    requstManager.savePage();
+
                 }
               },
             }).dxSpeedDialAction('instance');

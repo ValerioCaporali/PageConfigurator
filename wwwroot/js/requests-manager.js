@@ -15,8 +15,6 @@ export default class RequestManager {
 
     savePage() {
 
-        console.log(this.pageToSave);
-
         const data = {
             page: this.pageToSave,
             initialPage: this.initialPage
@@ -61,6 +59,13 @@ var renderer;
     })().catch(err => {
         console.log(err);
     });
+})().catch(err => {
+    console.log(err);
+});
+
+(async() => {
+    var response = await fetch(base_url + 'get-all');
+    homePages = await response.json();
 })().catch(err => {
     console.log(err);
 });
