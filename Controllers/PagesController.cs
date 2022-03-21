@@ -67,6 +67,7 @@ namespace Pages_configurator.Controllers
                     visibility = dbPage.visibility,
                     slug = dbPage.slug,
                     description = dbPage.description,
+                    drafts = dbPage.drafts != null ? JsonConvert.DeserializeObject<List<TableContent>>(dbPage.drafts) : null,
                     contents = JsonConvert.DeserializeObject<List<TableContent>>(dbPage.contents)
                 };
 
@@ -79,30 +80,66 @@ namespace Pages_configurator.Controllers
 
         
         [HttpPost("save-page")]
-        public IActionResult SavePage([FromBody] SaveDto saveDto)
+        public IActionResult SavePage([FromBody] Guid Id)
+        {
+
+            DbPage page = _context.Pages.Find(Id);
+            if (page == null)
+            {
+                return BadRequest("Page not found");
+            }
+            page.contents = page.drafts;
+            page.drafts = null;
+            _context.SaveChanges();
+            return Ok("Pagina published");
+
+        }
+
+        [HttpPost("save-draft")]
+        public IActionResult SaveInDraft([FromBody] SaveDto saveDto)
         {
 
             DbPage page = _context.Pages.Find(saveDto.Page.id);
-            List<TableContent> contents = JsonConvert.DeserializeObject<List<TableContent>>(page.contents);
-            int oldContentIndex = contents.FindIndex(content => content.Language == saveDto.InitialPage.contents.First().Language);
-            if (oldContentIndex == -1)
-                return BadRequest("Il contenuto della pagina non esiste");
-            
-            TableContent updatedContent = saveDto.Page.contents.First();
-
-            contents[oldContentIndex] = updatedContent;
             DbPage updatedPage = new DbPage();
+            List<TableContent> drafts = new List<TableContent>();
+            List<TableContent> contents = JsonConvert.DeserializeObject<List<TableContent>>(page.contents);
+
+            if (page.drafts != null)
+            {
+                drafts = JsonConvert.DeserializeObject<List<TableContent>>(page.drafts);
+                
+                int oldDraftIndex = drafts.FindIndex(draft => draft.Language == saveDto.InitialPage.contents.First().Language);
+                if (oldDraftIndex == -1)
+                {
+                    drafts.Add(saveDto.Page.contents.First());
+                }
+                else
+                {
+                    drafts[oldDraftIndex] = saveDto.Page.contents.First();
+                }
+            }
+            else
+            {
+                drafts.Add(saveDto.Page.contents.First());
+                foreach (TableContent content in contents)
+                {
+                    if (content.Language != saveDto.InitialPage.contents.First().Language)
+                    {
+                        drafts.Add(content);
+                    }
+                }
+            }
+
             updatedPage = page;
-            updatedPage.contents = JsonConvert.SerializeObject(contents);
-
+            updatedPage.drafts = JsonConvert.SerializeObject(drafts);
+            
             _context.Entry(page).CurrentValues.SetValues(updatedPage);
-
             _context.SaveChanges();
 
-
-            return Ok("Pagina salvata correttamente");
+            return Ok("Page correctly saved");
 
         }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

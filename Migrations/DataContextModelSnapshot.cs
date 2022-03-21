@@ -31,7 +31,7 @@ namespace Pages_configurator.Migrations
                     b.Property<string>("description")
                         .HasColumnType("text");
 
-                    b.Property<string>("draft")
+                    b.Property<string>("drafts")
                         .HasColumnType("text");
 
                     b.Property<string>("slug")

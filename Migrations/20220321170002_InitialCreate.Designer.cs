@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Pages_configurator.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220321135002_InitialCreate")]
+    [Migration("20220321170002_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,7 +33,7 @@ namespace Pages_configurator.Migrations
                     b.Property<string>("description")
                         .HasColumnType("text");
 
-                    b.Property<string>("draft")
+                    b.Property<string>("drafts")
                         .HasColumnType("text");
 
                     b.Property<string>("slug")

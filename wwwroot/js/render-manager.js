@@ -1,4 +1,3 @@
-// import RequestManaget from './requests-manager.js';
 import ModifyManager from './modify-manager.js'
 import HistoryManager from './history-manager.js';
 import SaveManager from './save-manager.js';
@@ -58,30 +57,57 @@ export default class RenderManager {
     }
 
     showOptions(page) {
-        console.log(page);
+        console.log(page)
         let pageOptionsContainer = document.getElementById('page-options');
         pageOptionsContainer.innerHTML = "";
-        page.contents.forEach(content => {
-            let pageCard = document.createElement('div');
-            pageCard.classList.add('page-card');
-            let pageImage = document.createElement("img");
-            pageImage.classList.add('card-img-top');
-            pageImage.src = "https://img.icons8.com/glyph-neue/452/paper.png";
-            let pageTitle = document.createElement("h6");
-            pageTitle.classList.add('card-title');
-            pageTitle.innerHTML = content.language ? content.language : 'Default';
-            pageTitle.style.textAlign = "center";
-            pageCard.append(pageImage, pageTitle);
-            pageCard.style.backgroundColor = "white"
-            pageOptionsContainer.appendChild(pageCard);
-            pageCard.addEventListener("click", () => {
-                $(pageCard).attr("data-toggle", "modal");
-                $(pageCard).attr("data-target", "#options-modal");
-                document.getElementById('list').style.display = "none";
-                document.getElementById('main').style.display = "block";
-                this.openPageStream(page, content);
-            })
-        });
+        if (page.drafts != null) {
+            console.log("drafts")
+            page.drafts.forEach(draft => {
+                let pageCard = document.createElement('div');
+                pageCard.classList.add('page-card');
+                let pageImage = document.createElement("img");
+                pageImage.classList.add('card-img-top');
+                pageImage.src = "https://img.icons8.com/glyph-neue/452/paper.png";
+                let pageTitle = document.createElement("h6");
+                pageTitle.classList.add('card-title');
+                pageTitle.innerHTML = draft.language ? draft.language : 'Default';
+                pageTitle.style.textAlign = "center";
+                pageCard.append(pageImage, pageTitle);
+                pageCard.style.backgroundColor = "white"
+                pageOptionsContainer.appendChild(pageCard);
+                pageCard.addEventListener("click", () => {
+                    $(pageCard).attr("data-toggle", "modal");
+                    $(pageCard).attr("data-target", "#options-modal");
+                    document.getElementById('list').style.display = "none";
+                    document.getElementById('main').style.display = "block";
+                    this.openPageStream(page, draft);
+                })
+            });
+        }
+        else {
+            console.log("no drafts");
+            page.contents.forEach(content => {
+                let pageCard = document.createElement('div');
+                pageCard.classList.add('page-card');
+                let pageImage = document.createElement("img");
+                pageImage.classList.add('card-img-top');
+                pageImage.src = "https://img.icons8.com/glyph-neue/452/paper.png";
+                let pageTitle = document.createElement("h6");
+                pageTitle.classList.add('card-title');
+                pageTitle.innerHTML = content.language ? content.language : 'Default';
+                pageTitle.style.textAlign = "center";
+                pageCard.append(pageImage, pageTitle);
+                pageCard.style.backgroundColor = "white"
+                pageOptionsContainer.appendChild(pageCard);
+                pageCard.addEventListener("click", () => {
+                    $(pageCard).attr("data-toggle", "modal");
+                    $(pageCard).attr("data-target", "#options-modal");
+                    document.getElementById('list').style.display = "none";
+                    document.getElementById('main').style.display = "block";
+                    this.openPageStream(page, content);
+                })
+            });
+        }
     }
 
     loadPanel = $('.loadpanel').dxLoadPanel({
@@ -94,14 +120,14 @@ export default class RenderManager {
         closeOnOutsideClick: false,
       }).dxLoadPanel('instance');
 
-    openPageStream = (fullPage, content) => {
+    openPageStream = (fullPage, contentOrDraft) => {
         let page = JSON.parse(JSON.stringify(fullPage));
-        page.contents = content;
+        page.contents = contentOrDraft;
         this.showPagePreview(page);
         this.selectedPage = page;
         this.historyManager = new HistoryManager();
         this.initHistoryButton();
-        this.initSavePageButton();
+        this.initSaveInDraftButton();
     }
 
     showPagePreview = (page) => {
@@ -860,12 +886,12 @@ export default class RenderManager {
 
     }
 
-    initSavePageButton() {
+    initSaveInDraftButton() {
 
         $(() => {
             let that = this;
             $('#save-page').dxSpeedDialAction({
-              label: 'Save Page',
+              label: 'Save draft',
               icon: 'save',
               index: 1,
               onClick() {
@@ -875,7 +901,7 @@ export default class RenderManager {
                     })
                 else {
                     let saveManager = new SaveManager();
-                    saveManager.savePage(that.selectedPage, that.historyManager.getInitialPage())
+                    saveManager.saveInDraft(that.selectedPage, that.historyManager.getInitialPage())
                 }
               },
             }).dxSpeedDialAction('instance');

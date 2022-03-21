@@ -12,7 +12,7 @@ namespace API.Model
         public int visibility { get; set; }
         public string slug { get; set; }
         public string description { get; set; }
-        public TableContent Draft { get; set; }
+        public List<TableContent> drafts { get; set; }
         public List<TableContent> contents { get; set; }
     }
 }

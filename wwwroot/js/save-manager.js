@@ -38,22 +38,19 @@ export default class SaveManager {
 
     }
 
-    savePage(pageToSave, initialPage) { // database
+    saveInDraft(pageToSave, initialPage) { // database
 
-        var content = [];
-        var initialContent = [];
+        var draft = [];
+        var oldDraft = [];
 
         JSON.parse(JSON.stringify(pageToSave));
         JSON.parse(JSON.stringify(initialPage));
 
-        content.push(pageToSave.contents);
-        pageToSave.contents = content;
+        draft.push(pageToSave.contents);
+        pageToSave.contents = draft;
 
-        initialContent.push(initialPage.contents);
-        initialPage.contents = initialContent;
-
-        console.log("pagina da salvare ", pageToSave);
-        console.log("pagina iniziale ", initialPage);
+        oldDraft.push(initialPage.contents);
+        initialPage.contents = oldDraft;
 
         const data = {
             page: pageToSave,
@@ -70,11 +67,16 @@ export default class SaveManager {
 
         }
 
-        fetch(this.base_url + 'save-page', options)
+        fetch(this.base_url + 'save-draft', options)
             .then(response => response.json())
             .then (response => console.log(response))
             .catch(error => console.log(error));
 
+    }
+
+    
+    savePage() {
+        // draft to content
     }
 
     

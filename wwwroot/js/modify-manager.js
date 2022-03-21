@@ -64,6 +64,9 @@ export default class ModifyManager {
             toolbar:
                 "a11ycheck addcomment showcomments casechange checklist code export formatpainter pageembed permanentpen table",
             toolbar_mode: "floating",
+            force_br_newlines : false,
+            force_p_newlines : false,
+            forced_root_block : '',
             tinycomments_mode: "embedded",
             height: "400",
             content_css: "../css/configurator-style.css",
@@ -788,7 +791,4 @@ export default class ModifyManager {
         
     }
 
-    saveWidget() {
-        // salvataggio del widget (in locale)
-    }
 }
