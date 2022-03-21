@@ -1,5 +1,7 @@
+// import RequestManaget from './requests-manager.js';
 import ModifyManager from './modify-manager.js'
 import HistoryManager from './history-manager.js';
+import SaveManager from './save-manager.js';
 export default class RenderManager {
 
     homePages;
@@ -12,54 +14,74 @@ export default class RenderManager {
     filterPageParameters;
     historyManager = new HistoryManager();
 
-    constructor(homePages, pages) {
-        this.homePages = JSON.parse(JSON.stringify(homePages));
+    constructor(pages) {
         this.pages = JSON.parse(JSON.stringify(pages));
         document.getElementById('structure-icon').addEventListener("click", () => {
             this.changeMode();
         })
+        document.getElementById('go-back').addEventListener("click", () => {
+            this.showPageList();
+        })
     }
 
+    populatePageList = () => {
 
-    populatePageList = (pageType) => {
-        var list;
-        if (pageType == "Home") {
-            list = document.getElementById('home-pages-list');
-            for (let i = 0; i < this.homePages.length; i++) {
-                var li = document.createElement("li");
-                var a = document.createElement("a");
-                a.href = "#";
-                a.appendChild(document.createTextNode(this.homePages[i].name));
-                li.appendChild(a);
-                li.addEventListener('click', () => {
-                    this.loadPanel.show();
-                    setTimeout(() => {
-                        this.loadPanel.hide();
-                        this.openPageStream(i, "Home");
-                    }, 600);
-                    })
-                list.appendChild(li);
-            }
-        } else if (pageType == "Pages") {
-            list = document.getElementById('pages-list');
-            for (let i = 0; i < this.pages.length; i++) {
-                var li = document.createElement("li");
-                li.classList.add('option');
-                this.spinner;
-                var a = document.createElement("a");
-                a.href = "#";
-                a.appendChild(document.createTextNode(this.pages[i].name));
-                li.appendChild(a);
-                li.addEventListener('click', () => {
-                this.loadPanel.show();
-                setTimeout(() => {
-                    this.loadPanel.hide();
-                    this.openPageStream(i, "Page");
-                }, 600);
-                })
-                list.appendChild(li);
-            }
-        } else console.log("Unexpected parameter");
+        let homeContainer = document.getElementById("home-pages-container");
+        let pageContainer = document.getElementById("pages-container");
+        this.pages.forEach(page => {
+            let pageCard = document.createElement('div');
+            pageCard.classList.add('page-card');
+            let pageImage = document.createElement("img");
+            pageImage.classList.add('card-img-top');
+            pageImage.src = "https://img.icons8.com/glyph-neue/452/paper.png";
+            let pageTitle = document.createElement("h6");
+            pageTitle.classList.add('card-title');
+            pageTitle.innerHTML = page.description;
+            pageTitle.style.textAlign = "center";
+            pageCard.append(pageImage, pageTitle);
+            $(pageCard).attr("data-toggle", "modal");
+            $(pageCard).attr("data-target", "#options-modal");
+            if (page.type == 0)
+                homeContainer.appendChild(pageCard);
+            else
+                pageContainer.appendChild(pageCard);
+            pageCard.addEventListener('click', () => {
+                this.showOptions(page);
+            })
+        })
+
+    }
+
+    showPageList() {
+        document.getElementById('list').style.display = "block";
+        document.getElementById('main').style.display = "none";
+    }
+
+    showOptions(page) {
+        console.log(page);
+        let pageOptionsContainer = document.getElementById('page-options');
+        pageOptionsContainer.innerHTML = "";
+        page.contents.forEach(content => {
+            let pageCard = document.createElement('div');
+            pageCard.classList.add('page-card');
+            let pageImage = document.createElement("img");
+            pageImage.classList.add('card-img-top');
+            pageImage.src = "https://img.icons8.com/glyph-neue/452/paper.png";
+            let pageTitle = document.createElement("h6");
+            pageTitle.classList.add('card-title');
+            pageTitle.innerHTML = content.language ? content.language : 'Default';
+            pageTitle.style.textAlign = "center";
+            pageCard.append(pageImage, pageTitle);
+            pageCard.style.backgroundColor = "white"
+            pageOptionsContainer.appendChild(pageCard);
+            pageCard.addEventListener("click", () => {
+                $(pageCard).attr("data-toggle", "modal");
+                $(pageCard).attr("data-target", "#options-modal");
+                document.getElementById('list').style.display = "none";
+                document.getElementById('main').style.display = "block";
+                this.openPageStream(page, content);
+            })
+        });
     }
 
     loadPanel = $('.loadpanel').dxLoadPanel({
@@ -72,16 +94,11 @@ export default class RenderManager {
         closeOnOutsideClick: false,
       }).dxLoadPanel('instance');
 
-    openPageStream = (index, pageType) => {
-        if (pageType == "Home") {
-            this.selectedPage = this.homePages[index];
-            this.filterPageParameters = { id: this.selectedPage.id, language: this.selectedPage.language }
-            this.showPagePreview(this.selectedPage);
-        } else if (pageType == "Page") {
-            this.selectedPage = this.pages[index];
-            this.filterPageParameters = { id: this.selectedPage.id, language: this.selectedPage.language }
-            this.showPagePreview(this.selectedPage);
-        }
+    openPageStream = (fullPage, content) => {
+        let page = JSON.parse(JSON.stringify(fullPage));
+        page.contents = content;
+        this.showPagePreview(page);
+        this.selectedPage = page;
         this.historyManager = new HistoryManager();
         this.initHistoryButton();
         this.initSavePageButton();
@@ -90,51 +107,11 @@ export default class RenderManager {
     showPagePreview = (page) => {
         let prev_button = document.getElementById("prev-page");
         this.setDefaultMode();
-        var title = document.getElementById("page-title");
-        title.innerHTML = "";
-        title.appendChild(document.createTextNode(page.name));
-        document.getElementById("editButton").style.display = "block";
-        var language = document.getElementById("page-language");
-        document.getElementById("page-language").style.display = "block";
-        document.getElementById("page-language").style.marginRight = "30px";
-        document.getElementById("page-default").style.display = "block";
-        var select = document.getElementById("language");
-        this.createOptions("language", page.language);
-        this.createOptions("default", page.default);
-        this.fillPage(page.widgets);
+        this.fillPage(page.contents.widgets);
     }
-
-    createOptions = (selectId, currentValue) => {
-        var languages = ["it", "en"];
-        var isDefault = [true, false];
-        while (document.getElementById(selectId).options.length > 0) {
-            document.getElementById(selectId).remove(0);
-        }
-        var select = document.getElementById(selectId);
-        if (selectId == "language") {
-            languages.forEach(async function(language) {
-                var option = document.createElement("option");
-                option.text = language;
-                if (currentValue == language && currentValue != false) {
-                    option.selected = "selected";
-                }
-                select.add(option);
-            });
-        }
-        if (selectId == "default") {
-            isDefault.forEach(async function(value) {
-                var option = document.createElement("option");
-                option.text = value;
-                if (currentValue == value) {
-                    option.selected = "selected";
-                }
-                select.add(option);
-            })
-        }
-    }
-
 
     fillPage = (widgets) => {
+        console.log(widgets)
         var totRows = this.calculateRows(widgets),
             totCols = this.calculateColumns(widgets),
             rows = new Array(),
@@ -897,7 +874,8 @@ export default class RenderManager {
                         DevExpress.ui.notify("La pagina non è stata modificata");
                     })
                 else {
-
+                    let saveManager = new SaveManager();
+                    saveManager.savePage(that.selectedPage, that.historyManager.getInitialPage())
                 }
               },
             }).dxSpeedDialAction('instance');

@@ -60,7 +60,7 @@ export default class ModifyManager {
         tinymce.init({
             selector: "#" + selector,
             plugins:
-                "a11ychecker advcode casechange export formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker",
+                "code a11ychecker advcode casechange export formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker",
             toolbar:
                 "a11ycheck addcomment showcomments casechange checklist code export formatpainter pageembed permanentpen table",
             toolbar_mode: "floating",
@@ -81,7 +81,26 @@ export default class ModifyManager {
         this.resetPanel();
         this.resetBordersButton();
         tinymce.remove();
-        var formData = new FormData(widget);
+        var formData = new FormData(widget, this.selectedPage);
+
+        /* Metadata Tab */
+
+        $(() => {
+            let items = [];
+            var that = this;
+            $.each( formData.metadataTab, function( key, value ) {
+                if (key != "language" && key != "description" && key != "slug")
+                    items.push({dataField: key.toString(), validationRules: [{type: "required"}]})
+                else
+                    items.push({dataField: key.toString()})
+            },),
+            $('#metadata').dxForm({
+              colCount: 2,
+              formData: formData.metadataTab,
+              items: items,
+              labelLocation: "top",
+            });  
+        });
 
         /* Properties Tab */
 
@@ -762,7 +781,7 @@ export default class ModifyManager {
         let initialWidget = this.widget;
         let widget = new Widget(this.newFormData, this.text_content_id, this.text_id, this.borders, this.mobileBorders, this.groupValueIds);
         let modifiedWidget = widget.widgetBinding();
-        let saveManager = new SaveManager(modifiedWidget, initialWidget, this.selectedPage);
+        let saveManager = new SaveManager(modifiedWidget, initialWidget, this.selectedPage, this.newFormData.metadataTab);
         let updatedPage = saveManager.updatePage();
         if (updatedPage)
             return updatedPage;

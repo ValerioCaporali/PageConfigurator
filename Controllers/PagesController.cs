@@ -50,35 +50,17 @@ namespace Pages_configurator.Controllers
             return View();
         }
 
-        [HttpGet("home-pages")]
-        public async Task<ActionResult<List<Page>>> GetHomePages()
-        {
-            var homePagesJson = await System.IO.File.ReadAllTextAsync("Pages/home.json");
-            List<Page> homePages = JsonConvert.DeserializeObject<List<Page>>(homePagesJson);
-            this.homePages = homePages;
-            return homePages;
-        }
-
-
-        [HttpGet("pages")]
-        public async Task<ActionResult<List<Page>>> GetPages()
-        {
-            var pagesJson = await System.IO.File.ReadAllTextAsync("Pages/pages.json");
-            List<Page> pages = JsonConvert.DeserializeObject<List<Page>>(pagesJson);
-            this.pages = pages;
-            return pages;
-        }
         [HttpGet("get-all")]
         public async Task<ActionResult<List<TablePage>>> GetAll()
         {
             await _bindingService.BindPagesFromJsonAsync();
 
-            List<TablePage> finalPages = new List<TablePage>();
+            List<TablePage> pages = new List<TablePage>();
             List<DbPage> dbPages = _context.Pages.ToList();
             foreach (DbPage dbPage in dbPages)
             {
 
-                TablePage finalPage = new TablePage
+                TablePage page = new TablePage
                 {
                     id = dbPage.id,
                     type = dbPage.type,
@@ -88,11 +70,11 @@ namespace Pages_configurator.Controllers
                     contents = JsonConvert.DeserializeObject<List<TableContent>>(dbPage.contents)
                 };
 
-                finalPages.Add(finalPage);
+                pages.Add(page);
 
             }
             
-            return finalPages;
+            return pages;
         }
 
         
@@ -100,48 +82,26 @@ namespace Pages_configurator.Controllers
         public IActionResult SavePage([FromBody] SaveDto saveDto)
         {
 
-            if (this.homePages.Where(page => page.Id == saveDto.Page.Id && page.Language == saveDto.Page.Language).Count() > 1)
-                return BadRequest("I valori identificativi per la pagina non sono univoci");
+            DbPage page = _context.Pages.Find(saveDto.Page.id);
+            List<TableContent> contents = JsonConvert.DeserializeObject<List<TableContent>>(page.contents);
+            int oldContentIndex = contents.FindIndex(content => content.Language == saveDto.InitialPage.contents.First().Language);
+            if (oldContentIndex == -1)
+                return BadRequest("Il contenuto della pagina non esiste");
+            
+            TableContent updatedContent = saveDto.Page.contents.First();
 
-            if (this.pages.Where(page => page.Id == saveDto.Page.Id && page.Language == saveDto.Page.Language).Count() > 1)
-                return BadRequest("I valori identificativi per la pagina non sono univoci");
+            contents[oldContentIndex] = updatedContent;
+            DbPage updatedPage = new DbPage();
+            updatedPage = page;
+            updatedPage.contents = JsonConvert.SerializeObject(contents);
 
-            var home_correspondence = this.homePages.Where(page => page.Id == saveDto.InitialPage.Id && page.Language == saveDto.InitialPage.Language);
-            var page_correspondence = this.homePages.Where(page => page.Id == saveDto.InitialPage.Id && page.Language == saveDto.InitialPage.Language);
-            if (!home_correspondence.Any() && !page_correspondence.Any())
-            {
-                return BadRequest("La pagina che si sta modificando non esiste");
-            }
+            _context.Entry(page).CurrentValues.SetValues(updatedPage);
 
-            if (home_correspondence.Any())
-            {
-                // fare qui tutti i controlli                
-                this.homePages.RemoveAll(page => page.Id == saveDto.InitialPage.Id && page.Language == saveDto.InitialPage.Id);
-                this.homePages.Add(saveDto.Page);
-                return Ok("Home salvata correttamente");
-            }
+            _context.SaveChanges();
 
-            if (page_correspondence.Any())
-            {
-                // fare qui tutti i controlli
-                this.pages.RemoveAll(page => page.Id == saveDto.InitialPage.Id && page.Language == saveDto.InitialPage.Id);
-                this.pages.Add(saveDto.Page);
-                return Ok("Pagina salvata correttamente");
-            }
 
-            return BadRequest("Errore durante il salvataggio");
+            return Ok("Pagina salvata correttamente");
 
-        }
-
-        // convert json to table
-        public void Convert() 
-        {
-
-        }
-
-        public Boolean isPageValid(Page page)
-        {
-            return false;
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

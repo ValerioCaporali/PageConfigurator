@@ -38,7 +38,6 @@ namespace API.Service
             
             foreach (Page page in homePages)
             {
-                var len = page.Language != null ? page.Language : null;
 
                 if (riddenPages.Contains(page.Name) == false) {
                     riddenPages.Add(page.Name);
@@ -107,7 +106,6 @@ namespace API.Service
             
             foreach (Page page in pages)
             {
-                var len = page.Language != null ? page.Language : null;
 
                 if (riddenPages.Contains(page.Name) == false) {
                     riddenPages.Add(page.Name);
@@ -123,7 +121,6 @@ namespace API.Service
     
                     foreach (Page pageToCompare in pages)
                     {
-                        var lenToCompare = pageToCompare.Language != null ? pageToCompare.Language : null;
                         var index = jsonContents.FindIndex(content => content.Title == pageToCompare.Name && content.Language != pageToCompare.Language);
                         if (index != -1)
                         {

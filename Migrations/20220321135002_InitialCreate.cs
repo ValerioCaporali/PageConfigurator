@@ -16,6 +16,7 @@ namespace Pages_configurator.Migrations
                     visibility = table.Column<int>(type: "integer", nullable: false),
                     slug = table.Column<string>(type: "text", nullable: true),
                     description = table.Column<string>(type: "text", nullable: true),
+                    draft = table.Column<string>(type: "text", nullable: true),
                     contents = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>

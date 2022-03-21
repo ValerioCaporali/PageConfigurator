@@ -1,9 +1,11 @@
 export default class FormData {
 
     widget;
+    selectedPage;
 
-    constructor (widget) {
+    constructor (widget, selectedPage) {
         this.widget = widget;
+        this.selectedPage = selectedPage;
         this.bindData();
     }
 
@@ -64,6 +66,20 @@ export default class FormData {
         { name: "Dialog", value: 6 }
 
     ]
+
+    metadataTab = {
+
+        visibility: null,
+
+        slug: null,
+
+        description: null,
+
+        language: null,
+
+        title: null
+        
+    }
 
     propertyTab = {
 
@@ -333,6 +349,13 @@ export default class FormData {
    }
     
      bindData() {
+
+        this.metadataTab.visibility = this.selectedPage.visibility;
+        this.metadataTab.slug = this.selectedPage.slug;
+        this.metadataTab.description = this.selectedPage.description;
+        this.metadataTab.language = this.selectedPage.contents.language;
+        this.metadataTab.title = this.selectedPage.contents.title;
+
         this.propertyTab.id = this.widget.id;
         this.propertyTab.row = this.widget.row;
         this.propertyTab.column = this.widget.column;

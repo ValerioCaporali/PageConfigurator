@@ -1,4 +1,4 @@
-import Render from "./render-manager.js";
+import RenderManager from "./render-manager.js";
 
 export default class RequestManager {
 
@@ -40,33 +40,17 @@ export default class RequestManager {
 }
 
 const base_url = 'api/Pages/';
-let homePages;
+// let homePages;
 let pages;
 
 var renderer;
 
 (async() => {
-    var response = await fetch(base_url + 'home-pages');
-    homePages = await response.json();
-    document.getElementById('home-pages-number').innerHTML = homePages.length;
-    (async() => {
-        var response = await fetch(base_url + 'pages');
-        pages = await response.json();
-        document.getElementById('pages-number').innerHTML = pages.length;
-        renderer = new Render(homePages, pages);
-        renderer.populatePageList("Home");
-        renderer.populatePageList("Pages");
-    })().catch(err => {
-        console.log(err);
-    });
-})().catch(err => {
-    console.log(err);
-});
-
-(async() => {
     var response = await fetch(base_url + 'get-all');
     pages = await response.json();
-    console.log("pagine dal database ", pages)
+    renderer = new RenderManager(pages);
+    console.log("PAGINE DALLA TABELLA ", pages)
+    renderer.populatePageList();
 })().catch(err => {
     console.log(err);
 });

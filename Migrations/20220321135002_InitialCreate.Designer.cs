@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Pages_configurator.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220316174059_InitialCreate")]
+    [Migration("20220321135002_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,7 +21,7 @@ namespace Pages_configurator.Migrations
                 .HasAnnotation("ProductVersion", "5.0.6")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-            modelBuilder.Entity("API.Entities.TablePage", b =>
+            modelBuilder.Entity("API.Entities.DbPage", b =>
                 {
                     b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
@@ -31,6 +31,9 @@ namespace Pages_configurator.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("description")
+                        .HasColumnType("text");
+
+                    b.Property<string>("draft")
                         .HasColumnType("text");
 
                     b.Property<string>("slug")

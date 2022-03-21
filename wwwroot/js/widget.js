@@ -253,7 +253,6 @@ export default class Widget {
                     case 'arrowdown':
                         border.type = 4
                         break;
-                
                     default:
                         break;
                 };
