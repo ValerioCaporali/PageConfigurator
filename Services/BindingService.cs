@@ -5,10 +5,8 @@ using System.Threading.Tasks;
 using API.Data;
 using API.Entities;
 using API.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-using Model.Content.Language;
-using Model.Page;
 using Model.Page.Contents;
+using Model.Page.Type;
 using Model.PageModel;
 using Newtonsoft.Json;
 
@@ -160,7 +158,7 @@ namespace API.Service
                     DbPage bindedPage = new DbPage
                     {
                         id = Guid.NewGuid(),
-                        type = (global::Model.Page.Type.PageType)1,
+                        type = (PageType)1,
                         visibility = 1,
                         slug = "/" + page.Id,
                         description = page.Name.ToString(),

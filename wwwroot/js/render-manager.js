@@ -53,9 +53,19 @@ export default class RenderManager {
 
     showPageList()
     {
-        document.getElementById('list').style.display = "block";
-        document.getElementById('main').style.display = "none";
-        window.location.reload();
+        if (!this.historyManager.isHistoryEmpty()) {
+            let message = "Tutte le modifiche andranno perse";
+            if(confirm(message)) {
+                document.getElementById('list').style.display = "block";
+                document.getElementById('main').style.display = "none";
+                window.location.reload();
+            }
+        }
+        else {
+            document.getElementById('list').style.display = "block";
+            document.getElementById('main').style.display = "none";
+            window.location.reload();
+        }
     }
 
     showOptions(page) {
@@ -120,15 +130,19 @@ export default class RenderManager {
       }).dxLoadPanel('instance');
 
     openPageStream = (fullPage, contentOrDraft) => {
-        if (fullPage.drafts != null)
-            this.initPublishButton(fullPage.id);
-        let page = JSON.parse(JSON.stringify(fullPage));
-        page.contents = contentOrDraft;
-        this.showPagePreview(page);
-        this.selectedPage = page;
-        this.historyManager = new HistoryManager();
-        this.initHistoryButton();
-        this.initSaveInDraftButton();
+        this.loadPanel.show()
+        setTimeout(() => {            
+            if (fullPage.drafts != null)
+                this.initPublishButton(fullPage.id);
+            let page = JSON.parse(JSON.stringify(fullPage));
+            page.contents = contentOrDraft;
+            this.showPagePreview(page);
+            this.selectedPage = page;
+            this.historyManager = new HistoryManager();
+            this.initHistoryButton();
+            this.initSaveInDraftButton();
+            this.loadPanel.hide();
+        }, 400);
     }
 
     showPagePreview = (page) => {
@@ -909,15 +923,21 @@ export default class RenderManager {
               icon: 'save',
               index: 1,
               onClick() {
-                if (that.historyManager.isHistoryEmpty())
-                    $(() => {
-                        DevExpress.ui.notify("La pagina non è stata modificata", "warning");
-                    })
-                else {
-                    let saveManager = new SaveManager();
-                    saveManager.saveInDraft(that.selectedPage, that.historyManager.getInitialPage())
+                that.loadPanel.show();
+                setTimeout(() => {
+                    that.loadPanel.hide();       
+                    if (that.historyManager.isHistoryEmpty())
+                        $(() => {
+                            DevExpress.ui.notify("La pagina non è stata modificata", "warning");
+                        });
+                    else {
+                        let saveManager = new SaveManager();
+                        let saved = saveManager.saveInDraft(that.selectedPage, that.historyManager.getInitialPage());
+                        if (saved)
+                            that.historyManager.emptyHistory();
+                    }
+                  }, 400);
                 }
-              },
             }).dxSpeedDialAction('instance');
           });
     }

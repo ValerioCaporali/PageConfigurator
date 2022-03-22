@@ -128,8 +128,8 @@ export default class ModifyManager {
         /* Text Tab */
         $(() => {
             let items = [];
-            $.each( formData.textTab, function( key, value ) {
-                (key != "positionType") ? items.push({dataField: key}) : items.push({dataField: "positionType", editorType: 'dxSelectBox', editorOptions: {items: formData.TextPosition, value: (value ? formData.TextPosition[value].value : null), valueExpr: 'value', displayExpr: 'name'}})
+            $.each( formData.textTab, function( key, value ) {                                                                                               
+                (key != "positionType") ? items.push({dataField: key}) : items.push({dataField: key, editorType: 'dxSelectBox', editorOptions: {items: formData.TextPosition, value: ((value || value == 0) ? formData.TextPosition[value]?.value : ""), valueExpr: 'value', displayExpr: 'name'}})
             },),
             $('#text').dxForm({
               colCount: 2,
@@ -152,7 +152,7 @@ export default class ModifyManager {
         $(() => {
             let items = [];
             $.each( formData.eventsTab, function( key, value ) {
-                items.push({dataField: key, editorType: 'dxSelectBox', editorOptions: {items: formData.Hover, value: (value ? formData.Hover[value]?.value : ""), valueExpr: 'value', displayExpr: 'name'}});
+                items.push({dataField: key, editorType: 'dxSelectBox', editorOptions: {items: formData.Hover, value: ((value || value == 0) ? formData.Hover[value].value : ""), valueExpr: 'value', displayExpr: 'name'}});
             },),
             $('#events-checkbox').dxForm({
               colCount: 2, 

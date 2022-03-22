@@ -30,8 +30,7 @@ export default class SaveManager {
 
         this.updatedPage.contents.language = this.metadata.language;
         this.updatedPage.contents.title = this.metadata.title;
-        this.updatedPage.type = this.metadata.type;
-        this.updatedPage.visibility = this.metadata.type;
+        this.updatedPage.visibility = this.metadata.visibility;
         this.updatedPage.slug = this.metadata.slug;
         this.updatedPage.description = this.metadata.description;
 
@@ -77,12 +76,14 @@ export default class SaveManager {
                 .catch(() => {
                     $(() => {
                         DevExpress.ui.notify(response.status);
-                    })
+                    });
+                    return false;
                 })
                 .then(({message}) => {
                     $(() => {
                         DevExpress.ui.notify(message);
-                    })
+                    });
+                    return false;
                 })
             }
             else
@@ -90,6 +91,8 @@ export default class SaveManager {
                 $(() => {
                     DevExpress.ui.notify("Pagina pubblicata correttamente", "success");
                 })
+
+                return true;
             }
         })
 

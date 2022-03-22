@@ -136,7 +136,14 @@ namespace Pages_configurator.Controllers
         [HttpPost("delete-draft")]
         public IActionResult DeleteFraft(Guid pageId)
         {
-            return Ok();
+            DbPage page = _context.Pages.Where(page => page.id == pageId).First();
+            if (page != null)
+            {
+                _context.Remove(page);
+                _context.SaveChanges();
+                return Ok("Draft correctly deleted");
+            }
+            return BadRequest("Page not found");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

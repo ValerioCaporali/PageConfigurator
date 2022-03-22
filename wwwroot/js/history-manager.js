@@ -21,6 +21,10 @@ export default class HistoryManager {
 
     }
 
+    emptyHistory() {
+        this.history = [];
+    }
+
     getInitialPage() {
 
         return this.history[0];

@@ -371,7 +371,7 @@ export default class FormData {
         this.textTab.right = (this.widget.text?.position?.right != null) ? this.widget.text.position.right : null;
         this.textTab.left = (this.widget.text?.position?.left != null) ? this.widget.text.position.left : null;
 
-        this.eventsTab.Hover = this.widget.hover ? this.widget.hover : null;
+        this.eventsTab.Hover = this.widget.hover != null ? this.widget.hover : null;
 
 
         this.styleTab.width = this.widget.style?.width ? this.widget.style?.width : null; 
