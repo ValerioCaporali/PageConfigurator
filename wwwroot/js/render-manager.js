@@ -51,17 +51,17 @@ export default class RenderManager {
 
     }
 
-    showPageList() {
+    showPageList()
+    {
         document.getElementById('list').style.display = "block";
         document.getElementById('main').style.display = "none";
+        window.location.reload();
     }
 
     showOptions(page) {
-        console.log(page)
         let pageOptionsContainer = document.getElementById('page-options');
         pageOptionsContainer.innerHTML = "";
         if (page.drafts != null) {
-            console.log("drafts")
             page.drafts.forEach(draft => {
                 let pageCard = document.createElement('div');
                 pageCard.classList.add('page-card');
@@ -70,7 +70,7 @@ export default class RenderManager {
                 pageImage.src = "https://img.icons8.com/glyph-neue/452/paper.png";
                 let pageTitle = document.createElement("h6");
                 pageTitle.classList.add('card-title');
-                pageTitle.innerHTML = draft.language ? draft.language : 'Default';
+                pageTitle.innerHTML = draft.language ? draft.language + ' (Draft)' : 'Default (Draft)';
                 pageTitle.style.textAlign = "center";
                 pageCard.append(pageImage, pageTitle);
                 pageCard.style.backgroundColor = "white"
@@ -85,7 +85,6 @@ export default class RenderManager {
             });
         }
         else {
-            console.log("no drafts");
             page.contents.forEach(content => {
                 let pageCard = document.createElement('div');
                 pageCard.classList.add('page-card');
@@ -121,6 +120,8 @@ export default class RenderManager {
       }).dxLoadPanel('instance');
 
     openPageStream = (fullPage, contentOrDraft) => {
+        if (fullPage.drafts != null)
+            this.initPublishButton(fullPage.id);
         let page = JSON.parse(JSON.stringify(fullPage));
         page.contents = contentOrDraft;
         this.showPagePreview(page);
@@ -137,7 +138,6 @@ export default class RenderManager {
     }
 
     fillPage = (widgets) => {
-        console.log(widgets)
         var totRows = this.calculateRows(widgets),
             totCols = this.calculateColumns(widgets),
             rows = new Array(),
@@ -878,16 +878,30 @@ export default class RenderManager {
         })
     }
 
-    initHistoryButton() {
-        
+    initHistoryButton()
+    {
         document.getElementById('prev-page').addEventListener('click', () => {
             this.renderPreviousPage();
         })
-
     }
 
-    initSaveInDraftButton() {
+    initPublishButton(id)
+    {
+        $(() => {
+            $('#publish-page').dxSpeedDialAction({
+              label: 'Publish page',
+              icon: 'save',
+              index: 1,
+              onClick() {
+                let saveManager = new SaveManager();
+                saveManager.publishPage(id);
+              },
+            }).dxSpeedDialAction('instance');
+          });
+    }
 
+    initSaveInDraftButton()
+    {
         $(() => {
             let that = this;
             $('#save-page').dxSpeedDialAction({
@@ -897,7 +911,7 @@ export default class RenderManager {
               onClick() {
                 if (that.historyManager.isHistoryEmpty())
                     $(() => {
-                        DevExpress.ui.notify("La pagina non è stata modificata");
+                        DevExpress.ui.notify("La pagina non è stata modificata", "warning");
                     })
                 else {
                     let saveManager = new SaveManager();
@@ -906,11 +920,10 @@ export default class RenderManager {
               },
             }).dxSpeedDialAction('instance');
           });
-          
-
     }
 
-    renderPreviousPage() {
+    renderPreviousPage()
+    {
         if (this.historyManager.isHistoryEmpty())
             $(() => {
                 DevExpress.ui.notify("Non sono state apportate delle modifiche");

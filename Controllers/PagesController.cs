@@ -25,9 +25,6 @@ namespace Pages_configurator.Controllers
 
     public class PagesController : Controller
     {
-        private int count = 0;
-        private List<Page> pages;
-        private List<Page> homePages;
         private readonly ILogger<PagesController> _logger;
         private IBindingService _bindingService;
         private DataContext _context;
@@ -57,9 +54,9 @@ namespace Pages_configurator.Controllers
 
             List<TablePage> pages = new List<TablePage>();
             List<DbPage> dbPages = _context.Pages.ToList();
+            
             foreach (DbPage dbPage in dbPages)
             {
-
                 TablePage page = new TablePage
                 {
                     id = dbPage.id,
@@ -70,40 +67,39 @@ namespace Pages_configurator.Controllers
                     drafts = dbPage.drafts != null ? JsonConvert.DeserializeObject<List<TableContent>>(dbPage.drafts) : null,
                     contents = JsonConvert.DeserializeObject<List<TableContent>>(dbPage.contents)
                 };
-
                 pages.Add(page);
-
             }
-            
             return pages;
         }
 
         
-        [HttpPost("save-page")]
+        [HttpPost("publish")]
         public IActionResult SavePage([FromBody] Guid Id)
         {
 
             DbPage page = _context.Pages.Find(Id);
-            if (page == null)
+            if (page != null)
             {
-                return BadRequest("Page not found");
+                page.contents = page.drafts;
+                page.drafts = null;
+                _context.SaveChanges();
+                return Ok("Page correctly published");
             }
-            page.contents = page.drafts;
-            page.drafts = null;
-            _context.SaveChanges();
-            return Ok("Pagina published");
+            return BadRequest("Page not found");
 
         }
 
         [HttpPost("save-draft")]
         public IActionResult SaveInDraft([FromBody] SaveDto saveDto)
         {
-
+            if (saveDto.Page == null || saveDto.InitialPage == null)
+            {
+                return BadRequest("Invalid sent data");
+            }
             DbPage page = _context.Pages.Find(saveDto.Page.id);
             DbPage updatedPage = new DbPage();
             List<TableContent> drafts = new List<TableContent>();
             List<TableContent> contents = JsonConvert.DeserializeObject<List<TableContent>>(page.contents);
-
             if (page.drafts != null)
             {
                 drafts = JsonConvert.DeserializeObject<List<TableContent>>(page.drafts);
@@ -132,14 +128,16 @@ namespace Pages_configurator.Controllers
 
             updatedPage = page;
             updatedPage.drafts = JsonConvert.SerializeObject(drafts);
-            
             _context.Entry(page).CurrentValues.SetValues(updatedPage);
             _context.SaveChanges();
-
             return Ok("Page correctly saved");
-
         }
 
+        [HttpPost("delete-draft")]
+        public IActionResult DeleteFraft(Guid pageId)
+        {
+            return Ok();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

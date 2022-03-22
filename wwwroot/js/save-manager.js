@@ -15,7 +15,8 @@ export default class SaveManager {
 
     }
 
-    updatePage() { // locally
+    updatePage()
+    {
 
         var modifiedWidgets = this.updatedPage.contents.widgets.map((currentWidget) => {
             if (currentWidget.row == this.initialWidget.row && currentWidget.column == this.initialWidget.column)
@@ -38,7 +39,8 @@ export default class SaveManager {
 
     }
 
-    saveInDraft(pageToSave, initialPage) { // database
+    saveInDraft(pageToSave, initialPage)
+    {
 
         var draft = [];
         var oldDraft = [];
@@ -68,16 +70,71 @@ export default class SaveManager {
         }
 
         fetch(this.base_url + 'save-draft', options)
-            .then(response => response.json())
-            .then (response => console.log(response))
-            .catch(error => console.log(error));
+        .then(response => {
+            if(!response.ok)
+            {
+                response.json()
+                .catch(() => {
+                    $(() => {
+                        DevExpress.ui.notify(response.status);
+                    })
+                })
+                .then(({message}) => {
+                    $(() => {
+                        DevExpress.ui.notify(message);
+                    })
+                })
+            }
+            else
+            {
+                $(() => {
+                    DevExpress.ui.notify("Pagina pubblicata correttamente", "success");
+                })
+            }
+        })
 
     }
 
     
-    savePage() {
-        // draft to content
-    }
+    publishPage(guid)
+    {
+        const data = {
+            id: guid
+        };
 
+        const options = {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+
+            body: JSON.stringify(data)
+        };
+
+        fetch(this.base_url + 'publish', options)
+        .then(response => {
+            if(!response.ok)
+            {
+                response.json()
+                .catch(() => {
+                    $(() => {
+                        DevExpress.ui.notify(response.status);
+                    })
+                })
+                .then(({message}) => {
+                    $(() => {
+                        DevExpress.ui.notify(message);
+                    })
+                })
+            }
+            else
+            {
+                $(() => {
+                    DevExpress.ui.notify("Pagina salvata correttamente", "success");
+                })
+            }
+        })
+    }
     
 }
