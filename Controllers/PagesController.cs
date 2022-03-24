@@ -10,19 +10,30 @@ using Newtonsoft.Json;
 using Pages_configurator.Models;
 using Model.PageModel;
 using Model.PageModel.PageWidget.WidgetContent;
+using API.DTOs;
+using API.Interfaces;
+using API.Data;
+using API.Entities;
+using API.Model;
+using Model.Page.Contents;
 
 namespace Pages_configurator.Controllers
 {
 
     [ApiController]
     [Route("api/[controller]")]
+
     public class PagesController : Controller
     {
         private readonly ILogger<PagesController> _logger;
+        private IBindingService _bindingService;
+        private DataContext _context;
 
-        public PagesController(ILogger<PagesController> logger)
+        public PagesController(ILogger<PagesController> logger, IBindingService bindingService, DataContext context)
         {
             _logger = logger;
+            _bindingService = bindingService;
+            _context = context;
         }
 
         public IActionResult Index(int pageIndex)
@@ -36,36 +47,103 @@ namespace Pages_configurator.Controllers
             return View();
         }
 
-        // use this to return to javascript the json with home pages
-        [HttpGet("HomePages")]
-        public async Task<ActionResult<List<Page>>> GetHomePages()
+        [HttpGet("get-all")]
+        public async Task<ActionResult<List<TablePage>>> GetAll()
         {
-            var homePagesJson = await System.IO.File.ReadAllTextAsync("Controllers/home.json");
-            var homePages = JsonConvert.DeserializeObject<List<Page>>(homePagesJson);
-            return homePages;
-        }
+            await _bindingService.BindPagesFromJsonAsync();
 
-        // use this to return to javascript the json with normal pages
-        [HttpGet("Pages")]
-        public async Task<ActionResult<List<Page>>> GetPages()
-        {
-            var pagesJson = await System.IO.File.ReadAllTextAsync("Controllers/pages.json");
-            var pages = JsonConvert.DeserializeObject<List<Page>>(pagesJson);
+            List<TablePage> pages = new List<TablePage>();
+            List<DbPage> dbPages = _context.Pages.ToList();
+            
+            foreach (DbPage dbPage in dbPages)
+            {
+                TablePage page = new TablePage
+                {
+                    id = dbPage.id,
+                    type = dbPage.type,
+                    visibility = dbPage.visibility,
+                    slug = dbPage.slug,
+                    description = dbPage.description,
+                    drafts = dbPage.drafts != null ? JsonConvert.DeserializeObject<List<TableContent>>(dbPage.drafts) : null,
+                    contents = JsonConvert.DeserializeObject<List<TableContent>>(dbPage.contents)
+                };
+                pages.Add(page);
+            }
             return pages;
         }
 
-        // use this to save all home pages
-        [HttpPost("SaveHomePages")]
-        public async Task<ActionResult> SaveHomePages()
+        
+        [HttpPost("publish")]
+        public IActionResult SavePage([FromBody] Guid Id)
         {
-            return Ok("Home pages salvate correttamente !");
+
+            DbPage page = _context.Pages.Find(Id);
+            if (page != null)
+            {
+                page.contents = page.drafts;
+                page.drafts = null;
+                _context.SaveChanges();
+                return Ok("Page correctly published");
+            }
+            return BadRequest("Page not found");
+
         }
 
-        // use this to save all pages
-        [HttpPost("SavePages")]
-        public async Task<ActionResult> SavePages()
+        [HttpPost("save-draft")]
+        public IActionResult SaveInDraft([FromBody] SaveDto saveDto)
         {
-            return Ok("Pagine salvate correttamente !");
+            if (saveDto.Page == null || saveDto.InitialPage == null)
+            {
+                return BadRequest("Invalid sent data");
+            }
+            DbPage page = _context.Pages.Find(saveDto.Page.id);
+            DbPage updatedPage = new DbPage();
+            List<TableContent> drafts = new List<TableContent>();
+            List<TableContent> contents = JsonConvert.DeserializeObject<List<TableContent>>(page.contents);
+            if (page.drafts != null)
+            {
+                drafts = JsonConvert.DeserializeObject<List<TableContent>>(page.drafts);
+                
+                int oldDraftIndex = drafts.FindIndex(draft => draft.Language == saveDto.InitialPage.contents.First().Language);
+                if (oldDraftIndex == -1)
+                {
+                    drafts.Add(saveDto.Page.contents.First());
+                }
+                else
+                {
+                    drafts[oldDraftIndex] = saveDto.Page.contents.First();
+                }
+            }
+            else
+            {
+                drafts.Add(saveDto.Page.contents.First());
+                foreach (TableContent content in contents)
+                {
+                    if (content.Language != saveDto.InitialPage.contents.First().Language)
+                    {
+                        drafts.Add(content);
+                    }
+                }
+            }
+
+            updatedPage = page;
+            updatedPage.drafts = JsonConvert.SerializeObject(drafts);
+            _context.Entry(page).CurrentValues.SetValues(updatedPage);
+            _context.SaveChanges();
+            return Ok("Page correctly saved");
+        }
+
+        [HttpPost("delete-draft")]
+        public IActionResult DeleteFraft(Guid pageId)
+        {
+            DbPage page = _context.Pages.Where(page => page.id == pageId).First();
+            if (page != null)
+            {
+                _context.Remove(page);
+                _context.SaveChanges();
+                return Ok("Draft correctly deleted");
+            }
+            return BadRequest("Page not found");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

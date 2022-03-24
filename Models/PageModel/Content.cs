@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
+// using Converter;
 
 namespace Model.PageModel
 {
@@ -11,8 +13,8 @@ namespace Model.PageModel
         public int SlideShowDelay { get; set; }
         public bool? ServerSideScalingEnabled { get; set; }
         public bool? CacheEnabled { get; set; }
-        public bool ShowIndicator { get; set; }
-        public bool ShowNavButtons { get; set; }
+        public bool? ShowIndicator { get; set; }
+        public bool? ShowNavButtons { get; set; }
         public string ShowcaseId { get; set; }
         public string Options { get; set; }
         public bool EnableAutoplay { get; set; }
@@ -25,5 +27,6 @@ namespace Model.PageModel
         public int Zoom { get; set; }
         public string Styles { get; set; }
         public string Icon { get; set; }
+
     }
 }

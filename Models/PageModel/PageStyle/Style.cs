@@ -13,6 +13,6 @@ namespace Model.PageModel.PageStyle
         public string FontFamily { get; set; }
         public string FontSize { get; set; }
         public SpaceProperty Padding { get; set; }
-        public BorderProperty Borders { get; set; }
+        public BorderProperty[] Borders { get; set; }
     }
 }
