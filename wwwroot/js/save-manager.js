@@ -38,8 +38,14 @@ export default class SaveManager {
 
     }
 
+    updateMetadata() {
+        
+    }
+
     saveInDraft(pageToSave, initialPage)
     {
+
+        console.log("page to save ", pageToSave);
 
         var draft = [];
         var oldDraft = [];

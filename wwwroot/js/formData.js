@@ -350,9 +350,9 @@ export default class FormData {
     
      bindData() {
 
-        this.metadataTab.visibility = this.selectedPage.visibility;
-        this.metadataTab.slug = this.selectedPage.slug;
-        this.metadataTab.description = this.selectedPage.description;
+        this.metadataTab.visibility = this.selectedPage.contents.visibility;
+        this.metadataTab.slug = this.selectedPage.contents.slug;
+        this.metadataTab.description = this.selectedPage.contents.description;
         this.metadataTab.language = this.selectedPage.contents.language;
         this.metadataTab.title = this.selectedPage.contents.title;
 

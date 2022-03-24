@@ -5,7 +5,7 @@ namespace API.DTOs
 {
     public class SaveDto
     {
-        public TablePage Page { get; set; }
-        public TablePage InitialPage { get; set; }
+        public CustomTablePage Page { get; set; }
+        public CustomTablePage InitialPage { get; set; }
     }
 }

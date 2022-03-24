@@ -62,7 +62,27 @@
         position: fixed;
         width: 100%;
         top: 0;
+        z-index: 1000;
+    }
+
+     #panel {
+        position: fixed;
+        width: 18%;
+        top: 0%;
+        right: 0;
+        bottom: 0;
+        overflow: visible;
+        background-color: #e6e9ec!important;
+        font-family: Roboto,Arial,Helvetica,Verdana,sans-serif;
+        font-size: 13px;
         z-index: 1;
+        box-shadow: 14px 0px 15px 6px #000000;
+    }
+
+    .sidebar-label {
+        margin: 6px;
+        color: #556068;
+        font-size: 10.4px;
     }
 
     .container {
@@ -93,6 +113,20 @@
         margin: 10px;
         width: 200px;
         cursor: pointer;
+    }
+
+    .widget-wrapper {
+        border-radius: 3px;
+        background-color: #fff;
+        cursor: move;
+        margin: 4px;
+        position: relative;
+        color: #556068;
+        width: 47.8%;
+    }
+
+    .widget-thumbnail {
+        font-size: 2.5em !important;
     }
 
     .page-card:hover {
@@ -414,10 +448,12 @@
     }
 
     .page {
-        max-width: 60%;
+        @* max-width: 60%;
         margin-left: 0;
         margin-right: 0;
-        margin: auto;
+        margin: auto; *@
+        max-width: 108%;
+        margin-right: 18% !important;
     }
 
     .edit-panel {
@@ -469,6 +505,10 @@
 
     #history-container *, #structure-icon:hover {
         cursor: pointer;
+    }
+
+    #structure-icon:hover {
+        transform: scale(1.2);
     }
 
     .dx-button {
@@ -530,11 +570,11 @@
     }
 
     .bg-dark {
-        background-color: #000000bd;
+        background-color: #e6e9ec!important;
     }
 
     .fa-xl {
-        font-size: 1.8em;
+        font-size: 1.3em;
     }
 
     .dx-buttongroup-wrapper {
@@ -570,17 +610,90 @@
     <div id="wrapper" class="page-wrapper chiller-theme toggled" style="height: 100%;">
 
         <nav id="navbar" class="navbar navbar-dark bg-dark">
-            <i id="go-back" class="dx-icon-arrowleft" style="display: none;"></i>
-            <a id="page-title" class="navbar-brand" href="#">Configuratore</a>
-            <div id="info" style="display: none;"><p style="margin-right: 0.4rem;">Stato: </p><p id="status"></p></div>
+            <i id="go-back" class="dx-icon-arrowleft" style="display: none; color: #000 !important;"></i>
+            <a id="page-title" class="navbar-brand" href="#" style="color: #000 !important;">Configuratore</a>
+            <div id="info" style="display: none;"><p style="margin-right: 0.4rem; color: black;">Stato: </p><p id="status"></p></div>
             <div id="structure-button" style="display: none; margin-left: 20px;">
-                <i id="structure-icon" class="fa-solid fa-xl fa-eye" style="margin-right: 20px; color: white; vertical-align: middle;"></i>
+                <i id="structure-icon" class="fa-solid fa-xl fa-eye" style="margin-right: 20px; color: #556068; vertical-align: middle;"></i>
             </div>
             <div id="history-container" style="display: block;">
-                <i id="prev-page" class="fa-solid fa-rotate-left fa-xl" style="display: none; margin-right: 20px; color: white;"></i>
+                <i id="prev-page" class="fa-solid fa-rotate-left fa-xl" style="display: none; margin-right: 20px; color: #556068;"></i>
             </div>
             <div id="buttons" style="display: none;"></div>
         </nav>
+
+        <div id="panel" style="display: none;">
+            <div class="container" style="max-width: 100%; margin-top: 20px;">
+                <p class="sidebar-label">Widget</p>
+                <div class="row" style="margin: 0;">
+                    <div class="widget-wrapper" draggable="true">
+                        <div style="text-align: center; margin-top: 16px; padding: 10px;">
+                            <i class="fa-solid fa-align-justify fa-xl widget-thumbnail"></i>
+                            <p style="margin-top: 12px;">Testo</p>
+                        </div>
+                    </div>
+                    <div class="widget-wrapper" draggable="true">
+                        <div style="text-align: center; margin-top: 16px; padding: 10px;">
+                            <i class="fa-solid fa-panorama fa-xl widget-thumbnail"></i>
+                            <p style="margin-top: 12px;">Galleria</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin: 0;">
+                    <div class="widget-wrapper" draggable="true">
+                        <div style="text-align: center; margin-top: 16px; padding: 10px;">
+                            <i class="fa-solid fa-video fa-xl widget-thumbnail"></i>
+                            <p style="margin-top: 12px;">Video</p>
+                        </div>
+                    </div>
+                    <div class="widget-wrapper" draggable="true">
+                        <div style="text-align: center; margin-top: 16px; padding: 10px;">
+                            <i class="fa-solid fa-file-pdf fa-xl widget-thumbnail"></i>
+                            <p style="margin-top: 12px;">Pdf</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin: 0;">
+                    <div class="widget-wrapper" draggable="true">
+                        <div style="text-align: center; margin-top: 16px; padding: 10px;">
+                            <i class="fa-solid fa-road fa-xl widget-thumbnail"></i>
+                            <p style="margin-top: 12px;">Tour</p>
+                        </div>
+                    </div>
+                    <div class="widget-wrapper" draggable="true">
+                        <div style="text-align: center; margin-top: 16px; padding: 10px;">
+                            <i class="fa-solid fa-map fa-xl widget-thumbnail"></i>
+                            <p style="margin-top: 12px;">Map</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin: 0;">
+                    <div class="widget-wrapper" draggable="true">
+                        <div style="text-align: center; margin-top: 16px; padding: 10px;">
+                            <i class="fa-solid fa-paste fa-xl widget-thumbnail"></i>
+                            <p style="margin-top: 12px;">Pagina</p>
+                        </div>
+                    </div>
+                    <div class="widget-wrapper" draggable="true">
+                        <div style="text-align: center; margin-top: 16px; padding: 10px;">
+                            <i class="fa-solid fa-left-right fa-xl widget-thumbnail"></i>
+                            <p style="margin-top: 12px;">Galleria orizzontale</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin: 0;">
+                    <div class="widget-wrapper" draggable="true">
+                        <div style="text-align: center; margin-top: 16px; padding: 10px;">
+                            <i class="fa-solid fa-border-all fa-xl widget-thumbnail"></i>
+                            <p style="margin-top: 12px;">Galleria griglia</p>
+                        </div>
+                    </div>
+                </div>
+                <span style="margin-top: 20px; display: block;"></span>
+                <p class="sidebar-label">Metadata</p>
+                <div id="metadata" style="margin: 4px;"></div>
+            </div>
+        </div>
 
         <div id="list" class="container" style="margin-top: 80px;">
             <div id="home-pages-container" class="row"></div>
@@ -609,16 +722,6 @@
             <div class="spinner-container" style="display: block; height: 100%; width: 100%;">
                 <div class="loadpanel"></div>
             </div>
-            <div id="page-toolbar" class="row" style="max-width: 80%;">
-                <div class="page-options">
-                    @* <div id="history-container" style="display: block; margin-right: 60px">
-                        <i id="prev-page" class="fa-solid fa-rotate-left fa-xl" style="display: none; margin-right: 20px;"></i>
-                    </div> *@
-                    @* <div id="structure-button" style="display: none; margin-left: 20px;">
-                        <i id="structure-icon" class="fa-solid fa-pen-to-square fa-xl"></i>
-                    </div> *@
-                </div>
-            </div>
             <div class="demo-container" id="demo-container" style="display: none;">
                 <div id="page" class="page">
                     <div id="responsive-box">
@@ -645,8 +748,8 @@
 
                         <div id="settings-tab" class="container">
                             <ul class="nav nav-tabs">
-                                <a class="nav-item active nav-link" href="#metadata-pane" data-toggle="tab">Metadata</a>
-                                <a class="nav-item nav-link" href="#property-pane" data-toggle="tab">Proprietà</a>
+                                @* <a class="nav-item active nav-link" href="#metadata-pane" data-toggle="tab">Metadata</a> *@
+                                <a class="nav-item nav-link active" href="#property-pane" data-toggle="tab">Proprietà</a>
                                 <a class="nav-item nav-link" href="#content-pane" data-toggle="tab">Contenuto</a>
                                 <a class="nav-item nav-link" href="#text-pane" data-toggle="tab">Testo</a>
                                 <a class="nav-item nav-link" href="#event-pane" data-toggle="tab">Eventi</a>
@@ -654,11 +757,11 @@
                                 <a class="nav-item nav-link" href="#mobile-style-pane" data-toggle="tab">Stile Mobile</a>
                             </ul>
                             <div class="tab-content" style="padding: 2%;">
-                                <div class="tab-pane active" id="metadata-pane">
+                                @* <div class="tab-pane active" id="metadata-pane">
                                     <div id="metadata"></div>
-                                </div>
+                                </div> *@
 
-                                <div class="tab-pane" id="property-pane">
+                                <div class="tab-pane active" id="property-pane">
                                     <div id="properties"></div>
                                 </div>
 

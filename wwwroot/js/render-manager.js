@@ -1,6 +1,7 @@
 import ModifyManager from './modify-manager.js'
 import HistoryManager from './history-manager.js';
 import SaveManager from './save-manager.js';
+import FormData from './formData.js';
 export default class RenderManager {
 
     homePages;
@@ -9,6 +10,7 @@ export default class RenderManager {
     selectedPage;
     generatedId = [];
     contentTextareaId = [];
+    metadataChanged = false;
     showingStructure = false;
     filterPageParameters;
     historyManager = new HistoryManager();
@@ -155,15 +157,16 @@ export default class RenderManager {
       }).dxLoadPanel('instance');
 
     openPageStream = (fullPage, contentOrDraft) => {
+        console.log(contentOrDraft)
         document.getElementById('page-title').innerHTML = contentOrDraft.title;
         this.loadPanel.show()
         setTimeout(() => {
-            if (fullPage.drafts != null) {
-                this.deleteDraftButton.option("disabled", false);
-                this.publishButton.option("disabled", false);
-            }
             let page = JSON.parse(JSON.stringify(fullPage));
             page.contents = contentOrDraft;
+            page.contents.visibility = page.contents.visibility || page.contents.visibility == 0 ? page.contents.visibility : page.visibility;
+            page.contents.description = page.contents.description ? page.contents.description : page.description;
+            page.contents.slug = page.contents.slug ? page.contents.slug : page.slug;
+            console.log("assdafsd ", page);
             this.showPagePreview(page);
             this.selectedPage = page;
             this.historyManager = new HistoryManager();
@@ -193,11 +196,17 @@ export default class RenderManager {
                     that.loadPanel.show();
                     setTimeout(() => {
                         that.loadPanel.hide();       
-                        if (that.historyManager.isHistoryEmpty())
+                        if (that.historyManager.isHistoryEmpty() && that.metadataChanged == false)
                             $(() => {
                                 DevExpress.ui.notify("La pagina non è stata modificata", "warning");
                             });
-                        else {
+                        else if (that.historyManager.isHistoryEmpty() && that.metadataChanged) {
+                            let saveManager = new SaveManager();
+                            saveManager.saveInDraft(that.selectedPage, that.selectedPage);
+                            document.getElementById("status").innerHTML = "bozza";
+                            document.getElementById("status").style.color = "#e03e0d";
+                        }
+                        else if (!that.historyManager.isHistoryEmpty() || that.metadataChanged) {
                             let saveManager = new SaveManager();
                             saveManager.saveInDraft(that.selectedPage, that.historyManager.getInitialPage());
                             that.historyManager.emptyHistory();
@@ -221,9 +230,12 @@ export default class RenderManager {
                     break;
 
                 case 3:
-                    let saveManager = new SaveManager();
-                    saveManager.publishPage(id);
-                    window.location.reload();
+                    that.loadPanel.show();
+                    setTimeout(() => {
+                        let saveManager = new SaveManager();
+                        saveManager.publishPage(that.selectedPage.id);
+                        window.location.reload();
+                    }, 400)
                     break;
             
                 default:
@@ -233,82 +245,35 @@ export default class RenderManager {
       });
     });
 
-    // initSaveInDraftButton = $(() => {
-    //     let that = this;
-    //     this.saveInDraftButton = $('#save-page').dxButton({
-    //       text: 'Salva bozza',
-    //       icon: 'box',
-    //       type: 'default',
-    //       disabled: true,
-    //       onClick() {
-    //         that.loadPanel.show();
-    //         setTimeout(() => {
-    //             that.loadPanel.hide();       
-    //             if (that.historyManager.isHistoryEmpty())
-    //                 $(() => {
-    //                     DevExpress.ui.notify("La pagina non è stata modificata", "warning");
-    //                 });
-    //             else {
-    //                 let saveManager = new SaveManager();
-    //                 saveManager.saveInDraft(that.selectedPage, that.historyManager.getInitialPage());
-    //                 that.historyManager.emptyHistory();
-    //                 document.getElementById("prev-page").style.display = "none";
-    //                 that.deleteDraftButton.option("disabled", false);
-    //                 that.publishButton.option("disabled", false);
-    //                 that.saveInDraftButton.option("disabled", true);
-    //             }
-    //           }, 400);
-    //         }
-    //     }).dxButton('instance');
-    //   });
-
-    // initDeleteDraftButton = $(() => {
-    //     let that = this;
-    //     this.deleteDraftButton = $('#delete-draft').dxButton({
-    //       text: 'Elimina bozza',
-    //       icon: 'trash',
-    //       type: 'danger',
-    //       disabled: true,
-    //       onClick() {
-    //         that.loadPanel.show();
-    //         setTimeout(() => {
-    //             that.loadPanel.hide();
-    //             let saveManager = new SaveManager();
-    //             saveManager.deleteDraft(that.selectedPage.id);
-    //             that.deleteDraftButton.option("disabled", true);
-    //             that.publishButton.option("disabled", true);
-    //             that.saveInDraftButton.option("disabled", true);
-    //             that.selectedPage.drafts = null;
-    //             localStorage.setItem("id", that.selectedPage.id);
-    //             window.location.reload();
-    //           }, 400);
-    //         }
-    //     }).dxButton('instance');
-    //   });
-
-    // initPublishButton = $(() => {
-    //     this.publishButton = $('#publish-page').dxButton({
-    //       text: 'Pubblica pagina',
-    //       icon: 'upload',
-    //       type: 'success',
-    //       index: 1,
-    //       disabled: true,
-    //       onClick() {
-    //         let saveManager = new SaveManager();
-    //         saveManager.publishPage(id);
-    //         that.deleteDraftButton.option("disabled", true);
-    //         that.publishButton.option("disabled", true);
-    //         that.saveInDraftButton.option("disabled", true);
-    //         window.location.reload();
-    //       },
-    //     }).dxButton('instance');
-    //   });
-
     showPagePreview = (page) => {
+        let formData = new FormData({}, page)
+        $(() => {
+            let items = [];
+            var that = this;
+            $.each( formData.metadataTab, function( key, value ) {
+                if (key != "language" && key != "description" && key != "slug")
+                    items.push({dataField: key.toString(), validationRules: [{type: "required"}]})
+                else
+                    items.push({dataField: key.toString()})
+            },),
+            $('#metadata').dxForm({
+              colCount: 2,
+              formData: formData.metadataTab,
+              items: items,
+              labelLocation: "top",
+              onFieldDataChanged: function (e) {
+                  that.metadataChanged = true;
+                  that.selectedPage.contents[e.dataField] = e.value;
+              }
+            });  
+        });
+        console.log(document.getElementById("navbar").clientHeight);
         document.getElementById("go-back").style.display = "block";
         document.getElementById("structure-button").style.display = "block";
         document.getElementById("info").style.display = "flex";
         document.getElementById("buttons").style.display = "block";
+        document.getElementById("panel").style.display = "block";
+        document.getElementById("panel").style.marginTop = document.getElementById("navbar").clientHeight + 'px';
         let prev_button = document.getElementById("prev-page");
         this.setDefaultMode();
         this.fillPage(page.contents.widgets);
