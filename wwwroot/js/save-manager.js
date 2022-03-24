@@ -44,8 +44,8 @@ export default class SaveManager {
         var draft = [];
         var oldDraft = [];
 
-        JSON.parse(JSON.stringify(pageToSave));
-        JSON.parse(JSON.stringify(initialPage));
+        pageToSave = JSON.parse(JSON.stringify(pageToSave));
+        initialPage = JSON.parse(JSON.stringify(initialPage));
 
         draft.push(pageToSave.contents);
         pageToSave.contents = draft;
@@ -68,22 +68,20 @@ export default class SaveManager {
 
         }
 
-        fetch(this.base_url + 'save-draft', options)
+        fetch(this.base_url + 'save', options)
         .then(response => {
             if(!response.ok)
             {
                 response.json()
                 .catch(() => {
                     $(() => {
-                        DevExpress.ui.notify(response.status);
+                        DevExpress.ui.notify(response.status, "warning");
                     });
-                    return false;
                 })
                 .then(({message}) => {
                     $(() => {
-                        DevExpress.ui.notify(message);
+                        DevExpress.ui.notify(message, "warning");
                     });
-                    return false;
                 })
             }
             else
@@ -91,11 +89,50 @@ export default class SaveManager {
                 $(() => {
                     DevExpress.ui.notify("Pagina pubblicata correttamente", "success");
                 })
-
-                return true;
             }
         })
 
+    }
+
+    deleteDraft(guid)
+    {
+        const data = {
+            id: guid
+        }
+
+        const options = {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+
+        }
+
+        fetch(this.base_url + 'delete-draft', options)
+        .then(response => {
+            if(!response.ok)
+            {
+                response.json()
+                .catch(() => {
+                    $(() => {
+                        DevExpress.ui.notify(response.status, "warning");
+                    });
+                })
+                .then(({message}) => {
+                    $(() => {
+                        DevExpress.ui.notify(message);
+                    });
+                })
+            }
+            else
+            {
+                $(() => {
+                    DevExpress.ui.notify("Bozza eliminata correttamente", "success");
+                })
+            }
+        })
     }
 
     
@@ -128,7 +165,7 @@ export default class SaveManager {
                 .then(({message}) => {
                     $(() => {
                         DevExpress.ui.notify(message);
-                    })
+                    });
                 })
             }
             else

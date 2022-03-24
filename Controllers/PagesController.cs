@@ -74,10 +74,10 @@ namespace Pages_configurator.Controllers
 
         
         [HttpPost("publish")]
-        public IActionResult SavePage([FromBody] Guid Id)
+        public IActionResult SavePage([FromBody] PublishDto publishDto)
         {
 
-            DbPage page = _context.Pages.Find(Id);
+            DbPage page = _context.Pages.Find(publishDto.id);
             if (page != null)
             {
                 page.contents = page.drafts;
@@ -89,7 +89,7 @@ namespace Pages_configurator.Controllers
 
         }
 
-        [HttpPost("save-draft")]
+        [HttpPost("save")]
         public IActionResult SaveInDraft([FromBody] SaveDto saveDto)
         {
             if (saveDto.Page == null || saveDto.InitialPage == null)
@@ -103,7 +103,6 @@ namespace Pages_configurator.Controllers
             if (page.drafts != null)
             {
                 drafts = JsonConvert.DeserializeObject<List<TableContent>>(page.drafts);
-                
                 int oldDraftIndex = drafts.FindIndex(draft => draft.Language == saveDto.InitialPage.contents.First().Language);
                 if (oldDraftIndex == -1)
                 {
@@ -134,12 +133,12 @@ namespace Pages_configurator.Controllers
         }
 
         [HttpPost("delete-draft")]
-        public IActionResult DeleteFraft(Guid pageId)
+        public IActionResult DeleteFraft([FromBody] DeleteDraftDto deleteDraftDto)
         {
-            DbPage page = _context.Pages.Where(page => page.id == pageId).First();
+            DbPage page = _context.Pages.Where(page => page.id == deleteDraftDto.id).FirstOrDefault();
             if (page != null)
             {
-                _context.Remove(page);
+                page.drafts = null;
                 _context.SaveChanges();
                 return Ok("Draft correctly deleted");
             }

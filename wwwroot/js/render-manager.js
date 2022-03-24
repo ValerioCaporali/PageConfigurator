@@ -12,6 +12,9 @@ export default class RenderManager {
     showingStructure = false;
     filterPageParameters;
     historyManager = new HistoryManager();
+    saveInDraftButton;
+    deleteDraftButton;
+    publishButton;
 
     constructor(pages) {
         this.pages = JSON.parse(JSON.stringify(pages));
@@ -24,6 +27,8 @@ export default class RenderManager {
     }
 
     populatePageList = () => {
+
+        this.checkDeletedDraft()
 
         let homeContainer = document.getElementById("home-pages-container");
         let pageContainer = document.getElementById("pages-container");
@@ -53,6 +58,7 @@ export default class RenderManager {
 
     showPageList()
     {
+        localStorage.clear();
         if (!this.historyManager.isHistoryEmpty()) {
             let message = "Tutte le modifiche andranno perse";
             if(confirm(message)) {
@@ -65,6 +71,21 @@ export default class RenderManager {
             document.getElementById('list').style.display = "block";
             document.getElementById('main').style.display = "none";
             window.location.reload();
+        }
+    }
+
+    checkDeletedDraft() {
+        if (localStorage.getItem("id") != null) {
+            let id = localStorage.getItem("id").toString();
+            this.pages.forEach(page => {
+                if (page.id == id) {
+                    document.getElementById('list').style.display = "none";
+                    document.getElementById('main').style.display = "block";
+                    document.getElementById("status").innerHTML = "pubblicato";
+                    document.getElementById("status").style.color = "#22a93d";
+                    this.openPageStream(page, page.contents[0]);
+                }
+            })
         }
     }
 
@@ -86,6 +107,8 @@ export default class RenderManager {
                 pageCard.style.backgroundColor = "white"
                 pageOptionsContainer.appendChild(pageCard);
                 pageCard.addEventListener("click", () => {
+                    document.getElementById("status").innerHTML = "bozza";
+                    document.getElementById("status").style.color = "#e03e0d";
                     $(pageCard).attr("data-toggle", "modal");
                     $(pageCard).attr("data-target", "#options-modal");
                     document.getElementById('list').style.display = "none";
@@ -109,6 +132,8 @@ export default class RenderManager {
                 pageCard.style.backgroundColor = "white"
                 pageOptionsContainer.appendChild(pageCard);
                 pageCard.addEventListener("click", () => {
+                    document.getElementById("status").innerHTML = "pubblicato";
+                    document.getElementById("status").style.color = "#22a93d";
                     $(pageCard).attr("data-toggle", "modal");
                     $(pageCard).attr("data-target", "#options-modal");
                     document.getElementById('list').style.display = "none";
@@ -130,22 +155,160 @@ export default class RenderManager {
       }).dxLoadPanel('instance');
 
     openPageStream = (fullPage, contentOrDraft) => {
+        document.getElementById('page-title').innerHTML = contentOrDraft.title;
         this.loadPanel.show()
-        setTimeout(() => {            
-            if (fullPage.drafts != null)
-                this.initPublishButton(fullPage.id);
+        setTimeout(() => {
+            if (fullPage.drafts != null) {
+                this.deleteDraftButton.option("disabled", false);
+                this.publishButton.option("disabled", false);
+            }
             let page = JSON.parse(JSON.stringify(fullPage));
             page.contents = contentOrDraft;
             this.showPagePreview(page);
             this.selectedPage = page;
             this.historyManager = new HistoryManager();
             this.initHistoryButton();
-            this.initSaveInDraftButton();
             this.loadPanel.hide();
         }, 400);
     }
 
+    buttons = [
+        { id: 1, name: 'Salva bozza', icon: 'box' },
+        { id: 2, name: 'Elimina bozza', icon: 'trash' },
+        { id: 3, name: 'Pubblica', icon: 'upload' },
+      ];
+
+    initButtons = $(() => {
+        let that = this;
+        $('#buttons').dxDropDownButton({
+        items: that.buttons,
+        splitButton: false,
+        text: 'Salva',
+        displayExpr: 'name',
+        keyExpr: 'id',
+        useSelectMode: false,
+        onItemClick(e) {
+            switch (e.itemData.id) {
+                case 1:
+                    that.loadPanel.show();
+                    setTimeout(() => {
+                        that.loadPanel.hide();       
+                        if (that.historyManager.isHistoryEmpty())
+                            $(() => {
+                                DevExpress.ui.notify("La pagina non è stata modificata", "warning");
+                            });
+                        else {
+                            let saveManager = new SaveManager();
+                            saveManager.saveInDraft(that.selectedPage, that.historyManager.getInitialPage());
+                            that.historyManager.emptyHistory();
+                            document.getElementById("prev-page").style.display = "none";
+                            document.getElementById("status").innerHTML = "bozza";
+                            document.getElementById("status").style.color = "#e03e0d";
+                        }
+                      }, 400);
+                    break;
+
+                case 2:
+                    that.loadPanel.show();
+                    setTimeout(() => {
+                        that.loadPanel.hide();
+                        let saveManager = new SaveManager();
+                        saveManager.deleteDraft(that.selectedPage.id);
+                        that.selectedPage.drafts = null;
+                        localStorage.setItem("id", that.selectedPage.id);
+                        window.location.reload();
+                      }, 400);
+                    break;
+
+                case 3:
+                    let saveManager = new SaveManager();
+                    saveManager.publishPage(id);
+                    window.location.reload();
+                    break;
+            
+                default:
+                    break;
+            }
+          },
+      });
+    });
+
+    // initSaveInDraftButton = $(() => {
+    //     let that = this;
+    //     this.saveInDraftButton = $('#save-page').dxButton({
+    //       text: 'Salva bozza',
+    //       icon: 'box',
+    //       type: 'default',
+    //       disabled: true,
+    //       onClick() {
+    //         that.loadPanel.show();
+    //         setTimeout(() => {
+    //             that.loadPanel.hide();       
+    //             if (that.historyManager.isHistoryEmpty())
+    //                 $(() => {
+    //                     DevExpress.ui.notify("La pagina non è stata modificata", "warning");
+    //                 });
+    //             else {
+    //                 let saveManager = new SaveManager();
+    //                 saveManager.saveInDraft(that.selectedPage, that.historyManager.getInitialPage());
+    //                 that.historyManager.emptyHistory();
+    //                 document.getElementById("prev-page").style.display = "none";
+    //                 that.deleteDraftButton.option("disabled", false);
+    //                 that.publishButton.option("disabled", false);
+    //                 that.saveInDraftButton.option("disabled", true);
+    //             }
+    //           }, 400);
+    //         }
+    //     }).dxButton('instance');
+    //   });
+
+    // initDeleteDraftButton = $(() => {
+    //     let that = this;
+    //     this.deleteDraftButton = $('#delete-draft').dxButton({
+    //       text: 'Elimina bozza',
+    //       icon: 'trash',
+    //       type: 'danger',
+    //       disabled: true,
+    //       onClick() {
+    //         that.loadPanel.show();
+    //         setTimeout(() => {
+    //             that.loadPanel.hide();
+    //             let saveManager = new SaveManager();
+    //             saveManager.deleteDraft(that.selectedPage.id);
+    //             that.deleteDraftButton.option("disabled", true);
+    //             that.publishButton.option("disabled", true);
+    //             that.saveInDraftButton.option("disabled", true);
+    //             that.selectedPage.drafts = null;
+    //             localStorage.setItem("id", that.selectedPage.id);
+    //             window.location.reload();
+    //           }, 400);
+    //         }
+    //     }).dxButton('instance');
+    //   });
+
+    // initPublishButton = $(() => {
+    //     this.publishButton = $('#publish-page').dxButton({
+    //       text: 'Pubblica pagina',
+    //       icon: 'upload',
+    //       type: 'success',
+    //       index: 1,
+    //       disabled: true,
+    //       onClick() {
+    //         let saveManager = new SaveManager();
+    //         saveManager.publishPage(id);
+    //         that.deleteDraftButton.option("disabled", true);
+    //         that.publishButton.option("disabled", true);
+    //         that.saveInDraftButton.option("disabled", true);
+    //         window.location.reload();
+    //       },
+    //     }).dxButton('instance');
+    //   });
+
     showPagePreview = (page) => {
+        document.getElementById("go-back").style.display = "block";
+        document.getElementById("structure-button").style.display = "block";
+        document.getElementById("info").style.display = "flex";
+        document.getElementById("buttons").style.display = "block";
         let prev_button = document.getElementById("prev-page");
         this.setDefaultMode();
         this.fillPage(page.contents.widgets);
@@ -854,8 +1017,8 @@ export default class RenderManager {
         }
         document.getElementById("history-container").style.display = "block";
         document.getElementById('page').classList.remove('page-structure');
-        document.getElementById('structure-icon').classList.remove('fa-eye');
-        document.getElementById('structure-icon').classList.add('fa-pen-to-square');
+        // document.getElementById('structure-icon').classList.remove('fa-eye');
+        // document.getElementById('structure-icon').classList.add('fa-pen-to-square');
         document.getElementById("demo-container").style.display = "block";
         var structureButton = document.getElementById('structure-button');
         structureButton.style.display = 'block';
@@ -871,8 +1034,8 @@ export default class RenderManager {
                 widget.classList.remove('structure');
             });
             this.changeEditIconsVisibility('none')
-            structureIcon.classList.remove('fa-eye');
-            structureIcon.classList.add('fa-pen-to-square');
+            // structureIcon.classList.remove('fa-eye');
+            // structureIcon.classList.add('fa-pen-to-square');
             this.showingStructure = false;
         } else {
             document.getElementById('page').classList.add('page-structure');
@@ -880,8 +1043,8 @@ export default class RenderManager {
                 widget.classList.add('structure');
             });
             this.changeEditIconsVisibility('block');
-            structureIcon.classList.add('fa-eye');
-            structureIcon.classList.remove('fa-pen-to-square');
+            // structureIcon.classList.add('fa-eye');
+            // structureIcon.classList.remove('fa-pen-to-square');
             this.showingStructure = true;
         }
     }
@@ -897,49 +1060,6 @@ export default class RenderManager {
         document.getElementById('prev-page').addEventListener('click', () => {
             this.renderPreviousPage();
         })
-    }
-
-    initPublishButton(id)
-    {
-        $(() => {
-            $('#publish-page').dxSpeedDialAction({
-              label: 'Publish page',
-              icon: 'save',
-              index: 1,
-              onClick() {
-                let saveManager = new SaveManager();
-                saveManager.publishPage(id);
-              },
-            }).dxSpeedDialAction('instance');
-          });
-    }
-
-    initSaveInDraftButton()
-    {
-        $(() => {
-            let that = this;
-            $('#save-page').dxSpeedDialAction({
-              label: 'Save draft',
-              icon: 'save',
-              index: 1,
-              onClick() {
-                that.loadPanel.show();
-                setTimeout(() => {
-                    that.loadPanel.hide();       
-                    if (that.historyManager.isHistoryEmpty())
-                        $(() => {
-                            DevExpress.ui.notify("La pagina non è stata modificata", "warning");
-                        });
-                    else {
-                        let saveManager = new SaveManager();
-                        let saved = saveManager.saveInDraft(that.selectedPage, that.historyManager.getInitialPage());
-                        if (saved)
-                            that.historyManager.emptyHistory();
-                    }
-                  }, 400);
-                }
-            }).dxSpeedDialAction('instance');
-          });
     }
 
     renderPreviousPage()
@@ -962,13 +1082,13 @@ export default class RenderManager {
         modifyManager.initPanel();
 
         document.getElementById("save-widget-changes-button").addEventListener("click", () => {
-
             let modifiedPage = modifyManager.getUpdatedPage();
             if (modifiedPage) {
                 if (this.historyManager.isHistoryEmpty())
                     this.historyManager.updateHistory(this.selectedPage);
                 this.historyManager.updateHistory(modifiedPage);
                 this.selectedPage = this.historyManager.getLastPage();
+                // this.saveInDraftButton.option('disabled', false);
                 this.showPagePreview(this.selectedPage);
             }
 

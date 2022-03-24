@@ -58,6 +58,13 @@
         border-radius: 5px;
     }
 
+    #navbar {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1;
+    }
+
     .container {
         max-width: 74%;
     }
@@ -457,13 +464,30 @@
     }
 
     #history-container {
-        margin: auto;
+        margin: 0;
     }
 
     #history-container *, #structure-icon:hover {
         cursor: pointer;
     }
 
+    .dx-button {
+        border-radius: 0;
+    }
+
+    .modal-dialog {
+        margin: auto;
+        position: absolute;
+        top: 40%;
+        left: 0;
+        transform: translateY(-50%) !important;
+        right: 0;
+    }
+
+    .modal-content {
+        border-radius: 0px;
+    }
+    
     .form-select {
         display: block;
         width: 100%;
@@ -486,9 +510,49 @@
         appearance: none;
     }
 
+    #buttons {
+        right: 0;
+        padding: 0;
+    }
+
+    #info {
+        display: flex;
+        color: white;
+        margin-right: 0 !important;
+        margin: auto;
+        vertical-align: middle;
+        top: 0 !important;
+        bottom: 0;
+    }
+
+    #info p {
+        margin-top: revert;
+    }
+
+    .bg-dark {
+        background-color: #000000bd;
+    }
+
+    .fa-xl {
+        font-size: 1.8em;
+    }
+
+    .dx-buttongroup-wrapper {
+        background-color: #fff;
+        width: 156px;
+        margin-right: 2px;
+        border-radius: 4px;
+    }
+
     .dx-icon-arrowleft {
         font-size: 30px;
         cursor: pointer;
+        color: #9a9a9a !important;
+        margin-right: 10px;
+    }
+
+    .dx-button-mode-outlined.dx-buttongroup-last-item.dx-button {
+        border: none !important;
     }
 
     .dx-toast-content {
@@ -505,7 +569,20 @@
 <body>
     <div id="wrapper" class="page-wrapper chiller-theme toggled" style="height: 100%;">
 
-        <div id="list" class="container" style="margin-top: 20px;">
+        <nav id="navbar" class="navbar navbar-dark bg-dark">
+            <i id="go-back" class="dx-icon-arrowleft" style="display: none;"></i>
+            <a id="page-title" class="navbar-brand" href="#">Configuratore</a>
+            <div id="info" style="display: none;"><p style="margin-right: 0.4rem;">Stato: </p><p id="status"></p></div>
+            <div id="structure-button" style="display: none; margin-left: 20px;">
+                <i id="structure-icon" class="fa-solid fa-xl fa-eye" style="margin-right: 20px; color: white; vertical-align: middle;"></i>
+            </div>
+            <div id="history-container" style="display: block;">
+                <i id="prev-page" class="fa-solid fa-rotate-left fa-xl" style="display: none; margin-right: 20px; color: white;"></i>
+            </div>
+            <div id="buttons" style="display: none;"></div>
+        </nav>
+
+        <div id="list" class="container" style="margin-top: 80px;">
             <div id="home-pages-container" class="row"></div>
             <div id="pages-container" class="row"></div>
                 <div class="modal fade" id="options-modal" role="dialog" style="backdrop-filter: blur(3px);"
@@ -533,14 +610,13 @@
                 <div class="loadpanel"></div>
             </div>
             <div id="page-toolbar" class="row" style="max-width: 80%;">
-                <i id="go-back" class="dx-icon-arrowleft"></i>
                 <div class="page-options">
-                    <div id="history-container" style="display: block; margin-right: 60px">
+                    @* <div id="history-container" style="display: block; margin-right: 60px">
                         <i id="prev-page" class="fa-solid fa-rotate-left fa-xl" style="display: none; margin-right: 20px;"></i>
-                    </div>
-                    <div id="structure-button" style="display: none; margin-left: 20px;">
+                    </div> *@
+                    @* <div id="structure-button" style="display: none; margin-left: 20px;">
                         <i id="structure-icon" class="fa-solid fa-pen-to-square fa-xl"></i>
-                    </div>
+                    </div> *@
                 </div>
             </div>
             <div class="demo-container" id="demo-container" style="display: none;">
@@ -549,14 +625,11 @@
                     </div>
                 </div>
             </div>
-            <div id="save-page"></div>
-            <div id="publish-page"></div>
         </main>
 
 
-        <div class="modal fade" id="edit-modal" role="dialog" style="backdrop-filter: blur(3px); display: none;"
-            data-backdrop="static">
-            <div class="modal-dialog modal-xl" style="margin-top: 5rem;">
+        <div class="modal fade" id="edit-modal" role="dialog" style="backdrop-filter: blur(3px); display: none; data-backdrop="static">
+            <div class="modal-dialog modal-xl">
 
                 <!-- Modal content-->
                 <div class="modal-content">
