@@ -54,13 +54,14 @@ export default class ModifyManager {
         this.selectedPage = selectedPage;
         this.text_content_id = text_content_id;
         this.text_id = text_id;
+
     }
 
     initHtmlEditors(selector) {
         tinymce.init({
             selector: "#" + selector,
             plugins:
-                "code a11ychecker advcode casechange export formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker",
+                "print preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons'",
             toolbar:
                 "a11ycheck addcomment showcomments casechange checklist code export formatpainter pageembed permanentpen table",
             toolbar_mode: "floating",
@@ -71,6 +72,11 @@ export default class ModifyManager {
             height: "400",
             content_css: "../css/configurator-style.css",
             strict_loading_mode : true
+        });
+        $(document).on('focusin', function(e) {
+            if ($(e.target).closest(".mce-window").length) {
+            e.stopImmediatePropagation();
+            }
         });
     }
 
@@ -114,7 +120,7 @@ export default class ModifyManager {
                 if (key == "row" || key == "column")
                     items.push({dataField: key.toString(), validationRules: [{type: "required"}]})
                 else if (key == "type")
-                    items.push({dataField: "type", editorType: 'dxSelectBox', editorOptions: {items: formData.Type, value: formData.Type[value].value, valueExpr: 'value', displayExpr: 'name', onSelectionChanged(e) {that.updateContentTab(e.selectedItem.value)}}, validationRules: [{type: "required"}]});
+                    items.push({dataField: "type", editorType: 'dxSelectBox', editorOptions: {items: formData.Type, value: formData.Type[value].value, valueExpr: 'value', displayExpr: 'name', onSelectionChanged(e) {that.updateContentTab(e.selectedItem.value)}, disabled: true}, validationRules: [{type: "required"}]});
                 else items.push({dataField: key.toString()})
             },),
             $('#properties').dxForm({

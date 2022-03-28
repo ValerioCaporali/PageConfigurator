@@ -31,6 +31,30 @@ export default class FormData {
 
     ]
 
+    Visibility = [
+
+        {value: 0, text: "Public"},
+
+        {value: 1, text: "Private"}
+        
+    ]
+
+    Language = [
+
+        {value: "null", text: "Default", disabled: true},
+
+        {value: "it", text: "Italiano"},
+
+        {value: "en", text: "Inglese"},
+
+        {value: "es", text: "Spagnolo"},
+
+        {value: "fr", text: "Francese"},
+
+        {value: "de", text: "Tedesco"}
+
+    ]
+
     TextPosition = [
 
         { name: "Centrato", value: 0 },

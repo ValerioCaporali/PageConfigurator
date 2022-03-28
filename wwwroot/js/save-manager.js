@@ -45,7 +45,7 @@ export default class SaveManager {
     saveInDraft(pageToSave, initialPage)
     {
 
-        console.log("page to save ", pageToSave);
+        console.log(pageToSave);
 
         var draft = [];
         var oldDraft = [];
@@ -81,20 +81,16 @@ export default class SaveManager {
                 response.json()
                 .catch(() => {
                     $(() => {
-                        DevExpress.ui.notify(response.status, "warning");
+                        swal(message, "warning");
                     });
                 })
                 .then(({message}) => {
-                    $(() => {
-                        DevExpress.ui.notify(message, "warning");
-                    });
+                    swal(message, "warning");
                 })
             }
             else
             {
-                $(() => {
-                    DevExpress.ui.notify("Pagina pubblicata correttamente", "success");
-                })
+                swal("Pagina salvata!", "La pagina è stata salvata correttamente nelle bozze", "success");
             }
         })
 

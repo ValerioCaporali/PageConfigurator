@@ -17,20 +17,37 @@ export default class RenderManager {
     saveInDraftButton;
     deleteDraftButton;
     publishButton;
+    isDraft = false;
+    typingTimer;
+    doneTypingInterval = 800;
 
     constructor(pages) {
         this.pages = JSON.parse(JSON.stringify(pages));
         document.getElementById('structure-icon').addEventListener("click", () => {
             this.changeMode();
-        })
+        });
         document.getElementById('go-back').addEventListener("click", () => {
             this.showPageList();
-        })
+        });
+        this.initSidebarCurtains();
     }
 
-    populatePageList = () => {
+    search = document.getElementById('search').addEventListener('keyup', (event) => {
+        document.getElementById('search').value = event.target.value;
+        clearTimeout(this.typingTimer);
+        this.typingTimer = setTimeout(() => {
+            this.populateBySearch(event.target.value, document.getElementById('filter').value);
+        }, this.doneTypingInterval);
+    });
 
-        this.checkDeletedDraft()
+
+    filters = document.getElementById('filter').addEventListener('change', (event) => {
+        let filter = event.target.value;
+        this.populateBySearch(document.getElementById('search').value, filter)
+    
+    });
+
+    populatePageList = () => {
 
         let homeContainer = document.getElementById("home-pages-container");
         let pageContainer = document.getElementById("pages-container");
@@ -38,6 +55,7 @@ export default class RenderManager {
             let pageCard = document.createElement('div');
             pageCard.classList.add('page-card');
             let pageImage = document.createElement("img");
+            pageImage.draggable = false;
             pageImage.classList.add('card-img-top');
             pageImage.src = "https://img.icons8.com/glyph-neue/452/paper.png";
             let pageTitle = document.createElement("h6");
@@ -45,6 +63,12 @@ export default class RenderManager {
             pageTitle.innerHTML = page.description;
             pageTitle.style.textAlign = "center";
             pageCard.append(pageImage, pageTitle);
+            if (page.drafts) {
+                let badge = document.createElement('span');
+                badge.className = "badge badge-warning";
+                badge.innerHTML = "Bozza";
+                pageCard.append(badge);
+            }
             $(pageCard).attr("data-toggle", "modal");
             $(pageCard).attr("data-target", "#options-modal");
             if (page.type == 0)
@@ -58,36 +82,68 @@ export default class RenderManager {
 
     }
 
+    populateBySearch(val, filter) {
+        val = val ? val : "";
+        document.getElementById("home-pages-container").style.display = "none";
+        document.getElementById("pages-container").style.display = "none";
+        let search = document.getElementById('searched');
+        search.innerHTML = "";
+        let searched;
+        searched = this.pages.filter((page) => {
+            if (page.description.toLowerCase().includes(val.toLowerCase()))
+                if (filter == "all")
+                    return page;
+                else if (page.type == filter)
+                    return page;
+        });
+        searched.forEach(page => {
+            let pageCard = document.createElement('div');
+            pageCard.classList.add('page-card');
+            let pageImage = document.createElement("img");
+            pageImage.draggable = false;
+            pageImage.classList.add('card-img-top');
+            pageImage.src = "https://img.icons8.com/glyph-neue/452/paper.png";
+            let pageTitle = document.createElement("h6");
+            pageTitle.classList.add('card-title');
+            pageTitle.innerHTML = page.description;
+            pageTitle.style.textAlign = "center";
+            pageCard.append(pageImage, pageTitle);
+            if (page.drafts) {
+                let badge = document.createElement('span');
+                badge.className = "badge badge-warning";
+                badge.innerHTML = "Bozza";
+                pageCard.append(badge);
+            }
+            $(pageCard).attr("data-toggle", "modal");
+            $(pageCard).attr("data-target", "#options-modal");
+            search.append(pageCard)
+            pageCard.addEventListener('click', () => {
+                this.showOptions(page);
+            })
+        })
+    }
+
     showPageList()
     {
         localStorage.clear();
         if (!this.historyManager.isHistoryEmpty()) {
-            let message = "Tutte le modifiche andranno perse";
-            if(confirm(message)) {
-                document.getElementById('list').style.display = "block";
-                document.getElementById('main').style.display = "none";
-                window.location.reload();
-            }
+            swal({
+                title: "Conferma",
+                text: "Tutte le modifiche non salvate andranno perse!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+              })
+              .then((willDelete) => {
+                if (willDelete) {
+                  window.location.reload();
+                }
+              });
         }
         else {
             document.getElementById('list').style.display = "block";
             document.getElementById('main').style.display = "none";
             window.location.reload();
-        }
-    }
-
-    checkDeletedDraft() {
-        if (localStorage.getItem("id") != null) {
-            let id = localStorage.getItem("id").toString();
-            this.pages.forEach(page => {
-                if (page.id == id) {
-                    document.getElementById('list').style.display = "none";
-                    document.getElementById('main').style.display = "block";
-                    document.getElementById("status").innerHTML = "pubblicato";
-                    document.getElementById("status").style.color = "#22a93d";
-                    this.openPageStream(page, page.contents[0]);
-                }
-            })
         }
     }
 
@@ -101,6 +157,7 @@ export default class RenderManager {
                 let pageImage = document.createElement("img");
                 pageImage.classList.add('card-img-top');
                 pageImage.src = "https://img.icons8.com/glyph-neue/452/paper.png";
+                pageImage.draggable = false;
                 let pageTitle = document.createElement("h6");
                 pageTitle.classList.add('card-title');
                 pageTitle.innerHTML = draft.language ? draft.language + ' (Draft)' : 'Default (Draft)';
@@ -115,6 +172,7 @@ export default class RenderManager {
                     $(pageCard).attr("data-target", "#options-modal");
                     document.getElementById('list').style.display = "none";
                     document.getElementById('main').style.display = "block";
+                    this.isDraft = true;
                     this.openPageStream(page, draft);
                 })
             });
@@ -126,6 +184,7 @@ export default class RenderManager {
                 let pageImage = document.createElement("img");
                 pageImage.classList.add('card-img-top');
                 pageImage.src = "https://img.icons8.com/glyph-neue/452/paper.png";
+                pageImage.draggable = false;
                 let pageTitle = document.createElement("h6");
                 pageTitle.classList.add('card-title');
                 pageTitle.innerHTML = content.language ? content.language : 'Default';
@@ -146,6 +205,49 @@ export default class RenderManager {
         }
     }
 
+    initSidebarCurtains() {
+        document.getElementById("widgets-curtain-header").addEventListener('click', () => {
+            if (document.getElementById("widgets-curtain").offsetHeight == 0) {
+                document.getElementById("close-widgets-curtain").style.display = "block";
+                document.getElementById("open-widgets-curtain").style.display = "none";
+                document.getElementById("widgets-curtain").style.height = "560px";
+                document.getElementById("widgets-curtain-header").style.boxShadow = "none";
+            } else {
+                document.getElementById("close-widgets-curtain").style.display = "none";
+                document.getElementById("open-widgets-curtain").style.display = "block";
+                document.getElementById("widgets-curtain").style.height = "0";
+                document.getElementById("widgets-curtain").style.overflow = "hidden";
+                setTimeout(() => {
+                    document.getElementById("widgets-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 3%)";
+                }, 300)
+            }
+        });
+
+        document.getElementById("metadata-curtain-header").addEventListener('click', () => {
+            if (document.getElementById("metadata").offsetHeight == 0) {
+                document.getElementById("close-metadata-curtain").style.display = "block";
+                document.getElementById("open-metadata-curtain").style.display = "none";
+                document.getElementById("metadata").style.height = "250px";
+                document.getElementById("metadata-curtain-header").style.boxShadow = "none";
+            } else {
+                document.getElementById("close-metadata-curtain").style.display = "none";
+                document.getElementById("open-metadata-curtain").style.display = "block";
+                document.getElementById("metadata").style.height = "0";
+                document.getElementById("metadata").style.overflow = "hidden";
+                setTimeout(() => {
+                    document.getElementById("metadata-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 3%)";
+                }, 300)
+            }
+        })
+    }
+
+    renderPageById(pageId) {
+        this.pages.forEach(page => {
+            if (page.id == pageId)
+                this.openPageStream(page, page.contents[0]);
+        });
+    }
+
     loadPanel = $('.loadpanel').dxLoadPanel({
         shadingColor: 'rgba(0,0,0,0.4)',
         position: { of: '#spinner-container' },
@@ -157,8 +259,7 @@ export default class RenderManager {
       }).dxLoadPanel('instance');
 
     openPageStream = (fullPage, contentOrDraft) => {
-        console.log(contentOrDraft)
-        document.getElementById('page-title').innerHTML = contentOrDraft.title;
+        document.getElementById('search').style.display = "none";
         this.loadPanel.show()
         setTimeout(() => {
             let page = JSON.parse(JSON.stringify(fullPage));
@@ -166,7 +267,6 @@ export default class RenderManager {
             page.contents.visibility = page.contents.visibility || page.contents.visibility == 0 ? page.contents.visibility : page.visibility;
             page.contents.description = page.contents.description ? page.contents.description : page.description;
             page.contents.slug = page.contents.slug ? page.contents.slug : page.slug;
-            console.log("assdafsd ", page);
             this.showPagePreview(page);
             this.selectedPage = page;
             this.historyManager = new HistoryManager();
@@ -195,16 +295,15 @@ export default class RenderManager {
                 case 1:
                     that.loadPanel.show();
                     setTimeout(() => {
-                        that.loadPanel.hide();       
+                        that.loadPanel.hide();    
                         if (that.historyManager.isHistoryEmpty() && that.metadataChanged == false)
-                            $(() => {
-                                DevExpress.ui.notify("La pagina non è stata modificata", "warning");
-                            });
+                            swal("", "Non ci sono modifiche da salvare", "info");
                         else if (that.historyManager.isHistoryEmpty() && that.metadataChanged) {
                             let saveManager = new SaveManager();
                             saveManager.saveInDraft(that.selectedPage, that.selectedPage);
                             document.getElementById("status").innerHTML = "bozza";
                             document.getElementById("status").style.color = "#e03e0d";
+                            that.isDraft = true;
                         }
                         else if (!that.historyManager.isHistoryEmpty() || that.metadataChanged) {
                             let saveManager = new SaveManager();
@@ -213,29 +312,63 @@ export default class RenderManager {
                             document.getElementById("prev-page").style.display = "none";
                             document.getElementById("status").innerHTML = "bozza";
                             document.getElementById("status").style.color = "#e03e0d";
+                            that.isDraft = true;
                         }
                       }, 400);
                     break;
 
                 case 2:
-                    that.loadPanel.show();
-                    setTimeout(() => {
-                        that.loadPanel.hide();
-                        let saveManager = new SaveManager();
-                        saveManager.deleteDraft(that.selectedPage.id);
-                        that.selectedPage.drafts = null;
-                        localStorage.setItem("id", that.selectedPage.id);
-                        window.location.reload();
-                      }, 400);
+                    if (that.isDraft == false) {
+                        swal("Attenzione", "La pagina non ha bozze", "info");
+                        break;
+                    }
+                    swal({
+                        title: "Eliminare le bozze ?",
+                        text: "La pagina verrà risincronizzata con la versione pubblicata",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                      })
+                      .then((willDelete) => {
+                        if (willDelete) {
+                            that.loadPanel.show();
+                            setTimeout(() => {
+                                that.loadPanel.hide();
+                                let saveManager = new SaveManager();
+                                saveManager.deleteDraft(that.selectedPage.id);
+                                that.selectedPage.drafts = null;
+                                // localStorage.setItem("id", that.selectedPage.id);
+                                that.isDraft = false;
+                                document.getElementById("status").innerHTML = "pubblicato";
+                                document.getElementById("status").style.color = "#22a93d";
+                                that.renderPageById(that.selectedPage.id);
+                              }, 400);
+                        }
+                      });
                     break;
 
                 case 3:
-                    that.loadPanel.show();
-                    setTimeout(() => {
-                        let saveManager = new SaveManager();
-                        saveManager.publishPage(that.selectedPage.id);
-                        window.location.reload();
-                    }, 400)
+                    if (that.isDraft == false) {
+                        swal("Pagina già pubblicata", "", "info");
+                        break;
+                    }
+                    swal({
+                        title: "Pubblicare la pagina ?",
+                        text: "Le modifiche effettuate alla pagina verranno pubblicate",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                      })
+                      .then((willDelete) => {
+                        if (willDelete) {
+                            that.loadPanel.show();
+                            setTimeout(() => {
+                                let saveManager = new SaveManager();
+                                saveManager.publishPage(that.selectedPage.id);
+                                window.location.reload();
+                            }, 400);
+                        }
+                      });
                     break;
             
                 default:
@@ -251,10 +384,16 @@ export default class RenderManager {
             let items = [];
             var that = this;
             $.each( formData.metadataTab, function( key, value ) {
-                if (key != "language" && key != "description" && key != "slug")
-                    items.push({dataField: key.toString(), validationRules: [{type: "required"}]})
+                if (key == "visibility")
+                    items.push({dataField: key.toString(), editorType: 'dxRadioGroup', editorOptions: {items: formData.Visibility, value: (formData.Visibility[page.contents.visibility].value), valueExpr: 'value', displayExpr: 'text', layout: 'horizontal'}});
+                else if (key != "language" && key != "description" && key != "slug" && key != "visibility")
+                    items.push({dataField: key.toString(), validationRules: [{type: "required"}]});
+                else if (key == "language") {
+                    let index = page.contents.language ? formData.Language.findIndex( lan => lan.value == page.contents.language) : 0;
+                    items.push({dataField: key.toString(), editorType: 'dxSelectBox', editorOptions: {items: formData.Language, value: formData.Language[index].value, valueExpr: 'value', displayExpr: 'text', disabled: key == "language" && !page.contents.language ? true : false}, validationRules: [{type: "required"}]});
+                }
                 else
-                    items.push({dataField: key.toString()})
+                    items.push({dataField: key.toString()});
             },),
             $('#metadata').dxForm({
               colCount: 2,
@@ -262,12 +401,12 @@ export default class RenderManager {
               items: items,
               labelLocation: "top",
               onFieldDataChanged: function (e) {
+                  console.log(e);
                   that.metadataChanged = true;
                   that.selectedPage.contents[e.dataField] = e.value;
               }
             });  
         });
-        console.log(document.getElementById("navbar").clientHeight);
         document.getElementById("go-back").style.display = "block";
         document.getElementById("structure-button").style.display = "block";
         document.getElementById("info").style.display = "flex";
@@ -457,7 +596,7 @@ export default class RenderManager {
             var canvasContainer = this.handleScrollablePdf(widget, direction);
             return canvasContainer;
         } else {
-            const url = '../docs/pdf.pdf';
+            const url = 'https://api.b2b.flowers.usalesman.it/api/v1/media/public/blobs/artnova/catalog.pdf';
 
             var canvas = document.createElement('canvas');
             var pdfToolbar = createpdfToolbar();
@@ -508,7 +647,7 @@ export default class RenderManager {
         var canvasContainer = document.createElement('div');
         canvasContainer.classList.add(direction === 'y' ? 'vertical-pdf-scroll-container' : 'horizontal-pdf-scroll');
         canvasContainer.id = "canvas-container";
-        const url = '../docs/pdf.pdf';
+        const url = 'https://api.b2b.flowers.usalesman.it/api/v1/media/public/blobs/artnova/catalog.pdf';
         var options = { scale: 1 };
 
         var renderScrollablePdfPage = (page) => {
