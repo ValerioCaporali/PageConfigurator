@@ -48,12 +48,14 @@ export default class ModifyManager {
     borders = [];
     mobileBorders = [];
     newFormData;
+    renderer;
 
-    constructor(widget, selectedPage, text_content_id, text_id) {
+    constructor(widget, selectedPage, text_content_id, text_id, renderer) {
         this.widget = widget;
         this.selectedPage = selectedPage;
         this.text_content_id = text_content_id;
         this.text_id = text_id;
+        this.renderer = renderer;
 
     }
 
@@ -61,13 +63,10 @@ export default class ModifyManager {
         tinymce.init({
             selector: "#" + selector,
             plugins:
-                "print preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons'",
+                "print preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons",
             toolbar:
                 "a11ycheck addcomment showcomments casechange checklist code export formatpainter pageembed permanentpen table",
             toolbar_mode: "floating",
-            force_br_newlines : false,
-            force_p_newlines : false,
-            forced_root_block : '',
             tinycomments_mode: "embedded",
             height: "400",
             content_css: "../css/configurator-style.css",
@@ -156,15 +155,19 @@ export default class ModifyManager {
 
         /* Events Tab */
         $(() => {
+            let that = this;
             let items = [];
             $.each( formData.eventsTab, function( key, value ) {
                 items.push({dataField: key, editorType: 'dxSelectBox', editorOptions: {items: formData.Hover, value: ((value || value == 0) ? formData.Hover[value].value : ""), valueExpr: 'value', displayExpr: 'name'}});
             },),
             $('#events-checkbox').dxForm({
-              colCount: 2, 
+              colCount: 1, 
               formData: formData.eventsTab,
               items: items,
               labelLocation: "top",
+              onFieldDataChanged: function (e) {
+                that.getUpdatedPage()
+            }
             });
         });
         $(() => {
@@ -175,7 +178,7 @@ export default class ModifyManager {
                 items.push({dataField: key, editorType: 'dxSelectBox', editorOptions: {items: formData.ClickActionType, value: ((currValue || currValue == 0) ? formData.ClickActionType[currValue]?.value : null), valueExpr: 'value', displayExpr: 'name', onSelectionChanged(e) {that.updateClickAction(e.selectedItem?.value)}}});
             },);
             $('#ca-type').dxForm({
-              colCount: 2, 
+              colCount: 1,
               formData: formData.caType,
               items: items,
               labelLocation: "top",
@@ -189,7 +192,7 @@ export default class ModifyManager {
                 else items.push({dataField: key, editorType: "dxCheckBox", value: value});
             },);
             $('#ca-0').dxForm({
-              colCount: 2, 
+              colCount: 1, 
               formData: formData.link,
               items: items,
               labelLocation: "top",
@@ -216,7 +219,7 @@ export default class ModifyManager {
                 items.push({dataField: key});
             },);
             $('#ca-2').dxForm({
-              colCount: 2, 
+              colCount: 1, 
               formData: formData.salesCampaign,
               items: items,
               labelLocation: "top",
@@ -279,6 +282,7 @@ export default class ModifyManager {
         /* Style Tab */
         $(() => {
             let items = [];
+            let that = this;
             $.each( formData.styleTab, function( key, value ) {
                 if (key == "height" || key == "width")
                 items.push({dataField: key});
@@ -288,10 +292,14 @@ export default class ModifyManager {
               formData: formData.styleTab,
               items: items,
               labelLocation: "top",
+              onFieldDataChanged: function (e) {
+                    that.getUpdatedPage();
+                }
             });
         });
         $(() => {
             let items = [];
+            let that = this;
             $.each( formData.styleTab, function( key, value ) {
                 if (key.indexOf("margin") != -1)
                     items.push({dataField: key});
@@ -301,10 +309,14 @@ export default class ModifyManager {
               formData: formData.styleTab,
               items: items,
               labelLocation: "top",
+              onFieldDataChanged: function (e) {
+                that.getUpdatedPage()
+            }
             });
         });
         $(() => {
             let items = [];
+            let that = this;
             $.each( formData.styleTab, function( key, value ) {
                 if (key.indexOf("padding") != -1)
                     items.push({dataField: key});
@@ -314,10 +326,14 @@ export default class ModifyManager {
               formData: formData.styleTab,
               items: items,
               labelLocation: "top",
+              onFieldDataChanged: function (e) {
+                that.getUpdatedPage()
+            }
             });
         });
         $(() => {
             let items = [];
+            let that = this;
             $.each( formData.styleTab, function( key, value ) {
                 if (key == "background")
                     items.push({dataField: key});
@@ -330,10 +346,14 @@ export default class ModifyManager {
               formData: formData.styleTab,
               items: items,
               labelLocation: "top",
+              onFieldDataChanged: function (e) {
+                that.getUpdatedPage()
+            }
             });
         });
         $(() => {
             let items = [];
+            let that = this;
             $.each( formData.styleTab, function( key, value ) {
                 if (key.indexOf("font") != -1)
                     items.push({dataField: key});
@@ -343,10 +363,14 @@ export default class ModifyManager {
               formData: formData.styleTab,
               items: items,
               labelLocation: "top",
+              onFieldDataChanged: function (e) {
+                that.getUpdatedPage()
+            }
             });
         });
         $(() => {
             let items = [];
+            let that = this;
             $.each(formData.styleTab, function (key, value) {
                 if (key.indexOf("border") != -1)
                     items.push({ dataField: key });
@@ -356,6 +380,9 @@ export default class ModifyManager {
                     formData: formData.styleTab,
                     items: items,
                     labelLocation: "top",
+                    onFieldDataChanged: function (e) {
+                        that.getUpdatedPage()
+                    }
                 });
         });
 
@@ -363,6 +390,7 @@ export default class ModifyManager {
         /* Mobile Style Tab */
         $(() => {
             let items = [];
+            let that = this;
             $.each( formData.mobileStyleTab, function( key, value ) {
                 if (key == "height" || key == "width")
                 items.push({dataField: key});
@@ -372,10 +400,14 @@ export default class ModifyManager {
               formData: formData.mobileStyleTab,
               items: items,
               labelLocation: "top",
+              onFieldDataChanged: function (e) {
+                that.getUpdatedPage()
+            }
             });
         });
         $(() => {
             let items = [];
+            let that = this;
             $.each( formData.mobileStyleTab, function( key, value ) {
                 if (key.indexOf("margin") != -1)
                     items.push({dataField: key});
@@ -385,10 +417,14 @@ export default class ModifyManager {
               formData: formData.mobileStyleTab,
               items: items,
               labelLocation: "top",
+              onFieldDataChanged: function (e) {
+                that.getUpdatedPage()
+            }
             });
         });
         $(() => {
             let items = [];
+            let that = this;
             $.each( formData.mobileStyleTab, function( key, value ) {
                 if (key.indexOf("padding") != -1)
                     items.push({dataField: key});
@@ -398,10 +434,14 @@ export default class ModifyManager {
               formData: formData.mobileStyleTab,
               items: items,
               labelLocation: "top",
+              onFieldDataChanged: function (e) {
+                that.getUpdatedPage()
+            }
             });
         });
         $(() => {
             let items = [];
+            let that = this;
             $.each( formData.mobileStyleTab, function( key, value ) {
                 if (key == "background")
                     items.push({dataField: key});
@@ -414,10 +454,14 @@ export default class ModifyManager {
               formData: formData.mobileStyleTab,
               items: items,
               labelLocation: "top",
+              onFieldDataChanged: function (e) {
+                that.getUpdatedPage()
+            }
             });
         });
         $(() => {
             let items = [];
+            let that = this;
             $.each( formData.mobileStyleTab, function( key, value ) {
                 if (key.indexOf("font") != -1)
                     items.push({dataField: key});
@@ -427,10 +471,14 @@ export default class ModifyManager {
               formData: formData.mobileStyleTab,
               items: items,
               labelLocation: "top",
+              onFieldDataChanged: function (e) {
+                that.getUpdatedPage()
+            }
             });
         });
         $(() => {
             let items = [];
+            let that = this;
             $.each(formData.mobileStyleTab, function (key, value) {
                 if (key.indexOf("border") != -1)
                     items.push({ dataField: key });
@@ -440,6 +488,9 @@ export default class ModifyManager {
                     formData: formData.mobileStyleTab,
                     items: items,
                     labelLocation: "top",
+                    onFieldDataChanged: function (e) {
+                        that.getUpdatedPage()
+                    }
                 });
         });
 
@@ -467,6 +518,7 @@ export default class ModifyManager {
 
                 $(() => {
                     let items = [];
+                    let that = this;
                     $.each( formData.galleryConfiguration, function( key, value ) {
                         if (key == "source") {
                             items.push({dataField: key, editorType: "dxTextArea"});
@@ -477,24 +529,32 @@ export default class ModifyManager {
                       formData: formData.galleryConfiguration,
                       items: items,
                       labelLocation: "top",
+                      onFieldDataChanged: function (e) {
+                        that.getUpdatedPage()
+                    }
                     });
                 });
                 $(() => {
                     let items = [];
+                    let that = this;
                     $.each( formData.galleryConfiguration, function( key, value ) {
                         if (key != "slideShowDelay" && key != "source")
                             items.push({dataField: key, editorType: "dxCheckBox", value: value});
                         else if(key == "slideShowDelay") items.push({dataField: key});
                     },),
                     $('#gallery-content').dxForm({
-                      colCount: 4,
+                      colCount: 1,
                       formData: formData.galleryConfiguration,
                       items: items,
                       labelLocation: "left",
+                      onFieldDataChanged: function (e) {
+                        that.getUpdatedPage()
+                    }
                     });
                 });
                 $(() => {
                     let items = [];
+                    let that = this;
                     $.each( formData.videoConfiguration, function( key, value ) {
                         if (key == "source") {
                             items.push({dataField: key, editorType: "dxTextArea"});
@@ -505,25 +565,33 @@ export default class ModifyManager {
                       formData: formData.videoConfiguration,
                       items: items,
                       labelLocation: "top",
+                      onFieldDataChanged: function (e) {
+                        that.getUpdatedPage()
+                    }
                     });
                 });
                 $(() => {
                     let items = [];
+                    let that = this;
                     $.each( formData.videoConfiguration, function( key, value ) {
                         if (key != "width" && key != "height" && key != "source")
                             items.push({dataField: key, editorType: "dxCheckBox", value: value});
                         else if(key != "content") items.push({dataField: key});
                     },),
                     $('#video-content').dxForm({
-                      colCount: 4,
+                      colCount: 1,
                       formData: formData.videoConfiguration,
                       items: items,
-                      labelLocation: "left",
+                      labelLocation: "top",
+                      onFieldDataChanged: function (e) {
+                        that.getUpdatedPage()
+                    }
                     });
                 });
 
                 $(() => {
                     let items = [];
+                    let that = this;
                     $.each( formData.pdfConfiguration, function( key, value ) {
                         items.push({dataField: key, editorType: "dxTextArea"});
                     },),
@@ -532,11 +600,15 @@ export default class ModifyManager {
                       formData: formData.pdfConfiguration,
                       items: items,
                       labelLocation: "top",
+                      onFieldDataChanged: function (e) {
+                        that.getUpdatedPage()
+                    }
                     });
                 });
 
                 $(() => {
                     let items = [];
+                    let that = this;
                     $.each( formData.showcaseConfiguration, function( key, value ) {
                         if (key == "source")
                             items.push({dataField: key, editorType: "dxTextArea"});
@@ -546,37 +618,49 @@ export default class ModifyManager {
                       formData: formData.showcaseConfiguration,
                       items: items,
                       labelLocation: "top",
+                      onFieldDataChanged: function (e) {
+                        that.getUpdatedPage()
+                    }
                     });
                 });
                 $(() => {
                     let items = [];
+                    let that = this;
                     $.each( formData.showcaseConfiguration, function( key, value ) {
                         if (key != "source")
                             items.push({dataField: key});
                     },),
                     $('#showcase-content').dxForm({
-                      colCount: 2,
+                      colCount: 1,
                       formData: formData.showcaseConfiguration,
                       items: items,
                       labelLocation: "top",
+                      onFieldDataChanged: function (e) {
+                        that.getUpdatedPage()
+                    }
                     });
                 });
 
                 $(() => {
                     let items = [];
+                    let that = this;
                     $.each( formData.mapConfiguration, function( key, value ) {
                         items.push({dataField: key, editorType: "dxTextArea"});
                     },),
                     $('#map-content').dxForm({
-                      colCount: 2,
+                      colCount: 1,
                       formData: formData.mapConfiguration,
                       items: items,
                       labelLocation: "top",
+                      onFieldDataChanged: function (e) {
+                        that.getUpdatedPage()
+                    }
                     });
                 });
 
                 $(() => {
                     let items = [];
+                    let that = this;
                     $.each( formData.webPageConfiguration, function( key, value ) {
                         items.push({dataField: key, editorType: "dxTextArea"});
                     },),
@@ -585,11 +669,15 @@ export default class ModifyManager {
                       formData: formData.webPageConfiguration,
                       items: items,
                       labelLocation: "top",
+                      onFieldDataChanged: function (e) {
+                        that.getUpdatedPage()
+                    }
                     });
                 });
 
                 $(() => {
                     let items = [];
+                    let that = this;
                     $.each( formData.horizontalScrollGalleryConfiguration, function( key, value ) {
                         items.push({dataField: key, editorType: "dxTextArea"});
                     },),
@@ -598,11 +686,15 @@ export default class ModifyManager {
                       formData: formData.horizontalScrollGalleryConfiguration,
                       items: items,
                       labelLocation: "top",
+                      onFieldDataChanged: function (e) {
+                        that.getUpdatedPage()
+                    }
                     });
                 });
 
                 $(() => {
                     let items = [];
+                    let that = this;
                     $.each( formData.gridGalleryConfiguration, function( key, value ) {
                         items.push({dataField: key, editorType: "dxTextArea"});
                     },),
@@ -611,6 +703,9 @@ export default class ModifyManager {
                       formData: formData.gridGalleryConfiguration,
                       items: items,
                       labelLocation: "top",
+                      onFieldDataChanged: function (e) {
+                        that.getUpdatedPage()
+                    }
                     });
                 });
 
@@ -639,11 +734,13 @@ export default class ModifyManager {
                     $("#border-selection").dxButtonGroup({ 
                         selectedItemKeys: that.borders
                     });
+                    that.getUpdatedPage();
                 } else if (e.removedItems.length > 0) {
                     that.borders = that.borders.filter(border => border != e.removedItems[0].style);
                     $("#border-selection").dxButtonGroup({ 
                         selectedItemKeys: that.borders
                     });
+                    that.getUpdatedPage();
                 }
             }
         });
@@ -785,15 +882,61 @@ export default class ModifyManager {
 
     }
 
+    isWidgetValid(updatedWidget) {
+        if (updatedWidget.row == null || updatedWidget.column == null || updatedWidget.type == null || !updatedWidget.content)
+            return false;
+        switch (updatedWidget.type) {
+            case 0:
+                if (!updatedWidget.content.text)
+                    return false;
+                return true
+                break;
+
+            case 1:
+            case 2:
+            case 3:
+            case 101:
+            case 102:
+                if (!updatedWidget.content.source)
+                    return false;
+                return true
+                break;
+
+            case 4:
+                if (!updatedWidget.content.source || updatedWidget.content.showCaseId == null)
+                    return false;
+                return true
+                break;
+
+            case 5:
+                if (updatedWidget.content.latitude == null || updatedWidget.content.longitude == null)
+                    return false;
+                return true
+                break;
+        
+            default:
+                break;
+        }
+    }
+
     getUpdatedPage() {
 
+        console.log("widget binding");
+
+        
         let initialWidget = this.widget;
         let widget = new Widget(this.newFormData, this.text_content_id, this.text_id, this.borders, this.mobileBorders, this.groupValueIds);
         let modifiedWidget = widget.widgetBinding();
+        // controls
+        if (!this.isWidgetValid(modifiedWidget)) {
+            swal("Widget non valido", "Controlla che tutti i campi richiesti siano stati compilati ", "warning");
+            return;
+        };
         let saveManager = new SaveManager(modifiedWidget, initialWidget, this.selectedPage, this.newFormData.metadataTab);
         let updatedPage = saveManager.updatePage();
         if (updatedPage)
-            return updatedPage;
+            // return updatedPage;
+            this.renderer.renderChanges(updatedPage);
         
     }
 

@@ -66,7 +66,7 @@
         z-index: 1000;
     }
 
-     #panel {
+     #sidebar {
         position: fixed;
         width: 18%;
         top: 0%;
@@ -97,6 +97,37 @@
         margin-right: 0;
     }
 
+    .sidenav {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        display: flex;
+    }
+
+    .nav-item {
+        width: 33.3%;
+        text-align: center;
+    }
+
+    .nav-pills .nav-link.active {
+        background-color: #e6e9ec !important;
+        border-bottom: 3px solid white;
+        color: #595454 !important;
+    }
+
+    .nav-pills {
+        background-color: #e6e9ec;
+    }
+
+    .nav-pills .nav-link {
+        border-radius: 0px !important;
+        color: #595454 !important;
+    }
+
+    .tab-content {
+        padding: 20px 40px;
+    }
+
     .container {
         max-width: 75%;
     }
@@ -124,16 +155,16 @@
         border: 0.1px solid black;
         border-radius: 4px;
         background-color: #f3f3f39e;
-        margin: 7px;
-        width: 180px;
+        margin: 4px;
+        width: 187px;
         cursor: pointer;
         transition: all 0.3s;
     }
 
     .page-card:hover {
         opacity: 1;
-        box-shadow: 0 5px 15px;
-        transform: scale(1.1);
+        box-shadow: 0px 0px 4px 2px rgba(0,0,0,0.18);
+        transform: scale(1.03);
     }
 
     .widget-wrapper {
@@ -144,6 +175,10 @@
         position: relative;
         color: #556068;
         width: 47.8%;
+    }
+
+    .widget-wrapper:hover {
+        box-shadow: 0px 0px 4px 2px rgba(0,0,0,0.18);
     }
 
     .widget-thumbnail {
@@ -164,6 +199,10 @@
         display: flex;
         overflow-x: scroll;
         padding: 8px;
+    }
+
+    .dx-layout-manager .dx-label-h-align .dx-field-item-content .dx-checkbox, .dx-layout-manager .dx-label-h-align .dx-field-item-content .dx-switch {
+        float: right;
     }
 
     canvas {
@@ -497,7 +536,7 @@
         margin: 4px;
     }
 
-    .widgets-curtain-header:hover {
+    #widgets-curtain-header:hover, #metadata-curtain-header:hover {
         cursor: pointer;
     }
 
@@ -623,6 +662,10 @@
         margin-top: revert;
     }
 
+    .dx-layout-manager .dx-field-item:not(.dx-first-row) {
+        padding: 0 !important;
+    }
+
     .bg-dark {
         background-color: #e6e9ec !important;
     }
@@ -644,12 +687,12 @@
         border-radius: 4px;
     }
 
-    .dx-icon-arrowleft {
+    @* .dx-icon-arrowleft {
         font-size: 30px;
         cursor: pointer;
         color: #9a9a9a !important;
         margin-right: 10px;
-    }
+    } *@
 
     .dx-button-mode-outlined.dx-buttongroup-last-item.dx-button {
         border: none !important;
@@ -689,8 +732,8 @@
             <div id="buttons" style="display: none;"></div>
         </nav>
 
-        <div id="panel" style="display: none;">
-            <div class="container" style="max-width: 100%; margin-top: 20px;">
+        <div id="sidebar" style="display: none;">
+            <div class="container" id="sidebar-default-view" style="max-width: 100%; margin-top: 20px;">
                 <div id="widgets-curtain-header" class="row sidebar-header curtain-header-shadow">
                     <p class="sidebar-label">WIDGET</p>
                     <i id="close-widgets-curtain" class="fa-solid fa-angle-down sidebar-icon"></i>
@@ -698,7 +741,7 @@
                 </div>
                 <div id="widgets-curtain" class="draggable-widgets-list">
                     <div class="row" style="margin: 0;">
-                        <div class="widget-wrapper" draggable="true">
+                        <div id="draggable" class="widget-wrapper" draggable="true">
                             <div style="text-align: center; margin-top: 16px; padding: 10px;">
                                 <i class="fa-solid fa-align-justify fa-xl widget-thumbnail"></i>
                                 <p style="margin-top: 12px;">Testo</p>
@@ -706,7 +749,7 @@
                         </div>
                         <div class="widget-wrapper" draggable="true">
                             <div style="text-align: center; margin-top: 16px; padding: 10px;">
-                                <i class="fa-solid fa-panorama fa-xl \"></i>
+                                <i class="fa-solid fa-panorama fa-xl widget-thumbnail"></i>
                                 <p style="margin-top: 12px;">Galleria</p>
                             </div>
                         </div>
@@ -768,7 +811,108 @@
                     <i id="close-metadata-curtain" class="fa-solid fa-angle-down sidebar-icon"></i>
                     <i id="open-metadata-curtain" class="fa-solid fa-angle-right sidebar-icon" style="display:none;"></i>
                 </div>
-                    <div id="metadata"></div>
+                <div id="metadata"></div>
+            </div>
+            <div id="sidebar-edit-view" style="max-width: 100%; display:none;">
+                <ul class="nav nav-pills mb-3" id="pills-tab" style="justify-content: space-around;" role="tablist">
+                  @* <li class="nav-item">
+                    <a class="nav-link active" id="pills-exit-tab" data-toggle="pill" href="#pills-content" role="tab" aria-controls="pills-content" aria-selected="true">Esci</a>
+                  </li> *@
+                  <li class="nav-item">
+                    <a class="nav-link active" id="pills-content-tab" data-toggle="pill" href="#pills-content" role="tab" aria-controls="pills-content" aria-selected="true">Contenuto</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="pills-style-tab" data-toggle="pill" href="#pills-style" role="tab" aria-controls="pills-style" aria-selected="false">Stile</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="pills-advanced-tab" data-toggle="pill" href="#pills-advanced" role="tab" aria-controls="pills-advanced" aria-selected="false">Avanzato</a>
+                  </li>
+                </ul>
+
+                @* SIDEBAR TABS CONTENTS *@
+                <div class="tab-content" id="pills-tabContent">
+                  <div class="tab-pane fade show active" id="pills-content" role="tabpanel" aria-labelledby="pills-content-tab">
+                        <div class="row" id="0" style="display: none;">
+                            <label for="0-text">Testo:</label>
+                        </div>
+
+                        <div id="1" style="display: none;">
+                            <div id="gallery-source"></div>
+                            <span style="margin-top: 22px; display: block;"></span>
+                            <div id="gallery-content"></div>
+                        </div>
+
+                        <div id="2" style="display: none;">
+                            <div id="video-source"></div>
+                            <span style="margin-top: 22px; display: block;"></span>
+                            <div id="video-content"></div>
+                        </div>
+
+                        <div class="row" id="3" style="display: none;">
+                            <div id="pdf-source"></div>
+                        </div>
+
+                        <div id="4" style="display: none;">
+                            <div id="showcase-source"></div>
+                            <span style="margin-top: 22px; display: block;"></span>
+                            <div id="showcase-content"></div>
+                        </div>
+
+                        <div id="5" style="display: none;">
+                            <div id="map-content"></div>
+                        </div>
+
+                        <div class="row" id="6" style="display: none;">
+                            <div id="webpage-source"></div>
+                        </div>
+
+                        <div class="row" id="101" style="display: none;">
+                            <div id="horizontalScrollGallery-source"></div>
+                        </div>
+
+                        <div class="row" id="102" style="display: none;">
+                            <div id="gridGallery-source"></div>
+                        </div>  
+                        <span style="margin-top: 20px; display: block;"></span>
+                        <div class="row">
+                            <div id="text-editor-container-12">
+                                <label for="text">Testo:</label>
+                            </div>
+
+                        </div>
+                        <span style="margin-top: 20px; display: block;"></span>
+                        <div id="text"></div>      
+                  </div>
+
+                  <div class="tab-pane fade" id="pills-style" role="tabpanel" aria-labelledby="pills-style-tab">
+                        <div id="dimensions"></div>
+                        <span style="margin-top: 20px; display: block;"></span>
+                        <div id="margin"></div>
+                        <span style="margin-top: 20px; display: block;"></span>
+                        <div id="padding"></div>
+                        <span style="margin-top: 20px; display: block;"></span>
+                        <div id="more"></div>
+                        <span style="margin-top: 20px; display: block;"></span>
+                        <div id="font"></div>
+                        <span style="margin-top: 20px; display: block;"></span>
+                        <label for="">Bordi</label><br />
+                        <div id="border-selection"></div>
+                        <span style="margin-top: 20px; display: block;"></span>
+                        <div id="border-properties"></div>
+                  </div>
+                  <div class="tab-pane fade" id="pills-advanced" role="tabpanel" aria-labelledby="pills-advanced-tab">
+                        <div id="events-checkbox"></div>
+                        <span style="margin-top: 20px; display: block;"></span>
+                        <div id="ca-type"></div>
+                        <span style="margin-top: 20px; display: block;"></span>
+                        <div id="ca-0"></div>
+                        <div id="ca-1"></div>
+                        <div id="ca-2"></div>
+                        <div id="ca-4"></div>
+                        <div id="ca-5"></div>
+                        <div id="ca-6"></div>
+                  </div>
+                </div>
             </div>
         </div>
 
@@ -776,24 +920,23 @@
             <div id="home-pages-container" class="row" style="margin: 0;"></div>
             <div id="pages-container" class="row" style="margin: 0;"></div>
             <div id="searched" class="row" style="margin: 0;"></div>
-                <div class="modal fade" id="options-modal" role="dialog" style="backdrop-filter: blur(3px);"
-                data-backdrop="static">
-                    <div class="modal-dialog modal-xl" style="margin-top: 5rem;">
-
-                    <!-- Modal content-->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title" id="options-modal-title">Pagine disponibili</h4>
-                                <button id="close-modal-button" type="button" class="close" data-dismiss="modal">&times;</button>
-                            </div>
-                            <div class="modal-body">
-                                <div style="padding-left: 20px;">
-                                    <div id="page-options" class="row"></div>
-                                </div>
+            <div class="modal fade" id="options-modal" role="dialog" style="backdrop-filter: blur(3px);"
+            data-backdrop="static">
+                <div class="modal-dialog modal-xl" style="margin-top: 5rem;">
+                <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="options-modal-title">Pagine disponibili</h4>
+                            <button id="close-modal-button" type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div style="padding-left: 20px;">
+                                <div id="page-options" class="row"></div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
 
         <main class="page-content" id="main" style="display: none;">
@@ -837,7 +980,7 @@
                                     <div id="properties"></div>
                                 </div>
 
-                                <div class="tab-pane" id="content-pane">
+                                @* <div class="tab-pane" id="content-pane">
 
                                     <div class="row" id="0" style="display: none;">
                                         <label for="0-text">Testo:</label>
@@ -881,9 +1024,9 @@
                                         <div id="gridGallery-source"></div>
                                     </div>
 
-                                </div>
+                                </div> *@
 
-                                <div class="tab-pane" id="event-pane">
+                                @* <div class="tab-pane" id="event-pane">
                                     <div id="events-checkbox"></div>
                                     <span style="margin-top: 20px; display: block;"></span>
                                     <div id="ca-type"></div>
@@ -894,9 +1037,9 @@
                                     <div id="ca-4"></div>
                                     <div id="ca-5"></div>
                                     <div id="ca-6"></div>
-                                </div>
+                                </div> *@
 
-                                <div class="tab-pane" id="text-pane">
+                                @* <div class="tab-pane" id="text-pane">
                                     <div class="row">
                                         <div class="col-md-12" id="text-editor-container-12">
                                             <label for="text">Testo:</label>
@@ -905,9 +1048,9 @@
                                     </div>
                                     <span style="margin-top: 20px; display: block;"></span>
                                     <div id="text"></div>
-                                </div>
+                                </div> *@
 
-                                <div class="tab-pane" id="style-pane">
+                                @* <div class="tab-pane" id="style-pane">
                                     <div id="dimensions"></div>
                                     <span style="margin-top: 20px; display: block;"></span>
                                     <div id="margin"></div>
@@ -940,7 +1083,7 @@
                                     <span style="margin-top: 20px; display: block;"></span>
                                     <div id="mobile-border-properties"></div>
                                 </div>
-                            </div>
+                            </div> *@
 
                         </div>
                         <div class="modal-footer">
@@ -955,6 +1098,7 @@
 
 </html>
 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCowLFqzzxbC6fbqqoWeJb97MeAi3Hvqqo" async></script>
@@ -964,7 +1108,7 @@
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.12.313/build/pdf.min.js"></script>
 <script src="https://cdn3.devexpress.com/jslib/21.2.4/js/dx.all.js"></script>
-<script type="module" src="~/js/index.js"></script>
+<script async type="module" src="~/js/index.js"></script>
 <script>
 
     $('#edit-modal').on('hidden.bs.modal', function () {

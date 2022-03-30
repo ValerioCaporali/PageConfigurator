@@ -53,6 +53,12 @@ export default class HistoryManager {
         
     }
 
+    getHistoryLenght() {
+
+        return this.history.length;
+        
+    }
+
     isHistoryEmpty() {
 
         return this.history.length == 0;

@@ -30,6 +30,9 @@ export default class RenderManager {
             this.showPageList();
         });
         this.initSidebarCurtains();
+        document.getElementById("draggable").addEventListener("dragstart", (event) => {
+            console.log(event);
+        });
     }
 
     search = document.getElementById('search').addEventListener('keyup', (event) => {
@@ -47,7 +50,7 @@ export default class RenderManager {
     
     });
 
-    populatePageList = () => {
+    populatePageList() {
 
         let homeContainer = document.getElementById("home-pages-container");
         let pageContainer = document.getElementById("pages-container");
@@ -258,7 +261,7 @@ export default class RenderManager {
         closeOnOutsideClick: false,
       }).dxLoadPanel('instance');
 
-    openPageStream = (fullPage, contentOrDraft) => {
+    openPageStream(fullPage, contentOrDraft) {
         document.getElementById('search').style.display = "none";
         this.loadPanel.show()
         setTimeout(() => {
@@ -296,7 +299,7 @@ export default class RenderManager {
                     that.loadPanel.show();
                     setTimeout(() => {
                         that.loadPanel.hide();    
-                        if (that.historyManager.isHistoryEmpty() && that.metadataChanged == false)
+                        if (that.historyManager.isHistoryEmpty() || that.historyManager.getHistoryLenght() == 1 && that.metadataChanged == false)
                             swal("", "Non ci sono modifiche da salvare", "info");
                         else if (that.historyManager.isHistoryEmpty() && that.metadataChanged) {
                             let saveManager = new SaveManager();
@@ -378,7 +381,7 @@ export default class RenderManager {
       });
     });
 
-    showPagePreview = (page) => {
+    showPagePreview(page) {
         let formData = new FormData({}, page)
         $(() => {
             let items = [];
@@ -411,14 +414,14 @@ export default class RenderManager {
         document.getElementById("structure-button").style.display = "block";
         document.getElementById("info").style.display = "flex";
         document.getElementById("buttons").style.display = "block";
-        document.getElementById("panel").style.display = "block";
-        document.getElementById("panel").style.marginTop = document.getElementById("navbar").clientHeight + 'px';
+        document.getElementById("sidebar").style.display = "block";
+        document.getElementById("sidebar").style.marginTop = document.getElementById("navbar").clientHeight + 'px';
         let prev_button = document.getElementById("prev-page");
         this.setDefaultMode();
         this.fillPage(page.contents.widgets);
     }
 
-    fillPage = (widgets) => {
+    fillPage(widgets) {
         var totRows = this.calculateRows(widgets),
             totCols = this.calculateColumns(widgets),
             rows = new Array(),
@@ -453,7 +456,7 @@ export default class RenderManager {
         });
     }
 
-    calculateRows = (widgets) => {
+    calculateRows(widgets) {
         var totRows = 0;
         widgets.forEach((widget) => {
             var currentSpan = (!widget.rowSpan) ? 1 : widget.rowSpan
@@ -462,7 +465,7 @@ export default class RenderManager {
         return (totRows == 0) ? (totRows + 1) : totRows;
     }
 
-    calculateColumns = (widgets) => {
+    calculateColumns(widgets) {
         var totCols = 0;
         widgets.forEach((widget) => {
             var currentSpan = (!widget.columnSpan) ? 1 : widget.columnSpan;
@@ -471,7 +474,7 @@ export default class RenderManager {
         return (totCols == 0) ? (totCols + 1) : totCols;
     }
 
-    handleWidget = (widget) => {
+    handleWidget(widget) {
         var [container, elem, editButton, editButtonContainer] = [document.createElement('div'), this.handelWidgetType(widget), document.createElement('i'), document.createElement('div')];
         if (widget.style != null)
             elem = this.handleWidgetStyle(widget, elem);
@@ -481,8 +484,8 @@ export default class RenderManager {
         editButtonContainer.classList.add('edit-button-container');
         editButtonContainer.appendChild(editButton);
         editButton.className = 'fas fa-wrench edit-icon fa-lg';
-        $(editButton).attr("data-toggle", "modal");
-        $(editButton).attr("data-target", "#edit-modal");
+        // $(editButton).attr("data-toggle", "modal");
+        // $(editButton).attr("data-target", "#edit-modal");
         editButton.addEventListener('click', () => {
             this.openModifyPanel(widget);
         })
@@ -490,7 +493,7 @@ export default class RenderManager {
         return container;
     }
 
-    handelWidgetType = (widget) => {
+    handelWidgetType(widget) {
         switch (widget.type) {
             case 0:
                 var textContainer = this.handleTextWidget(widget);
@@ -530,13 +533,13 @@ export default class RenderManager {
         }
     }
 
-    handleTextWidget = (widget) => {
+    handleTextWidget(widget) {
         var div = document.createElement("div");
         div.innerHTML = widget.content.text.trim();
         return div;
     }
 
-    handleGalleryWidget = (widget) => {
+    handleGalleryWidget(widget) {
         var baseId = "g";
         var galleryContainer = document.createElement("div");
         var div = document.createElement("div");
@@ -568,7 +571,7 @@ export default class RenderManager {
         return galleryContainer;
     }
 
-    handleVideoWidget = (widget) => {
+    handleVideoWidget(widget) {
         var videoContainer = document.createElement('div');
         var video = this.buildIframe(widget);
         const regExp = "/^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/";
@@ -589,7 +592,7 @@ export default class RenderManager {
         return videoContainer;
     }
 
-    handlePdfWidget = (widget) => {
+    handlePdfWidget(widget) {
         var scrollable = true;
         var direction = 'x';
         if (scrollable) {
@@ -643,7 +646,7 @@ export default class RenderManager {
         }
     }
 
-    handleScrollablePdf = (widget, direction) => {
+    handleScrollablePdf(widget, direction) {
         var canvasContainer = document.createElement('div');
         canvasContainer.classList.add(direction === 'y' ? 'vertical-pdf-scroll-container' : 'horizontal-pdf-scroll');
         canvasContainer.id = "canvas-container";
@@ -700,7 +703,7 @@ export default class RenderManager {
 
     }
 
-    renderPdfPage = (pagePending = null, pdfSettings) => {
+    renderPdfPage(pagePending = null, pdfSettings) {
         pdfSettings.pageIsRendering = true;
         scale = pdfSettings.scale;
         var pageToRender;
@@ -733,7 +736,7 @@ export default class RenderManager {
         });
     }
 
-    queueRenderPage = (pdfSettings, num) => {
+    queueRenderPage(pdfSettings, num) {
         if (pdfSettings.pageIsRendering) {
             pdfSettings.pageNumIsPending = num;
         } else {
@@ -741,39 +744,39 @@ export default class RenderManager {
         }
     }
 
-    showPrevPage = (pdfSettings) => {
+    showPrevPage(pdfSettings) {
         if (pdfSettings.pageNum <= 1)
             return
         pdfSettings.pageNum--;
         this.queueRenderPage(pdfSettings, pdfSettings.pageNum);
     }
 
-    showNextPage = (pdfSettings) => {
+    showNextPage(pdfSettings) {
         if (pdfSettings.pageNum >= pdfSettings.pdfDoc.numPages)
             return;
         pdfSettings.pageNum++;
         this.queueRenderPage(pdfSettings, pdfSettings.pageNum);
     }
 
-    displayPage = (pdfSettings) => {
+    displayPage(pdfSettings) {
         pdfSettings.pdfDoc.getPage(pdfSettings.pageNum).then(() => {
             this.renderPdfPage(null, pdfSettings);
         })
     }
 
-    zoomInPdf = (pdfSetting) => {
+    zoomInPdf(pdfSetting) {
         pdfSetting.scale = pdfSetting.scale + 0.25;
         this.displayPage(pdfSetting);
     }
 
-    zoomOutPdf = (pdfSetting) => {
+    zoomOutPdf(pdfSetting) {
         if (pdfSetting.scale <= 0.25)
             return;
         pdfSetting.scale = pdfSetting.scale - 0.25;
         this.displayPage(pdfSetting);
     }
 
-    createpdfToolbar = () => {
+    createpdfToolbar() {
         var pdfToolbar = document.createElement('div');
         pdfToolbar.className = 'pdf-toolbar';
         var prevButton = document.createElement('button'),
@@ -803,7 +806,7 @@ export default class RenderManager {
         return pdfToolbar;
     }
 
-    handleTourWidget = (widget) => {
+    handleTourWidget(widget) {
         var sdkKey = 'qeyy42zwyfu5fwkrxas6i6qqd';
         var tourContainer = document.createElement('div');
         var tourIframe = this.buildIframe(widget);
@@ -829,7 +832,7 @@ export default class RenderManager {
         return tourContainer;
     }
 
-    handleMapWidget = (widget) => {
+    handleMapWidget(widget) {
         var mapContainer = document.createElement('div');
         var mapOptions;
         const position = { lat: widget.content.latitude, lng: widget.content.longitude };
@@ -849,7 +852,7 @@ export default class RenderManager {
         return mapContainer;
     }
 
-    handleGridGalleryWidget = (widget) => {
+    handleGridGalleryWidget(widget) {
         var gridGalleryContainer = document.createElement('div');
         gridGalleryContainer.classList.add('grid-gallery');
         if (widget.content.source) {
@@ -865,7 +868,7 @@ export default class RenderManager {
         return gridGalleryContainer;
     }
 
-    handleWebPageWidget = (widget) => {
+    handleWebPageWidget(widget) {
         var webPageContainer = document.createElement('div');
         var webPageIframe = this.buildIframe(widget);
         webPageIframe.src = widget.content.source[0];
@@ -873,7 +876,7 @@ export default class RenderManager {
         return webPageContainer;
     }
 
-    handleHorizontalScrollGallery = (widget) => {
+    handleHorizontalScrollGallery(widget) {
         var base_id = "horizontal-gallery";
         var [gallery, galleryWrapper] = [document.createElement('div'), document.createElement('div')];
         gallery.classList.add('gallery');
@@ -892,7 +895,7 @@ export default class RenderManager {
         return gallery;
     }
 
-    createGalleryNavButtons = (galleryId) => {
+    createGalleryNavButtons(galleryId) {
         var [span, leftArrow, rightArrow] = [document.createElement('span'), document.createElement('i'), document.createElement('i')];
         leftArrow.className = 'fas fa-xl fa-angle-left left-icon';
         rightArrow.className = 'fas fa-xl fa-angle-right right-icon';
@@ -906,7 +909,7 @@ export default class RenderManager {
         return span;
     }
 
-    handleVideo = (widget, video_url, video) => {
+    handleVideo(widget, video_url, video) {
         if (widget.content.enableAutoplay) {
             if (video_url.searchParams.get('autoplay') != null)
                 video_url.searchParams.set('autoplay', 1);
@@ -945,7 +948,7 @@ export default class RenderManager {
         return video_url;
     }
 
-    buildIframe = (widget) => {
+    buildIframe(widget) {
         var iframe = document.createElement('iframe');
         iframe.src = "https://my.matterport.com/show/?m=xx7GChUUBii";
         iframe.allowFullscreen = true;
@@ -961,7 +964,7 @@ export default class RenderManager {
     }
 
 
-    handleWidgetStyle = (widget, div) => {
+    handleWidgetStyle(widget, div) {
 
         div.style.position = "relative";
 
@@ -1000,7 +1003,7 @@ export default class RenderManager {
         return div;
     }
 
-    handlePadding = (widget, div) => {
+    handlePadding(widget, div) {
         if (widget.style.padding.top) {
             div.style.paddingTop = widget.style.padding.top;
         }
@@ -1019,7 +1022,7 @@ export default class RenderManager {
         return div;
     }
 
-    handleMargin = (widget, div) => {
+    handleMargin(widget, div) {
         if (widget.style.margin.top) {
             div.style.marginTop = widget.style.margin.top;
         }
@@ -1038,7 +1041,7 @@ export default class RenderManager {
         return div;
     }
 
-    handleBorders = (widget, div) => {
+    handleBorders(widget, div) {
         widget.style.borders.forEach(border => {
             switch (border.type) {
                 case 0:
@@ -1076,7 +1079,7 @@ export default class RenderManager {
         return div;
     }
 
-    handleTextPosition = (widget, text) => {
+    handleTextPosition(widget, text) {
         if (widget.text.position.type == 0) {
             text.style.position = "absolute";
             text.style.display = "flex";
@@ -1094,7 +1097,7 @@ export default class RenderManager {
         }
     }
 
-    applyDefaultStyle = (widget, div) => {
+    applyDefaultStyle(widget, div) {
         switch (widget.type) {
             case 2:
                 div.classList.add('video-container-default');
@@ -1112,7 +1115,7 @@ export default class RenderManager {
         }
     }
 
-    setDefaultMode = () => {
+    setDefaultMode() {
         var editIcon = document.querySelectorAll('.edit-icon');
         if (editIcon) {
             editIcon.forEach((icon) => {
@@ -1153,7 +1156,7 @@ export default class RenderManager {
         }
     }
 
-    changeEditIconsVisibility = (displayMode) => {
+    changeEditIconsVisibility(displayMode) {
         document.querySelectorAll('.edit-icon').forEach(editIcon => {
             editIcon.style.display = displayMode;
         })
@@ -1178,32 +1181,31 @@ export default class RenderManager {
         }
     }
 
-    openModifyPanel = (widget) => {
+    openModifyPanel(widget) {
+        document.getElementById("sidebar-default-view").style.display = "none";
+        document.getElementById("sidebar-edit-view").style.display = "block";
         let text_content_id = this.generateId("0-ta-");
         let text_id = this.generateId("value-")
         let temp_selected_page = JSON.parse(JSON.stringify(this.selectedPage));
-        let modifyManager = new ModifyManager(widget, JSON.parse(JSON.stringify(this.selectedPage)), text_content_id, text_id);
+        let modifyManager = new ModifyManager(widget, JSON.parse(JSON.stringify(this.selectedPage)), text_content_id, text_id, this);
         modifyManager.initPanel();
-
-        document.getElementById("save-widget-changes-button").addEventListener("click", () => {
-            let modifiedPage = modifyManager.getUpdatedPage();
-            if (modifiedPage) {
-                if (this.historyManager.isHistoryEmpty())
-                    this.historyManager.updateHistory(this.selectedPage);
-                this.historyManager.updateHistory(modifiedPage);
-                this.selectedPage = this.historyManager.getLastPage();
-                // this.saveInDraftButton.option('disabled', false);
-                this.showPagePreview(this.selectedPage);
-            }
-
-        });
     }
 
-    generateId = (id) => {
-            while (this.generatedId.indexOf(id) > -1) {
-                id = id + Math.floor((Math.random() * (10000 + 1 - 1)) + 1).toString();
-            }
-            this.generatedId.push(id);
-            return id;
+    renderChanges(modifiedPage) {
+        if (modifiedPage) {
+            if (this.historyManager.isHistoryEmpty())
+                this.historyManager.updateHistory(this.selectedPage);
+            this.historyManager.updateHistory(modifiedPage);
+            this.selectedPage = this.historyManager.getLastPage();
+            this.showPagePreview(this.selectedPage);
         }
+    }
+
+    generateId(id) {
+        while (this.generatedId.indexOf(id) > -1) {
+            id = id + Math.floor((Math.random() * (10000 + 1 - 1)) + 1).toString();
+        }
+        this.generatedId.push(id);
+        return id;
+    }
 }

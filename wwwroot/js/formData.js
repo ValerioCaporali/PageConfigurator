@@ -285,6 +285,8 @@ export default class FormData {
 
      galleryConfiguration = {
 
+        slideShowDelay: null,
+
         source: null,
 
         showIndicator: false,
@@ -293,12 +295,10 @@ export default class FormData {
         
         enableLoop: false,
         
-        slideShowDelay: null,
-        
         serverSideScalingEnabled: false,
         
-        cacheEnabled: false
-
+        cacheEnabled: false,
+        
    }
 
    videoConfiguration = {
