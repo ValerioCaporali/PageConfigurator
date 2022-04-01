@@ -9,6 +9,17 @@ export default class FormData {
         this.bindData();
     }
 
+    gallerySourceInput = {
+        url: null
+    }
+    
+    horizontalScrollGallerySourceInput = {
+        url: null
+    }
+    gridGallerySourceInput = {
+        url: null
+    }
+
     Type = [
 
         { name: "Testo", value: 0 },
@@ -193,19 +204,67 @@ export default class FormData {
         
     }
 
+    margin = {
+        
+        total: null,
+
+        top: null,
+
+        right: null,
+
+        bottom: null,
+
+        left: null
+
+    }
+
+    mobileMargin = {
+        
+        total: null,
+
+        top: null,
+
+        right: null,
+
+        bottom: null,
+
+        left: null
+
+    }
+
+    padding = {
+        
+        total: null,
+
+        top: null,
+
+        right: null,
+
+        bottom: null,
+
+        left: null
+
+    }
+
+    mobilePadding = {
+        
+        total: null,
+
+        top: null,
+
+        right: null,
+
+        bottom: null,
+
+        left: null
+
+    }
+
     styleTab = {
         
         height: null,
         
         width: null,
-        
-        marginTotal: null,
-        
-        marginTop: null,
-        
-        marginRight: null,
-        
-        marginBottom: null,
         
         marginLeft: null,
         
@@ -216,16 +275,6 @@ export default class FormData {
         fontFamily: null,
         
         fontSize: null,
-        
-        paddingTotal: null,
-        
-        paddingTop: null,
-        
-        paddingRight: null,
-        
-        paddingBottom: null,
-        
-        paddingLeft: null,
 
         borderStyle: null,
 
@@ -241,16 +290,6 @@ export default class FormData {
 
         width: null,
 
-        marginTotal: null,
-
-        marginTop: null,
-
-        marginRight: null,
-
-        marginBottom: null,
-
-        marginLeft: null,
-
         background: null,
 
         textColor: null,
@@ -258,16 +297,6 @@ export default class FormData {
         fontFamily: null,
 
         fontSize: null,
-
-        paddingTotal: null,
-
-        paddingTop: null,
-
-        paddingRight: null,
-
-        paddingBottom: null,
-
-        paddingLeft: null,
 
         borderStyle: null,
 
@@ -400,15 +429,16 @@ export default class FormData {
 
         this.styleTab.width = this.widget.style?.width ? this.widget.style?.width : null; 
         this.styleTab.height = this.widget.style?.height ? this.widget.style?.height : null; 
-        this.styleTab.marginTotal = this.widget.style?.margin?.total ? this.widget.style?.margin?.total : null; 
-        this.styleTab.marginTop = this.widget.style?.margin?.top ? this.widget.style?.margin?.top : null;
-        this.styleTab.marginRight = this.widget.style?.margin?.right ? this.widget.style?.margin?.right : null;
-        this.styleTab.marginLeft = this.widget.style?.margin?.left ? this.widget.style?.margin?.left : null;
-        this.styleTab.paddingTotal = this.widget.style?.padding?.total ? this.widget.style?.padding?.total : null;
-        this.styleTab.paddingTop = this.widget.style?.padding?.top ? this.widget.style?.padding?.top : null;
-        this.styleTab.paddingRight = this.widget.style?.padding?.right ? this.widget.style?.padding?.right : null;
-        this.styleTab.paddingBottom = this.widget.style?.padding?.bottom ? this.widget.style?.padding?.bottom : null;
-        this.styleTab.paddingLeft = this.widget.style?.padding?.left ? this.widget.style?.padding?.left : null;
+        this.margin.total = this.widget.style?.margin?.total ? this.widget.style?.margin?.total : null; 
+        this.margin.top = this.widget.style?.margin?.top ? this.widget.style?.margin?.top : null;
+        this.margin.right = this.widget.style?.margin?.right ? this.widget.style?.margin?.right : null;
+        this.margin.bottom = this.widget.style?.margin?.left ? this.widget.style?.margin?.left : null;
+        this.margin.left = this.widget.style?.margin?.left ? this.widget.style?.margin?.left : null;
+        this.padding.total = this.widget.style?.padding?.total ? this.widget.style?.padding?.total : null;
+        this.padding.top = this.widget.style?.padding?.top ? this.widget.style?.padding?.top : null;
+        this.padding.right = this.widget.style?.padding?.right ? this.widget.style?.padding?.right : null;
+        this.padding.bottom = this.widget.style?.padding?.bottom ? this.widget.style?.padding?.bottom : null;
+        this.padding.left = this.widget.style?.padding?.left ? this.widget.style?.padding?.left : null;
         this.styleTab.background = this.widget.style?.background ? this.widget.style?.background : null;
         this.styleTab.textColor = this.widget.style?.textColor ? this.widget.style?.textColor : null;
         this.styleTab.fontFamily = this.widget.style?.fontFamily ? this.widget.style?.fontFamily : null;
@@ -470,16 +500,16 @@ export default class FormData {
 
 		this.mobileStyleTab.width = this.widget.style?.width ? this.widget.style?.width : null;
         this.mobileStyleTab.height = this.widget.style?.height ? this.widget.style?.height : null;
-        this.mobileStyleTab.marginTotal = this.widget.style?.margin?.total ? this.widget.style?.margin?.total : null;
-        this.mobileStyleTab.marginTop = this.widget.style?.margin?.top ? this.widget.style?.margin?.top : null;
-        this.mobileStyleTab.marginRight = this.widget.style?.margin?.right ? this.widget.style?.margin?.right : null;
-        this.mobileStyleTab.marginBottom = this.widget.style?.margin?.bottom ? this.widget.style?.margin?.bottom : null;
-        this.mobileStyleTab.marginLeft = this.widget.style?.margin?.left ? this.widget.style?.margin?.left : null;
-        this.mobileStyleTab.paddingTotal = this.widget.style?.padding?.total ? this.widget.style?.padding?.total : null;
-        this.mobileStyleTab.paddingTop = this.widget.style?.padding?.top ? this.widget.style?.padding?.top : null;
-        this.mobileStyleTab.paddingRight = this.widget.style?.padding?.right ? this.widget.style?.padding?.right : null;
-        this.mobileStyleTab.paddingBottom = this.widget.style?.padding?.bottom ? this.widget.style?.padding?.bottom : null;
-        this.mobileStyleTab.paddingLeft = this.widget.style?.padding?.left ? this.widget.style?.padding?.left : null;
+        this.mobileMargin.total = this.widget.style?.margin?.total ? this.widget.style?.margin?.total : null;
+        this.mobileMargin.top = this.widget.style?.margin?.top ? this.widget.style?.margin?.top : null;
+        this.mobileMargin.right = this.widget.style?.margin?.right ? this.widget.style?.margin?.right : null;
+        this.mobileMargin.bottom = this.widget.style?.margin?.bottom ? this.widget.style?.margin?.bottom : null;
+        this.mobileMargin.left = this.widget.style?.margin?.left ? this.widget.style?.margin?.left : null;
+        this.mobilePadding.total = this.widget.style?.padding?.total ? this.widget.style?.padding?.total : null;
+        this.mobilePadding.top = this.widget.style?.padding?.top ? this.widget.style?.padding?.top : null;
+        this.mobilePadding.right = this.widget.style?.padding?.right ? this.widget.style?.padding?.right : null;
+        this.mobilePadding.bottom = this.widget.style?.padding?.bottom ? this.widget.style?.padding?.bottom : null;
+        this.mobilePadding.left = this.widget.style?.padding?.left ? this.widget.style?.padding?.left : null;
         this.mobileStyleTab.background = this.widget.style?.background ? this.widget.style?.background : null;
         this.mobileStyleTab.textColor = this.widget.style?.textColor ? this.widget.style?.textColor : null;
         this.mobileStyleTab.fontFamily = this.widget.style?.fontFamily ? this.widget.style?.fontFamily : null;
@@ -501,8 +531,18 @@ export default class FormData {
                 
             case 1:
                 for (const [key, value] of Object.entries(this.widget.content))
-                if (key == "showIndicator" || key == "showNavButtons" || key == "enableLoop" || key == "slideShowDelay" || key == "serverSideScalingEnabled" || key == "cacheEnabled" || key == "source")
+                if (key == "showIndicator" || key == "showNavButtons" || key == "enableLoop" || key == "slideShowDelay" || key == "serverSideScalingEnabled" || key == "cacheEnabled")
                     this.galleryConfiguration[key.toString()] = value;
+                else {
+                    this.galleryConfiguration.source = [];
+                    this.widget.content.source.forEach(currSource => {
+                        let source = {
+                            url: currSource,
+                            thumbnail: currSource
+                        }
+                        this.galleryConfiguration.source.push(source);
+                    });    
+                }
                 break;
                 
             case 2:
@@ -532,11 +572,25 @@ export default class FormData {
                 break;
                 
             case 101:
-                this.horizontalScrollGalleryConfiguration.source = this.widget.content.source ? this.widget.content.source : null;
+                this.horizontalScrollGalleryConfiguration.source = [];
+                this.widget.content.source.forEach(currSource => {
+                    let source = {
+                        url: currSource,
+                        thumbnail: currSource
+                    }
+                    this.horizontalScrollGalleryConfiguration.source.push(source);
+                });
                 break;
                 
             case 102:
-                this.gridGalleryConfiguration.source = this.widget.content.source ? this.widget.content.source : null;
+                this.gridGalleryConfiguration.source = [];
+                this.widget.content.source.forEach(currSource => {
+                    let source = {
+                        url: currSource,
+                        thumbnail: currSource
+                    }
+                    this.gridGalleryConfiguration.source.push(source);
+                });
                 break;
                 
             default:

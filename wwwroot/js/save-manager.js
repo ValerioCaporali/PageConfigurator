@@ -45,8 +45,6 @@ export default class SaveManager {
     saveInDraft(pageToSave, initialPage)
     {
 
-        console.log(pageToSave);
-
         var draft = [];
         var oldDraft = [];
 

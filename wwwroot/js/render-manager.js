@@ -4,28 +4,22 @@ import SaveManager from './save-manager.js';
 import FormData from './formData.js';
 export default class RenderManager {
 
-    homePages;
     pages;
-    selectedHomePage;
     selectedPage;
     generatedId = [];
-    contentTextareaId = [];
     metadataChanged = false;
-    showingStructure = false;
-    filterPageParameters;
     historyManager = new HistoryManager();
-    saveInDraftButton;
-    deleteDraftButton;
-    publishButton;
     isDraft = false;
     typingTimer;
     doneTypingInterval = 800;
 
     constructor(pages) {
         this.pages = JSON.parse(JSON.stringify(pages));
-        document.getElementById('structure-icon').addEventListener("click", () => {
-            this.changeMode();
-        });
+        this.setupEventListener();
+
+    }
+
+    setupEventListener() {
         document.getElementById('go-back').addEventListener("click", () => {
             this.showPageList();
         });
@@ -33,15 +27,19 @@ export default class RenderManager {
         document.getElementById("draggable").addEventListener("dragstart", (event) => {
             console.log(event);
         });
+        document.getElementById("widgets-list-button").addEventListener("click", () => {
+            this.closeModifyPanel();
+        });
+        
+        document.getElementById('search').addEventListener('keyup', (event) => {
+            document.getElementById('search').value = event.target.value;
+            clearTimeout(this.typingTimer);
+            this.typingTimer = setTimeout(() => {
+                this.populateBySearch(event.target.value, document.getElementById('filter').value);
+            }, this.doneTypingInterval);
+        });
     }
 
-    search = document.getElementById('search').addEventListener('keyup', (event) => {
-        document.getElementById('search').value = event.target.value;
-        clearTimeout(this.typingTimer);
-        this.typingTimer = setTimeout(() => {
-            this.populateBySearch(event.target.value, document.getElementById('filter').value);
-        }, this.doneTypingInterval);
-    });
 
 
     filters = document.getElementById('filter').addEventListener('change', (event) => {
@@ -215,6 +213,13 @@ export default class RenderManager {
                 document.getElementById("open-widgets-curtain").style.display = "none";
                 document.getElementById("widgets-curtain").style.height = "560px";
                 document.getElementById("widgets-curtain-header").style.boxShadow = "none";
+                document.getElementById("close-metadata-curtain").style.display = "none";
+                document.getElementById("open-metadata-curtain").style.display = "block";
+                document.getElementById("metadata").style.height = "0";
+                document.getElementById("metadata").style.overflow = "hidden";
+                setTimeout(() => {
+                    document.getElementById("metadata-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 1%)";
+                }, 300)
             } else {
                 document.getElementById("close-widgets-curtain").style.display = "none";
                 document.getElementById("open-widgets-curtain").style.display = "block";
@@ -232,16 +237,138 @@ export default class RenderManager {
                 document.getElementById("open-metadata-curtain").style.display = "none";
                 document.getElementById("metadata").style.height = "250px";
                 document.getElementById("metadata-curtain-header").style.boxShadow = "none";
+                document.getElementById("close-widgets-curtain").style.display = "none";
+                document.getElementById("open-widgets-curtain").style.display = "block";
+                document.getElementById("widgets-curtain").style.height = "0";
+                document.getElementById("widgets-curtain").style.overflow = "hidden";
+                setTimeout(() => {
+                    document.getElementById("widgets-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 3%)";
+                }, 300)
             } else {
                 document.getElementById("close-metadata-curtain").style.display = "none";
                 document.getElementById("open-metadata-curtain").style.display = "block";
                 document.getElementById("metadata").style.height = "0";
                 document.getElementById("metadata").style.overflow = "hidden";
                 setTimeout(() => {
-                    document.getElementById("metadata-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 3%)";
+                    document.getElementById("metadata-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 1%)";
                 }, 300)
             }
-        })
+        });
+
+        document.getElementById("content-curtain-header").addEventListener('click', () => {
+            if (document.getElementById("content-curtain").offsetHeight == 0) {
+                document.getElementById("close-content-curtain").style.display = "block";
+                document.getElementById("open-content-curtain").style.display = "none";
+                document.getElementById("content-curtain").style.height = "auto";
+                document.getElementById("content-curtain-header").style.boxShadow = "none";
+                document.getElementById("close-text-curtain").style.display = "none";
+                document.getElementById("open-text-curtain").style.display = "block";
+                document.getElementById("text-curtain").style.height = "0";
+                document.getElementById("text-curtain").style.overflow = "hidden";
+                document.getElementById("text-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 3%)";
+            } else {
+                document.getElementById("close-content-curtain").style.display = "none";
+                document.getElementById("open-content-curtain").style.display = "block";
+                document.getElementById("content-curtain").style.height = "0";
+                document.getElementById("content-curtain").style.overflow = "hidden";
+                document.getElementById("content-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 3%)";
+            }
+        });
+
+        document.getElementById("text-curtain-header").addEventListener('click', () => {
+            if (document.getElementById("text-curtain").offsetHeight == 0) {
+                document.getElementById("close-text-curtain").style.display = "block";
+                document.getElementById("open-text-curtain").style.display = "none";
+                document.getElementById("text-curtain").style.height = "auto";
+                document.getElementById("text-curtain-header").style.boxShadow = "none";
+                document.getElementById("close-content-curtain").style.display = "none";
+                document.getElementById("open-content-curtain").style.display = "block";
+                document.getElementById("content-curtain").style.height = "0";
+                document.getElementById("content-curtain").style.overflow = "hidden";
+                document.getElementById("content-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 3%)";
+            } else {
+                document.getElementById("close-text-curtain").style.display = "none";
+                document.getElementById("open-text-curtain").style.display = "block";
+                document.getElementById("text-curtain").style.height = "0";
+                document.getElementById("text-curtain").style.overflow = "hidden";
+                document.getElementById("text-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 3%)";
+            }
+        });
+
+        document.getElementById("style-curtain-header").addEventListener('click', () => {
+            if (document.getElementById("style-curtain").offsetHeight == 0) {
+                document.getElementById("close-style-curtain").style.display = "block";
+                document.getElementById("open-style-curtain").style.display = "none";
+                document.getElementById("style-curtain").style.height = "auto";
+                document.getElementById("style-curtain-header").style.boxShadow = "none";
+                document.getElementById("close-events-curtain").style.display = "none";
+                document.getElementById("open-events-curtain").style.display = "block";
+                document.getElementById("events-curtain").style.height = "0";
+                document.getElementById("events-curtain").style.overflow = "hidden";
+                document.getElementById("events-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 3%)";
+                document.getElementById("close-mobile-style-curtain").style.display = "none";
+                document.getElementById("open-mobile-style-curtain").style.display = "block";
+                document.getElementById("mobile-style-curtain").style.height = "0";
+                document.getElementById("mobile-style-curtain").style.overflow = "hidden";
+                document.getElementById("mobile-style-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 3%)";
+            } else {
+                document.getElementById("close-style-curtain").style.display = "none";
+                document.getElementById("open-style-curtain").style.display = "block";
+                document.getElementById("style-curtain").style.height = "0";
+                document.getElementById("style-curtain").style.overflow = "hidden";
+                document.getElementById("style-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 3%)";
+            }
+        });
+
+        document.getElementById("events-curtain-header").addEventListener('click', () => {
+            if (document.getElementById("events-curtain").offsetHeight == 0) {
+                document.getElementById("close-events-curtain").style.display = "block";
+                document.getElementById("open-events-curtain").style.display = "none";
+                document.getElementById("events-curtain").style.height = "auto";
+                document.getElementById("events-curtain-header").style.boxShadow = "none";
+                document.getElementById("close-style-curtain").style.display = "none";
+                document.getElementById("open-style-curtain").style.display = "block";
+                document.getElementById("style-curtain").style.height = "0";
+                document.getElementById("style-curtain").style.overflow = "hidden";
+                document.getElementById("style-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 3%)";
+                document.getElementById("close-mobile-style-curtain").style.display = "none";
+                document.getElementById("open-mobile-style-curtain").style.display = "block";
+                document.getElementById("mobile-style-curtain").style.height = "0";
+                document.getElementById("mobile-style-curtain").style.overflow = "hidden";
+                document.getElementById("mobile-style-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 3%)";
+            } else {
+                document.getElementById("close-events-curtain").style.display = "none";
+                document.getElementById("open-events-curtain").style.display = "block";
+                document.getElementById("events-curtain").style.height = "0";
+                document.getElementById("events-curtain").style.overflow = "hidden";
+                document.getElementById("events-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 3%)";
+            }
+        });
+
+        document.getElementById("mobile-style-curtain-header").addEventListener('click', () => {
+            if (document.getElementById("mobile-style-curtain").offsetHeight == 0) {
+                document.getElementById("close-mobile-style-curtain").style.display = "block";
+                document.getElementById("open-mobile-style-curtain").style.display = "none";
+                document.getElementById("mobile-style-curtain").style.height = "auto";
+                document.getElementById("mobile-style-curtain-header").style.boxShadow = "none";
+                document.getElementById("close-style-curtain").style.display = "none";
+                document.getElementById("open-style-curtain").style.display = "block";
+                document.getElementById("style-curtain").style.height = "0";
+                document.getElementById("style-curtain").style.overflow = "hidden";
+                document.getElementById("style-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 3%)";
+                document.getElementById("close-events-curtain").style.display = "none";
+                document.getElementById("open-events-curtain").style.display = "block";
+                document.getElementById("events-curtain").style.height = "0";
+                document.getElementById("events-curtain").style.overflow = "hidden";
+                document.getElementById("events-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 3%)";
+            } else {
+                document.getElementById("close-mobile-style-curtain").style.display = "none";
+                document.getElementById("open-mobile-style-curtain").style.display = "block";
+                document.getElementById("mobile-style-curtain").style.height = "0";
+                document.getElementById("mobile-style-curtain").style.overflow = "hidden";
+                document.getElementById("mobile-style-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 3%)";
+            }
+        });
     }
 
     renderPageById(pageId) {
@@ -340,7 +467,7 @@ export default class RenderManager {
                                 let saveManager = new SaveManager();
                                 saveManager.deleteDraft(that.selectedPage.id);
                                 that.selectedPage.drafts = null;
-                                // localStorage.setItem("id", that.selectedPage.id);
+
                                 that.isDraft = false;
                                 document.getElementById("status").innerHTML = "pubblicato";
                                 document.getElementById("status").style.color = "#22a93d";
@@ -399,24 +526,21 @@ export default class RenderManager {
                     items.push({dataField: key.toString()});
             },),
             $('#metadata').dxForm({
-              colCount: 2,
+              colCount: 1,
               formData: formData.metadataTab,
               items: items,
-              labelLocation: "top",
+              labelLocation: "left",
               onFieldDataChanged: function (e) {
-                  console.log(e);
                   that.metadataChanged = true;
                   that.selectedPage.contents[e.dataField] = e.value;
               }
             });  
         });
         document.getElementById("go-back").style.display = "block";
-        document.getElementById("structure-button").style.display = "block";
         document.getElementById("info").style.display = "flex";
         document.getElementById("buttons").style.display = "block";
         document.getElementById("sidebar").style.display = "block";
         document.getElementById("sidebar").style.marginTop = document.getElementById("navbar").clientHeight + 'px';
-        let prev_button = document.getElementById("prev-page");
         this.setDefaultMode();
         this.fillPage(page.contents.widgets);
     }
@@ -484,12 +608,16 @@ export default class RenderManager {
         editButtonContainer.classList.add('edit-button-container');
         editButtonContainer.appendChild(editButton);
         editButton.className = 'fas fa-wrench edit-icon fa-lg';
-        // $(editButton).attr("data-toggle", "modal");
-        // $(editButton).attr("data-target", "#edit-modal");
-        editButton.addEventListener('click', () => {
+        container.append(editButtonContainer, elem);
+        container.addEventListener('mouseover', () => {
+            elem.classList.add("structure");
+        });
+        container.addEventListener('mouseout', () => {
+            elem.classList.remove("structure");
+        });
+        elem.addEventListener('click', () => {
             this.openModifyPanel(widget);
         })
-        container.append(editButtonContainer, elem);
         return container;
     }
 
@@ -560,7 +688,7 @@ export default class RenderManager {
         }, 100)
         galleryContainer.appendChild(div);
         setTimeout(() => {
-            if (widget.text) {
+            if (widget.text.value) {
                 let text = document.createElement("div");
                 text.innerHTML = widget.text?.value?.trim();
                 this.handleTextPosition(widget, text);
@@ -1123,54 +1251,24 @@ export default class RenderManager {
             })
         }
         document.getElementById("history-container").style.display = "block";
-        document.getElementById('page').classList.remove('page-structure');
-        // document.getElementById('structure-icon').classList.remove('fa-eye');
-        // document.getElementById('structure-icon').classList.add('fa-pen-to-square');
         document.getElementById("demo-container").style.display = "block";
-        var structureButton = document.getElementById('structure-button');
-        structureButton.style.display = 'block';
-        this.showingStructure = false;
     }
 
-    changeMode = () => {
-        var widgets = document.querySelectorAll(".widget");
-        var structureIcon = document.getElementById('structure-icon');
-        if (this.showingStructure) {
-            document.getElementById('page').classList.remove('page-structure');
-            [].forEach.call(widgets, (widget) => {
-                widget.classList.remove('structure');
-            });
-            this.changeEditIconsVisibility('none')
-            // structureIcon.classList.remove('fa-eye');
-            // structureIcon.classList.add('fa-pen-to-square');
-            this.showingStructure = false;
-        } else {
-            document.getElementById('page').classList.add('page-structure');
-            [].forEach.call(widgets, (widget) => {
-                widget.classList.add('structure');
-            });
-            this.changeEditIconsVisibility('block');
-            // structureIcon.classList.add('fa-eye');
-            // structureIcon.classList.remove('fa-pen-to-square');
-            this.showingStructure = true;
-        }
-    }
-
-    changeEditIconsVisibility(displayMode) {
-        document.querySelectorAll('.edit-icon').forEach(editIcon => {
-            editIcon.style.display = displayMode;
-        })
-    }
-
-    initHistoryButton()
-    {
+    initHistoryButton() {
+        let that = this;
+        document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey && event.key === 'z') {
+                this.closeModifyPanel();
+                that.renderPreviousPage();
+            }
+          });
         document.getElementById('prev-page').addEventListener('click', () => {
+            this.closeModifyPanel();
             this.renderPreviousPage();
         })
     }
 
-    renderPreviousPage()
-    {
+    renderPreviousPage() {
         if (this.historyManager.isHistoryEmpty())
             $(() => {
                 DevExpress.ui.notify("Non sono state apportate delle modifiche");
@@ -1191,7 +1289,14 @@ export default class RenderManager {
         modifyManager.initPanel();
     }
 
+    closeModifyPanel() {
+        document.getElementById("sidebar-edit-view").style.display = "none";  
+        document.getElementById("sidebar-default-view").style.display = "block";  
+    }
+
     renderChanges(modifiedPage) {
+        console.log("modified page ", modifiedPage);
+        modifiedPage = JSON.parse(JSON.stringify(modifiedPage)); // to delete reference
         if (modifiedPage) {
             if (this.historyManager.isHistoryEmpty())
                 this.historyManager.updateHistory(this.selectedPage);
@@ -1201,7 +1306,7 @@ export default class RenderManager {
         }
     }
 
-    generateId(id) {
+    generateId(id) { // for all html element which need an id
         while (this.generatedId.indexOf(id) > -1) {
             id = id + Math.floor((Math.random() * (10000 + 1 - 1)) + 1).toString();
         }
