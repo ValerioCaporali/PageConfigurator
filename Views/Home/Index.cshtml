@@ -103,6 +103,22 @@
         display: flex;
     }
 
+    .dx-button-has-icon .dx-icon {
+        width: 25px;
+        height: 25px;
+    }
+
+    #page-title {
+        display: none;
+        margin-left: 0 !important;
+        margin: auto;
+        color: #9a9a9a;
+    }
+
+    #save-draft-button, #delete-draft-button {
+        margin-right: 6px;
+    }
+
     #sidebar-default-view {
         max-width: 100% !important;
         margin-top: 20px;
@@ -197,6 +213,17 @@
         font-size: 12px;
     }
 
+    #margin *,
+    #mobile-margin *,
+    #padding *,
+    #mobile-padding * {
+        padding: 0;
+    }
+
+    input {
+        padding: 7px 9px 8px !important;
+    }
+
     .tab-content {
         padding: 0;
     }
@@ -212,6 +239,10 @@
 
     .tox-textarea {
         display: block;
+    }
+
+    #margin > div.dx-first-row.dx-last-row.dx-field-item.dx-col-1.dx-field-item-optional.dx-flex-layout {
+        padding: 0 !important;
     }
 
     #gallery-source,
@@ -596,7 +627,7 @@
     }
 
     .widget {
-        transition: all 0.1;
+        transition: all 0.1s;
     }
 
     .fade-scale {
@@ -733,10 +764,6 @@
         margin-top: revert;
     }
 
-    @* .dx-layout-manager .dx-field-item:not(.dx-first-row) {
-        padding: 0 !important;
-    } *@
-
     .bg-dark {
         background-color: #e6e9ec !important;
     }
@@ -778,6 +805,7 @@
 
         <nav id="navbar" class="navbar navbar-dark bg-dark">
             <i id="go-back" class="dx-icon-arrowleft" style="display: none; color: #000 !important; font-size: 30px; cursor: pointer; color: #9a9a9a !important; margin-right: 10px;"></i>
+            <h5 id="page-title"></h5>
             <form id="search" value="" class="form-inline my-2 my-lg-0" style="width: 75%; display: flex; left: 0; right: 0; margin: auto;">
                 <input id="search" class="form-control mr-sm-2" style="width: 90%;" type="search" placeholder="Search">
                 <select value="all" class="form-select form-inline form-select-sm" style="width: 9%;" aria-label=".form-select-sm example" id="filter">
@@ -791,6 +819,9 @@
                 <i id="prev-page" class="fa-solid fa-rotate-left fa-xl" style="display: none; margin-right: 20px; color: #556068;"></i>
             </div>
             <div id="buttons" style="display: none;"></div>
+            <div id="save-draft-button" style="display: none;"></div>
+            <div id="delete-draft-button" style="display: none;"></div>
+            <div id="publish-button" style="display: none;"></div>
         </nav>
 
         <div id="sidebar" style="display: none;">
@@ -886,8 +917,7 @@
                         <a class="nav-link" id="pills-advanced-tab" data-toggle="pill" href="#pills-advanced" role="tab" aria-controls="pills-advanced" aria-selected="false">AVANAZATO</a>
                     </li>
                 </ul>
-
-                @* SIDEBAR TABS CONTENTS *@
+                
                 <div class="tab-content" id="pills-tabContent">
                   <div class="tab-pane fade show active" id="pills-content" role="tabpanel" aria-labelledby="pills-content-tab">
                         <div id="content-curtain-header" class="row sidebar-header curtain-header-shadow">
@@ -969,17 +999,17 @@
                             <div id="dimensions"></div>
                             <span style="margin-top: 20px; display: block;"></span>
                             <div id="margin-total"></div>
-                            <p style="color: #333; font-size: 14px; font-family: 'Helvetica Neue','Segoe UI', helvetica,verdana, sans-serif">Margine</p>
+                            <p style="color: #333; font-size: 14px; font-family: 'Helvetica Neue','Segoe UI', helvetica,verdana, sans-serif">Margin:</p>
                             <div id="margin"></div>
                             <span style="margin-top: 20px; display: block;"></span>
-                            <p style="color: #333; font-size: 14px; font-family: 'Helvetica Neue','Segoe UI', helvetica,verdana, sans-serif">Padding</p>
+                            <p style="color: #333; font-size: 14px; font-family: 'Helvetica Neue','Segoe UI', helvetica,verdana, sans-serif">Padding:</p>
                             <div id="padding"></div>
                             <span style="margin-top: 20px; display: block;"></span>
                             <div id="more"></div>
                             <span style="margin-top: 20px; display: block;"></span>
                             <div id="font"></div>
                             <span style="margin-top: 20px; display: block;"></span>
-                            <label for="">Bordi</label><br />
+                            <label for="">Borders:</label><br />
                             <div id="border-selection"></div>
                             <span style="margin-top: 20px; display: block;"></span>
                             <div id="border-properties"></div>
@@ -994,17 +1024,17 @@
                             <div id="mobile-dimensions"></div>
                             <span style="margin-top: 20px; display: block;"></span>
                             <div id="mobile-margin-total"></div>
-                            <p style="color: #333; font-size: 14px; font-family: 'Helvetica Neue','Segoe UI', helvetica,verdana, sans-serif">Margine</p>
+                            <p style="color: #333; font-size: 14px; font-family: 'Helvetica Neue','Segoe UI', helvetica,verdana, sans-serif">Margin:</p>
                             <div id="mobile-margin"></div>
                             <span style="margin-top: 20px; display: block;"></span>
-                            <p style="color: #333; font-size: 14px; font-family: 'Helvetica Neue','Segoe UI', helvetica,verdana, sans-serif">Padding</p>
+                            <p style="color: #333; font-size: 14px; font-family: 'Helvetica Neue','Segoe UI', helvetica,verdana, sans-serif">Padding:</p>
                             <div id="mobile-padding"></div>
                             <span style="margin-top: 20px; display: block;"></span>
                             <div id="mobile-more"></div>
                             <span style="margin-top: 20px; display: block;"></span>
                             <div id="mobile-font"></div>
                             <span style="margin-top: 20px; display: block;"></span>
-                            <label for="">Bordi</label><br />
+                            <label for="">Borders:</label><br />
                             <div id="mobile-border-selection"></div>
                             <span style="margin-top: 20px; display: block;"></span>
                             <div id="mobile-border-properties"></div>

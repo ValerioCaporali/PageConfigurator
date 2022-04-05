@@ -36,17 +36,6 @@ namespace Pages_configurator.Controllers
             _context = context;
         }
 
-        public IActionResult Index(int pageIndex)
-        {
-            ViewBag.Index = pageIndex;
-            return View();
-        }
-
-        public IActionResult Pages()
-        {
-            return View();
-        }
-
         [HttpGet("get-all")]
         public async Task<ActionResult<List<CustomTablePage>>> GetAll()
         {
@@ -71,7 +60,6 @@ namespace Pages_configurator.Controllers
             }
             return pages;
         }
-
         
         [HttpPost("publish")]
         public IActionResult SavePage([FromBody] PublishDto publishDto)

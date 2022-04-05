@@ -12,6 +12,9 @@ export default class RenderManager {
     isDraft = false;
     typingTimer;
     doneTypingInterval = 800;
+    saveInDraftBtn;
+    deleteDraftBtn;
+    publishPageBtn;
 
     constructor(pages) {
         this.pages = JSON.parse(JSON.stringify(pages));
@@ -134,12 +137,12 @@ export default class RenderManager {
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
-              })
-              .then((willDelete) => {
+            })
+            .then((willDelete) => {
                 if (willDelete) {
                   window.location.reload();
                 }
-              });
+            });
         }
         else {
             document.getElementById('list').style.display = "block";
@@ -175,6 +178,8 @@ export default class RenderManager {
                     document.getElementById('main').style.display = "block";
                     this.isDraft = true;
                     this.openPageStream(page, draft);
+                    this.deleteDraftBtn.option("disabled", false);
+                    this.publishPageBtn.option("disabled", false);
                 })
             });
         }
@@ -194,6 +199,7 @@ export default class RenderManager {
                 pageCard.style.backgroundColor = "white"
                 pageOptionsContainer.appendChild(pageCard);
                 pageCard.addEventListener("click", () => {
+                    this.isDraft = false;
                     document.getElementById("status").innerHTML = "pubblicato";
                     document.getElementById("status").style.color = "#22a93d";
                     $(pageCard).attr("data-toggle", "modal");
@@ -201,6 +207,9 @@ export default class RenderManager {
                     document.getElementById('list').style.display = "none";
                     document.getElementById('main').style.display = "block";
                     this.openPageStream(page, content);
+                    this.saveInDraftBtn.option("disabled", true);
+                    this.deleteDraftBtn.option("disabled", true);
+                    this.publishPageBtn.option("disabled", true);
                 })
             });
         }
@@ -411,104 +420,124 @@ export default class RenderManager {
         { id: 3, name: 'Pubblica', icon: 'upload' },
       ];
 
-    initButtons = $(() => {
+    saveDraft = $(() => {
         let that = this;
-        $('#buttons').dxDropDownButton({
-        items: that.buttons,
-        splitButton: false,
-        text: 'Salva',
-        displayExpr: 'name',
-        keyExpr: 'id',
-        useSelectMode: false,
-        onItemClick(e) {
-            switch (e.itemData.id) {
-                case 1:
-                    that.loadPanel.show();
-                    setTimeout(() => {
-                        that.loadPanel.hide();    
-                        if (that.historyManager.isHistoryEmpty() || that.historyManager.getHistoryLenght() == 1 && that.metadataChanged == false)
-                            swal("", "Non ci sono modifiche da salvare", "info");
-                        else if (that.historyManager.isHistoryEmpty() && that.metadataChanged) {
-                            let saveManager = new SaveManager();
-                            saveManager.saveInDraft(that.selectedPage, that.selectedPage);
-                            document.getElementById("status").innerHTML = "bozza";
-                            document.getElementById("status").style.color = "#e03e0d";
-                            that.isDraft = true;
-                        }
-                        else if (!that.historyManager.isHistoryEmpty() || that.metadataChanged) {
-                            let saveManager = new SaveManager();
-                            saveManager.saveInDraft(that.selectedPage, that.historyManager.getInitialPage());
-                            that.historyManager.emptyHistory();
-                            document.getElementById("prev-page").style.display = "none";
-                            document.getElementById("status").innerHTML = "bozza";
-                            document.getElementById("status").style.color = "#e03e0d";
-                            that.isDraft = true;
-                        }
-                      }, 400);
-                    break;
-
-                case 2:
-                    if (that.isDraft == false) {
-                        swal("Attenzione", "La pagina non ha bozze", "info");
-                        break;
+        that.saveInDraftBtn = $('#save-draft-button').dxButton({
+            stylingMode: 'contained',
+            text: 'Salva bozza',
+            type: 'default',
+            disabled: true,
+            width: 120,
+            onClick() {
+                that.loadPanel.show();
+                setTimeout(() => {
+                    that.loadPanel.hide();    
+                    if (that.historyManager.isHistoryEmpty() || that.historyManager.getHistoryLenght() == 1 && that.metadataChanged == false)
+                        swal("", "Non ci sono modifiche da salvare", "info");
+                    else if (that.historyManager.isHistoryEmpty() && that.metadataChanged) {
+                        let saveManager = new SaveManager();
+                        saveManager.saveInDraft(that.selectedPage, that.selectedPage);
+                        document.getElementById("status").innerHTML = "bozza";
+                        document.getElementById("status").style.color = "#e03e0d";
+                        that.isDraft = true;
                     }
-                    swal({
-                        title: "Eliminare le bozze ?",
-                        text: "La pagina verrà risincronizzata con la versione pubblicata",
-                        icon: "warning",
-                        buttons: true,
-                        dangerMode: true,
-                      })
-                      .then((willDelete) => {
-                        if (willDelete) {
-                            that.loadPanel.show();
-                            setTimeout(() => {
-                                that.loadPanel.hide();
-                                let saveManager = new SaveManager();
-                                saveManager.deleteDraft(that.selectedPage.id);
-                                that.selectedPage.drafts = null;
-
-                                that.isDraft = false;
-                                document.getElementById("status").innerHTML = "pubblicato";
-                                document.getElementById("status").style.color = "#22a93d";
-                                that.renderPageById(that.selectedPage.id);
-                              }, 400);
-                        }
-                      });
-                    break;
-
-                case 3:
-                    if (that.isDraft == false) {
-                        swal("Pagina già pubblicata", "", "info");
-                        break;
+                    else if (!that.historyManager.isHistoryEmpty() || that.metadataChanged) {
+                        let saveManager = new SaveManager();
+                        saveManager.saveInDraft(that.selectedPage, that.historyManager.getInitialPage());
+                        that.historyManager.emptyHistory();
+                        document.getElementById("prev-page").style.display = "none";
+                        document.getElementById("status").innerHTML = "bozza";
+                        document.getElementById("status").style.color = "#e03e0d";
+                        that.isDraft = true;
+                        that.saveInDraftBtn.option("disabled", true);
+                        that.deleteDraftBtn.option("disabled", false);
+                        that.publishPageBtn.option("disabled", false);
                     }
-                    swal({
-                        title: "Pubblicare la pagina ?",
-                        text: "Le modifiche effettuate alla pagina verranno pubblicate",
-                        icon: "warning",
-                        buttons: true,
-                        dangerMode: true,
-                      })
-                      .then((willDelete) => {
-                        if (willDelete) {
-                            that.loadPanel.show();
-                            setTimeout(() => {
-                                let saveManager = new SaveManager();
-                                saveManager.publishPage(that.selectedPage.id);
-                                window.location.reload();
-                            }, 400);
-                        }
-                      });
-                    break;
-            
-                default:
-                    break;
-            }
-          },
-      });
+                  }, 400);
+            },
+        }).dxButton('instance');
+    });
+
+    deleteDraft = $(() => {
+        console.log(this.isDraft);
+        let that = this;
+        that.deleteDraftBtn = $('#delete-draft-button').dxButton({
+            stylingMode: 'contained',
+            text: 'Elimina bozza',
+            type: 'danger',
+            disabled: true,
+            width: 130,
+            onClick() {
+                if (that.isDraft == false) {
+                    swal("Attenzione", "La pagina non ha bozze", "info");
+                    return;
+                }
+                swal({
+                    title: "Eliminare le bozze ?",
+                    text: "La pagina verrà risincronizzata con la versione pubblicata",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                  })
+                  .then((willDelete) => {
+                    if (willDelete) {
+                        that.loadPanel.show();
+                        setTimeout(() => {
+                            that.loadPanel.hide();
+                            let saveManager = new SaveManager();
+                            saveManager.deleteDraft(that.selectedPage.id);
+                            that.selectedPage.drafts = null;
+                        
+                            that.isDraft = false;
+                            document.getElementById("status").innerHTML = "pubblicato";
+                            document.getElementById("status").style.color = "#22a93d";
+                            that.renderPageById(that.selectedPage.id);
+                            that.deleteDraftBtn.option("disabled", true);
+                            that.publishPageBtn.option("disabled", true);
+                          }, 400);
+                    }
+                  });
+            },
+        }).dxButton('instance');
+    });
+
+    publish = $(() => {
+        let that = this;
+        that.publishPageBtn = $('#publish-button').dxButton({
+            stylingMode: 'contained',
+            text: 'Pubblica',
+            type: 'success',
+            disabled: true,
+            width: 120,
+            onClick() {
+                if (that.isDraft == false) {
+                    swal("Pagina già pubblicata", "", "info");
+                    return;
+                }
+                swal({
+                    title: "Pubblicare la pagina ?",
+                    text: "Le modifiche effettuate alla pagina verranno pubblicate",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                  })
+                  .then((willDelete) => {
+                    if (willDelete) {
+                        that.loadPanel.show();
+                        setTimeout(() => {
+                            let saveManager = new SaveManager();
+                            saveManager.publishPage(that.selectedPage.id);
+                            window.location.reload();
+                        }, 400);
+                    }
+                  });
+            },
+        }).dxButton('instance');
     });
 
     showPagePreview(page) {
+        document.getElementById("page-title").style.display = "block";
+        document.getElementById("page-title").innerHTML = page.description;
         let formData = new FormData({}, page)
         $(() => {
             let items = [];
@@ -538,7 +567,9 @@ export default class RenderManager {
         });
         document.getElementById("go-back").style.display = "block";
         document.getElementById("info").style.display = "flex";
-        document.getElementById("buttons").style.display = "block";
+        document.getElementById("save-draft-button").style.display = "block";
+        document.getElementById("delete-draft-button").style.display = "block";
+        document.getElementById("publish-button").style.display = "block";
         document.getElementById("sidebar").style.display = "block";
         document.getElementById("sidebar").style.marginTop = document.getElementById("navbar").clientHeight + 'px';
         this.setDefaultMode();

@@ -42,8 +42,62 @@ export default class SaveManager {
         
     }
 
+    isPageValid(page) {
+        console.log(page);
+        page.contents.widgets.forEach(widget => {
+            if (widget.row == null || widget.column == null) {
+                swal("Errore", "I campi riga e colonna non possono essere vuoti", "warning");
+                return false
+            }
+            
+            switch (widget.type) {
+                case 0:
+                    if (!widget.content.text) {
+                        swal("Errore", "Il contenuto di un widget di tipo testo non può essere vuoto", "warning");
+                        return false;
+                    }
+                    return true;
+                    break;
+    
+                case 1:
+                case 2:
+                case 3:
+                case 101:
+                case 102:
+                    if (!widget.content.source || widget.content.source == "") {
+                        swal("Errore", "Il campo Source non può essere vuoto", "warning");
+                        return false;
+                    }
+                    return true;
+                    break;
+    
+                case 4:
+                    if (!widget.content.source || widget.content.showCaseId == null) {
+                        swal("Errore", "Alcuni campi richiesti non sono stati riempiti", "warning");
+                        return false;
+                    }
+                    return true;
+                    break;
+    
+                case 5:
+                    if (widget.content.latitude == null || widget.content.longitude == null) {
+                        swal("Errore", "Il campo latitudine o longitdine non è stato riempito", "warning");
+                        return false;
+                    }
+                    return true;
+                    break;
+            
+                default:
+                    break;
+            }
+        });
+    }
+
     saveInDraft(pageToSave, initialPage)
     {
+
+        if(!this.isPageValid(pageToSave))
+            return;
 
         var draft = [];
         var oldDraft = [];

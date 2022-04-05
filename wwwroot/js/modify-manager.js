@@ -15,27 +15,27 @@ export default class ModifyManager {
     };
     borders_config = [
         {
-            icon: "fullscreen",
+            icon: "assets/icons/total.png",
             style: "fullscreen",
             hint: "Bordo totale",
         },
         {
-            icon: "arrowup",
+            icon: "assets/icons/top.png",
             style: "arrowup",
             hint: "Bordo alto",
         },
         {
-            icon: "arrowright",
+            icon: "assets/icons/right.png",
             style: "arrowright",
             hint: "Bordo destro",
         },
         {
-            icon: "arrowdown",
+            icon: "assets/icons/bottom.png",
             style: "arrowdown",
             hint: "Bordo basso",
         },
         {
-            icon: "arrowleft",
+            icon: "assets/icons/left.png",
             style: "arrowleft",
             hint: "Bordo sinistro",
         },
@@ -79,7 +79,10 @@ export default class ModifyManager {
                     that.typingTimer = setTimeout(() => {
                         that.getUpdatedPage();
                     }, that.doneTypingInterval);
-                    });
+                });
+                editor.on('closeWindow', function(e) {
+                    that.getUpdatedPage();
+                })
               }
         }).then(() => {
             $(document).on('focusin', function(e) {
@@ -93,15 +96,7 @@ export default class ModifyManager {
                 let iframeBody = innerDoc.getElementById('tinymce');
                 iframeBody.style.position = "relative";
             }
-            var toxButtons = document.querySelectorAll('.tox-button');
-            console.log(toxButtons);
-            toxButtons.forEach(toxButton => {
-                console.log(toxButton);
-                toxButton.addEventListener('click', () => {
-                    this.getUpdatedPage();
-                })
-            })
-        })
+        });
     }
 
     resetHtmlEditors() {
@@ -294,13 +289,23 @@ export default class ModifyManager {
                 items.push({dataField: key});
             },),
             $('#margin').dxForm({
-                colCount: 5, 
+                colCount: 5,
                 labelMode: 'floating',
                 formData: formData.margin,
                 items: items,
                 showColonAfterLabel: true,
                 labelLocation: "left",
                 onFieldDataChanged: function (e) {
+                    if (e.dataField == "total") {
+                        formData.margin.top = null;
+                        formData.margin.right = null;
+                        formData.margin.bottom = null;
+                        formData.margin.left = null;
+                        this.updateData('top', formData.margin.top);
+                        this.updateData('right', formData.margin.right);
+                        this.updateData('bottom', formData.margin.bottom);
+                        this.updateData('left', formData.margin.left);
+                    }
                     that.getUpdatedPage()
                 }
             });
@@ -319,7 +324,17 @@ export default class ModifyManager {
                 showColonAfterLabel: true,
                 labelLocation: "left",
                 onFieldDataChanged: function (e) {
-                    that.getUpdatedPage();
+                    if (e.dataField == "total") {
+                        formData.padding.top = null;
+                        formData.padding.right = null;
+                        formData.padding.bottom = null;
+                        formData.padding.left = null;
+                        this.updateData('top', formData.padding.top);
+                        this.updateData('right', formData.padding.right);
+                        this.updateData('bottom', formData.padding.bottom);
+                        this.updateData('left', formData.padding.left);
+                    }
+                    that.getUpdatedPage()
                 }
             });
         });
@@ -408,9 +423,20 @@ export default class ModifyManager {
             $('#mobile-margin').dxForm({
               colCount: 5, 
               formData: formData.mobileMargin,
+              labelMode: 'floating',
               items: items,
               labelLocation: "top",
               onFieldDataChanged: function (e) {
+                if (e.dataField == "total") {
+                    formData.mobileMargin.top = null;
+                    formData.mobileMargin.right = null;
+                    formData.mobileMargin.bottom = null;
+                    formData.mobileMargin.left = null;
+                    this.updateData('top', formData.mobileMargin.top);
+                    this.updateData('right', formData.mobileMargin.right);
+                    this.updateData('bottom', formData.mobileMargin.bottom);
+                    this.updateData('left', formData.mobileMargin.left);
+                }
                 that.getUpdatedPage()
             }
             });
@@ -424,9 +450,20 @@ export default class ModifyManager {
             $('#mobile-padding').dxForm({
               colCount: 5, 
               formData: formData.mobilePadding,
+              labelMode: 'floating',
               items: items,
               labelLocation: "top",
               onFieldDataChanged: function (e) {
+                if (e.dataField == "total") {
+                    formData.mobilePadding.top = null;
+                    formData.mobilePadding.right = null;
+                    formData.mobilePadding.bottom = null;
+                    formData.mobilePadding.left = null;
+                    this.updateData('top', formData.mobilePadding.top);
+                    this.updateData('right', formData.mobilePadding.right);
+                    this.updateData('bottom', formData.mobilePadding.bottom);
+                    this.updateData('left', formData.mobilePadding.left);
+                }
                 that.getUpdatedPage()
             }
             });
@@ -569,9 +606,10 @@ export default class ModifyManager {
         $(() => {
             let that = this;
             $('#gallery-source-form').dxForm({
-              colCount: 2,
+              colCount: 3,
               formData: formData.gallerySourceInput,
               items: [{
+                    colSpan: 2,
                     dataField: 'url',
                     editorOptions: {
                         width: '100%'
@@ -580,13 +618,9 @@ export default class ModifyManager {
                 {
                     itemType: 'button',
                     horizontalAlignment: 'right',
-                    editorOptions: {
-                        width: '10%'
-                    },
                     buttonOptions: {
                       text: 'Aggiungi',
                       type: 'normal',
-                      useSubmitBehavior: true,
                 },}],
               labelLocation: "left",
               onFieldDataChanged: function (e) {
@@ -600,8 +634,10 @@ export default class ModifyManager {
                     gallery.refresh();
                     that.getUpdatedPage()
                 }
-                else if (e.value)
-                    swal("Errore", "Immagine non raggiungibile", "warning");
+                else if (e.value) {
+                    swal("Errore", "Sorgente non raggiungibile", "warning");
+                    return;
+                }
             }
             });
         });
@@ -840,24 +876,6 @@ export default class ModifyManager {
             });
         });
 
-        
-        // $(() => {
-        //     let items = [];
-        //     let that = this;
-        //     $.each( formData.horizontalScrollGalleryConfiguration, function( key, value ) {
-        //         items.push({dataField: key, editorType: "dxTextArea"});
-        //     },),
-        //     $('#horizontalScrollGallery-source').dxForm({
-        //       colCount: 1,
-        //       formData: formData.horizontalScrollGalleryConfiguration,
-        //       items: items,
-        //       labelLocation: "top",
-        //       onFieldDataChanged: function (e) {
-        //         that.getUpdatedPage()
-        //     }
-        //     });
-        // });
-
 
         var gridGallery;
 
@@ -954,24 +972,6 @@ export default class ModifyManager {
             }
             });
         });
-
-
-        // $(() => {
-        //     let items = [];
-        //     let that = this;
-        //     $.each( formData.gridGalleryConfiguration, function( key, value ) {
-        //         items.push({dataField: key, editorType: "dxTextArea"});
-        //     },),
-        //     $('#gridGallery-source').dxForm({
-        //       colCount: 1,
-        //       formData: formData.gridGalleryConfiguration,
-        //       items: items,
-        //       labelLocation: "top",
-        //       onFieldDataChanged: function (e) {
-        //         that.getUpdatedPage()
-        //     }
-        //     });
-        // });
 
         this.newFormData = formData;
 
@@ -1195,22 +1195,16 @@ export default class ModifyManager {
     }
 
     getUpdatedPage() {
-        
         let initialWidget = this.widget;
         let formData = JSON.parse(JSON.stringify(this.newFormData))
         let widget = new Widget(formData, this.text_content_id, this.text_id, this.borders, this.mobileBorders, this.groupValueIds);
         let modifiedWidget = widget.widgetBinding();
-        // controls
-        if (!this.isWidgetValid(modifiedWidget)) {
-            swal("Widget non valido", "I campi richiesti non sono stati riempiti ", "warning");
-            return;
-        };
         let saveManager = new SaveManager(modifiedWidget, initialWidget, this.selectedPage, this.newFormData.metadataTab);
         let updatedPage = saveManager.updatePage();
         if (updatedPage) {
+            this.renderer.saveInDraftBtn.option("disabled", false);
             this.renderer.renderChanges(updatedPage);
         }
-        
     }
 
 }
