@@ -10,7 +10,6 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
     <title>@ViewData["Title"]</title>
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -94,6 +93,20 @@
         vertical-align: middle;
         margin: auto;
         margin-right: 0;
+    }
+
+    .sidebar-footer {
+        bottom: 0;
+        width: 100%;
+        padding: 10px 3px;
+        background: #e6e9ec !important;
+        box-shadow: 0px -1px 5px #d8d9db !important;
+        border-top: none !important;
+    }
+
+    #delete-widget-btn {
+        margin: auto;
+        margin-right: 10px;
     }
 
     .sidenav {
@@ -1059,6 +1072,9 @@
                         </div>
                   </div>
                 </div>
+                <div class="sidebar-footer">
+                    <div id="delete-widget-btn"></div>
+                </div>
             </div>
         </div>
 
@@ -1105,7 +1121,7 @@
 
 </html>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCowLFqzzxbC6fbqqoWeJb97MeAi3Hvqqo" async></script>

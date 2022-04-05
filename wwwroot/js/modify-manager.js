@@ -111,6 +111,20 @@ export default class ModifyManager {
         tinymce.remove();
         var formData = new FormData(widget, this.selectedPage);
 
+        /* Delete widget button */
+        $(() => {
+            let that = this;
+            $('#delete-widget-btn').dxButton({
+              stylingMode: 'contained',
+              text: 'Elimina widget',
+              type: 'danger',
+              width: 130,
+              onClick() {
+                that.deleteWidget(widget);
+              },
+            });
+        });
+
         /* Text Tab */
         $(() => {
             let that = this;
@@ -380,7 +394,9 @@ export default class ModifyManager {
             let that = this;
             $.each(formData.styleTab, function (key, value) {
                 if (key.indexOf("border") != -1)
-                    if (key == "borderColor")
+                    if (key == "borderStyle")                         
+                        items.push({dataField: key, editorType: 'dxSelectBox', editorOptions: {items: formData.Borders, value: (value ? formData.Borders.find(b => b.value == value.toLowerCase()) : ""), valueExpr: 'value', displayExpr: 'value', onSelectionChanged(e) {that.getUpdatedPage()}}});
+                    else if (key == "borderColor")
                         items.push({dataField: key, editorType: "dxColorBox"});
                     else 
                         items.push({ dataField: key });
@@ -510,7 +526,12 @@ export default class ModifyManager {
             let that = this;
             $.each(formData.mobileStyleTab, function (key, value) {
                 if (key.indexOf("border") != -1)
-                    items.push({ dataField: key });
+                    if (key == "borderStyle")
+                        items.push({dataField: key, editorType: 'dxSelectBox', editorOptions: {items: formData.Borders, value: (value ? formData.Borders.find(b => b.value == value.toLowerCase()) : ""), valueExpr: 'value', displayExpr: 'value'}});
+                    else if (key == "borderColor")
+                        items.push({dataField: key, editorType: "dxColorBox"});
+                    else
+                        items.push({ dataField: key });
             }),
                 $('#mobile-border-properties').dxForm({
                     colCount: 3,
@@ -1192,6 +1213,47 @@ export default class ModifyManager {
             default:
                 break;
         }
+    }
+
+    deleteWidget(widget) {
+        swal({
+            title: "Conferma",
+            text: "Il widget verrà eliminato",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                document.getElementById("sidebar-edit-view").style.display = "none";
+                document.getElementById("sidebar-default-view").style.display = "block";
+                this.selectedPage.contents.widgets = this.selectedPage.contents.widgets.filter(currWidget => currWidget.row != widget.row || currWidget.column != widget.column);
+                this.adaptPageLayout(widget);
+                this.renderer.saveInDraftBtn.option("disabled", false);
+                this.renderer.renderChanges(this.selectedPage);
+            }
+        });
+    }
+
+    // to adapt page layout after widget has been deleted
+    adaptPageLayout(deletedWidget) {
+        let isColumnEmpty = true;
+        this.selectedPage.contents.widgets.forEach(w => {
+            if (w.column == deletedWidget.column || (w.column < deletedWidget.column  && (w.column + w.columnSpan) >= deletedWidget.column))
+            isColumnEmpty = false;
+        });
+        if (isColumnEmpty) {
+            this.selectedPage.contents.widgets.forEach(w => {
+                    w.column -= deletedWidget.column ? (deletedWidget.column + deletedWidget.columnSpan) : (1 + deletedWidget.columnSpan);
+            })
+        }
+        let isRowEmpty = true;
+        this.selectedPage.contents.widgets.forEach(w => {
+            if (w.row == deletedWidget.row || (w.row < deletedWidget.row && (w.row + w.rowSpan) >= deletedWidget.row))
+                isRowEmpty = false;
+        })
+        if (isRowEmpty)
+            this.selectedPage.contents.widgets.forEach(w => { if (w.row  > deletedWidget.row) w.row-- });
     }
 
     getUpdatedPage() {

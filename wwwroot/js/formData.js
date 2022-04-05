@@ -73,6 +73,30 @@ export default class FormData {
         { name: "Assoluto", value: 1}
 
     ]
+    
+    Borders = [
+        
+        {value: "dotted"},
+        
+        {value: "dashed"},
+        
+        {value: "solid"},
+        
+        {value: "double"},
+        
+        {value: "groove"},
+        
+        {value: "ridge"},
+        
+        {value: "inset"},
+        
+        {value: "outset"},
+        
+        {value: "none"},
+        
+        {value: "hidden"}
+        
+    ]
 
     Hover = [
 

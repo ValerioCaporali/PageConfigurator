@@ -15,6 +15,7 @@ export default class RenderManager {
     saveInDraftBtn;
     deleteDraftBtn;
     publishPageBtn;
+    responsiveBox;
 
     constructor(pages) {
         this.pages = JSON.parse(JSON.stringify(pages));
@@ -459,7 +460,6 @@ export default class RenderManager {
     });
 
     deleteDraft = $(() => {
-        console.log(this.isDraft);
         let that = this;
         that.deleteDraftBtn = $('#delete-draft-button').dxButton({
             stylingMode: 'contained',
@@ -536,6 +536,7 @@ export default class RenderManager {
     });
 
     showPagePreview(page) {
+        console.log(page);
         document.getElementById("page-title").style.display = "block";
         document.getElementById("page-title").innerHTML = page.description;
         let formData = new FormData({}, page)
@@ -573,7 +574,7 @@ export default class RenderManager {
         document.getElementById("sidebar").style.display = "block";
         document.getElementById("sidebar").style.marginTop = document.getElementById("navbar").clientHeight + 'px';
         this.setDefaultMode();
-        this.fillPage(page.contents.widgets);
+        this.fillPage(page.contents.widgets, false);
     }
 
     fillPage(widgets) {
@@ -600,7 +601,7 @@ export default class RenderManager {
             }
         });
 
-        $('#responsive-box').dxResponsiveBox({
+        this.responsiveBox = $('#responsive-box').dxResponsiveBox({
             rows: rows,
             cols: cols,
             items: items,
@@ -608,7 +609,7 @@ export default class RenderManager {
             screenByWidth(width) {
                 return (width < 700) ? 'sm' : 'lg';
             },
-        });
+        }).dxResponsiveBox('instance');
     }
 
     calculateRows(widgets) {
@@ -1289,7 +1290,7 @@ export default class RenderManager {
         let that = this;
         document.addEventListener('keydown', function(event) {
             if (event.ctrlKey && event.key === 'z') {
-                this.closeModifyPanel();
+                that.closeModifyPanel();
                 that.renderPreviousPage();
             }
           });
@@ -1301,9 +1302,7 @@ export default class RenderManager {
 
     renderPreviousPage() {
         if (this.historyManager.isHistoryEmpty())
-            $(() => {
-                DevExpress.ui.notify("Non sono state apportate delle modifiche");
-            })
+            swal("Attenzione", "Non presenti delle modifiche in questa sessione", "info")
         else {
             this.selectedPage = this.historyManager.getPreviousPage();
             this.showPagePreview(this.selectedPage);
@@ -1311,6 +1310,7 @@ export default class RenderManager {
     }
 
     openModifyPanel(widget) {
+        console.log(this.responsiveBox);
         document.getElementById("sidebar-default-view").style.display = "none";
         document.getElementById("sidebar-edit-view").style.display = "block";
         let text_content_id = this.generateId("0-ta-");
@@ -1326,7 +1326,6 @@ export default class RenderManager {
     }
 
     renderChanges(modifiedPage) {
-        console.log("modified page ", modifiedPage);
         modifiedPage = JSON.parse(JSON.stringify(modifiedPage)); // to delete reference
         if (modifiedPage) {
             if (this.historyManager.isHistoryEmpty())
@@ -1337,7 +1336,7 @@ export default class RenderManager {
         }
     }
 
-    generateId(id) { // for all html element which need an id
+    generateId(id) { // for all html elements which need an id
         while (this.generatedId.indexOf(id) > -1) {
             id = id + Math.floor((Math.random() * (10000 + 1 - 1)) + 1).toString();
         }

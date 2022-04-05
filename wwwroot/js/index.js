@@ -12,13 +12,3 @@ xhr.onload = function() {
     renderer.populatePageList();
 }
 xhr.send(null);
-
-
-// (async () => {
-//     let response = await fetch(base_url + 'get-all');
-//     let pages = await response.json();
-//     renderer = new RenderManager(pages);
-//     renderer.populatePageList();
-// })().catch(err => {
-//     console.log(err);
-// })
