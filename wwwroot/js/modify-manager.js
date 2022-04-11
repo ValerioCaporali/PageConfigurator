@@ -1172,9 +1172,9 @@ export default class ModifyManager {
         var http = new XMLHttpRequest();
     
         http.open('HEAD', image_url, false);
-        http.send();
+        //http.send();
     
-        return http.status != 404;
+        return true;
     
     }
 
@@ -1242,11 +1242,11 @@ export default class ModifyManager {
             if (w.column == deletedWidget.column || (w.column < deletedWidget.column  && (w.column + w.columnSpan) >= deletedWidget.column))
             isColumnEmpty = false;
         });
-        if (isColumnEmpty) {
-            this.selectedPage.contents.widgets.forEach(w => {
-                    w.column -= deletedWidget.column ? (deletedWidget.column + deletedWidget.columnSpan) : (1 + deletedWidget.columnSpan);
-            })
-        }
+        // if (isColumnEmpty) {
+        //     this.selectedPage.contents.widgets.forEach(w => {
+        //             w.column -= deletedWidget.column ? (deletedWidget.column + deletedWidget.columnSpan) : (1 + deletedWidget.columnSpan);
+        //     })
+        // }
         let isRowEmpty = true;
         this.selectedPage.contents.widgets.forEach(w => {
             if (w.row == deletedWidget.row || (w.row < deletedWidget.row && (w.row + w.rowSpan) >= deletedWidget.row))

@@ -201,6 +201,10 @@ export default class Widget {
         hover: null
 
     }
+    
+    getEmptyWidget() {
+        return this.widget;
+    }
 
     widgetBinding() {
 
@@ -400,6 +404,7 @@ export default class Widget {
                     source.push(currSource.url)
                 });
                 this.formData.galleryConfiguration.source = source;
+                this.formData.galleryConfiguration.slideShowDelay = parseInt(this.formData.galleryConfiguration.slideShowDelay);
                 this.widget.content = this.formData.galleryConfiguration;
                 break;
             case 2:

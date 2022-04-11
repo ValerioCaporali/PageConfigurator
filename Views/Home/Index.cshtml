@@ -64,6 +64,47 @@
         top: 0;
         z-index: 1000;
     }
+    
+    #add-icon:hover {
+        cursor:pointer;
+    }
+    
+    .presets {
+        justify-content: center;
+        margin: 0 auto;
+    }
+    
+    .presets-label {
+        justify-content: center;
+        margin: 0;
+        margin-bottom: 30px !important;
+    }
+    
+    .presets-label p {
+        padding: 0 !important;
+        font-size: 16px !important;
+    }
+
+    .resizer {
+        width: 10px;
+        height: 10px;
+        background: #000;
+        margin: auto;
+        float: right;
+        cursor: se-resize;
+        display: none;
+    }
+    
+    .preset {
+        padding: 0px 20px;
+        opacity: 60%;
+        transition: all 0.1s;
+    }
+    
+    .preset:hover {
+        cursor: pointer;
+        opacity: 100%;
+    }
 
      #sidebar {
         position: fixed;
@@ -202,6 +243,19 @@
         right: 0;
         left: 0;
         border-radius: 20px;
+    }
+
+    .dropzone {
+        border: 2px dashed black;
+        padding: 80px;
+        margin-top: 20px;
+        transition: all 0.18s;
+    }
+
+    .dropzone:hover {
+        border: 2px dashed black !important;
+        padding: 80px !important;
+        margin-top: 20px !important;
     }
 
     .nav-item {
@@ -846,13 +900,13 @@
                 </div>
                 <div id="widgets-curtain" class="draggable-widgets-list">
                     <div class="row" style="margin: 0;">
-                        <div id="draggable" class="widget-wrapper" draggable="true">
+                        <div id="draggable-text" class="widget-wrapper" draggable="true" value="0">
                             <div style="text-align: center; margin-top: 16px; padding: 10px;">
                                 <i class="fa-solid fa-align-justify fa-xl widget-thumbnail"></i>
                                 <p style="margin-top: 12px;">Testo</p>
                             </div>
                         </div>
-                        <div class="widget-wrapper" draggable="true">
+                        <div class="widget-wrapper" draggable="true" value="1">
                             <div style="text-align: center; margin-top: 16px; padding: 10px;">
                                 <i class="fa-solid fa-panorama fa-xl widget-thumbnail"></i>
                                 <p style="margin-top: 12px;">Galleria</p>
@@ -860,13 +914,13 @@
                         </div>
                     </div>
                     <div class="row" style="margin: 0;">
-                        <div class="widget-wrapper" draggable="true">
+                        <div class="widget-wrapper" draggable="true" value="2">
                             <div style="text-align: center; margin-top: 16px; padding: 10px;">
                                 <i class="fa-solid fa-video fa-xl widget-thumbnail"></i>
                                 <p style="margin-top: 12px;">Video</p>
                             </div>
                         </div>
-                        <div class="widget-wrapper" draggable="true">
+                        <div class="widget-wrapper" draggable="true" value="3">
                             <div style="text-align: center; margin-top: 16px; padding: 10px;">
                                 <i class="fa-solid fa-file-pdf fa-xl widget-thumbnail"></i>
                                 <p style="margin-top: 12px;">Pdf</p>
@@ -874,13 +928,13 @@
                         </div>
                     </div>
                     <div class="row" style="margin: 0;">
-                        <div class="widget-wrapper" draggable="true">
+                        <div class="widget-wrapper" draggable="true" value="4">
                             <div style="text-align: center; margin-top: 16px; padding: 10px;">
                                 <i class="fa-solid fa-road fa-xl widget-thumbnail"></i>
                                 <p style="margin-top: 12px;">Tour</p>
                             </div>
                         </div>
-                        <div class="widget-wrapper" draggable="true">
+                        <div class="widget-wrapper" draggable="true" value="5">
                             <div style="text-align: center; margin-top: 16px; padding: 10px;">
                                 <i class="fa-solid fa-map fa-xl widget-thumbnail"></i>
                                 <p style="margin-top: 12px;">Map</p>
@@ -888,13 +942,13 @@
                         </div>
                     </div>
                     <div class="row" style="margin: 0;">
-                        <div class="widget-wrapper" draggable="true">
+                        <div class="widget-wrapper" draggable="true" value="6">
                             <div style="text-align: center; margin-top: 16px; padding: 10px;">
                                 <i class="fa-solid fa-paste fa-xl widget-thumbnail"></i>
                                 <p style="margin-top: 12px;">Pagina</p>
                             </div>
                         </div>
-                        <div class="widget-wrapper" draggable="true">
+                        <div class="widget-wrapper" draggable="true" value="101">
                             <div style="text-align: center; margin-top: 16px; padding: 10px;">
                                 <i class="fa-solid fa-left-right fa-xl widget-thumbnail"></i>
                                 <p style="margin-top: 12px;">Galleria orizzontale</p>
@@ -902,7 +956,7 @@
                         </div>
                     </div>
                     <div class="row" style="margin: 0;">
-                        <div class="widget-wrapper" draggable="true">
+                        <div class="widget-wrapper" draggable="true" value="102">
                             <div style="text-align: center; margin-top: 16px; padding: 10px;">
                                 <i class="fa-solid fa-border-all fa-xl widget-thumbnail"></i>
                                 <p style="margin-top: 12px;">Galleria griglia</p>
@@ -1083,9 +1137,9 @@
             <div id="pages-container" class="row" style="margin: 0;"></div>
             <div id="searched" class="row" style="margin: 0;"></div>
             <div class="modal fade" id="options-modal" role="dialog" style="backdrop-filter: blur(3px);"
-            data-backdrop="static">
+                 data-backdrop="static">
                 <div class="modal-dialog modal-xl" style="margin-top: 5rem;">
-                <!-- Modal content-->
+                    <!-- Modal content-->
                     <div class="modal-content">
                         <div class="modal-header">
                             <h4 class="modal-title" id="options-modal-title">Pagine disponibili</h4>
@@ -1099,6 +1153,23 @@
                     </div>
                 </div>
             </div>
+            <div id="presets-container" class="container" style="display: none;">
+                <div class="row presets-label">
+                    <p>SCEGLI IL TUO PRESET</p>
+                </div>
+                <div class="row presets">
+                    <div id="two-column-preset" class="preset">
+                        <img src="assets/images/presets/two-columns.png" alt="">
+                    </div>
+                    <div id="three-column-preset" class="preset">
+                        <img src="assets/images/presets/three-columns.png" alt="">
+                    </div>
+                    <div id="four-column-preset" class="preset">
+                        <img src="assets/images/presets/four-columns.png" alt="">
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <main class="page-content" id="main" style="display: none;">

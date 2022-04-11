@@ -64,7 +64,7 @@ export default class SaveManager {
                 case 3:
                 case 101:
                 case 102:
-                    if (!widget.content.source || widget.content.source == "") {
+                    if (widget.content.source == null || widget.content.source == "") {
                         swal("Errore", "Il campo Source non può essere vuoto", "warning");
                         return false;
                     }
@@ -72,7 +72,7 @@ export default class SaveManager {
                     break;
     
                 case 4:
-                    if (!widget.content.source || widget.content.showCaseId == null) {
+                    if (widget.content.source == null || widget.content.showCaseId == null) {
                         swal("Errore", "Alcuni campi richiesti non sono stati riempiti", "warning");
                         return false;
                     }
@@ -88,6 +88,7 @@ export default class SaveManager {
                     break;
             
                 default:
+                    return true;
                     break;
             }
         });
@@ -96,8 +97,8 @@ export default class SaveManager {
     saveInDraft(pageToSave, initialPage)
     {
 
-        if(!this.isPageValid(pageToSave))
-            return;
+        // if(!this.isPageValid(pageToSave))
+        //     return;
 
         var draft = [];
         var oldDraft = [];
@@ -182,9 +183,7 @@ export default class SaveManager {
             }
             else
             {
-                $(() => {
-                    DevExpress.ui.notify("Bozza eliminata correttamente", "success");
-                })
+                swal("Bozza eliminata", "La bozza è stata pubblicata correttamente", "success");
             }
         })
     }
@@ -224,9 +223,7 @@ export default class SaveManager {
             }
             else
             {
-                $(() => {
-                    DevExpress.ui.notify("Pagina salvata correttamente", "success");
-                })
+                swal("Pagina pubblicata", "Le bozze sono state pubblicate correttamente", "success");
             }
         })
     }

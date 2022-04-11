@@ -2,6 +2,8 @@ import ModifyManager from './modify-manager.js'
 import HistoryManager from './history-manager.js';
 import SaveManager from './save-manager.js';
 import FormData from './formData.js';
+import Widget from "./widget.js";
+import DefaultContents from "./defaultContents.js";
 export default class RenderManager {
 
     pages;
@@ -16,25 +18,51 @@ export default class RenderManager {
     deleteDraftBtn;
     publishPageBtn;
     responsiveBox;
+    twoColEL = false;
+    threeColEL = false;
+    fourColEL = false;
 
     constructor(pages) {
         this.pages = JSON.parse(JSON.stringify(pages));
-        this.setupEventListener();
-
+        this.initInteractives(); // init interactives html elements
     }
 
-    setupEventListener() {
+    initEventListener() {
+        let that = this;
+        let addIcon = document.getElementById('add-icon');
+        
+        addIcon.addEventListener('click', () => {
+            this.showPresets();
+            if (!this.twoColEL) {
+                this.twoColEL = true;
+                document.getElementById('two-column-preset').addEventListener('click', () => {that.applyPreset(2); })
+            }
+            if (!this.threeColEL) {
+                this.threeColEL = true;
+                document.getElementById('three-column-preset').addEventListener('click', () => {that.applyPreset(3) })
+            }
+            if (!this.fourColEL) {
+                this.fourColEL = true;
+                document.getElementById('four-column-preset').addEventListener('click', () => { that.applyPreset(4) })
+            }
+        });
+
         document.getElementById('go-back').addEventListener("click", () => {
             this.showPageList();
         });
-        this.initSidebarCurtains();
-        document.getElementById("draggable").addEventListener("dragstart", (event) => {
-            console.log(event);
+        let draggableWidgets = document.querySelectorAll('.widget-wrapper');
+        draggableWidgets.forEach(draggableWidget => {
+            draggableWidget.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData("text/plain", draggableWidget.getAttribute('value'));
+            })
         });
+    }
+
+    initInteractives() {
+        this.initSidebarCurtains();
         document.getElementById("widgets-list-button").addEventListener("click", () => {
             this.closeModifyPanel();
         });
-        
         document.getElementById('search').addEventListener('keyup', (event) => {
             document.getElementById('search').value = event.target.value;
             clearTimeout(this.typingTimer);
@@ -128,8 +156,7 @@ export default class RenderManager {
         })
     }
 
-    showPageList()
-    {
+    showPageList() {
         localStorage.clear();
         if (!this.historyManager.isHistoryEmpty()) {
             swal({
@@ -536,7 +563,6 @@ export default class RenderManager {
     });
 
     showPagePreview(page) {
-        console.log(page);
         document.getElementById("page-title").style.display = "block";
         document.getElementById("page-title").innerHTML = page.description;
         let formData = new FormData({}, page)
@@ -576,6 +602,110 @@ export default class RenderManager {
         this.setDefaultMode();
         this.fillPage(page.contents.widgets, false);
     }
+    
+    createDropzone(base_id, container, widget) {
+        let that = this;
+        if (base_id && container) {
+            let widgetData = JSON.stringify(widget);
+            container.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData("text/plain", JSON.stringify(widgetData));
+            });
+            container.ondragover = function(e) {
+                e.preventDefault()
+                container.style.backgroundColor = "#e4e4e4";
+                container.style.opacity = "50%";
+            };
+            container.ondragleave = function() {
+                container.style.backgroundColor = "#fff";
+                container.style.opacity = "100%";
+            };
+            container.ondrop = function(event) {
+                event.preventDefault();
+                container.style.backgroundColor = "#fff";
+                container.style.opacity = "100%";
+                let widgetData = event.dataTransfer.getData("text");
+                widgetData = JSON.parse(widgetData);
+                if (typeof widgetData == 'number')
+                    that.addWidget(parseInt(widgetData), widget.row, widget.column);
+                else
+                    that.replaceWidget(widget, widgetData);
+                
+                this.saveInDraftBtn.option('disabled', false);
+            };
+        }
+        else if (base_id && !container) {
+            let id = this.generateId(base_id);
+            let dropzone = document.createElement('div');
+            dropzone.classList.add("dropzone");
+            dropzone.id= this.generateId('dz-');
+            let addIcon = document.createElement("i");
+            addIcon.className = "fa-solid fa-circle-plus";
+            addIcon.style.fontSize = "60px";
+            dropzone.append(addIcon);
+            dropzone.ondragover = function(e) {
+                e.preventDefault()
+                dropzone.style.backgroundColor = "#e4e4e4";
+                dropzone.style.opacity = "50%";
+            }
+            dropzone.ondragleave = function() {
+                dropzone.style.backgroundColor = "#fff";
+                dropzone.style.opacity = "100%";
+            }
+            dropzone.ondrop = function(event) {
+                event.preventDefault();
+                dropzone.style.backgroundColor = "#fff";
+                dropzone.style.opacity = "100%";
+                let widgetData = event.dataTransfer.getData("text");
+                widgetData = JSON.parse(widgetData);
+                if (typeof widgetData == 'number')
+                    that.addWidget(parseInt(widgetData), widget.row, widget.column);
+                else
+                    that.replaceWidget(widget, widgetData);
+            };
+            this.saveInDraftBtn.option('disabled', false);
+            return dropzone;
+        } else {
+            let dropzone = document.createElement('div');
+            dropzone.classList.add("dropzone");
+            dropzone.id= "dropzone";
+            let addIcon = document.createElement("i");
+            addIcon.id = "add-icon"
+            addIcon.className = "fa-solid fa-circle-plus";
+            addIcon.style.fontSize = "60px";
+            let dropText = document.createElement("p");
+            dropText.innerHTML = "Rilascia qui il widget o il preset";
+            dropText.style.fontStyle = "italic";
+            let dropzoneContent = document.createElement("div");
+            dropzoneContent.id = "dropzone-content";
+            let presets = document.getElementById('presets-container');
+            presets.style.display = "none";
+            dropzoneContent.append(addIcon, dropText, presets)
+            dropzone.append(dropzoneContent);
+            dropzone.ondragover = function(e) {
+                e.preventDefault()
+                dropzone.style.backgroundColor = "#e4e4e4";
+                dropzone.style.opacity = "50%";
+            }
+            dropzone.ondragleave = function() {
+                dropzone.style.backgroundColor = "#fff";
+                dropzone.style.opacity = "100%";
+            }
+            dropzone.ondrop = function(event) {
+                event.preventDefault();
+                dropzone.style.backgroundColor = "#fff";
+                dropzone.style.opacity = "100%";
+                let widgetType = event.dataTransfer.getData("text");
+                widgetType = JSON.parse(widgetType);
+                if (typeof widgetType != 'number') {
+                    swal("Attenzione", "In quest'area è possibile aggiungere solo widget vuoti", "warning");
+                    return;
+                }
+                that.addWidget(parseInt(widgetType));
+            };
+            this.saveInDraftBtn.option('disabled', false);
+            return dropzone;
+        }
+    }
 
     fillPage(widgets) {
         var totRows = this.calculateRows(widgets),
@@ -583,7 +713,7 @@ export default class RenderManager {
             rows = new Array(),
             cols = new Array(),
             object = { ratio: 1 };
-        for (var i = 0; i < totRows; i++) {
+        for (var i = 0; i < totRows + 1; i++) {
             rows.push(object);
         }
         for (var i = 0; i < totCols; i++) {
@@ -600,7 +730,22 @@ export default class RenderManager {
                 html: this.handleWidget(w)
             }
         });
+        
+        let dropzone = this.createDropzone()
 
+
+        items.push(
+            {
+                location: [{
+                    row: totRows,
+                    col: 0,
+                    colspan: totCols,
+                    rowspan: 1
+                }],
+                html: dropzone
+            }
+        )
+            
         this.responsiveBox = $('#responsive-box').dxResponsiveBox({
             rows: rows,
             cols: cols,
@@ -610,7 +755,9 @@ export default class RenderManager {
                 return (width < 700) ? 'sm' : 'lg';
             },
         }).dxResponsiveBox('instance');
-    }
+
+        this.initEventListener();
+        }
 
     calculateRows(widgets) {
         var totRows = 0;
@@ -640,11 +787,19 @@ export default class RenderManager {
         editButtonContainer.classList.add('edit-button-container');
         editButtonContainer.appendChild(editButton);
         editButton.className = 'fas fa-wrench edit-icon fa-lg';
-        container.append(editButtonContainer, elem);
+
+        let resizer = document.createElement("div");
+        resizer.className = 'resizer';
+        this.initResizeEvent(resizer, widget, elem);
+
+        container.setAttribute('draggable', false);
+        container.append(editButtonContainer, elem, resizer);
         container.addEventListener('mouseover', () => {
+            resizer.style.display = "block";
             elem.classList.add("structure");
         });
         container.addEventListener('mouseout', () => {
+            resizer.style.display = "none";
             elem.classList.remove("structure");
         });
         elem.addEventListener('click', () => {
@@ -653,44 +808,93 @@ export default class RenderManager {
         return container;
     }
 
+    initResizeEvent(resizer, widget, elem) {
+        let pageWidth = document.getElementById("page").clientWidth;
+        resizer.addEventListener('mousedown', (e) => {
+            let besideWidget = this.selectedPage.contents.widgets.find(w => {return w.row == widget.row && w.column == widget.column + widget.columnSpan});
+            console.log("beside widgets ", besideWidget);
+            let startX = e.clientX;
+            let startWidth = parseInt(document.defaultView.getComputedStyle(elem).width, 10);
+            document.documentElement.addEventListener('mousemove', (e) => {
+                elem.style.width = (startWidth + e.clientX - startX) + 'px';
+            }, false);
+            document.documentElement.addEventListener('mouseup', (e) => {
+                if ((startWidth + e.clientX - startX) > startWidth && besideWidget) {
+                    let oldElement = elem;
+                    let newElement = oldElement.cloneNode(true);
+                    newElement.style.width = startWidth + 'px';
+                    oldElement.parentNode.replaceChild(newElement, oldElement);
+                    swal("Attenzione", "Non è possiblie sovrapporre due elementi", "warning");
+                    this.initResizeEvent(resizer, widget, newElement);
+                } else if ((startWidth + e.clientX - startX) < pageWidth) {
+                    let oldElement = elem;
+                    let newElement = oldElement.cloneNode(true);
+                    oldElement.parentNode.replaceChild(newElement, oldElement);
+                    let resizeRatio = newElement.clientWidth / startWidth;
+                    console.log(resizeRatio);
+                    if (widget.columnSpan > 1) {
+                        let oldSpan = widget.columnSpan;
+                        widget.columnSpan = Math.round(widget.columnSpan * resizeRatio) != 0 ? Math.round(widget.columnSpan * resizeRatio) : 1;
+                        // this.addWidget(1000, widget.row, widget.column + widget.columnSpan, oldSpan - widget.columnSpan);
+                        this.renderChanges(this.selectedPage);
+                        console.log(this.selectedPage.contents.widgets);
+                    }
+                    this.initResizeEvent(resizer, widget, newElement);
+                }
+            }, false);
+        } , false);
+    }
+
     handelWidgetType(widget) {
-        switch (widget.type) {
-            case 0:
-                var textContainer = this.handleTextWidget(widget);
-                return textContainer;
-                break;
-            case 1:
-                var galleryContainer = this.handleGalleryWidget(widget);
-                return galleryContainer;
-                break;
-            case 2:
-                var videoContainer = this.handleVideoWidget(widget);
-                return videoContainer;
-                break;
-            case 3:
-                var pdfContainer = this.handlePdfWidget(widget);
-                return pdfContainer;
-                break;
-            case 4:
-                var tourContainer = this.handleTourWidget(widget);
-                return tourContainer;
-            case 5:
-                var mapContainer = this.handleMapWidget(widget);
-                return mapContainer;
-            case 6:
-                var webPageContainer = this.handleWebPageWidget(widget);
-                return webPageContainer;
-            case 101:
-                var horizontalScrollGallery = this.handleHorizontalScrollGallery(widget);
-                return horizontalScrollGallery;
-            case 102:
-                var gridGalleryContainer = this.handleGridGalleryWidget(widget);
-                return gridGalleryContainer;
-            default:
-                var div = document.createElement("div");
-                div.innerHTML = "widget to handle";
-                return div;
-        }
+            switch (widget.type) {
+                case 0:
+                    var textContainer = this.handleTextWidget(widget);
+                    this.createDropzone('w-dz', textContainer, widget);
+                    return textContainer;
+                    break;
+                case 1:
+                    var galleryContainer = this.handleGalleryWidget(widget);
+                    this.createDropzone('w-dz', galleryContainer, widget);
+                    return galleryContainer;
+                    break;
+                case 2:
+                    var videoContainer = this.handleVideoWidget(widget);
+                    this.createDropzone('w-dz', videoContainer, widget);
+                    return videoContainer;
+                    break;
+                case 3:
+                    var pdfContainer = this.handlePdfWidget(widget);
+                    this.createDropzone('w-dz', pdfContainer, widget);
+                    return pdfContainer;
+                    break;
+                case 4:
+                    var tourContainer = this.handleTourWidget(widget);
+                    this.createDropzone('w-dz', tourContainer, widget);
+                    return tourContainer;
+                case 5:
+                    var mapContainer = this.handleMapWidget(widget);
+                    this.createDropzone('w-dz', mapContainer, widget);
+                    return mapContainer;
+                case 6:
+                    var webPageContainer = this.handleWebPageWidget(widget);
+                    this.createDropzone('w-dz', webPageContainer, widget);
+                    return webPageContainer;
+                case 101:
+                    var horizontalScrollGallery = this.handleHorizontalScrollGallery(widget);
+                    this.createDropzone('w-dz', horizontalScrollGallery, widget);
+                    return horizontalScrollGallery;
+                case 102:
+                    var gridGalleryContainer = this.handleGridGalleryWidget(widget);
+                    this.createDropzone('w-dz', gridGalleryContainer, widget);
+                    return gridGalleryContainer;
+                case 1000:
+                    let dropzone = this.createDropzone('dz', null, widget);
+                    return dropzone;
+                default:
+                    var div = document.createElement("div");
+                    div.innerHTML = "widget to handle";
+                    return div;
+            }
     }
 
     handleTextWidget(widget) {
@@ -735,7 +939,7 @@ export default class RenderManager {
         var videoContainer = document.createElement('div');
         var video = this.buildIframe(widget);
         const regExp = "/^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/";
-        var src = "https://www.youtube.com/embed/qC0vDKVPCrw";
+        var src = "https://www.youtube.com/embed/X91__O-5zz8";
         var video_url = new URL(src);
         if (src.match(regExp) || src.indexOf("www.youtube-nocookie") != -1) {
             video.allowFullscreen = "true";
@@ -1020,7 +1224,7 @@ export default class RenderManager {
                 var imageContainer = document.createElement('div'),
                     img = document.createElement('img');
                 imageContainer.classList.add('image-item');
-                img.src = 'https://www.w3schools.com/w3images/nature.jpg';
+                img.src = 'assets/images/image.jpg';
                 imageContainer.appendChild(img);
                 gridGalleryContainer.appendChild(imageContainer);
             })
@@ -1045,7 +1249,7 @@ export default class RenderManager {
         widget.content.source.forEach(source => {
             var [itemWrapper, item] = [document.createElement('div'), document.createElement('img')];
             itemWrapper.classList.add('item-gallery-image');
-            item.src = 'https://www.w3schools.com/w3images/nature.jpg';
+            item.src = 'assets/images/image.jpg';
             itemWrapper.appendChild(item);
             galleryWrapper.appendChild(itemWrapper);
         });
@@ -1286,6 +1490,14 @@ export default class RenderManager {
         document.getElementById("demo-container").style.display = "block";
     }
 
+    generateId(id) { // for all html elements which need an id
+        while (this.generatedId.indexOf(id) > -1) {
+            id = id + '-' + Math.floor((Math.random() * (10000 + 1 - 1)) + 1).toString();
+        }
+        this.generatedId.push(id);
+        return id;
+    }
+    
     initHistoryButton() {
         let that = this;
         document.addEventListener('keydown', function(event) {
@@ -1305,12 +1517,11 @@ export default class RenderManager {
             swal("Attenzione", "Non presenti delle modifiche in questa sessione", "info")
         else {
             this.selectedPage = this.historyManager.getPreviousPage();
-            this.showPagePreview(this.selectedPage);
+            this.fillPage(this.selectedPage.contents.widgets);
         }
     }
 
     openModifyPanel(widget) {
-        console.log(this.responsiveBox);
         document.getElementById("sidebar-default-view").style.display = "none";
         document.getElementById("sidebar-edit-view").style.display = "block";
         let text_content_id = this.generateId("0-ta-");
@@ -1332,15 +1543,168 @@ export default class RenderManager {
                 this.historyManager.updateHistory(this.selectedPage);
             this.historyManager.updateHistory(modifiedPage);
             this.selectedPage = this.historyManager.getLastPage();
-            this.showPagePreview(this.selectedPage);
+            this.fillPage(this.selectedPage.contents.widgets);
+        }
+    }
+    
+    showPresets() {
+        let presets = document.getElementById('presets-container');
+        let dropzone = document.getElementById('dropzone');
+        document.getElementById("dropzone-content").style.display = "none";
+        presets.style.display = "block";
+        dropzone.appendChild(presets);
+    }
+
+    applyPreset(colNumber) {
+        let cols = 0;
+        let rows = 0;
+        if (this.selectedPage.contents.widgets.length != 0) {
+            cols = this.calculateColumns(this.selectedPage.contents.widgets);
+            rows = this.calculateRows(this.selectedPage.contents.widgets);
+        }
+        if (colNumber != cols) {
+            this.adaptPage(colNumber, cols, rows);
+        } else {
+            for(let i = 0; i < cols; i++) {
+                let newWidget = new Widget().getEmptyWidget();
+                newWidget.row = rows;
+                newWidget.column = i;
+                newWidget.type = 1000;
+                this.selectedPage.contents.widgets.push(newWidget);
+            }
+            this.renderChanges(this.selectedPage);
         }
     }
 
-    generateId(id) { // for all html elements which need an id
-        while (this.generatedId.indexOf(id) > -1) {
-            id = id + Math.floor((Math.random() * (10000 + 1 - 1)) + 1).toString();
+    adaptPage(colNumber, cols, rows) {
+        let that = this;
+        if (cols % colNumber == 0 || colNumber % cols == 0) {
+            if (colNumber < cols) {
+                for (let i = 0; i < colNumber; i++) {
+                    let newWidget = new Widget().getEmptyWidget();
+                    newWidget.row = rows;
+                    newWidget.column = i * (cols / colNumber);
+                    newWidget.columnSpan = (cols / colNumber);
+                    newWidget.type = 1000;
+                    that.selectedPage.contents.widgets.push(newWidget);
+                }
+            } else {
+                that.selectedPage.contents.widgets.forEach(w => {
+                    w.columnSpan = (w.columnSpan) ? w.columnSpan : 1;
+                    w.columnSpan *= (colNumber / cols);
+                    if (w.column != 0)
+                        w.column = (w.column * w.columnSpan);
+                });
+                for (let i = 0; i < colNumber; i++) {
+                    let newWidget = new Widget().getEmptyWidget();
+                    newWidget.row = rows;
+                    newWidget.column = i;
+                    newWidget.type = 1000;
+                    that.selectedPage.contents.widgets.push(newWidget);
+                }
+            }
+        } else {
+            let temp = colNumber;
+            while (temp % cols != 0) {
+                temp += colNumber;
+            }
+            this.selectedPage.contents.widgets.forEach(w => {
+                w.columnSpan = w.columnSpan ? w.columnSpan * (temp / cols) : 1 * (temp / cols);
+                w.column =  w.column ? (w.column * temp) / cols : w.column;
+            });
+            for (let i = 0; i < colNumber; i++) {
+                let newWidget = new Widget().getEmptyWidget();
+                newWidget.row = rows;
+                newWidget.column = i * (temp / colNumber);
+                newWidget.columnSpan = (temp / colNumber);
+                newWidget.type = 1000;
+                that.selectedPage.contents.widgets.push(newWidget);
+            }
         }
-        this.generatedId.push(id);
-        return id;
+
+        this.renderChanges(this.selectedPage);
     }
+
+    replaceWidget(toWidget, fromWidget) {
+        swal({
+            title: "Conferma",
+            text: "Sosituire il widget ?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((confirm) => {
+            if (confirm) {
+              fromWidget = JSON.parse(fromWidget);
+              let toWidgetIndex = this.selectedPage.contents.widgets.findIndex(w => w.row == toWidget.row && w.column == toWidget.column);
+              this.selectedPage.contents.widgets[toWidgetIndex] = fromWidget;
+              this.selectedPage.contents.widgets[toWidgetIndex].row = toWidget.row;
+              this.selectedPage.contents.widgets[toWidgetIndex].column = toWidget.column;
+              this.selectedPage.contents.widgets[toWidgetIndex].columnSpan = toWidget.columnSpan;
+              this.renderChanges(this.selectedPage);
+            }
+        });
+    }
+    
+    addWidget(widgetType, row, column, span) {
+        let emptyWidget = new Widget().getEmptyWidget();
+        emptyWidget.type = widgetType;
+        let defaultContents = new DefaultContents();
+        switch (emptyWidget.type) {
+            case 0:
+                emptyWidget.content = defaultContents.textContent;
+                emptyWidget.style = {padding: {top: "30px", bottom: "30px"}};
+                break;
+            case 1:
+                emptyWidget.content = defaultContents.gallerySource;
+                break;
+            case 2:
+                emptyWidget.content = defaultContents.videoSource;
+                break;
+            case 3:
+                emptyWidget.content = defaultContents.pdfSource;
+                break;
+            case 4:
+                emptyWidget.content = defaultContents.showcaseSource;
+                break;    
+            case 5:
+                emptyWidget.content = defaultContents.mapContent;
+                break;
+            case 6:
+                emptyWidget.content = defaultContents.webPageSource;
+                break;
+            case 101:
+            case 102:
+                emptyWidget.content = defaultContents.horizontalAndGridGallerySource;
+                break;
+            case 1000:
+                emptyWidget = emptyWidget;
+                break;
+        }
+        if (span) {
+            emptyWidget.row = row;
+            emptyWidget.column = column;
+            emptyWidget.columnSpan = span;
+            this.selectedPage.contents.widgets.push(emptyWidget);
+        }
+        else if (row || row == 0 && column || column == 0) {
+            this.selectedPage.contents.widgets.forEach(widget => {
+                if (widget.row == row && widget.column == column) {
+                    widget.type = widgetType;
+                    widget.content = emptyWidget.content;
+                }
+            });
+        } else {
+            let pageRows = this.calculateRows(this.selectedPage.contents.widgets);
+            let pageColumns = this.calculateColumns(this.selectedPage.contents.widgets);
+            emptyWidget.row = pageRows;
+            emptyWidget.column = 0;
+            emptyWidget.columnSpan = pageColumns;
+            if (span)
+                emptyWidget.columnSpan = span;
+            this.selectedPage.contents.widgets.push(emptyWidget);
+        }
+        this.renderChanges(this.selectedPage);
+    }
+
 }
