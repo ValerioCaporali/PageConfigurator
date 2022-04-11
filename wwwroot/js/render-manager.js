@@ -809,7 +809,6 @@ export default class RenderManager {
     }
 
     initResizeEvent(resizer, widget, elem) {
-        let pageWidth = document.getElementById("page").clientWidth;
         resizer.addEventListener('mousedown', (e) => {
             let besideWidget = this.selectedPage.contents.widgets.find(w => {return w.row == widget.row && w.column == widget.column + widget.columnSpan});
             console.log("beside widgets ", besideWidget);
@@ -826,18 +825,19 @@ export default class RenderManager {
                     oldElement.parentNode.replaceChild(newElement, oldElement);
                     swal("Attenzione", "Non è possiblie sovrapporre due elementi", "warning");
                     this.initResizeEvent(resizer, widget, newElement);
-                } else if ((startWidth + e.clientX - startX) < pageWidth) {
+                } else {
+                    let pageWidth = this.calculateColumns(this.selectedPage.contents.widgets);
                     let oldElement = elem;
                     let newElement = oldElement.cloneNode(true);
                     oldElement.parentNode.replaceChild(newElement, oldElement);
                     let resizeRatio = newElement.clientWidth / startWidth;
-                    console.log(resizeRatio);
-                    if (widget.columnSpan > 1) {
-                        let oldSpan = widget.columnSpan;
+                    if (widget.columnSpan > 1 && (widget.column + widget.columnSpan) < pageWidth) {
                         widget.columnSpan = Math.round(widget.columnSpan * resizeRatio) != 0 ? Math.round(widget.columnSpan * resizeRatio) : 1;
-                        // this.addWidget(1000, widget.row, widget.column + widget.columnSpan, oldSpan - widget.columnSpan);
                         this.renderChanges(this.selectedPage);
-                        console.log(this.selectedPage.contents.widgets);
+                    }
+                    else {
+                        this.fillPage()
+                        swal("Errore", "Non è possibile indrandire oltre la grandezza della pagina");
                     }
                     this.initResizeEvent(resizer, widget, newElement);
                 }

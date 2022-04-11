@@ -865,9 +865,21 @@
         background-color: #3e9d36;
     }
 
+    #loader-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+    }
+
 </style>
 
 <body>
+    <div id="loader-container">
+        <div class="loader" id="loader"></div>
+    </div>
     <div id="wrapper" class="page-wrapper chiller-theme toggled" style="height: 100%;">
 
         <nav id="navbar" class="navbar navbar-dark bg-dark">
@@ -883,7 +895,7 @@
             </form>
             <div id="info" style="display: none;"><p style="margin-right: 0.4rem; color: black;">Stato: </p><p id="status"></p></div>
             <div id="history-container" style="display: block;">
-                <i id="prev-page" class="fa-solid fa-rotate-left fa-xl" style="display: none; margin-right: 20px; color: #556068;"></i>
+                <i id="prev-page" class="fa-solid fa-rotate-left fa-xl" style="display: none; margin-right: 20px; color: #556068;"></i> 
             </div>
             <div id="buttons" style="display: none;"></div>
             <div id="save-draft-button" style="display: none;"></div>
@@ -1202,7 +1214,7 @@
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.12.313/build/pdf.min.js"></script>
 <script src="https://cdn3.devexpress.com/jslib/21.2.4/js/dx.all.js"></script>
-<script async type="module" src="~/js/index.js"></script>
+<script type="module" src="~/js/index.js" defer></script>
 <script>
 
 </script>
