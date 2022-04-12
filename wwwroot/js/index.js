@@ -19,7 +19,7 @@ var loadPanel = $('.loader').dxLoadPanel({
 
 xhr.addEventListener('progress', () => {
     loadPanel.show();
-})
+});
 
 xhr.addEventListener('load', () => {
     setTimeout(() => {
@@ -28,6 +28,6 @@ xhr.addEventListener('load', () => {
         renderer = new RenderManager(pages);
         renderer.populatePageList();
     }, 600);
-})
+});
 
 xhr.send(null);

@@ -691,6 +691,7 @@ export default class RenderManager {
                 dropzone.style.opacity = "100%";
             }
             dropzone.ondrop = function(event) {
+                console.log("drop");
                 event.preventDefault();
                 dropzone.style.backgroundColor = "#fff";
                 dropzone.style.opacity = "100%";
@@ -788,18 +789,18 @@ export default class RenderManager {
         editButtonContainer.appendChild(editButton);
         editButton.className = 'fas fa-wrench edit-icon fa-lg';
 
-        let resizer = document.createElement("div");
-        resizer.className = 'resizer';
-        this.initResizeEvent(resizer, widget, elem);
+        // let resizer = document.createElement("div");
+        // resizer.className = 'resizer';
+        // this.initResizeEvent(resizer, widget, elem);
 
         container.setAttribute('draggable', false);
-        container.append(editButtonContainer, elem, resizer);
+        container.append(editButtonContainer, elem);
         container.addEventListener('mouseover', () => {
-            resizer.style.display = "block";
+            // resizer.style.display = "block";
             elem.classList.add("structure");
         });
         container.addEventListener('mouseout', () => {
-            resizer.style.display = "none";
+            // resizer.style.display = "none";
             elem.classList.remove("structure");
         });
         elem.addEventListener('click', () => {
@@ -808,42 +809,42 @@ export default class RenderManager {
         return container;
     }
 
-    initResizeEvent(resizer, widget, elem) {
-        resizer.addEventListener('mousedown', (e) => {
-            let besideWidget = this.selectedPage.contents.widgets.find(w => {return w.row == widget.row && w.column == widget.column + widget.columnSpan});
-            console.log("beside widgets ", besideWidget);
-            let startX = e.clientX;
-            let startWidth = parseInt(document.defaultView.getComputedStyle(elem).width, 10);
-            document.documentElement.addEventListener('mousemove', (e) => {
-                elem.style.width = (startWidth + e.clientX - startX) + 'px';
-            }, false);
-            document.documentElement.addEventListener('mouseup', (e) => {
-                if ((startWidth + e.clientX - startX) > startWidth && besideWidget) {
-                    let oldElement = elem;
-                    let newElement = oldElement.cloneNode(true);
-                    newElement.style.width = startWidth + 'px';
-                    oldElement.parentNode.replaceChild(newElement, oldElement);
-                    swal("Attenzione", "Non è possiblie sovrapporre due elementi", "warning");
-                    this.initResizeEvent(resizer, widget, newElement);
-                } else {
-                    let pageWidth = this.calculateColumns(this.selectedPage.contents.widgets);
-                    let oldElement = elem;
-                    let newElement = oldElement.cloneNode(true);
-                    oldElement.parentNode.replaceChild(newElement, oldElement);
-                    let resizeRatio = newElement.clientWidth / startWidth;
-                    if (widget.columnSpan > 1 && (widget.column + widget.columnSpan) < pageWidth) {
-                        widget.columnSpan = Math.round(widget.columnSpan * resizeRatio) != 0 ? Math.round(widget.columnSpan * resizeRatio) : 1;
-                        this.renderChanges(this.selectedPage);
-                    }
-                    else {
-                        this.fillPage()
-                        swal("Errore", "Non è possibile indrandire oltre la grandezza della pagina");
-                    }
-                    this.initResizeEvent(resizer, widget, newElement);
-                }
-            }, false);
-        } , false);
-    }
+    // initResizeEvent(resizer, widget, elem) {
+    //     resizer.addEventListener('mousedown', (e) => {
+    //         let besideWidget = this.selectedPage.contents.widgets.find(w => {return w.row == widget.row && w.column == widget.column + widget.columnSpan});
+    //         console.log("beside widgets ", besideWidget);
+    //         let startX = e.clientX;
+    //         let startWidth = parseInt(document.defaultView.getComputedStyle(elem).width, 10);
+    //         document.documentElement.addEventListener('mousemove', (e) => {
+    //             elem.style.width = (startWidth + e.clientX - startX) + 'px';
+    //         }, false);
+    //         document.documentElement.addEventListener('mouseup', (e) => {
+    //             if ((startWidth + e.clientX - startX) > startWidth && besideWidget) {
+    //                 let oldElement = elem;
+    //                 let newElement = oldElement.cloneNode(true);
+    //                 newElement.style.width = startWidth + 'px';
+    //                 oldElement.parentNode.replaceChild(newElement, oldElement);
+    //                 swal("Attenzione", "Non è possiblie sovrapporre due elementi", "warning");
+    //                 this.initResizeEvent(resizer, widget, newElement);
+    //             } else {
+    //                 let pageWidth = this.calculateColumns(this.selectedPage.contents.widgets);
+    //                 let oldElement = elem;
+    //                 let newElement = oldElement.cloneNode(true);
+    //                 oldElement.parentNode.replaceChild(newElement, oldElement);
+    //                 let resizeRatio = newElement.clientWidth / startWidth;
+    //                 if (widget.columnSpan > 1 && (widget.column + widget.columnSpan) < pageWidth) {
+    //                     widget.columnSpan = Math.round(widget.columnSpan * resizeRatio) != 0 ? Math.round(widget.columnSpan * resizeRatio) : 1;
+    //                     this.renderChanges(this.selectedPage);
+    //                 }
+    //                 else {
+    //                     this.fillPage()
+    //                     swal("Errore", "Non è possibile indrandire oltre la grandezza della pagina");
+    //                 }
+    //                 this.initResizeEvent(resizer, widget, newElement);
+    //             }
+    //         }, false);
+    //     } , false);
+    // }
 
     handelWidgetType(widget) {
             switch (widget.type) {
