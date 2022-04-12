@@ -1216,15 +1216,15 @@ export default class ModifyManager {
     }
 
     deleteWidget(widget) {
-        swal({
-            title: "Conferma",
-            text: "Il widget verrà eliminato",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-        .then((willDelete) => {
-            if (willDelete) {
+        Swal.fire({
+            title: 'Eliminare il widget ?',
+            icon: 'question',
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: 'Si',
+            denyButtonText: `No`,
+        }).then((result) => {
+            if (result.isConfirmed) {
                 document.getElementById("sidebar-edit-view").style.display = "none";
                 document.getElementById("sidebar-default-view").style.display = "block";
                 this.selectedPage.contents.widgets = this.selectedPage.contents.widgets.filter(currWidget => currWidget.row != widget.row || currWidget.column != widget.column);
@@ -1265,7 +1265,7 @@ export default class ModifyManager {
         let updatedPage = saveManager.updatePage();
         if (updatedPage) {
             this.renderer.saveInDraftBtn.option("disabled", false);
-            this.renderer.renderChanges(updatedPage);
+            this.renderer.renderWidgetChanges(JSON.parse(JSON.stringify(modifiedWidget)), updatedPage);
         }
     }
 

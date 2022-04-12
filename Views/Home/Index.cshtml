@@ -13,6 +13,7 @@
     <title>@ViewData["Title"]</title>
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
@@ -86,8 +87,11 @@
     }
 
     .resizer {
-        width: 10px;
-        height: 10px;
+        margin-top: -20px !important;
+        opacity: 0;
+        display: none;
+        width: 20px;
+        height: 20px;
         background: #000;
         margin: auto;
         float: right;
@@ -684,17 +688,17 @@
 
     .page-structure {
         padding-top: 10px;
-        border: 1px dashed;
+        border: 1px dotted;
     }
 
     .structure {
-        padding: 10px;
-        border: 2.2px dashed #312d2d;
+        margin: 0px 10px;
+        outline: 2px dotted #312d2d !important;
         transition: all 0.2s;
     }
 
     .widget {
-        transition: all 0.1s;
+        transition: all 0.2s;
     }
 
     .fade-scale {

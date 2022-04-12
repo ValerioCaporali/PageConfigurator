@@ -53,7 +53,6 @@ export default class SaveManager {
             switch (widget.type) {
                 case 0:
                     if (!widget.content.text) {
-                        swal("Errore", "Il contenuto di un widget di tipo testo non può essere vuoto", "warning");
                         return false;
                     }
                     return true;
@@ -65,7 +64,6 @@ export default class SaveManager {
                 case 101:
                 case 102:
                     if (widget.content.source == null || widget.content.source == "") {
-                        swal("Errore", "Il campo Source non può essere vuoto", "warning");
                         return false;
                     }
                     return true;
@@ -73,7 +71,6 @@ export default class SaveManager {
     
                 case 4:
                     if (widget.content.source == null || widget.content.showCaseId == null) {
-                        swal("Errore", "Alcuni campi richiesti non sono stati riempiti", "warning");
                         return false;
                     }
                     return true;
@@ -81,12 +78,18 @@ export default class SaveManager {
     
                 case 5:
                     if (widget.content.latitude == null || widget.content.longitude == null) {
-                        swal("Errore", "Il campo latitudine o longitdine non è stato riempito", "warning");
                         return false;
                     }
                     return true;
                     break;
-            
+                case 6:
+                    if (!widget.content.source) {
+                        return false;
+                    }
+                    return true;
+                    break;
+                case 1000:
+                    return true;
                 default:
                     return true;
                     break;
@@ -97,8 +100,14 @@ export default class SaveManager {
     saveInDraft(pageToSave, initialPage)
     {
 
-        // if(!this.isPageValid(pageToSave))
-        //     return;
+         if(!this.isPageValid(pageToSave)) {
+             Swal.fire({
+                 icon: 'error',
+                 title: 'Errore',
+                 text: 'La pagina non può essere salvata. Controllare tutti i campi richiesti',
+             });
+             return;
+         }
 
         var draft = [];
         var oldDraft = [];
@@ -143,7 +152,11 @@ export default class SaveManager {
             }
             else
             {
-                swal("Pagina salvata!", "La pagina è stata salvata correttamente nelle bozze", "success");
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Pagina salvata !',
+                    text: 'La pagina è stata salvata correttamente nelle bozze',
+                });
             }
         })
 
@@ -183,7 +196,11 @@ export default class SaveManager {
             }
             else
             {
-                swal("Bozza eliminata", "La bozza è stata pubblicata correttamente", "success");
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Bozza eliminata',
+                    text: 'La bozza è stata eliminata correttamente',
+                });
             }
         })
     }
@@ -201,7 +218,6 @@ export default class SaveManager {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-
             body: JSON.stringify(data)
         };
 
@@ -223,7 +239,11 @@ export default class SaveManager {
             }
             else
             {
-                swal("Pagina pubblicata", "Le bozze sono state pubblicate correttamente", "success");
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Pagina pubblicata !',
+                    text: 'La pagina è stata pubblicata correttamente',
+                });
             }
         })
     }
