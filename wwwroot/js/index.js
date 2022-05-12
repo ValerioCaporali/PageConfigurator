@@ -25,6 +25,7 @@ xhr.addEventListener('load', () => {
     setTimeout(() => {
         loadPanel.hide();
         let pages = xhr.response;
+        console.log("PAGES ", pages);
         renderer = new RenderManager(pages);
         renderer.populatePageList();
     }, 600);

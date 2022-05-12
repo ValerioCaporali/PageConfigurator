@@ -421,6 +421,9 @@ export default class Widget {
                 this.widget.content = this.formData.showcaseConfiguration;
                 break;
             case 5:
+                this.formData.mapConfiguration.latitude = parseFloat(this.formData.mapConfiguration.latitude);
+                this.formData.mapConfiguration.longitude = parseFloat(this.formData.mapConfiguration.longitude);
+                this.formData.mapConfiguration.zoom = parseInt(this.formData.mapConfiguration.zoom);
                 this.widget.content = this.formData.mapConfiguration;
                 break;
             case 6:

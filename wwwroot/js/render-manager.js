@@ -17,12 +17,18 @@ export default class RenderManager {
     saveInDraftBtn;
     deleteDraftBtn;
     publishPageBtn;
+    deletePageBtn;
     responsiveBox;
+    fallbackResponsiveBox;
     twoColEL = false;
     threeColEL = false;
     fourColEL = false;
 
     constructor(pages) {
+        // var container = document.getElementById("jsoneditor");
+        // var editor = new JSONEditor(container);
+        // editor.set(this.selectedPage.contents.widgets);
+        // var json = editor.get(); // to get modified json
         this.pages = JSON.parse(JSON.stringify(pages));
         this.initInteractives(); // init interactives html elements
     }
@@ -48,7 +54,7 @@ export default class RenderManager {
         });
 
         document.getElementById('go-back').addEventListener("click", () => {
-            this.showPageList();
+            this.reloadPage();
         });
         let draggableWidgets = document.querySelectorAll('.widget-wrapper');
         draggableWidgets.forEach(draggableWidget => {
@@ -59,6 +65,7 @@ export default class RenderManager {
     }
 
     initInteractives() {
+        let that = this;
         this.initSidebarCurtains();
         document.getElementById("widgets-list-button").addEventListener("click", () => {
             this.closeModifyPanel();
@@ -70,6 +77,38 @@ export default class RenderManager {
                 this.populateBySearch(event.target.value, document.getElementById('filter').value);
             }, this.doneTypingInterval);
         });
+        document.getElementById('create').addEventListener('click', function() {
+            let type = document.getElementById('type').value;
+            let slug = document.getElementById('slug').value;
+            if (type && slug) {
+                let slugTaken = false;
+                that.pages.forEach(page => {
+                    if ('/' + slug == page.slug) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Errore',
+                            text: 'La path è già in uso',
+                        });
+                        slugTaken = true;
+                    }
+                })
+                if (!slugTaken) {
+                    new SaveManager().createPage(type, slug.toString()).then(newPage => {
+                        that.selectedPage = newPage;
+                        document.getElementById('list').style.display = "none";
+                        document.getElementById('main').style.display = "block";
+                        that.openPageStream(newPage, newPage.contents[0]);
+                    })
+                }
+            }
+            else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Errore',
+                    text: 'I campi non sono validi',
+                })
+            }
+        })
     }
 
 
@@ -81,9 +120,9 @@ export default class RenderManager {
     });
 
     populatePageList() {
-
         let homeContainer = document.getElementById("home-pages-container");
         let pageContainer = document.getElementById("pages-container");
+        console.log(this.pages);
         this.pages.forEach(page => {
             let pageCard = document.createElement('div');
             pageCard.classList.add('page-card');
@@ -111,8 +150,7 @@ export default class RenderManager {
             pageCard.addEventListener('click', () => {
                 this.showOptions(page);
             })
-        })
-
+        });
     }
 
     populateBySearch(val, filter) {
@@ -123,7 +161,7 @@ export default class RenderManager {
         search.innerHTML = "";
         let searched;
         searched = this.pages.filter((page) => {
-            if (page.description.toLowerCase().includes(val.toLowerCase()))
+            if (page.description?.toLowerCase().includes(val.toLowerCase()))
                 if (filter == "all")
                     return page;
                 else if (page.type == filter)
@@ -156,7 +194,7 @@ export default class RenderManager {
         })
     }
 
-    showPageList() {
+    reloadPage() {
         localStorage.clear();
         if (!this.historyManager.isHistoryEmpty()) {
             Swal.fire({
@@ -173,8 +211,6 @@ export default class RenderManager {
             });
         }
         else {
-            document.getElementById('list').style.display = "block";
-            document.getElementById('main').style.display = "none";
             window.location.reload();
         }
     }
@@ -410,8 +446,15 @@ export default class RenderManager {
 
     renderPageById(pageId) {
         this.pages.forEach(page => {
-            if (page.id == pageId)
-                this.openPageStream(page, page.contents[0]);
+            if (page.id == pageId) {
+                page.contents = page.contents[0];
+                page.contents.visibility = page.contents.visibility || page.contents.visibility == 0 ? page.contents.visibility : page.visibility;
+                page.contents.description = page.contents.description ? page.contents.description : page.description;
+                page.contents.slug = page.contents.slug ? page.contents.slug : page.slug;
+                this.showPagePreview(page);
+                this.selectedPage = page;
+
+            }
         });
     }
 
@@ -427,7 +470,7 @@ export default class RenderManager {
 
     openPageStream(fullPage, contentOrDraft) {
         document.getElementById('search').style.display = "none";
-        this.loadPanel.show()
+        this.loadPanel.show();
         setTimeout(() => {
             let page = JSON.parse(JSON.stringify(fullPage));
             page.contents = contentOrDraft;
@@ -437,6 +480,7 @@ export default class RenderManager {
             this.showPagePreview(page);
             this.selectedPage = page;
             this.historyManager = new HistoryManager();
+            this.historyManager.updateHistory(JSON.parse(JSON.stringify(this.selectedPage)));
             this.initHistoryButton();
             this.loadPanel.hide();
         }, 400);
@@ -465,7 +509,7 @@ export default class RenderManager {
                             icon: 'info',
                             title: 'Attenzione',
                             text: 'Non ci sono modifiche da salvare',
-                        });                    
+                        });
                     else if (that.historyManager.isHistoryEmpty() && that.metadataChanged) {
                         let saveManager = new SaveManager();
                         saveManager.saveInDraft(that.selectedPage, that.selectedPage);
@@ -475,7 +519,7 @@ export default class RenderManager {
                     }
                     else if (!that.historyManager.isHistoryEmpty() || that.metadataChanged) {
                         let saveManager = new SaveManager();
-                        saveManager.saveInDraft(that.selectedPage, that.historyManager.getInitialPage());
+                        saveManager.saveInDraft(that.historyManager.getHistory());
                         that.historyManager.emptyHistory();
                         document.getElementById("prev-page").style.display = "none";
                         document.getElementById("status").innerHTML = "bozza";
@@ -515,7 +559,6 @@ export default class RenderManager {
                     confirmButtonText: 'Si',
                     denyButtonText: `No`,
                 }).then((result) => {
-                    /* Read more about isConfirmed, isDenied below */
                     if (result.isConfirmed) {
                         that.loadPanel.show();
                         setTimeout(() => {
@@ -523,7 +566,6 @@ export default class RenderManager {
                             let saveManager = new SaveManager();
                             saveManager.deleteDraft(that.selectedPage.id);
                             that.selectedPage.drafts = null;
-
                             that.isDraft = false;
                             document.getElementById("status").innerHTML = "pubblicato";
                             document.getElementById("status").style.color = "#22a93d";
@@ -575,6 +617,36 @@ export default class RenderManager {
         }).dxButton('instance');
     });
 
+    deletePage = $(() => {
+        let that = this;
+        that.deletePageBtn = $('#delete-page-button').dxButton({
+            stylingMode: 'contained',
+            text: 'Elimina Pagina',
+            type: 'danger',
+            disabled: false,
+            width: 120,
+            onClick() {
+                Swal.fire({
+                    title: 'Eliminare la pagina ?',
+                    icon: 'question',
+                    showDenyButton: true,
+                    showCancelButton: false,
+                    confirmButtonText: 'Si',
+                    denyButtonText: `No`,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        that.loadPanel.show();
+                        setTimeout(() => {
+                            let saveManager = new SaveManager();
+                            saveManager.deletePage(that.selectedPage.id);
+                            window.location.reload();
+                        }, 400);
+                    }
+                });
+            },
+        }).dxButton('instance');
+    });
+
     showPagePreview(page) {
         document.getElementById("page-title").style.display = "block";
         document.getElementById("page-title").innerHTML = page.description;
@@ -602,6 +674,7 @@ export default class RenderManager {
               onFieldDataChanged: function (e) {
                   that.metadataChanged = true;
                   that.selectedPage.contents[e.dataField] = e.value;
+                  that.historyManager.updateHistory(that.selectedPage);
               }
             });
         });
@@ -610,6 +683,7 @@ export default class RenderManager {
         document.getElementById("save-draft-button").style.display = "block";
         document.getElementById("delete-draft-button").style.display = "block";
         document.getElementById("publish-button").style.display = "block";
+        document.getElementById("delete-page-button").style.display = "block";
         document.getElementById("sidebar").style.display = "block";
         document.getElementById("sidebar").style.marginTop = document.getElementById("navbar").clientHeight + 'px';
         this.setDefaultMode();
@@ -621,10 +695,14 @@ export default class RenderManager {
         if (base_id && container) {
             let widgetData = JSON.stringify(widget);
             container.addEventListener('dragstart', (e) => {
+                container.style.zIndex = 1000;
                 e.dataTransfer.setData("text/plain", JSON.stringify(widgetData));
             });
+            container.addEventListener('dragend', () => {
+                container.style.zIndex = 0;
+            })
             container.ondragover = function(e) {
-                e.preventDefault()
+                e.preventDefault();
                 container.style.backgroundColor = "#e4e4e4";
                 container.style.opacity = "50%";
             };
@@ -638,12 +716,9 @@ export default class RenderManager {
                 container.style.opacity = "100%";
                 let widgetData = event.dataTransfer.getData("text");
                 widgetData = JSON.parse(widgetData);
-                if (typeof widgetData == 'number')
-                    that.addWidget(parseInt(widgetData), widget.row, widget.column);
-                else
-                    that.replaceWidget(widget, widgetData);
-                
-                this.saveInDraftBtn.option('disabled', false);
+                console.log(widgetData);
+                that.replaceWidget(widget, widgetData);
+                that.saveInDraftBtn.option('disabled', false);
             };
         }
         else if (base_id && !container) {
@@ -651,10 +726,10 @@ export default class RenderManager {
             let dropzone = document.createElement('div');
             dropzone.classList.add("dropzone");
             dropzone.id= this.generateId('dz-');
-            let addIcon = document.createElement("i");
-            addIcon.className = "fa-solid fa-circle-plus";
-            addIcon.style.fontSize = "60px";
-            dropzone.append(addIcon);
+            let dropText = document.createElement("p");
+            dropText.innerHTML = "Rilascia qui il widget";
+            dropText.style.fontStyle = "italic";
+            dropzone.append(dropText);
             dropzone.ondragover = function(e) {
                 e.preventDefault()
                 dropzone.style.backgroundColor = "#e4e4e4";
@@ -670,10 +745,7 @@ export default class RenderManager {
                 dropzone.style.opacity = "100%";
                 let widgetData = event.dataTransfer.getData("text");
                 widgetData = JSON.parse(widgetData);
-                if (typeof widgetData == 'number')
-                    that.addWidget(parseInt(widgetData), widget.row, widget.column);
-                else
-                    that.replaceWidget(widget, widgetData);
+                that.replaceWidget(widget, widgetData);
             };
             this.saveInDraftBtn.option('disabled', false);
             return dropzone;
@@ -750,7 +822,6 @@ export default class RenderManager {
         
         let dropzone = this.createDropzone()
 
-
         items.push(
             {
                 location: [{
@@ -774,6 +845,7 @@ export default class RenderManager {
         }).dxResponsiveBox('instance');
 
         this.initEventListener();
+        
     }
 
     calculateRows(widgets) {
@@ -800,6 +872,12 @@ export default class RenderManager {
             elem = this.handleWidgetStyle(widget, elem);
         else
             elem = this.applyDefaultStyle(widget, elem);
+        if (widget.text && widget.text.value) {
+            let text = document.createElement("div");
+            text.innerHTML = widget.text?.value?.trim();
+            this.handleTextPosition(widget, text);
+            elem.appendChild(text);
+        }
         elem.classList.add("widget");
         editButtonContainer.classList.add('edit-button-container');
         editButtonContainer.appendChild(editButton);
@@ -809,21 +887,23 @@ export default class RenderManager {
         resizer.className = 'resizer';
         this.initResizeEvent(resizer, widget, elem);
 
-        container.setAttribute('draggable', false);
+        elem.setAttribute('draggable', true);
         container.append(elem, resizer);
-        container.addEventListener('mouseover', () => {
-            resizer.style.display = "block";
-            // elem.style.opacity = "70%";  
-            elem.classList.add('structure');
-        });
-        container.addEventListener('mouseout', () => {
-            resizer.style.display = "none";
-            // elem.style.opacity = "100%";
-            elem.classList.remove('structure');
-        });
-        elem.addEventListener('click', () => {
-            this.openModifyPanel(widget);
-        })
+        if (widget.type != 1000) {
+            container.addEventListener('mouseover', () => {
+                resizer.style.display = "block";
+                // elem.style.opacity = "70%";  
+                elem.classList.add('structure');
+            });
+            container.addEventListener('mouseout', () => {
+                resizer.style.display = "none";
+                // elem.style.opacity = "100%";
+                elem.classList.remove('structure');
+            }); 
+            elem.addEventListener('click', () => {
+                this.openModifyPanel(widget);
+            })
+        }
         return container;
     }
 
@@ -831,7 +911,6 @@ export default class RenderManager {
         resizer.addEventListener('mousedown', (e) => {
             let besideWidget = this.selectedPage.contents.widgets.find(w => {return w.row == widget.row && w.column > widget.column});
             let pageColumns = this.calculateColumns(this.selectedPage.contents.widgets);
-            let columnInPx = document.getElementById('page').clientWidth / pageColumns;
             let startX = e.clientX;
             let startWidth = parseInt(document.defaultView.getComputedStyle(elem).width, 10);
             document.documentElement.addEventListener('mousemove', (e) => {
@@ -865,62 +944,127 @@ export default class RenderManager {
                         return;
                     } else {
                         widget.columnSpan = newSpan;
-                        this.fillPage(this.selectedPage.contents.widgets);
+                        this.historyManager.updateHistory(JSON.parse(JSON.stringify(this.selectedPage)));
+                        var totRows = this.calculateRows(this.selectedPage.contents.widgets);
+                        var totCols = this.calculateColumns(this.selectedPage.contents.widgets);
+                        this.initFallbackRespondiveBox(totRows, totCols, false);
+
+                        // replace the entire row taking from fallback responsivebox
+                        let responsiveBoxCotnainer = document.getElementById('responsive-box');
+                        let newRowDiv = document.getElementById('fallback-responsive-box').children[0].children[widget.row];
+                        console.log(newRowDiv);
+                        let oldRowDiv = responsiveBoxCotnainer.children[0].children[widget.row];
+                        responsiveBoxCotnainer.children[0].replaceChild(newRowDiv, oldRowDiv);
+                        
+                        
+                        // update main responsivebox screenItems
+                        this.responsiveBox._screenItems = this.responsiveBox._screenItems.filter(screenItem => screenItem.location.row != widget.row);
+                        this.fallbackResponsiveBox._screenItems.forEach(screenItem => {
+                            if (screenItem.location.row == widget.row) {
+                                this.responsiveBox._screenItems.push(screenItem);
+                                this.initEventListener(resizer, widget, screenItem.item.html);
+                            }
+                        });
+
+                        // reset fallback responsivebox screenItems
+                        this.fallbackResponsiveBox._screenItems = null;                
                     }
             }, false);
         } , false);
     }
 
     handelWidgetType(widget) {
-            switch (widget.type) {
-                case 0:
-                    var textContainer = this.handleTextWidget(widget);
-                    this.createDropzone('w-dz', textContainer, widget);
-                    return textContainer;
-                    break;
-                case 1:
-                    var galleryContainer = this.handleGalleryWidget(widget);
-                    this.createDropzone('w-dz', galleryContainer, widget);
-                    return galleryContainer;
-                    break;
-                case 2:
-                    var videoContainer = this.handleVideoWidget(widget);
-                    this.createDropzone('w-dz', videoContainer, widget);
-                    return videoContainer;
-                    break;
-                case 3:
-                    var pdfContainer = this.handlePdfWidget(widget);
-                    this.createDropzone('w-dz', pdfContainer, widget);
-                    return pdfContainer;
-                    break;
-                case 4:
-                    var tourContainer = this.handleTourWidget(widget);
-                    this.createDropzone('w-dz', tourContainer, widget);
-                    return tourContainer;
-                case 5:
-                    var mapContainer = this.handleMapWidget(widget);
-                    this.createDropzone('w-dz', mapContainer, widget);
-                    return mapContainer;
-                case 6:
-                    var webPageContainer = this.handleWebPageWidget(widget);
-                    this.createDropzone('w-dz', webPageContainer, widget);
-                    return webPageContainer;
-                case 101:
-                    var horizontalScrollGallery = this.handleHorizontalScrollGallery(widget);
-                    this.createDropzone('w-dz', horizontalScrollGallery, widget);
-                    return horizontalScrollGallery;
-                case 102:
-                    var gridGalleryContainer = this.handleGridGalleryWidget(widget);
-                    this.createDropzone('w-dz', gridGalleryContainer, widget);
-                    return gridGalleryContainer;
-                case 1000:
-                    let dropzone = this.createDropzone('dz', null, widget);
-                    return dropzone;
-                default:
-                    var div = document.createElement("div");
-                    div.innerHTML = "widget to handle";
-                    return div;
-            }
+        switch (widget.type) {
+            case 0:
+                var textContainer = this.handleTextWidget(widget);
+                this.createDropzone('w-dz', textContainer, widget);
+                return textContainer;
+                break;
+            case 1:
+                var galleryContainer = this.handleGalleryWidget(widget);
+                this.createDropzone('w-dz', galleryContainer, widget);
+                return galleryContainer;
+                break;
+            case 2:
+                var videoContainer = this.handleVideoWidget(widget);
+                let overlay = document.createElement("div");
+                overlay.style.display = "block"
+                overlay.classList.add('iframe-overlay');
+                let modifyIcon = document.createElement("i");
+                modifyIcon.className = "fa-solid fa-gear";
+                videoContainer.appendChild(overlay);
+                this.createDropzone('w-dz', videoContainer, widget);
+                videoContainer.onmouseover = function() {
+                    // overlay.style.zIndex = "-1";
+                    videoContainer.style.opacity = "80%";
+                }
+                videoContainer.onmouseout = function() {
+                    overlay.style.zIndex = "2";
+                    videoContainer.style.opacity = "100%";
+                }
+                return videoContainer;
+                break;
+            case 3:
+                var pdfContainer = this.handlePdfWidget(widget);
+                this.createDropzone('w-dz', pdfContainer, widget);
+                return pdfContainer;
+                break;
+            case 4:
+                var tourContainer = this.handleTourWidget(widget);
+                let tourOverlay = document.createElement("div");
+                tourOverlay.style.display = "block";
+                tourOverlay.classList.add('iframe-overlay');
+                let tourModifyIcon = document.createElement("i");
+                tourModifyIcon.className = "fa-solid fa-gear";
+                this.createDropzone('w-dz', tourContainer, widget);
+                tourContainer.appendChild(tourOverlay);
+                tourContainer.addEventListener('mouseover', function() {
+                    // tourOverlay.style.zIndex = "-1";
+                    tourContainer.style.opacity = "80%";
+                });
+                tourContainer.addEventListener('mouseout', function() {
+                    tourOverlay.style.zIndex = "2";
+                    tourContainer.style.opacity = "100%";
+                });
+                return tourContainer;
+            case 5:
+                var mapContainer = this.handleMapWidget(widget);
+                this.createDropzone('w-dz', mapContainer, widget);
+                return mapContainer;
+            case 6:
+                var webPageContainer = this.handleWebPageWidget(widget);
+                let pageOverlay = document.createElement("div");
+                pageOverlay.style.display = "block"
+                pageOverlay.classList.add("iframe-overlay");
+                let pageModifyIcon = document.createElement("i");
+                pageModifyIcon.className = "fa-solid fa-gear";
+                this.createDropzone('w-dz', webPageContainer, widget);
+                webPageContainer.appendChild(pageOverlay);
+                webPageContainer.addEventListener('mouseover', function() {
+                    // pageOverlay.style.zIndex = "-1";
+                    webPageContainer.style.opacity = "80%";
+                });
+                webPageContainer.addEventListener('mouseout', function() {
+                    pageOverlay.style.zIndex = "2";
+                    webPageContainer.style.opacity = "100%";
+                });
+                return webPageContainer;
+            case 101:
+                var horizontalScrollGallery = this.handleHorizontalScrollGallery(widget);
+                this.createDropzone('w-dz', horizontalScrollGallery, widget);
+                return horizontalScrollGallery;
+            case 102:
+                var gridGalleryContainer = this.handleGridGalleryWidget(widget);
+                this.createDropzone('w-dz', gridGalleryContainer, widget);
+                return gridGalleryContainer;
+            case 1000:
+                let dropzone = this.createDropzone('dz', null, widget);
+                return dropzone;
+            default:
+                var div = document.createElement("div");
+                div.innerHTML = "widget to handle";
+                return div;
+        }
     }
 
     handleTextWidget(widget) {
@@ -947,17 +1091,8 @@ export default class RenderManager {
                 showNavButtons: (widget.content.showNavButtons) ? widget.content.showNavButtons : false,
                 showIndicator: (widget.content.showIndicator) ? widget.content.showIndicator : false,
             }).dxGallery('instance');
-        }, 100)
+        }, 100);
         galleryContainer.appendChild(div);
-        setTimeout(() => {
-            if (widget.text.value) {
-                let text = document.createElement("div");
-                text.innerHTML = widget.text?.value?.trim();
-                this.handleTextPosition(widget, text);
-                galleryContainer.appendChild(text);
-
-            }
-        }, 300)
         return galleryContainer;
     }
 
@@ -965,7 +1100,7 @@ export default class RenderManager {
         var videoContainer = document.createElement('div');
         var video = this.buildIframe(widget);
         const regExp = "/^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/";
-        var src = "https://www.youtube.com/embed/X91__O-5zz8";
+        var src = widget.content.source[0];
         var video_url = new URL(src);
         if (src.match(regExp) || src.indexOf("www.youtube-nocookie") != -1) {
             video.allowFullscreen = "true";
@@ -978,7 +1113,10 @@ export default class RenderManager {
         } else {
             video.src = video_url;
         }
-        videoContainer.appendChild(video);
+        let overlay = document.createElement('div');
+        overlay.style.width = videoContainer.offsetWidth + 'px';
+        overlay.style.height = videoContainer.offsetHeight + 'px';
+        videoContainer.append(overlay, video);
         return videoContainer;
     }
 
@@ -1339,6 +1477,7 @@ export default class RenderManager {
     }
 
     buildIframe(widget) {
+        let that = this;
         var iframe = document.createElement('iframe');
         iframe.src = "https://my.matterport.com/show/?m=xx7GChUUBii";
         iframe.allowFullscreen = true;
@@ -1483,7 +1622,7 @@ export default class RenderManager {
             text.style.top = widget.text.position.top;
             text.style.right = widget.text.position.right;
             text.style.bottom = widget.text.position.bottom;
-            text.style.left = widget.text.position.left;
+            text.style.left = widget.text.position.left;s
         }
     }
 
@@ -1539,7 +1678,7 @@ export default class RenderManager {
     }
 
     renderPreviousPage() {
-        if (this.historyManager.isHistoryEmpty())
+        if (this.historyManager.isHistoryEmpty() || (this.historyManager.getHistoryLenght()) == 1)
             Swal.fire({
                 icon: 'error',
                 title: 'Errore',
@@ -1547,8 +1686,8 @@ export default class RenderManager {
             });
             
         else {
-            this.selectedPage = this.historyManager.getPreviousPage();
-            this.fillPage(this.selectedPage.contents.widgets);
+            this.selectedPage = JSON.parse(JSON.stringify(this.historyManager.getPreviousPage()));
+            this.fillPage(this.selectedPage.contents.widgets)          
         }
     }
 
@@ -1559,7 +1698,9 @@ export default class RenderManager {
         let text_id = this.generateId("value-")
         let temp_selected_page = JSON.parse(JSON.stringify(this.selectedPage));
         let modifyManager = new ModifyManager(widget, JSON.parse(JSON.stringify(this.selectedPage)), text_content_id, text_id, this);
+        this.loadPanel.show();
         modifyManager.initPanel();
+        this.loadPanel.hide();
     }
 
     closeModifyPanel() {
@@ -1567,38 +1708,30 @@ export default class RenderManager {
         document.getElementById("sidebar-default-view").style.display = "block";  
     }
 
-    renderChanges(modifiedPage) {
-        modifiedPage = JSON.parse(JSON.stringify(modifiedPage)); // to delete reference
-        if (modifiedPage) {
-            if (this.historyManager.isHistoryEmpty())
-                this.historyManager.updateHistory(this.selectedPage);
-            this.historyManager.updateHistory(modifiedPage);
-            this.selectedPage = this.historyManager.getLastPage();
-            this.fillPage(this.selectedPage.contents.widgets);
-        }
-    }
+    // renderChanges(modifiedPage) {
+    //     modifiedPage = JSON.parse(JSON.stringify(modifiedPage)); // to delete reference
+    //     if (modifiedPage) {
+    //         if (this.historyManager.isHistoryEmpty())
+    //             this.historyManager.updateHistory(JSON.parse(JSON.stringify(this.selectedPage)));
+    //         this.historyManager.updateHistory(modifiedPage);
+    //         this.selectedPage = this.historyManager.getLastPage();
+    //         this.fillPage(this.selectedPage.contents.widgets);
+    //     }
+    // }
     
     renderWidgetChanges(widget, modifiedPage) {
         this.responsiveBox._screenItems.forEach(screenItem => {
             if (screenItem.location.row == widget.row && screenItem.location.col == widget.column) {
                 modifiedPage = JSON.parse(JSON.stringify(modifiedPage)); // to delete reference
-                if (modifiedPage) {
-                    if (this.historyManager.isHistoryEmpty())
-                        this.historyManager.updateHistory(this.selectedPage);
-                    this.historyManager.updateHistory(modifiedPage);
-                    this.selectedPage = this.historyManager.getLastPage();
-                }
                 let oldNode = screenItem.item.html;
                 let newNode = this.handleWidget(widget);
                 let oldNodeParent = oldNode.parentNode;
-                console.log(oldNode, oldNodeParent)
                 oldNodeParent.innerHTML = "";
                 oldNodeParent.appendChild(newNode);
                 screenItem.item.html = newNode;
-                
             }
         });
-        console.log(this.responsiveBox)
+        this.historyManager.updateHistory(JSON.parse(JSON.stringify(modifiedPage)));
     }
     
     showPresets() {
@@ -1608,8 +1741,16 @@ export default class RenderManager {
         presets.style.display = "block";
         dropzone.appendChild(presets);
     }
+    
+    hidePresets() {
+        let presets = document.getElementById('presets-container');
+        let dropzone = document.getElementById('dropzone');
+        presets.style.display = "none";
+        document.getElementById("dropzone-content").style.display = "block";
+    }
 
     applyPreset(colNumber) {
+        this.hidePresets();
         let cols = 0;
         let rows = 0;
         if (this.selectedPage.contents.widgets.length != 0) {
@@ -1626,7 +1767,6 @@ export default class RenderManager {
                 newWidget.type = 1000;
                 this.selectedPage.contents.widgets.push(newWidget);
             }
-            this.renderChanges(this.selectedPage);
         }
     }
 
@@ -1675,28 +1815,103 @@ export default class RenderManager {
                 that.selectedPage.contents.widgets.push(newWidget);
             }
         }
-        this.renderChanges(this.selectedPage);
+
+        var totRows = this.calculateRows(this.selectedPage.contents.widgets);
+        var totCols = this.calculateColumns(this.selectedPage.contents.widgets);
+
+        this.initFallbackRespondiveBox(totRows, totCols);
+        
+
+        this.responsiveBox._screenItems[this.responsiveBox._screenItems.length - 1].location.row = totRows;
+        
+        let lastScreenItem = this.responsiveBox._screenItems.pop();
+
+        this.fallbackResponsiveBox._screenItems.forEach(screenItem => {
+            screenItem.location.row = totRows - 1;
+            screenItem.item.location[0].row = totRows - 1;
+            this.responsiveBox._screenItems.push(screenItem);
+        });
+        lastScreenItem.location.row  = totRows;
+        this.responsiveBox._screenItems.push(lastScreenItem);
+        
+        this.fallbackResponsiveBox._screenItems = [];
+        
+        let newRowNode = document.getElementById('fallback-responsive-box').firstChild.lastChild
+        
+        document.getElementById('responsive-box').firstChild.insertBefore(newRowNode, document.getElementById('responsive-box').firstChild.lastChild);
     }
 
-    replaceWidget(toWidget, fromWidget) {
-        Swal.fire({
-            title: 'Sostituire il widget ?',
-            icon: 'question',
-            showDenyButton: true,
-            showCancelButton: false,
-            confirmButtonText: 'Si',
-            denyButtonText: `No`,
-        }).then((result) => {
-            if (result.isConfirmed) {
-                fromWidget = JSON.parse(fromWidget);
-                let toWidgetIndex = this.selectedPage.contents.widgets.findIndex(w => w.row == toWidget.row && w.column == toWidget.column);
-                this.selectedPage.contents.widgets[toWidgetIndex] = fromWidget;
-                this.selectedPage.contents.widgets[toWidgetIndex].row = toWidget.row;
-                this.selectedPage.contents.widgets[toWidgetIndex].column = toWidget.column;
-                this.selectedPage.contents.widgets[toWidgetIndex].columnSpan = toWidget.columnSpan;
-                this.renderChanges(this.selectedPage);
+    replaceWidget(toWidget, widgetData) {
+        if (typeof widgetData == 'number') {
+            // this.historyManager.updateHistory(this.selectedPage);
+            let emptyWidget = new Widget().getEmptyWidget();
+            emptyWidget.type = widgetData;
+            let defaultContents = new DefaultContents();
+            switch (emptyWidget.type) {
+                case 0:
+                    emptyWidget.content = defaultContents.textContent;
+                    emptyWidget.style = {padding: {top: "30px", bottom: "30px"}};
+                    break;
+                case 1:
+                    emptyWidget.content = defaultContents.gallerySource;
+                    break;
+                case 2:
+                    emptyWidget.content = defaultContents.videoSource;
+                    break;
+                case 3:
+                    emptyWidget.content = defaultContents.pdfSource;
+                    break;
+                case 4:
+                    emptyWidget.content = defaultContents.showcaseSource;
+                    break;
+                case 5:
+                    emptyWidget.content = defaultContents.mapContent;
+                    break;
+                case 6:
+                    var totRows = this.calculateRows(this.selectedPage.contents.widgets);
+                    var totCols = this.calculateColumns(this.selectedPage.contents.widgets);
+                    this.initFallbackRespondiveBox(totRows, totCols)
+                    emptyWidget.content = defaultContents.webPageSource;
+                    break;
+                case 101:
+                case 102:
+                    emptyWidget.content = defaultContents.horizontalAndGridGallerySource;
+                    break;
+                case 1000:
+                    emptyWidget = emptyWidget;
+                    break;
             }
-        });
+            
+            emptyWidget.row = toWidget.row;
+            emptyWidget.column = toWidget.column;
+            emptyWidget.columnSpan = toWidget.columnSpan;
+            
+            let oldWidgetIndex = this.selectedPage.contents.widgets.findIndex(w => w.row == toWidget.row && w.column == toWidget.column)
+            this.selectedPage.contents.widgets[oldWidgetIndex] = emptyWidget;
+            this.renderWidgetChanges(emptyWidget, this.selectedPage);
+        }
+        else {
+            widgetData = JSON.parse(widgetData);
+            if (toWidget.row != widgetData.row || toWidget.column != widgetData.column) {
+                Swal.fire({
+                    title: 'Sostituire il widget ?',
+                    icon: 'question',
+                    showDenyButton: true,
+                    showCancelButton: false,
+                    confirmButtonText: 'Si',
+                    denyButtonText: `No`,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        let toWidgetIndex = this.selectedPage.contents.widgets.findIndex(w => w.row == toWidget.row && w.column == toWidget.column);
+                        this.selectedPage.contents.widgets[toWidgetIndex] = widgetData;
+                        this.selectedPage.contents.widgets[toWidgetIndex].row = toWidget.row;
+                        this.selectedPage.contents.widgets[toWidgetIndex].column = toWidget.column;
+                        this.selectedPage.contents.widgets[toWidgetIndex].columnSpan = toWidget.columnSpan;
+                        this.renderWidgetChanges(this.selectedPage.contents.widgets[toWidgetIndex], this.selectedPage);
+                    }
+                });
+            }
+        }
     }
     
     addWidget(widgetType, row, column, span) {
@@ -1725,6 +1940,7 @@ export default class RenderManager {
                 break;
             case 6:
                 emptyWidget.content = defaultContents.webPageSource;
+                emptyWidget.style.height = "1100px";
                 break;
             case 101:
             case 102:
@@ -1738,6 +1954,7 @@ export default class RenderManager {
             emptyWidget.row = row;
             emptyWidget.column = column;
             emptyWidget.columnSpan = span;
+            this.selectedPage = JSON.parse(JSON.stringify(this.selectedPage))
             this.selectedPage.contents.widgets.push(emptyWidget);
         }
         else if (row || row == 0 && column || column == 0) {
@@ -1756,8 +1973,61 @@ export default class RenderManager {
             if (span)
                 emptyWidget.columnSpan = span;
             this.selectedPage.contents.widgets.push(emptyWidget);
+        }        
+        var totRows = this.calculateRows(this.selectedPage.contents.widgets);
+        var totCols = this.calculateColumns(this.selectedPage.contents.widgets);
+        this.initFallbackRespondiveBox(totRows, totCols);
+        this.responsiveBox._screenItems[this.responsiveBox._screenItems.length - 1].location.row = totRows;
+        let lastScreenItem = this.responsiveBox._screenItems.pop();
+        this.fallbackResponsiveBox._screenItems.forEach(screenItem => {
+            screenItem.location.row = totRows - 1;
+            screenItem.item.location[0].row = totRows - 1;
+            this.responsiveBox._screenItems.push(screenItem);
+        });
+        lastScreenItem.location.row  = totRows;
+        this.responsiveBox._screenItems.push(lastScreenItem);
+        this.fallbackResponsiveBox._screenItems = [];
+        let newRowNode = document.getElementById('fallback-responsive-box').firstChild.lastChild
+        document.getElementById('responsive-box').firstChild.insertBefore(newRowNode, document.getElementById('responsive-box').firstChild.lastChild);
+        this.historyManager.updateHistory(JSON.parse(JSON.stringify(this.selectedPage)));
+    }
+    
+    initFallbackRespondiveBox(rows, cols, append) {
+        var totRows = rows;
+        var totCols = cols;
+        let rbRows = new Array();
+        let rbCols = new Array();
+        var object = { ratio: 1 };
+        for (var i = 0; i < totCols; i++) {
+            rbCols.push(object);
         }
-        this.renderChanges(this.selectedPage);
+        for (var i = 0; i < totRows; i++) {
+            rbRows.push(object);
+        }
+
+        let items = this.selectedPage.contents.widgets.map(w => {
+            return {
+                location: [{
+                    row: w.row,
+                    col: w.column,
+                    colspan: (w.columnSpan) ? w.columnSpan : 1,
+                    rowspan: (w.rowSpan) ? w.rowSpan : 1
+                }],
+                html: this.handleWidget(w)
+            }
+        });
+
+        let filteredItems = items.filter(item => item.location[0].row == totRows - 1)
+
+        this.fallbackResponsiveBox = $('#fallback-responsive-box').dxResponsiveBox({
+            rows: rbRows,
+            cols: rbCols,
+            items: append ? filteredItems : items,
+            singleColumnScreen: 'sm',
+            screenByWidth(width) {
+                return (width < 700) ? 'sm' : 'lg';
+            },
+        }).dxResponsiveBox('instance');
     }
 
 }

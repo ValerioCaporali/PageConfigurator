@@ -16,6 +16,7 @@ using API.Data;
 using API.Entities;
 using API.Model;
 using Model.Page.Contents;
+using Model.Page.Type;
 
 namespace Pages_configurator.Controllers
 {
@@ -159,6 +160,60 @@ namespace Pages_configurator.Controllers
                 return Ok("Draft correctly deleted");
             }
             return BadRequest("Page not found");
+        }
+
+        [HttpPost("delete-page")]
+        public IActionResult DeletePage([FromBody] DeletePageDto deletePageDto)
+        {
+            DbPage page = _context.Pages.Where(page => page.id == deletePageDto.id).FirstOrDefault();
+            if (page != null)
+            {
+                _context.Pages.Remove(page);
+                _context.SaveChanges();
+                return Ok("Page correctly deleted");
+            }
+            return BadRequest("Page not found");
+        }
+
+        [HttpPost("create")]
+        public ActionResult<CustomTablePage> CreatePage([FromBody] CreatePageDto createPageDto)
+        {
+            TableContent content = new TableContent
+            {
+                Widgets = new List<Model.PageModel.PageWidget.Widget>(),
+                Title = "",
+                Language = null
+            };
+            List<TableContent> contents = new List<TableContent>();
+            contents.Add(content);
+            string serializedContents = JsonConvert.SerializeObject(contents);
+            DbPage newPage = new DbPage
+            {
+                id = Guid.NewGuid(),
+                type = (PageType) createPageDto.Type,
+                visibility = 1,
+                slug = "/" + createPageDto.Slug,
+                contents = serializedContents
+            };
+
+            CustomTablePage page = new CustomTablePage
+            {
+                id = newPage.id,
+                type = newPage.type,
+                visibility = newPage.visibility,
+                slug = newPage.slug,
+                description = newPage.description,
+                drafts = newPage.drafts != null ? JsonConvert.DeserializeObject<List<CustomTableContent>>(newPage.drafts) : null,
+                contents = JsonConvert.DeserializeObject<List<CustomTableContent>>(newPage.contents)
+            };
+
+            page.contents[0].Description = page.description;
+            page.contents[0].Visibility = page.visibility;
+            page.contents[0].Slug = page.slug;
+            
+            _context.Pages.Add(newPage);
+            _context.SaveChanges();
+            return page;
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -14,6 +14,7 @@
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.7.4/jsoneditor.css" integrity="sha512-XmjnlPNi5tkrcqMGEG7ZOpGhny9t8fdCk0oxZxjFaqF3cl3UKv+51GgeUoY3Rf/ZaGtBvMZ9dDhceGZ1hcOyMw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
@@ -26,7 +27,6 @@
     <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/21.2.4/css/dx.light.css" />
     <script src="https://cdn.tiny.cloud/1/tanbthyu2xdpiwjwhtvcw768cj6626e06m1hl4qo7m96fyvc/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="https://cdn.tiny.cloud/1/tanbthyu2xdpiwjwhtvcw768cj6626e06m1hl4qo7m96fyvc/tinymce/5/jquery.tinymce.min.js" referrerpolicy="origin"></script>
-
 </head>
 
 <style>
@@ -173,7 +173,7 @@
         color: #9a9a9a;
     }
 
-    #save-draft-button, #delete-draft-button {
+    #save-draft-button, #delete-draft-button, #publish-button {
         margin-right: 6px;
     }
 
@@ -195,7 +195,7 @@
     }
 
     #widgets-curtain-header:hover, 
-    #metadata-curtain-header:hover, 
+    #metadata-curtain-header:hover,
     #text-curtain-header:hover, 
     #content-curtain-header:hover, 
     #style-curtain-header,
@@ -252,14 +252,12 @@
     .dropzone {
         border: 2px dashed black;
         padding: 80px;
-        margin-top: 20px;
+        margin: 10px !important;
         transition: all 0.18s;
     }
-
+    
     .dropzone:hover {
-        border: 2px dashed black !important;
-        padding: 80px !important;
-        margin-top: 20px !important;
+        cursor: default !important;
     }
 
     .nav-item {
@@ -287,7 +285,8 @@
     #margin *,
     #mobile-margin *,
     #padding *,
-    #mobile-padding * {
+    #mobile-padding *,
+    #text * {
         padding: 0;
     }
 
@@ -878,6 +877,38 @@
         bottom: 0;
         margin: auto;
     }
+    
+    .iframe-overlay {
+        position: absolute;
+        width: fit-content !important;
+        height: fit-content !important;
+        inset: 0px;
+        opacity: 0 !important;
+        z-index: 2;
+        margin: auto;
+        display: block !important;
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    .edit-overlay {
+        position: absolute;
+        width: fit-content !important;
+        height: fit-content !important;
+        inset: 0px;
+        opacity: 0 !important;
+        z-index: 2;
+        margin: auto;
+        display: block !important;
+    }
+
+    .iframe-overlay i {
+        font-size: 30px;
+    }
+
+    #create-page {
+        margin: 0.5rem;
+    }
 
 </style>
 
@@ -891,12 +922,13 @@
             <i id="go-back" class="dx-icon-arrowleft" style="display: none; color: #000 !important; font-size: 30px; cursor: pointer; color: #9a9a9a !important; margin-right: 10px;"></i>
             <h5 id="page-title"></h5>
             <form id="search" value="" class="form-inline my-2 my-lg-0" style="width: 75%; display: flex; left: 0; right: 0; margin: auto;">
-                <input id="search" class="form-control mr-sm-2" style="width: 90%;" type="search" placeholder="Search">
-                <select value="all" class="form-select form-inline form-select-sm" style="width: 9%;" aria-label=".form-select-sm example" id="filter">
+                <input id="search" class="form-control mr-sm-2" style="width: 83%;" type="search" placeholder="Search" required>
+                <select value="all" class="form-select form-inline form-select-sm" style="width: 9%;" aria-label=".form-select-sm example" id="filter" required>
                   <option value="all" selected>Tutte</option>
                   <option value="1">Pagine</option>
                   <option value="0">Home</option>
                 </select>
+                <button id="create-page" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target=".bd-example-modal-lg">Crea Pagina</button>
             </form>
             <div id="info" style="display: none;"><p style="margin-right: 0.4rem; color: black;">Stato: </p><p id="status"></p></div>
             <div id="history-container" style="display: block;">
@@ -906,7 +938,33 @@
             <div id="save-draft-button" style="display: none;"></div>
             <div id="delete-draft-button" style="display: none;"></div>
             <div id="publish-button" style="display: none;"></div>
+            <div id="delete-page-button" style="display: none;"></div>
         </nav>
+
+        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="padding: 40px;">
+                <form>
+                  <div class="form-group">
+                    <label for="type">Tipo:</label>
+                    <select id="type" class="form-select" aria-label="Default select example">
+                      <option disabled="true" selected>Seleziona il tipo</option>
+                      <option value="0">Home</option>
+                      <option value="1">Pagina</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="slug">Slug:</label>
+                    <input id="slug" type="text" class="form-control" placeholder="/nuova-pagina">
+                  </div>
+                  <div class="modal-footer" style="margin-top: 35px; padding: 1rem 0 0 0 !important;">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
+                    <button id="create" type="button" class="btn btn-primary" data-dismiss="modal">Crea</button>
+                  </div>
+                </form>
+            </div>
+          </div>
+        </div>
 
         <div id="sidebar" style="display: none;">
             <div class="container" id="sidebar-default-view">
@@ -1197,9 +1255,10 @@
                 <div class="loaddata"></div>
             </div>
             <div class="demo-container" id="demo-container" style="display: none;">
-                <div id="page" class="page">
-                    <div id="responsive-box">
-                    </div>
+                <div id="page" class="page" style="">
+                    <div id="responsive-box"></div>
+                    <div id="fallback-responsive-box" style="display: none"></div>
+                    <div id="jsoneditor" style="width: 400px; height: 400px;"></div>
                 </div>
             </div>
         </main>
@@ -1219,6 +1278,7 @@
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.12.313/build/pdf.min.js"></script>
 <script src="https://cdn3.devexpress.com/jslib/21.2.4/js/dx.all.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.7.4/jsoneditor.min.js" integrity="sha512-KQaWlVsZF0iPXCR8p176hVrg/rlw+smy8dpJ+vwiuvoHyGr8PTVvaAV4ZmsAYdCvMRP8e3sB9pl1mRuaunaXrg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="module" src="~/js/index.js" defer></script>
 <script>
 

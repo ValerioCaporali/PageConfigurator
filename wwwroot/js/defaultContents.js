@@ -33,11 +33,11 @@ export default class DefaultContents {
     }
     
     videoSource = {
-        source: 'https://www.youtube.com/embed/X91__O-5zz8'
+        source: ['https://www.youtube.com/embed/X91__O-5zz8']
     };
     
     webPageSource = {
-        source: 'https://it.wikipedia.org/wiki/Pagina_principale'
+        source: ['https://devq.it/#home']
     };
     
     showcaseSource = {

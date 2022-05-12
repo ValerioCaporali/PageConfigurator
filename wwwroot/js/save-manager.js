@@ -97,23 +97,25 @@ export default class SaveManager {
         });
     }
 
-    saveInDraft(pageToSave, initialPage)
+    saveInDraft(history)
     {
 
-         if(!this.isPageValid(pageToSave)) {
-             Swal.fire({
-                 icon: 'error',
-                 title: 'Errore',
-                 text: 'La pagina non può essere salvata. Controllare tutti i campi richiesti',
-             });
-             return;
-         }
+         // if(!this.isPageValid(pageToSave)) {
+         //     Swal.fire({
+         //         icon: 'error',
+         //         title: 'Errore',
+         //         text: 'La pagina non può essere salvata. Controllare tutti i campi richiesti',
+         //     });
+         //     return;
+         // }
 
         var draft = [];
         var oldDraft = [];
 
-        pageToSave = JSON.parse(JSON.stringify(pageToSave));
-        initialPage = JSON.parse(JSON.stringify(initialPage));
+        let pageToSave = JSON.parse(JSON.stringify(history[history.length - 1]));
+        let initialPage = JSON.parse(JSON.stringify(history[0]));
+
+        console.log(pageToSave);
 
         draft.push(pageToSave.contents);
         pageToSave.contents = draft;
@@ -246,6 +248,67 @@ export default class SaveManager {
                 });
             }
         })
+    }
+
+    deletePage(guid) {
+        const data = {
+            id: guid
+        };
+
+        const options = {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        };
+
+        fetch(this.base_url + 'delete-page', options)
+        .then(response => {
+            if(!response.ok)
+            {
+                response.json()
+                .catch(() => {
+                    $(() => {
+                        DevExpress.ui.notify(response.status);
+                    })
+                })
+                .then(({message}) => {
+                    $(() => {
+                        DevExpress.ui.notify(message);
+                    });
+                })
+            }
+            else
+            {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Pagina pubblicata !',
+                    text: 'La pagina è stata pubblicata correttamente',
+                });
+            }
+        })
+    }
+
+    async createPage(type, slug) {
+        const data = {
+            type: Number(type),
+            slug: slug
+        };
+
+        const options = {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        };
+
+        let response = await fetch(this.base_url + 'create', options);
+        let newPage = await response.json();
+        return newPage;
     }
     
 }

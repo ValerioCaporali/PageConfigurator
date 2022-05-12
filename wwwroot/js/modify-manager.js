@@ -64,11 +64,14 @@ export default class ModifyManager {
     initHtmlEditors(selector) {
         let that = this;
         tinymce.init({
+            entity_encoding : "raw",
+            verify_html : false,
+            cleanup : false,
             selector: "#" + selector,
             plugins:
-                "code",
+                "code print preview",
             toolbar:
-                "code",
+                "code undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment",
             toolbar_mode: "floating",
             height: "400",
             dialog_type : "modal",
@@ -82,7 +85,10 @@ export default class ModifyManager {
                 });
                 editor.on('closeWindow', function(e) {
                     that.getUpdatedPage();
-                })
+                });
+                editor.on('ExecCommand', function(e) {
+                    that.getUpdatedPage();
+                  });
               }
         }).then(() => {
             $(document).on('focusin', function(e) {
@@ -94,7 +100,7 @@ export default class ModifyManager {
             for(let i = 0; i < iframe.length; i++) {
                 let innerDoc = iframe[i].contentDocument;
                 let iframeBody = innerDoc.getElementById('tinymce');
-                iframeBody.style.position = "relative";
+                // iframeBody.style.position = "relative";
             }
         });
     }
@@ -133,12 +139,14 @@ export default class ModifyManager {
                 (key != "positionType") ? items.push({dataField: key}) : items.push({dataField: key, editorType: 'dxSelectBox', editorOptions: {items: formData.TextPosition, value: ((value || value == 0) ? formData.TextPosition[value]?.value : ""), valueExpr: 'value', displayExpr: 'name'}})
             },),
             $('#text').dxForm({
-              colCount: 2,
+              colCount: 5,
               formData: formData.textTab,
               items: items,
               labelLocation: "top",
+              labelMode: 'floating',
+              showColonAfterLabel: true,
               onFieldDataChanged: function (e) {
-                that.getUpdatedPage()
+                that.getUpdatedPage();
             }
             });
         });
@@ -165,7 +173,7 @@ export default class ModifyManager {
               items: items,
               labelLocation: "top",
               onFieldDataChanged: function (e) {
-                that.getUpdatedPage()
+                that.getUpdatedPage();
             }
             });
         });
@@ -395,7 +403,7 @@ export default class ModifyManager {
             $.each(formData.styleTab, function (key, value) {
                 if (key.indexOf("border") != -1)
                     if (key == "borderStyle")                         
-                        items.push({dataField: key, editorType: 'dxSelectBox', editorOptions: {items: formData.Borders, value: (value ? formData.Borders.find(b => b.value == value.toLowerCase()) : ""), valueExpr: 'value', displayExpr: 'value', onSelectionChanged(e) {that.getUpdatedPage()}}});
+                        items.push({dataField: key, editorType: 'dxSelectBox', editorOptions: {items: formData.Borders, placeholder: "solid", value: (value ? formData.Borders.find(b => b.value == value.toLowerCase()) : ""), valueExpr: 'value', displayExpr: 'value', onSelectionChanged(e) {that.getUpdatedPage()}}});
                     else if (key == "borderColor")
                         items.push({dataField: key, editorType: "dxColorBox"});
                     else 
@@ -527,7 +535,7 @@ export default class ModifyManager {
             $.each(formData.mobileStyleTab, function (key, value) {
                 if (key.indexOf("border") != -1)
                     if (key == "borderStyle")
-                        items.push({dataField: key, editorType: 'dxSelectBox', editorOptions: {items: formData.Borders, value: (value ? formData.Borders.find(b => b.value == value.toLowerCase()) : ""), valueExpr: 'value', displayExpr: 'value'}});
+                        items.push({dataField: key, editorType: 'dxSelectBox', editorOptions: {items: formData.Borders, placeholder: "solid", value: (value ? formData.Borders.find(b => b.value == value.toLowerCase()) : "solid"), valueExpr: 'value', displayExpr: 'value'}});
                     else if (key == "borderColor")
                         items.push({dataField: key, editorType: "dxColorBox"});
                     else
@@ -645,14 +653,14 @@ export default class ModifyManager {
                 },}],
               labelLocation: "left",
               onFieldDataChanged: function (e) {
-                  console.log(e);
-                if (that.imageExists(e.value)) {
+                if (that.imageExists(e.value) && e.value != "") {
                     let source = {
                         url: e.value,
                         thumbnail: e.value
                     };
                     formData.galleryConfiguration.source.push(source);
                     gallery.refresh();
+                    this.resetValues();
                     that.getUpdatedPage()
                 }
                 else if (e.value) {
@@ -704,7 +712,7 @@ export default class ModifyManager {
             $.each( formData.videoConfiguration, function( key, value ) {
                 if (key != "width" && key != "height" && key != "source")
                     items.push({dataField: key, editorType: "dxCheckBox", value: value});
-                else if(key != "content") items.push({dataField: key});
+                else if(key != "source") items.push({dataField: key});
             },),
             $('#video-content').dxForm({
               colCount: 1,
@@ -882,13 +890,14 @@ export default class ModifyManager {
                 },}],
               labelLocation: "left",
               onFieldDataChanged: function (e) {
-                if (that.imageExists(e.value)) {
+                if (that.imageExists(e.value) && e.value != "") {
                     let source = {
                         url: e.value,
                         thumbnail: e.value
                     };
                     formData.horizontalScrollGalleryConfiguration.source.push(source);
                     horizontalScrollGallery.refresh();
+                    this.resetValues();
                     that.getUpdatedPage()
                 }
                 else if (e.value)
@@ -979,13 +988,14 @@ export default class ModifyManager {
                 },}],
               labelLocation: "left",
               onFieldDataChanged: function (e) {
-                if (that.imageExists(e.value)) {
+                if (that.imageExists(e.value) && e.value != "") {
                     let source = {
                         url: e.value,
                         thumbnail: e.value
                     };
                     formData.gridGalleryConfiguration.source.push(source);
                     gridGallery.refresh();
+                    this.resetValues();
                     that.getUpdatedPage()
                 }
                 else if (e.value)
@@ -1230,7 +1240,14 @@ export default class ModifyManager {
                 this.selectedPage.contents.widgets = this.selectedPage.contents.widgets.filter(currWidget => currWidget.row != widget.row || currWidget.column != widget.column);
                 this.adaptPageLayout(widget);
                 this.renderer.saveInDraftBtn.option("disabled", false);
-                this.renderer.renderChanges(this.selectedPage);
+                this.renderer.responsiveBox._screenItems.forEach(screenItem => {
+                    if (screenItem.location.row == widget.row && screenItem.location.col == widget.column) {
+                        let htmlNode = screenItem.item.html.parentNode;
+                        htmlNode.remove();
+                    }
+                })
+                this.renderer.historyManager.updateHistory(this.selectedPage);
+                this.renderer.selectedPage = this.selectedPage;
             }
         });
     }
@@ -1265,6 +1282,7 @@ export default class ModifyManager {
         let updatedPage = saveManager.updatePage();
         if (updatedPage) {
             this.renderer.saveInDraftBtn.option("disabled", false);
+            // this.renderer.historyManager.updateHistory(JSON.parse(JSON.stringify(modifiedWidget)));
             this.renderer.renderWidgetChanges(JSON.parse(JSON.stringify(modifiedWidget)), updatedPage);
         }
     }

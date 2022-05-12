@@ -74,7 +74,7 @@ export default class FormData {
 
     ]
     
-    Borders = [
+    Borders = [ 
         
         {value: "dotted"},
         
@@ -300,11 +300,11 @@ export default class FormData {
         
         fontSize: null,
 
-        borderStyle: null,
+        borderStyle: "solid",
 
-        borderWidth: null,
+        borderWidth: "1px",
 
-        borderColor: null
+        borderColor: "black"
         
     };
 
@@ -322,11 +322,11 @@ export default class FormData {
 
         fontSize: null,
 
-        borderStyle: null,
+        borderStyle: "solid",
 
-        borderWidth: null,
+        borderWidth: "1px",
 
-        borderColor: null
+        borderColor: "black"
 
      };
 
@@ -426,7 +426,7 @@ export default class FormData {
    }
     
      bindData() {
-
+         
         this.metadataTab.visibility = this.selectedPage.contents.visibility;
         this.metadataTab.slug = this.selectedPage.contents.slug;
         this.metadataTab.description = this.selectedPage.contents.description;

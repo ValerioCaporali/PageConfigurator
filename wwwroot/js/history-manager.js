@@ -11,14 +11,14 @@ export default class HistoryManager {
     }
 
     updateHistory(page) {
-        document.getElementById("prev-page").style.display = "block";
-
+        if (this.getHistoryLenght() > 0)
+            document.getElementById("prev-page").style.display = "block";
         this.history.push(page);
+        console.log(this.history);
         if (this.history.length != 0) {
-            if (this.history.length > this.maxHistoryLenght)
-                this.history.shift(); // initial page can be deleted from the history
+            // if (this.history.length > this.maxHistoryLenght)
+            //     this.history.shift();
             this.current_index = this.history.length - 1;
-
         }
     }
 
@@ -40,8 +40,9 @@ export default class HistoryManager {
             this.history.splice(this.current_index);
             this.current_index = 0;
             return this.history[0];
-        }
-        else {
+        } else if (this.current_index == 0) {
+            return this.history[this.current_index];
+        } else {
             this.history.splice(this.current_index);
             this.current_index--;
             return this.history[this.current_index];
