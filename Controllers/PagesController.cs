@@ -36,51 +36,53 @@ namespace Pages_configurator.Controllers
             _context = context;
         }
 
-        public IActionResult Index(int pageIndex)
-        {
-            ViewBag.Index = pageIndex;
-            return View();
-        }
-
-        public IActionResult Pages()
-        {
-            return View();
-        }
-
         [HttpGet("get-all")]
-        public async Task<ActionResult<List<TablePage>>> GetAll()
+        public async Task<ActionResult<List<CustomTablePage>>> GetAll()
         {
             await _bindingService.BindPagesFromJsonAsync();
 
-            List<TablePage> pages = new List<TablePage>();
+            List<CustomTablePage> pages = new List<CustomTablePage>();
             List<DbPage> dbPages = _context.Pages.ToList();
             
             foreach (DbPage dbPage in dbPages)
             {
-                TablePage page = new TablePage
+                CustomTablePage page = new CustomTablePage
                 {
                     id = dbPage.id,
                     type = dbPage.type,
                     visibility = dbPage.visibility,
                     slug = dbPage.slug,
                     description = dbPage.description,
-                    drafts = dbPage.drafts != null ? JsonConvert.DeserializeObject<List<TableContent>>(dbPage.drafts) : null,
-                    contents = JsonConvert.DeserializeObject<List<TableContent>>(dbPage.contents)
+                    drafts = dbPage.drafts != null ? JsonConvert.DeserializeObject<List<CustomTableContent>>(dbPage.drafts) : null,
+                    contents = JsonConvert.DeserializeObject<List<CustomTableContent>>(dbPage.contents)
                 };
                 pages.Add(page);
             }
             return pages;
         }
-
         
         [HttpPost("publish")]
-        public IActionResult SavePage([FromBody] Guid Id)
+        public IActionResult SavePage([FromBody] PublishDto publishDto)
         {
 
-            DbPage page = _context.Pages.Find(Id);
+            DbPage page = _context.Pages.Find(publishDto.id);
             if (page != null)
             {
-                page.contents = page.drafts;
+                List<TableContent> contents = new List<TableContent>();
+                List<CustomTableContent> drafts = JsonConvert.DeserializeObject<List<CustomTableContent>>(page.drafts);
+                page.visibility = drafts[0].Visibility;
+                page.description = drafts[0].Description;
+                page.slug = drafts[0].Slug;
+                foreach (CustomTableContent draft in drafts)
+                {
+                    TableContent content = new TableContent {
+                        Language = draft.Language,
+                        Title = draft.Title,
+                        Widgets = draft.Widgets
+                    };
+                    contents.Add(content);
+                }
+                page.contents = JsonConvert.SerializeObject(contents);
                 page.drafts = null;
                 _context.SaveChanges();
                 return Ok("Page correctly published");
@@ -89,7 +91,7 @@ namespace Pages_configurator.Controllers
 
         }
 
-        [HttpPost("save-draft")]
+        [HttpPost("save")]
         public IActionResult SaveInDraft([FromBody] SaveDto saveDto)
         {
             if (saveDto.Page == null || saveDto.InitialPage == null)
@@ -98,12 +100,11 @@ namespace Pages_configurator.Controllers
             }
             DbPage page = _context.Pages.Find(saveDto.Page.id);
             DbPage updatedPage = new DbPage();
-            List<TableContent> drafts = new List<TableContent>();
-            List<TableContent> contents = JsonConvert.DeserializeObject<List<TableContent>>(page.contents);
+            List<CustomTableContent> drafts = new List<CustomTableContent>();
+            List<CustomTableContent> contents = JsonConvert.DeserializeObject<List<CustomTableContent>>(page.contents);
             if (page.drafts != null)
             {
-                drafts = JsonConvert.DeserializeObject<List<TableContent>>(page.drafts);
-                
+                drafts = JsonConvert.DeserializeObject<List<CustomTableContent>>(page.drafts);
                 int oldDraftIndex = drafts.FindIndex(draft => draft.Language == saveDto.InitialPage.contents.First().Language);
                 if (oldDraftIndex == -1)
                 {
@@ -113,15 +114,29 @@ namespace Pages_configurator.Controllers
                 {
                     drafts[oldDraftIndex] = saveDto.Page.contents.First();
                 }
+                foreach (CustomTableContent draft in drafts)
+                {
+                    draft.Visibility = saveDto.Page.contents.First().Visibility;
+                    draft.Slug = saveDto.Page.contents.First().Slug;
+                    draft.Description = saveDto.Page.contents.First().Description;
+                }
             }
             else
             {
                 drafts.Add(saveDto.Page.contents.First());
-                foreach (TableContent content in contents)
+                foreach (CustomTableContent content in contents)
                 {
                     if (content.Language != saveDto.InitialPage.contents.First().Language)
                     {
-                        drafts.Add(content);
+                        CustomTableContent customContent = new CustomTableContent {
+                            Language = content.Language,
+                            Title = content.Title,
+                            Widgets = content.Widgets,
+                            Visibility = saveDto.Page.contents[0].Visibility,
+                            Description = saveDto.Page.contents[0].Description,
+                            Slug = saveDto.Page.contents[0].Slug
+                        };
+                        drafts.Add(customContent);
                     }
                 }
             }
@@ -134,12 +149,12 @@ namespace Pages_configurator.Controllers
         }
 
         [HttpPost("delete-draft")]
-        public IActionResult DeleteFraft(Guid pageId)
+        public IActionResult DeleteFraft([FromBody] DeleteDraftDto deleteDraftDto)
         {
-            DbPage page = _context.Pages.Where(page => page.id == pageId).First();
+            DbPage page = _context.Pages.Where(page => page.id == deleteDraftDto.id).FirstOrDefault();
             if (page != null)
             {
-                _context.Remove(page);
+                page.drafts = null;
                 _context.SaveChanges();
                 return Ok("Draft correctly deleted");
             }

@@ -38,14 +38,82 @@ export default class SaveManager {
 
     }
 
+    updateMetadata() {
+        
+    }
+
+    isPageValid(page) {
+        console.log(page);
+        page.contents.widgets.forEach(widget => {
+            if (widget.row == null || widget.column == null) {
+                swal("Errore", "I campi riga e colonna non possono essere vuoti", "warning");
+                return false
+            }
+            
+            switch (widget.type) {
+                case 0:
+                    if (!widget.content.text) {
+                        return false;
+                    }
+                    return true;
+                    break;
+    
+                case 1:
+                case 2:
+                case 3:
+                case 101:
+                case 102:
+                    if (widget.content.source == null || widget.content.source == "") {
+                        return false;
+                    }
+                    return true;
+                    break;
+    
+                case 4:
+                    if (widget.content.source == null || widget.content.showCaseId == null) {
+                        return false;
+                    }
+                    return true;
+                    break;
+    
+                case 5:
+                    if (widget.content.latitude == null || widget.content.longitude == null) {
+                        return false;
+                    }
+                    return true;
+                    break;
+                case 6:
+                    if (!widget.content.source) {
+                        return false;
+                    }
+                    return true;
+                    break;
+                case 1000:
+                    return true;
+                default:
+                    return true;
+                    break;
+            }
+        });
+    }
+
     saveInDraft(pageToSave, initialPage)
     {
+
+         if(!this.isPageValid(pageToSave)) {
+             Swal.fire({
+                 icon: 'error',
+                 title: 'Errore',
+                 text: 'La pagina non può essere salvata. Controllare tutti i campi richiesti',
+             });
+             return;
+         }
 
         var draft = [];
         var oldDraft = [];
 
-        JSON.parse(JSON.stringify(pageToSave));
-        JSON.parse(JSON.stringify(initialPage));
+        pageToSave = JSON.parse(JSON.stringify(pageToSave));
+        initialPage = JSON.parse(JSON.stringify(initialPage));
 
         draft.push(pageToSave.contents);
         pageToSave.contents = draft;
@@ -68,34 +136,73 @@ export default class SaveManager {
 
         }
 
-        fetch(this.base_url + 'save-draft', options)
+        fetch(this.base_url + 'save', options)
         .then(response => {
             if(!response.ok)
             {
                 response.json()
                 .catch(() => {
                     $(() => {
-                        DevExpress.ui.notify(response.status);
+                        swal(message, "warning");
                     });
-                    return false;
+                })
+                .then(({message}) => {
+                    swal(message, "warning");
+                })
+            }
+            else
+            {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Pagina salvata !',
+                    text: 'La pagina è stata salvata correttamente nelle bozze',
+                });
+            }
+        })
+
+    }
+
+    deleteDraft(guid)
+    {
+        const data = {
+            id: guid
+        }
+
+        const options = {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+
+        }
+
+        fetch(this.base_url + 'delete-draft', options)
+        .then(response => {
+            if(!response.ok)
+            {
+                response.json()
+                .catch(() => {
+                    $(() => {
+                        DevExpress.ui.notify(response.status, "warning");
+                    });
                 })
                 .then(({message}) => {
                     $(() => {
                         DevExpress.ui.notify(message);
                     });
-                    return false;
                 })
             }
             else
             {
-                $(() => {
-                    DevExpress.ui.notify("Pagina pubblicata correttamente", "success");
-                })
-
-                return true;
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Bozza eliminata',
+                    text: 'La bozza è stata eliminata correttamente',
+                });
             }
         })
-
     }
 
     
@@ -111,7 +218,6 @@ export default class SaveManager {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-
             body: JSON.stringify(data)
         };
 
@@ -128,14 +234,16 @@ export default class SaveManager {
                 .then(({message}) => {
                     $(() => {
                         DevExpress.ui.notify(message);
-                    })
+                    });
                 })
             }
             else
             {
-                $(() => {
-                    DevExpress.ui.notify("Pagina salvata correttamente", "success");
-                })
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Pagina pubblicata !',
+                    text: 'La pagina è stata pubblicata correttamente',
+                });
             }
         })
     }

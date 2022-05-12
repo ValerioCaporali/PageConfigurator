@@ -5,17 +5,16 @@
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
-    <script src="https://cdn.tiny.cloud/1/y10y7it4cblpazpalsphbcrlyoz7xtuyid9skocdb0bw6l5a/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    @* <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> *@
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
         integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
@@ -25,6 +24,8 @@
     <link href="~/css/configurator-style.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/21.2.4/css/dx.common.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/21.2.4/css/dx.light.css" />
+    <script src="https://cdn.tiny.cloud/1/tanbthyu2xdpiwjwhtvcw768cj6626e06m1hl4qo7m96fyvc/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/tanbthyu2xdpiwjwhtvcw768cj6626e06m1hl4qo7m96fyvc/tinymce/5/jquery.tinymce.min.js" referrerpolicy="origin"></script>
 
 </head>
 
@@ -58,8 +59,267 @@
         border-radius: 5px;
     }
 
+    #navbar {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+    }
+    
+    #add-icon:hover {
+        cursor:pointer;
+    }
+    
+    .presets {
+        justify-content: center;
+        margin: 0 auto;
+    }
+    
+    .presets-label {
+        justify-content: center;
+        margin: 0;
+        margin-bottom: 30px !important;
+    }
+    
+    .presets-label p {
+        padding: 0 !important;
+        font-size: 16px !important;
+    }
+
+    .resizer {
+        margin-top: -20px !important;
+        opacity: 0;
+        display: none;
+        width: 20px;
+        height: 20px;
+        background: #000;
+        margin: auto;
+        float: right;
+        cursor: se-resize;
+        display: none;
+    }
+    
+    .preset {
+        padding: 0px 20px;
+        opacity: 60%;
+        transition: all 0.1s;
+    }
+    
+    .preset:hover {
+        cursor: pointer;
+        opacity: 100%;
+    }
+
+     #sidebar {
+        position: fixed;
+        width: 18%;
+        top: 0%;
+        right: 0;
+        bottom: 0;
+        background-color: #e6e9ec!important;
+        font-family: Roboto,Arial,Helvetica,Verdana,sans-serif;
+        font-size: 13px;
+        z-index: 1;
+        box-shadow: 14px 0px 15px 6px #000000;
+    }
+
+    .sidebar-header {
+        padding: 15px;
+    }
+
+    .sidebar-label {
+        margin: auto;
+        margin-left: 0;
+        color: #556068;
+        font-size: 10.4px;
+    }
+
+    .sidebar-icon {
+        vertical-align: middle;
+        margin: auto;
+        margin-right: 0;
+    }
+
+    .sidebar-footer {
+        bottom: 0;
+        width: 100%;
+        padding: 10px 3px;
+        background: #e6e9ec !important;
+        box-shadow: 0px -1px 5px #d8d9db !important;
+        border-top: none !important;
+    }
+
+    #delete-widget-btn {
+        margin: auto;
+        margin-right: 10px;
+    }
+
+    .sidenav {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        display: flex;
+    }
+
+    .dx-button-has-icon .dx-icon {
+        width: 25px;
+        height: 25px;
+    }
+
+    #page-title {
+        display: none;
+        margin-left: 0 !important;
+        margin: auto;
+        color: #9a9a9a;
+    }
+
+    #save-draft-button, #delete-draft-button {
+        margin-right: 6px;
+    }
+
+    #sidebar-default-view {
+        max-width: 100% !important;
+        margin-top: 20px;
+        padding: 0 !important;
+    }
+
+    #metadata {
+        height: 250px;
+        transition: height 0.2s;
+        margin: 4px;
+        padding: 5px;
+    }
+
+    #events-curtain, #text-curtain, #content-curtain {
+        transition: max-height 0.3s;
+    }
+
+    #widgets-curtain-header:hover, 
+    #metadata-curtain-header:hover, 
+    #text-curtain-header:hover, 
+    #content-curtain-header:hover, 
+    #style-curtain-header,
+    #mobile-style-curtain-header,
+    #events-curtain-header,
+    #widgets-list-button {
+        cursor: pointer;
+    }
+    
+    #metadata-curtain-header,
+    #text-curtain-header,
+    #events-curtain-header,
+    #mobile-style-curtain-header {
+        box-shadow: 0px 8px 4px -2px rgb(0 0 0 / 3%);
+    }
+    
+    #events-curtain  {
+        height: 0px;
+    }
+
+    #widgets-curtain, #metadata,
+    #text-curtain,
+    #content-curtain,
+    #style-curtain,
+    #mobile-style-curtain,
+    #events-curtain {
+        padding: 0px 16px;
+    }
+
+    #text-curtain {
+        height: auto;
+        transition: all 0.3ms;
+    }
+
+    .curtain-header-shadow {
+        transition: all 0.3ms;
+        box-shadow: none;
+    }
+
+    .edit-panel {
+        display: none;
+        width: 50%;
+        height: 800px;
+        margin: auto;
+        background-color: #f0f0f0;
+        top: 0;
+        bottom: 0;
+        position: absolute;
+        right: 0;
+        left: 0;
+        border-radius: 20px;
+    }
+
+    .dropzone {
+        border: 2px dashed black;
+        padding: 80px;
+        margin-top: 20px;
+        transition: all 0.18s;
+    }
+
+    .dropzone:hover {
+        border: 2px dashed black !important;
+        padding: 80px !important;
+        margin-top: 20px !important;
+    }
+
+    .nav-item {
+        width: 33.3%;
+        text-align: center;
+    }
+
+    .nav-pills .nav-link.active {
+        background-color: #e6e9ec !important;
+        border-bottom: 3px solid white;
+        color: #595454 !important;
+    }
+
+    .nav-pills {
+        background-color: #e6e9ec;
+    }
+
+    .nav-pills .nav-link {
+        border-radius: 0px !important;
+        color: #595454 !important;
+        font-weight: bold;
+        font-size: 12px;
+    }
+
+    #margin *,
+    #mobile-margin *,
+    #padding *,
+    #mobile-padding * {
+        padding: 0;
+    }
+
+    input {
+        padding: 7px 9px 8px !important;
+    }
+
+    .tab-content {
+        padding: 0;
+    }
+
+    .image-thumbnail {
+        width: -webkit-fill-available;
+        width: -moz-available;
+    }
+
     .container {
-        max-width: 74%;
+        max-width: 75%;
+    }
+
+    .tox-textarea {
+        display: block;
+    }
+
+    #margin > div.dx-first-row.dx-last-row.dx-field-item.dx-col-1.dx-field-item-optional.dx-flex-layout {
+        padding: 0 !important;
+    }
+
+    #gallery-source,
+    #gridGallery-source,
+    #horizontal-scroll-gallery-source {
+        max-height: 400px;
     }
 
     h4 {
@@ -79,18 +339,40 @@
     }
 
     .page-card {
+        opacity: 0.7;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.15);
         padding: 20px;
         border: 0.1px solid black;
         border-radius: 4px;
         background-color: #f3f3f39e;
-        margin: 10px;
-        width: 200px;
+        margin: 4px;
+        width: 187px;
         cursor: pointer;
+        transition: all 0.3s;
     }
 
     .page-card:hover {
-      transform: scale(1.1);
-        box-shadow: 1px 1px 1px #000000;
+        opacity: 1;
+        box-shadow: 0px 0px 4px 2px rgba(0,0,0,0.18);
+        transform: scale(1.03);
+    }
+
+    .widget-wrapper {
+        border-radius: 3px;
+        background-color: #fff;
+        cursor: move;
+        margin: 4px;
+        position: relative;
+        color: #556068;
+        width: 47.8%;
+    }
+
+    .widget-wrapper:hover {
+        box-shadow: 0px 0px 4px 2px rgba(0,0,0,0.18);
+    }
+
+    .widget-thumbnail {
+        font-size: 2.5em !important;
     }
 
     .vertical-pdf-scroll-container {
@@ -107,6 +389,10 @@
         display: flex;
         overflow-x: scroll;
         padding: 8px;
+    }
+
+    .dx-layout-manager .dx-label-h-align .dx-field-item-content .dx-checkbox, .dx-layout-manager .dx-label-h-align .dx-field-item-content .dx-switch {
+        float: right;
     }
 
     canvas {
@@ -386,8 +672,12 @@
         z-index: 101;
     }
 
+    .widget:hover {
+        cursor: pointer;
+    }
+
     .edit-icon {
-        padding: 10px;
+        padding: 3px;
         display: none;
         width: fit-content;
         right: 0;
@@ -397,34 +687,49 @@
     }
 
     .page-structure {
-        border: 1px dashed;
+        padding-top: 10px;
+        border: 1px dotted;
     }
 
     .structure {
-        margin: 10px;
-        padding: 10px;
-        border: 2.2px dashed #312d2d;
+        margin: 0px 10px;
+        outline: 2px dotted #312d2d !important;
+        transition: all 0.2s;
+    }
+
+    .widget {
+        transition: all 0.2s;
+    }
+
+    .fade-scale {
+      transform: scale(0);
+      opacity: 0;
+      -webkit-transition: all .50s linear;
+      -o-transition: all .50s linear;
+      transition: all .50s linear;
+    }
+
+    .fade-scale.in {
+      opacity: 1;
+      transform: scale(1);
     }
 
     .page {
-        max-width: 60%;
-        margin-left: 0;
-        margin-right: 0;
-        margin: auto;
+        max-width: 108%;
+        margin-right: 18% !important;
     }
 
-    .edit-panel {
-        display: none;
-        width: 50%;
-        height: 800px;
-        margin: auto;
-        background-color: #f0f0f0;
-        top: 0;
-        bottom: 0;
-        position: absolute;
-        right: 0;
-        left: 0;
-        border-radius: 20px;
+    .draggable-widgets-list {
+        height: 560px;
+        transition: height 0.3s;
+    }
+
+    .dx-buttongroup-wrapper {
+        width: 100% !important;
+    }
+
+    .row {
+        margin: 0;
     }
 
     .edit-panel-container {}
@@ -457,13 +762,34 @@
     }
 
     #history-container {
-        margin: auto;
+        margin: 0;
     }
 
     #history-container *, #structure-icon:hover {
         cursor: pointer;
     }
 
+    #structure-icon:hover {
+        transform: scale(1.2);
+    }
+
+    .dx-button {
+        border-radius: 0;
+    }
+
+    .modal-dialog {
+        margin: auto;
+        position: absolute;
+        top: 40%;
+        left: 0;
+        transform: translateY(-50%) !important;
+        right: 0;
+    }
+
+    .modal-content {
+        border-radius: 0px;
+    }
+    
     .form-select {
         display: block;
         width: 100%;
@@ -486,9 +812,52 @@
         appearance: none;
     }
 
-    .dx-icon-arrowleft {
-        font-size: 30px;
+    #buttons {
+        right: 0;
+        padding: 0;
+    }
+
+    #filters:hover {
         cursor: pointer;
+    }
+
+    #info {
+        display: flex;
+        color: white;
+        margin-right: 20px !important;
+        margin: auto;
+        vertical-align: middle;
+        top: 0 !important;
+        bottom: 0;
+    }
+
+    #info p {
+        margin-top: revert;
+    }
+
+    .bg-dark {
+        background-color: #e6e9ec !important;
+    }
+
+    .fa-xl {
+        font-size: 1.1em;
+    }
+
+    .badge {
+        display: table;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .dx-buttongroup-wrapper {
+        background-color: #fff;
+        width: 156px;
+        margin-right: 2px;
+        border-radius: 4px;
+    }
+
+    .dx-button-mode-outlined.dx-buttongroup-last-item.dx-button {
+        border: none !important;
     }
 
     .dx-toast-content {
@@ -500,48 +869,332 @@
         background-color: #3e9d36;
     }
 
+    #loader-container {
+        position: fixed;
+        z-index: -1;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+    }
+
 </style>
 
 <body>
+    <div id="loader-container">
+        <div class="loader" id="loader"></div>
+    </div>
     <div id="wrapper" class="page-wrapper chiller-theme toggled" style="height: 100%;">
 
-        <div id="list" class="container" style="margin-top: 20px;">
-            <div id="home-pages-container" class="row"></div>
-            <div id="pages-container" class="row"></div>
-                <div class="modal fade" id="options-modal" role="dialog" style="backdrop-filter: blur(3px);"
-                data-backdrop="static">
-                    <div class="modal-dialog modal-xl" style="margin-top: 5rem;">
+        <nav id="navbar" class="navbar navbar-dark bg-dark">
+            <i id="go-back" class="dx-icon-arrowleft" style="display: none; color: #000 !important; font-size: 30px; cursor: pointer; color: #9a9a9a !important; margin-right: 10px;"></i>
+            <h5 id="page-title"></h5>
+            <form id="search" value="" class="form-inline my-2 my-lg-0" style="width: 75%; display: flex; left: 0; right: 0; margin: auto;">
+                <input id="search" class="form-control mr-sm-2" style="width: 90%;" type="search" placeholder="Search">
+                <select value="all" class="form-select form-inline form-select-sm" style="width: 9%;" aria-label=".form-select-sm example" id="filter">
+                  <option value="all" selected>Tutte</option>
+                  <option value="1">Pagine</option>
+                  <option value="0">Home</option>
+                </select>
+            </form>
+            <div id="info" style="display: none;"><p style="margin-right: 0.4rem; color: black;">Stato: </p><p id="status"></p></div>
+            <div id="history-container" style="display: block;">
+                <i id="prev-page" class="fa-solid fa-rotate-left fa-xl" style="display: none; margin-right: 20px; color: #556068;"></i> 
+            </div>
+            <div id="buttons" style="display: none;"></div>
+            <div id="save-draft-button" style="display: none;"></div>
+            <div id="delete-draft-button" style="display: none;"></div>
+            <div id="publish-button" style="display: none;"></div>
+        </nav>
 
-                    <!-- Modal content-->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title" id="options-modal-title">Pagine disponibili</h4>
-                                <button id="close-modal-button" type="button" class="close" data-dismiss="modal">&times;</button>
+        <div id="sidebar" style="display: none;">
+            <div class="container" id="sidebar-default-view">
+                <div id="widgets-curtain-header" class="row sidebar-header curtain-header-shadow">
+                    <b class="sidebar-label">WIDGET</b>
+                    <i id="close-widgets-curtain" class="fa-solid fa-angle-down sidebar-icon"></i>
+                    <i id="open-widgets-curtain" class="fa-solid fa-angle-right sidebar-icon" style="display:none;"></i>
+                </div>
+                <div id="widgets-curtain" class="draggable-widgets-list">
+                    <div class="row" style="margin: 0;">
+                        <div id="draggable-text" class="widget-wrapper" draggable="true" value="0">
+                            <div style="text-align: center; margin-top: 16px; padding: 10px;">
+                                <i class="fa-solid fa-align-justify fa-xl widget-thumbnail"></i>
+                                <p style="margin-top: 12px;">Testo</p>
                             </div>
-                            <div class="modal-body">
-                                <div style="padding-left: 20px;">
-                                    <div id="page-options" class="row"></div>
-                                </div>
+                        </div>
+                        <div class="widget-wrapper" draggable="true" value="1">
+                            <div style="text-align: center; margin-top: 16px; padding: 10px;">
+                                <i class="fa-solid fa-panorama fa-xl widget-thumbnail"></i>
+                                <p style="margin-top: 12px;">Galleria</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin: 0;">
+                        <div class="widget-wrapper" draggable="true" value="2">
+                            <div style="text-align: center; margin-top: 16px; padding: 10px;">
+                                <i class="fa-solid fa-video fa-xl widget-thumbnail"></i>
+                                <p style="margin-top: 12px;">Video</p>
+                            </div>
+                        </div>
+                        <div class="widget-wrapper" draggable="true" value="3">
+                            <div style="text-align: center; margin-top: 16px; padding: 10px;">
+                                <i class="fa-solid fa-file-pdf fa-xl widget-thumbnail"></i>
+                                <p style="margin-top: 12px;">Pdf</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin: 0;">
+                        <div class="widget-wrapper" draggable="true" value="4">
+                            <div style="text-align: center; margin-top: 16px; padding: 10px;">
+                                <i class="fa-solid fa-road fa-xl widget-thumbnail"></i>
+                                <p style="margin-top: 12px;">Tour</p>
+                            </div>
+                        </div>
+                        <div class="widget-wrapper" draggable="true" value="5">
+                            <div style="text-align: center; margin-top: 16px; padding: 10px;">
+                                <i class="fa-solid fa-map fa-xl widget-thumbnail"></i>
+                                <p style="margin-top: 12px;">Map</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin: 0;">
+                        <div class="widget-wrapper" draggable="true" value="6">
+                            <div style="text-align: center; margin-top: 16px; padding: 10px;">
+                                <i class="fa-solid fa-paste fa-xl widget-thumbnail"></i>
+                                <p style="margin-top: 12px;">Pagina</p>
+                            </div>
+                        </div>
+                        <div class="widget-wrapper" draggable="true" value="101">
+                            <div style="text-align: center; margin-top: 16px; padding: 10px;">
+                                <i class="fa-solid fa-left-right fa-xl widget-thumbnail"></i>
+                                <p style="margin-top: 12px;">Galleria orizzontale</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin: 0;">
+                        <div class="widget-wrapper" draggable="true" value="102">
+                            <div style="text-align: center; margin-top: 16px; padding: 10px;">
+                                <i class="fa-solid fa-border-all fa-xl widget-thumbnail"></i>
+                                <p style="margin-top: 12px;">Galleria griglia</p>
                             </div>
                         </div>
                     </div>
                 </div>
+                <span style="margin-top: 20px; display: block;"></span>
+                <div id="metadata-curtain-header" class="row sidebar-header curtain-header-shadow">
+                    <b class="sidebar-label">METADATA</b>
+                    <i id="close-metadata-curtain" class="fa-solid fa-angle-down sidebar-icon" style="display:none;"></i>
+                    <i id="open-metadata-curtain" class="fa-solid fa-angle-right sidebar-icon"></i>
+                </div>
+                <div id="metadata" style="height: 0px; overflow: hidden;"></div>
+            </div>
+            <div id="sidebar-edit-view" style="max-width: 100%; display:none;">
+                <ul class="nav nav-pills mb-3" id="pills-tab" style="justify-content: space-around;" role="tablist">
+                    <li class="nav-item">
+                        <i id="widgets-list-button" class="fa-solid fa-grip fa-xl" style="color: #67646a; vertical-align: bottom; font-size: 20px;"></i>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" id="pills-content-tab" data-toggle="pill" href="#pills-content" role="tab" aria-controls="pills-content" aria-selected="true">CONTENUTO</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-advanced-tab" data-toggle="pill" href="#pills-advanced" role="tab" aria-controls="pills-advanced" aria-selected="false">AVANAZATO</a>
+                    </li>
+                </ul>
+                
+                <div class="tab-content" id="pills-tabContent">
+                  <div class="tab-pane fade show active" id="pills-content" role="tabpanel" aria-labelledby="pills-content-tab">
+                        <div id="content-curtain-header" class="row sidebar-header curtain-header-shadow">
+                            <b class="sidebar-label">CONTENUTO</b>
+                            <i id="close-content-curtain" class="fa-solid fa-angle-down sidebar-icon"></i>
+                            <i id="open-content-curtain" class="fa-solid fa-angle-right sidebar-icon" style="display:none;"></i>
+                        </div>
+                        <div id="content-curtain">
+                            <div class="row" id="0" style="display: none;"></div>
+
+                            <div id="1" style="display: none;">
+                                <div id="gallery-source"></div>
+                                <span style="margin-top: 12px; display: block;"></span>
+                                <div id="gallery-source-form"></div>
+                                <span style="margin-top: 22px; display: block;"></span>
+                                <div id="gallery-content"></div>
+                            </div>
+
+                            <div id="2" style="display: none;">
+                                <div id="video-source"></div>
+                                <span style="margin-top: 22px; display: block;"></span>
+                                <div id="video-content"></div>
+                            </div>
+
+                            <div class="row" id="3" style="display: none;">
+                                <div id="pdf-source"></div>
+                            </div>
+
+                            <div id="4" style="display: none;">
+                                <div id="showcase-source"></div>
+                                <span style="margin-top: 22px; display: block;"></span>
+                                <div id="showcase-content"></div>
+                            </div>
+
+                            <div id="5" style="display: none;">
+                                <div id="map-content"></div>
+                            </div>
+
+                            <div class="row" id="6" style="display: none;">
+                                <div id="webpage-source"></div>
+                            </div>
+
+                            <div class="row" id="101" style="display: none;">
+                                <div id="horizontalScrollGallery-source"></div>
+                                <span style="margin-top: 12px; display: block;"></span>
+                                <div id="horizontal-gallery-source-form"></div>
+                            </div>
+
+                            <div class="row" id="102" style="display: none;">
+                                <div id="gridGallery-source"></div>
+                                <span style="margin-top: 12px; display: block;"></span>
+                                <div id="grid-gallery-source-form"></div>
+                            </div>  
+                            <span style="margin-top: 20px; display: block;"></span>
+                        </div>
+                        <span style="margin-top: 20px; display: block;"></span>
+                        <div id="text-curtain-header" class="row sidebar-header curtain-header-shadow">
+                            <b class="sidebar-label">TESTO</b>
+                            <i id="close-text-curtain" class="fa-solid fa-angle-down sidebar-icon" style="display:none;"></i>
+                            <i id="open-text-curtain" class="fa-solid fa-angle-right sidebar-icon"></i>
+                        </div>
+                        <div id="text-curtain" style="height: 0px; overflow: hidden;">
+                            <div class="row">
+                                <div id="text-editor-container-12" style="width: 100%;">
+                                </div>
+                            </div>
+                            <span style="margin-top: 20px; display: block;"></span>
+                            <div id="text"></div>
+                        </div>
+                  </div>
+
+                  <div class="tab-pane fade" id="pills-advanced" role="tabpanel" aria-labelledby="pills-advanced-tab">
+                        <div id="style-curtain-header" class="row sidebar-header curtain-header-shadow">
+                            <b class="sidebar-label">STILE</b>
+                            <i id="close-style-curtain" class="fa-solid fa-angle-down sidebar-icon"></i>
+                            <i id="open-style-curtain" class="fa-solid fa-angle-right sidebar-icon" style="display:none;"></i>
+                        </div>
+                        <div id="style-curtain">
+                            <div id="dimensions"></div>
+                            <span style="margin-top: 20px; display: block;"></span>
+                            <div id="margin-total"></div>
+                            <p style="color: #333; font-size: 14px; font-family: 'Helvetica Neue','Segoe UI', helvetica,verdana, sans-serif">Margin:</p>
+                            <div id="margin"></div>
+                            <span style="margin-top: 20px; display: block;"></span>
+                            <p style="color: #333; font-size: 14px; font-family: 'Helvetica Neue','Segoe UI', helvetica,verdana, sans-serif">Padding:</p>
+                            <div id="padding"></div>
+                            <span style="margin-top: 20px; display: block;"></span>
+                            <div id="more"></div>
+                            <span style="margin-top: 20px; display: block;"></span>
+                            <div id="font"></div>
+                            <span style="margin-top: 20px; display: block;"></span>
+                            <label for="">Borders:</label><br />
+                            <div id="border-selection"></div>
+                            <span style="margin-top: 20px; display: block;"></span>
+                            <div id="border-properties"></div>
+                        </div>
+                        <span style="margin-top: 20px; display: block;"></span>
+                        <div id="mobile-style-curtain-header" class="row sidebar-header curtain-header-shadow">
+                            <b class="sidebar-label">STILE MOBILE</b>
+                            <i id="close-mobile-style-curtain" class="fa-solid fa-angle-down sidebar-icon" style="display:none;"></i>
+                            <i id="open-mobile-style-curtain" class="fa-solid fa-angle-right sidebar-icon"></i>
+                        </div>
+                        <div id="mobile-style-curtain" style="height: 0px; overflow: hidden;">
+                            <div id="mobile-dimensions"></div>
+                            <span style="margin-top: 20px; display: block;"></span>
+                            <div id="mobile-margin-total"></div>
+                            <p style="color: #333; font-size: 14px; font-family: 'Helvetica Neue','Segoe UI', helvetica,verdana, sans-serif">Margin:</p>
+                            <div id="mobile-margin"></div>
+                            <span style="margin-top: 20px; display: block;"></span>
+                            <p style="color: #333; font-size: 14px; font-family: 'Helvetica Neue','Segoe UI', helvetica,verdana, sans-serif">Padding:</p>
+                            <div id="mobile-padding"></div>
+                            <span style="margin-top: 20px; display: block;"></span>
+                            <div id="mobile-more"></div>
+                            <span style="margin-top: 20px; display: block;"></span>
+                            <div id="mobile-font"></div>
+                            <span style="margin-top: 20px; display: block;"></span>
+                            <label for="">Borders:</label><br />
+                            <div id="mobile-border-selection"></div>
+                            <span style="margin-top: 20px; display: block;"></span>
+                            <div id="mobile-border-properties"></div>
+                        </div>
+                        <span style="margin-top: 20px; display: block;"></span>
+                        <div id="events-curtain-header" class="row sidebar-header curtain-header-shadow">
+                            <b class="sidebar-label">EVENTI</b>
+                            <i id="close-events-curtain" class="fa-solid fa-angle-down sidebar-icon" style="display:none;"></i>
+                            <i id="open-events-curtain" class="fa-solid fa-angle-right sidebar-icon"></i>
+                        </div>
+                        <div id="events-curtain" style="height: 0px; overflow: hidden;">
+                            <div id="events-checkbox"></div>
+                            <span style="margin-top: 20px; display: block;"></span>
+                            <div id="ca-type"></div>
+                            <span style="margin-top: 20px; display: block;"></span>
+                            <div id="ca-0"></div>
+                            <div id="ca-1"></div>
+                            <div id="ca-2"></div>
+                            <div id="ca-4"></div>
+                            <div id="ca-5"></div>
+                            <div id="ca-6"></div>
+                        </div>
+                  </div>
+                </div>
+                <div class="sidebar-footer">
+                    <div id="delete-widget-btn"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="list" class="container" style="margin-top: 80px;">
+            <div id="home-pages-container" class="row" style="margin: 0;"></div>
+            <div id="pages-container" class="row" style="margin: 0;"></div>
+            <div id="searched" class="row" style="margin: 0;"></div>
+            <div class="modal fade" id="options-modal" role="dialog" style="backdrop-filter: blur(3px);"
+                 data-backdrop="static">
+                <div class="modal-dialog modal-xl" style="margin-top: 5rem;">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="options-modal-title">Pagine disponibili</h4>
+                            <button id="close-modal-button" type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div style="padding-left: 20px;">
+                                <div id="page-options" class="row"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="presets-container" class="container" style="display: none;">
+                <div class="row presets-label">
+                    <p>SCEGLI IL TUO PRESET</p>
+                </div>
+                <div class="row presets">
+                    <div id="two-column-preset" class="preset">
+                        <img src="assets/images/presets/two-columns.png" alt="">
+                    </div>
+                    <div id="three-column-preset" class="preset">
+                        <img src="assets/images/presets/three-columns.png" alt="">
+                    </div>
+                    <div id="four-column-preset" class="preset">
+                        <img src="assets/images/presets/four-columns.png" alt="">
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <main class="page-content" id="main" style="display: none;">
             <div class="spinner-container" style="display: block; height: 100%; width: 100%;">
                 <div class="loadpanel"></div>
             </div>
-            <div id="page-toolbar" class="row" style="max-width: 80%;">
-                <i id="go-back" class="dx-icon-arrowleft"></i>
-                <div class="page-options">
-                    <div id="history-container" style="display: block; margin-right: 60px">
-                        <i id="prev-page" class="fa-solid fa-rotate-left fa-xl" style="display: none; margin-right: 20px;"></i>
-                    </div>
-                    <div id="structure-button" style="display: none; margin-left: 20px;">
-                        <i id="structure-icon" class="fa-solid fa-pen-to-square fa-xl"></i>
-                    </div>
-                </div>
+            <div id="data-spinner-container" style="display: block; height: 100%; width: 100%;">
+                <div class="loaddata"></div>
             </div>
             <div class="demo-container" id="demo-container" style="display: none;">
                 <div id="page" class="page">
@@ -549,164 +1202,14 @@
                     </div>
                 </div>
             </div>
-            <div id="save-page"></div>
-            <div id="publish-page"></div>
         </main>
-
-
-        <div class="modal fade" id="edit-modal" role="dialog" style="backdrop-filter: blur(3px); display: none;"
-            data-backdrop="static">
-            <div class="modal-dialog modal-xl" style="margin-top: 5rem;">
-
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="modify-modal-title">Modifica widget</h4>
-                        <button id="close-modal-button" type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-
-                        <div class="container">
-                            <h5 style="font-weight: 700;">Impostazioni</h5>
-                        </div>
-
-                        <div id="settings-tab" class="container">
-                            <ul class="nav nav-tabs">
-                                <a class="nav-item active nav-link" href="#metadata-pane" data-toggle="tab">Metadata</a>
-                                <a class="nav-item nav-link" href="#property-pane" data-toggle="tab">Proprietà</a>
-                                <a class="nav-item nav-link" href="#content-pane" data-toggle="tab">Contenuto</a>
-                                <a class="nav-item nav-link" href="#text-pane" data-toggle="tab">Testo</a>
-                                <a class="nav-item nav-link" href="#event-pane" data-toggle="tab">Eventi</a>
-                                <a class="nav-item nav-link" href="#style-pane" data-toggle="tab">Stile</a>
-                                <a class="nav-item nav-link" href="#mobile-style-pane" data-toggle="tab">Stile Mobile</a>
-                            </ul>
-                            <div class="tab-content" style="padding: 2%;">
-                                <div class="tab-pane active" id="metadata-pane">
-                                    <div id="metadata"></div>
-                                </div>
-
-                                <div class="tab-pane" id="property-pane">
-                                    <div id="properties"></div>
-                                </div>
-
-                                <div class="tab-pane" id="content-pane">
-
-                                    <div class="row" id="0" style="display: none;">
-                                        <label for="0-text">Testo:</label>
-                                    </div>
-
-                                    <div id="1" style="display: none;">
-                                        <div id="gallery-source"></div>
-                                        <span style="margin-top: 22px; display: block;"></span>
-                                        <div id="gallery-content"></div>
-                                    </div>
-
-                                    <div id="2" style="display: none;">
-                                        <div id="video-source"></div>
-                                        <span style="margin-top: 22px; display: block;"></span>
-                                        <div id="video-content"></div>
-                                    </div>
-
-                                    <div class="row" id="3" style="display: none;">
-                                        <div id="pdf-source"></div>
-                                    </div>
-
-                                    <div id="4" style="display: none;">
-                                        <div id="showcase-source"></div>
-                                        <span style="margin-top: 22px; display: block;"></span>
-                                        <div id="showcase-content"></div>
-                                    </div>
-
-                                    <div id="5" style="display: none;">
-                                        <div id="map-content"></div>
-                                    </div>
-
-                                    <div class="row" id="6" style="display: none;">
-                                        <div id="webpage-source"></div>
-                                    </div>
-
-                                    <div class="row" id="101" style="display: none;">
-                                        <div id="horizontalScrollGallery-source"></div>
-                                    </div>
-
-                                    <div class="row" id="102" style="display: none;">
-                                        <div id="gridGallery-source"></div>
-                                    </div>
-
-                                </div>
-
-                                <div class="tab-pane" id="event-pane">
-                                    <div id="events-checkbox"></div>
-                                    <span style="margin-top: 20px; display: block;"></span>
-                                    <div id="ca-type"></div>
-                                    <span style="margin-top: 20px; display: block;"></span>
-                                    <div id="ca-0"></div>
-                                    <div id="ca-1"></div>
-                                    <div id="ca-2"></div>
-                                    <div id="ca-4"></div>
-                                    <div id="ca-5"></div>
-                                    <div id="ca-6"></div>
-                                </div>
-
-                                <div class="tab-pane" id="text-pane">
-                                    <div class="row">
-                                        <div class="col-md-12" id="text-editor-container-12">
-                                            <label for="text">Testo:</label>
-                                        </div>
-
-                                    </div>
-                                    <span style="margin-top: 20px; display: block;"></span>
-                                    <div id="text"></div>
-                                </div>
-
-                                <div class="tab-pane" id="style-pane">
-                                    <div id="dimensions"></div>
-                                    <span style="margin-top: 20px; display: block;"></span>
-                                    <div id="margin"></div>
-                                    <span style="margin-top: 20px; display: block;"></span>
-                                    <div id="padding"></div>
-                                    <span style="margin-top: 20px; display: block;"></span>
-                                    <div id="more"></div>
-                                    <span style="margin-top: 20px; display: block;"></span>
-                                    <div id="font"></div>
-                                    <span style="margin-top: 20px; display: block;"></span>
-                                    <label for="">Bordi</label><br />
-                                    <div id="border-selection"></div>
-                                    <span style="margin-top: 20px; display: block;"></span>
-                                    <div id="border-properties"></div>
-                                </div>
-
-                                <div class="tab-pane" id="mobile-style-pane">
-                                    <div id="mobile-dimensions"></div>
-                                    <span style="margin-top: 20px; display: block;"></span>
-                                    <div id="mobile-margin"></div>
-                                    <span style="margin-top: 20px; display: block;"></span>
-                                    <div id="mobile-padding"></div>
-                                    <span style="margin-top: 20px; display: block;"></span>
-                                    <div id="mobile-more"></div>
-                                    <span style="margin-top: 20px; display: block;"></span>
-                                    <div id="mobile-font"></div>
-                                    <span style="margin-top: 20px; display: block;"></span>
-                                    <label for="">Bordi</label><br />
-                                    <div id="mobile-border-selection"></div>
-                                    <span style="margin-top: 20px; display: block;"></span>
-                                    <div id="mobile-border-properties"></div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" id="delete" class="btn btn-danger" data-dismiss="modal">Elimina Widget</button>
-                            <button id="save-widget-changes-button" type="button" class="btn btn-success" data-dismiss="modal">Salva</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    </div>
 
 </body>
 
 </html>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCowLFqzzxbC6fbqqoWeJb97MeAi3Hvqqo" async></script>
@@ -714,40 +1217,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
 <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.12.313/build/pdf.min.js"></script>
-<script type="module" src="~/js/requests-manager.js" asp-append-version="true"></script>
 <script src="https://cdn3.devexpress.com/jslib/21.2.4/js/dx.all.js"></script>
+<script type="module" src="~/js/index.js" defer></script>
 <script>
-
-    $('#edit-modal').on('hidden.bs.modal', function () {
-        $(this).find(":input").val('');
-    })
-
-    $('body').on('hidden.bs.modal', '.modal', function () {
-        $(this).removeData('bs.modal');
-      });
-
-    $(".sidebar-dropdown > a").click(function () {
-            $(".sidebar-submenu").slideUp(200);
-        if (
-        $(this)
-        .parent()
-        .hasClass("active")
-        ) {
-            $(".sidebar-dropdown").removeClass("active");
-        $(this)
-        .parent()
-        .removeClass("active");
-        } else {
-            $(".sidebar-dropdown").removeClass("active");
-        $(this)
-        .next(".sidebar-submenu")
-        .slideDown(200);
-        $(this)
-        .parent()
-        .addClass("active");
-        }
-    });
 
 </script>

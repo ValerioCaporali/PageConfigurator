@@ -201,6 +201,10 @@ export default class Widget {
         hover: null
 
     }
+    
+    getEmptyWidget() {
+        return this.widget;
+    }
 
     widgetBinding() {
 
@@ -214,20 +218,20 @@ export default class Widget {
 
         this.style.height = this.formData.styleTab?.height;
         this.style.width = this.formData.styleTab.width;
-        this.margin.total = this.formData.styleTab.marginTotal;
-        this.margin.top = this.formData.styleTab.marginTop;
-        this.margin.right = this.formData.styleTab.marginRight;
-        this.margin.bottom = this.formData.styleTab.marginBottom;
-        this.margin.left = this.formData.styleTab.marginLeft;
+        this.margin.total = this.formData.margin.total;
+        this.margin.top = this.formData.margin.top;
+        this.margin.right = this.formData.margin.right;
+        this.margin.bottom = this.formData.margin.bottom;
+        this.margin.left = this.formData.margin.left;
         this.style.background = this.formData.styleTab.background;
         this.style.textColor = this.formData.styleTab.textColor;
         this.style.fontFamily = this.formData.styleTab.fontFamily;
         this.style.fontSize = this.formData.styleTab.fontSize;
-        this.padding.total = this.formData.styleTab.paddingTotal;
-        this.padding.top = this.formData.styleTab.paddingTop;
-        this.padding.right = this.formData.styleTab.paddingRight;
-        this.padding.bottom = this.formData.styleTab.paddingBottom;
-        this.padding.left = this.formData.styleTab.paddingLeft;
+        this.padding.total = this.formData.padding.total;
+        this.padding.top = this.formData.padding.top;
+        this.padding.right = this.formData.padding.right;
+        this.padding.bottom = this.formData.padding.bottom;
+        this.padding.left = this.formData.padding.left;
 
         if (this.borders) {
             for (let i = 0; i < this.borders.length; i++) {
@@ -331,20 +335,20 @@ export default class Widget {
 
         this.mobileStyle.height = this.formData.mobileStyleTab.height;
         this.mobileStyle.width = this.formData.mobileStyleTab.width;
-        this.mobileMargin.total = this.formData.mobileStyleTab.marginTotal;
-        this.mobileMargin.top = this.formData.mobileStyleTab.marginTop;
-        this.mobileMargin.right = this.formData.mobileStyleTab.marginRight;
-        this.mobileMargin.bottom = this.formData.mobileStyleTab.marginBottom;
-        this.mobileMargin.left = this.formData.mobileStyleTab.marginLeft;
+        this.mobileMargin.total = this.formData.mobileMargin.total;
+        this.mobileMargin.top = this.formData.mobileMargin.top;
+        this.mobileMargin.right = this.formData.mobileMargin.right;
+        this.mobileMargin.bottom = this.formData.mobileMargin.bottom;
+        this.mobileMargin.left = this.formData.mobileMargin.left;
         this.mobileStyle.background = this.formData.mobileStyleTab.background;
         this.mobileStyle.textColor = this.formData.mobileStyleTab.textColor;
         this.mobileStyle.fontFamily = this.formData.mobileStyleTab.fontFamily;
         this.mobileStyle.fontSize = this.formData.mobileStyleTab.fontSize;
-        this.mobilePadding.total = this.formData.mobileStyleTab.paddingTotal;
-        this.mobilePadding.top = this.formData.mobileStyleTab.paddingTop;
-        this.mobilePadding.right = this.formData.mobileStyleTab.paddingRight;
-        this.mobilePadding.bottom = this.formData.mobileStyleTab.paddingBottom;
-        this.mobilePadding.left = this.formData.mobileStyleTab.paddingLeft;
+        this.mobilePadding.total = this.formData.mobilePadding.total;
+        this.mobilePadding.top = this.formData.mobilePadding.top;
+        this.mobilePadding.right = this.formData.mobilePadding.right;
+        this.mobilePadding.bottom = this.formData.mobilePadding.bottom;
+        this.mobilePadding.left = this.formData.mobilePadding.left;
 
         if (this.mobileBorders) {
             for (let i = 0; i < this.mobileBorders.length; i++) {
@@ -381,7 +385,7 @@ export default class Widget {
         
         this.widget.hover = this.formData.eventsTab.Hover;
 
-        this.text.value = tinymce.get(this.text_id).getContent({format : 'raw'}).toString() != "<p><br data-mce-bogus=\"1\"></p>" ? tinymce.get(this.text_id).getContent({format : 'raw'}).toString() : null;
+        this.text.value = tinymce.get(this.text_id)?.getContent({format : 'raw'})?.toString() != "<p><br data-mce-bogus=\"1\"></p>" ? tinymce.get(this.text_id).getContent({format : 'raw'}).toString() : null;
         this.position.type = this.formData.textTab.positionType;
         this.position.top = this.formData.textTab.top ? this.formData.textTab.top : null;
         this.position.right = this.formData.textTab.right ? this.formData.textTab.right : null;
@@ -393,9 +397,14 @@ export default class Widget {
                 this.formData.htmlConfiguration.text = tinymce.get(this.text_content_id).getContent({format : 'raw'}).toString();
                 this.widget.content = this.formData.htmlConfiguration;
                 break;
-            case 1: 
-                let gallerySource = this.formData.galleryConfiguration.source.toString().split(",");
-                this.formData.galleryConfiguration.source = gallerySource;
+            case 1:
+                let source = [];
+                this.formData.galleryConfiguration.source = JSON.parse(JSON.stringify(this.formData.galleryConfiguration.source));
+                this.formData.galleryConfiguration.source.forEach(currSource => {
+                    source.push(currSource.url)
+                });
+                this.formData.galleryConfiguration.source = source;
+                this.formData.galleryConfiguration.slideShowDelay = parseInt(this.formData.galleryConfiguration.slideShowDelay);
                 this.widget.content = this.formData.galleryConfiguration;
                 break;
             case 2:
@@ -420,9 +429,26 @@ export default class Widget {
                 this.widget.content = this.formData.webPageConfiguration;
                 break;
             case 101:
-                let horizontalScrollGallerySource = this.formData.horizontalScrollGalleryConfiguration.source.toString().split(/\r?\n/);
-                this.formData.horizontalScrollGalleryConfiguration.source = horizontalScrollGallerySource;
+                let horizontalGallerySource = [];
+                this.formData.horizontalScrollGalleryConfiguration.source = JSON.parse(JSON.stringify(this.formData.horizontalScrollGalleryConfiguration.source));
+                this.formData.horizontalScrollGalleryConfiguration.source.forEach(currSource => {
+                    horizontalGallerySource.push(currSource.url)
+                });
+                this.formData.horizontalScrollGalleryConfiguration.source = horizontalGallerySource;
                 this.widget.content = this.formData.horizontalScrollGalleryConfiguration;
+
+                // let horizontalScrollGallerySource = this.formData.horizontalScrollGalleryConfiguration.source.toString().split(/\r?\n/);
+                // this.formData.horizontalScrollGalleryConfiguration.source = horizontalScrollGallerySource;
+                // this.widget.content = this.formData.horizontalScrollGalleryConfiguration;
+                break;
+            case 102:
+                let gridGallerySource = [];
+                this.formData.gridGalleryConfiguration.source = JSON.parse(JSON.stringify(this.formData.gridGalleryConfiguration.source));
+                this.formData.gridGalleryConfiguration.source.forEach(currSource => {
+                    gridGallerySource.push(currSource.url)
+                });
+                this.formData.gridGalleryConfiguration.source = gridGallerySource;
+                this.widget.content = this.formData.gridGalleryConfiguration;
                 break;
             default:
                 break;

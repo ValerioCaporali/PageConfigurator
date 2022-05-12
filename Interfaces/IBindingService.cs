@@ -8,7 +8,7 @@ namespace API.Interfaces
 {
     public interface IBindingService
     {
-        Task BindPagesFromJsonAsync(); // to bind page from json to table structure
+        Task BindPagesFromJsonAsync();
         
     }
 }

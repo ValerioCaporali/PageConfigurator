@@ -5,7 +5,9 @@ namespace Model.Content.Language
         Default = 0,
         It = 1,
         En = 2,
-        De = 3
+        Es = 3,
+        Fr = 4,
+        De = 5
 
     }    
 }

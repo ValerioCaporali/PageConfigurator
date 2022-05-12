@@ -1,29 +1,86 @@
 import ModifyManager from './modify-manager.js'
 import HistoryManager from './history-manager.js';
 import SaveManager from './save-manager.js';
+import FormData from './formData.js';
+import Widget from "./widget.js";
+import DefaultContents from "./defaultContents.js";
 export default class RenderManager {
 
-    homePages;
     pages;
-    selectedHomePage;
     selectedPage;
     generatedId = [];
-    contentTextareaId = [];
-    showingStructure = false;
-    filterPageParameters;
+    metadataChanged = false;
     historyManager = new HistoryManager();
+    isDraft = false;
+    typingTimer;
+    doneTypingInterval = 800;
+    saveInDraftBtn;
+    deleteDraftBtn;
+    publishPageBtn;
+    responsiveBox;
+    twoColEL = false;
+    threeColEL = false;
+    fourColEL = false;
 
     constructor(pages) {
         this.pages = JSON.parse(JSON.stringify(pages));
-        document.getElementById('structure-icon').addEventListener("click", () => {
-            this.changeMode();
-        })
-        document.getElementById('go-back').addEventListener("click", () => {
-            this.showPageList();
-        })
+        this.initInteractives(); // init interactives html elements
     }
 
-    populatePageList = () => {
+    initEventListener() {
+        let that = this;
+        let addIcon = document.getElementById('add-icon');
+        
+        addIcon.addEventListener('click', () => {
+            this.showPresets();
+            if (!this.twoColEL) {
+                this.twoColEL = true;
+                document.getElementById('two-column-preset').addEventListener('click', () => {that.applyPreset(2); })
+            }
+            if (!this.threeColEL) {
+                this.threeColEL = true;
+                document.getElementById('three-column-preset').addEventListener('click', () => {that.applyPreset(3) })
+            }
+            if (!this.fourColEL) {
+                this.fourColEL = true;
+                document.getElementById('four-column-preset').addEventListener('click', () => { that.applyPreset(4) })
+            }
+        });
+
+        document.getElementById('go-back').addEventListener("click", () => {
+            this.showPageList();
+        });
+        let draggableWidgets = document.querySelectorAll('.widget-wrapper');
+        draggableWidgets.forEach(draggableWidget => {
+            draggableWidget.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData("text/plain", draggableWidget.getAttribute('value'));
+            })
+        });
+    }
+
+    initInteractives() {
+        this.initSidebarCurtains();
+        document.getElementById("widgets-list-button").addEventListener("click", () => {
+            this.closeModifyPanel();
+        });
+        document.getElementById('search').addEventListener('keyup', (event) => {
+            document.getElementById('search').value = event.target.value;
+            clearTimeout(this.typingTimer);
+            this.typingTimer = setTimeout(() => {
+                this.populateBySearch(event.target.value, document.getElementById('filter').value);
+            }, this.doneTypingInterval);
+        });
+    }
+
+
+
+    filters = document.getElementById('filter').addEventListener('change', (event) => {
+        let filter = event.target.value;
+        this.populateBySearch(document.getElementById('search').value, filter)
+    
+    });
+
+    populatePageList() {
 
         let homeContainer = document.getElementById("home-pages-container");
         let pageContainer = document.getElementById("pages-container");
@@ -31,6 +88,7 @@ export default class RenderManager {
             let pageCard = document.createElement('div');
             pageCard.classList.add('page-card');
             let pageImage = document.createElement("img");
+            pageImage.draggable = false;
             pageImage.classList.add('card-img-top');
             pageImage.src = "https://img.icons8.com/glyph-neue/452/paper.png";
             let pageTitle = document.createElement("h6");
@@ -38,6 +96,12 @@ export default class RenderManager {
             pageTitle.innerHTML = page.description;
             pageTitle.style.textAlign = "center";
             pageCard.append(pageImage, pageTitle);
+            if (page.drafts) {
+                let badge = document.createElement('span');
+                badge.className = "badge badge-warning";
+                badge.innerHTML = "Bozza";
+                pageCard.append(badge);
+            }
             $(pageCard).attr("data-toggle", "modal");
             $(pageCard).attr("data-target", "#options-modal");
             if (page.type == 0)
@@ -51,15 +115,62 @@ export default class RenderManager {
 
     }
 
-    showPageList()
-    {
-        if (!this.historyManager.isHistoryEmpty()) {
-            let message = "Tutte le modifiche andranno perse";
-            if(confirm(message)) {
-                document.getElementById('list').style.display = "block";
-                document.getElementById('main').style.display = "none";
-                window.location.reload();
+    populateBySearch(val, filter) {
+        val = val ? val : "";
+        document.getElementById("home-pages-container").style.display = "none";
+        document.getElementById("pages-container").style.display = "none";
+        let search = document.getElementById('searched');
+        search.innerHTML = "";
+        let searched;
+        searched = this.pages.filter((page) => {
+            if (page.description.toLowerCase().includes(val.toLowerCase()))
+                if (filter == "all")
+                    return page;
+                else if (page.type == filter)
+                    return page;
+        });
+        searched.forEach(page => {
+            let pageCard = document.createElement('div');
+            pageCard.classList.add('page-card');
+            let pageImage = document.createElement("img");
+            pageImage.draggable = false;
+            pageImage.classList.add('card-img-top');
+            pageImage.src = "https://img.icons8.com/glyph-neue/452/paper.png";
+            let pageTitle = document.createElement("h6");
+            pageTitle.classList.add('card-title');
+            pageTitle.innerHTML = page.description;
+            pageTitle.style.textAlign = "center";
+            pageCard.append(pageImage, pageTitle);
+            if (page.drafts) {
+                let badge = document.createElement('span');
+                badge.className = "badge badge-warning";
+                badge.innerHTML = "Bozza";
+                pageCard.append(badge);
             }
+            $(pageCard).attr("data-toggle", "modal");
+            $(pageCard).attr("data-target", "#options-modal");
+            search.append(pageCard)
+            pageCard.addEventListener('click', () => {
+                this.showOptions(page);
+            })
+        })
+    }
+
+    showPageList() {
+        localStorage.clear();
+        if (!this.historyManager.isHistoryEmpty()) {
+            Swal.fire({
+                title: 'Sicuro di voler uscire ?',
+                icon: 'question',
+                showDenyButton: true,
+                showCancelButton: false,
+                confirmButtonText: 'Si',
+                denyButtonText: `No`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.reload();
+                }
+            });
         }
         else {
             document.getElementById('list').style.display = "block";
@@ -78,6 +189,7 @@ export default class RenderManager {
                 let pageImage = document.createElement("img");
                 pageImage.classList.add('card-img-top');
                 pageImage.src = "https://img.icons8.com/glyph-neue/452/paper.png";
+                pageImage.draggable = false;
                 let pageTitle = document.createElement("h6");
                 pageTitle.classList.add('card-title');
                 pageTitle.innerHTML = draft.language ? draft.language + ' (Draft)' : 'Default (Draft)';
@@ -86,11 +198,16 @@ export default class RenderManager {
                 pageCard.style.backgroundColor = "white"
                 pageOptionsContainer.appendChild(pageCard);
                 pageCard.addEventListener("click", () => {
+                    document.getElementById("status").innerHTML = "bozza";
+                    document.getElementById("status").style.color = "#e03e0d";
                     $(pageCard).attr("data-toggle", "modal");
                     $(pageCard).attr("data-target", "#options-modal");
                     document.getElementById('list').style.display = "none";
                     document.getElementById('main').style.display = "block";
+                    this.isDraft = true;
                     this.openPageStream(page, draft);
+                    this.deleteDraftBtn.option("disabled", false);
+                    this.publishPageBtn.option("disabled", false);
                 })
             });
         }
@@ -101,6 +218,7 @@ export default class RenderManager {
                 let pageImage = document.createElement("img");
                 pageImage.classList.add('card-img-top');
                 pageImage.src = "https://img.icons8.com/glyph-neue/452/paper.png";
+                pageImage.draggable = false;
                 let pageTitle = document.createElement("h6");
                 pageTitle.classList.add('card-title');
                 pageTitle.innerHTML = content.language ? content.language : 'Default';
@@ -109,14 +227,192 @@ export default class RenderManager {
                 pageCard.style.backgroundColor = "white"
                 pageOptionsContainer.appendChild(pageCard);
                 pageCard.addEventListener("click", () => {
+                    this.isDraft = false;
+                    document.getElementById("status").innerHTML = "pubblicato";
+                    document.getElementById("status").style.color = "#22a93d";
                     $(pageCard).attr("data-toggle", "modal");
                     $(pageCard).attr("data-target", "#options-modal");
                     document.getElementById('list').style.display = "none";
                     document.getElementById('main').style.display = "block";
                     this.openPageStream(page, content);
+                    this.saveInDraftBtn.option("disabled", true);
+                    this.deleteDraftBtn.option("disabled", true);
+                    this.publishPageBtn.option("disabled", true);
                 })
             });
         }
+    }
+
+    initSidebarCurtains() {
+        document.getElementById("widgets-curtain-header").addEventListener('click', () => {
+            if (document.getElementById("widgets-curtain").offsetHeight == 0) {
+                document.getElementById("close-widgets-curtain").style.display = "block";
+                document.getElementById("open-widgets-curtain").style.display = "none";
+                document.getElementById("widgets-curtain").style.height = "560px";
+                document.getElementById("widgets-curtain-header").style.boxShadow = "none";
+                document.getElementById("close-metadata-curtain").style.display = "none";
+                document.getElementById("open-metadata-curtain").style.display = "block";
+                document.getElementById("metadata").style.height = "0";
+                document.getElementById("metadata").style.overflow = "hidden";
+                setTimeout(() => {
+                    document.getElementById("metadata-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 1%)";
+                }, 300)
+            } else {
+                document.getElementById("close-widgets-curtain").style.display = "none";
+                document.getElementById("open-widgets-curtain").style.display = "block";
+                document.getElementById("widgets-curtain").style.height = "0";
+                document.getElementById("widgets-curtain").style.overflow = "hidden";
+                setTimeout(() => {
+                    document.getElementById("widgets-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 3%)";
+                }, 300)
+            }
+        });
+
+        document.getElementById("metadata-curtain-header").addEventListener('click', () => {
+            if (document.getElementById("metadata").offsetHeight == 0) {
+                document.getElementById("close-metadata-curtain").style.display = "block";
+                document.getElementById("open-metadata-curtain").style.display = "none";
+                document.getElementById("metadata").style.height = "250px";
+                document.getElementById("metadata-curtain-header").style.boxShadow = "none";
+                document.getElementById("close-widgets-curtain").style.display = "none";
+                document.getElementById("open-widgets-curtain").style.display = "block";
+                document.getElementById("widgets-curtain").style.height = "0";
+                document.getElementById("widgets-curtain").style.overflow = "hidden";
+                setTimeout(() => {
+                    document.getElementById("widgets-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 3%)";
+                }, 300)
+            } else {
+                document.getElementById("close-metadata-curtain").style.display = "none";
+                document.getElementById("open-metadata-curtain").style.display = "block";
+                document.getElementById("metadata").style.height = "0";
+                document.getElementById("metadata").style.overflow = "hidden";
+                setTimeout(() => {
+                    document.getElementById("metadata-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 1%)";
+                }, 300)
+            }
+        });
+
+        document.getElementById("content-curtain-header").addEventListener('click', () => {
+            if (document.getElementById("content-curtain").offsetHeight == 0) {
+                document.getElementById("close-content-curtain").style.display = "block";
+                document.getElementById("open-content-curtain").style.display = "none";
+                document.getElementById("content-curtain").style.height = "auto";
+                document.getElementById("content-curtain-header").style.boxShadow = "none";
+                document.getElementById("close-text-curtain").style.display = "none";
+                document.getElementById("open-text-curtain").style.display = "block";
+                document.getElementById("text-curtain").style.height = "0";
+                document.getElementById("text-curtain").style.overflow = "hidden";
+                document.getElementById("text-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 3%)";
+            } else {
+                document.getElementById("close-content-curtain").style.display = "none";
+                document.getElementById("open-content-curtain").style.display = "block";
+                document.getElementById("content-curtain").style.height = "0";
+                document.getElementById("content-curtain").style.overflow = "hidden";
+                document.getElementById("content-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 3%)";
+            }
+        });
+
+        document.getElementById("text-curtain-header").addEventListener('click', () => {
+            if (document.getElementById("text-curtain").offsetHeight == 0) {
+                document.getElementById("close-text-curtain").style.display = "block";
+                document.getElementById("open-text-curtain").style.display = "none";
+                document.getElementById("text-curtain").style.height = "auto";
+                document.getElementById("text-curtain-header").style.boxShadow = "none";
+                document.getElementById("close-content-curtain").style.display = "none";
+                document.getElementById("open-content-curtain").style.display = "block";
+                document.getElementById("content-curtain").style.height = "0";
+                document.getElementById("content-curtain").style.overflow = "hidden";
+                document.getElementById("content-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 3%)";
+            } else {
+                document.getElementById("close-text-curtain").style.display = "none";
+                document.getElementById("open-text-curtain").style.display = "block";
+                document.getElementById("text-curtain").style.height = "0";
+                document.getElementById("text-curtain").style.overflow = "hidden";
+                document.getElementById("text-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 3%)";
+            }
+        });
+
+        document.getElementById("style-curtain-header").addEventListener('click', () => {
+            if (document.getElementById("style-curtain").offsetHeight == 0) {
+                document.getElementById("close-style-curtain").style.display = "block";
+                document.getElementById("open-style-curtain").style.display = "none";
+                document.getElementById("style-curtain").style.height = "auto";
+                document.getElementById("style-curtain-header").style.boxShadow = "none";
+                document.getElementById("close-events-curtain").style.display = "none";
+                document.getElementById("open-events-curtain").style.display = "block";
+                document.getElementById("events-curtain").style.height = "0";
+                document.getElementById("events-curtain").style.overflow = "hidden";
+                document.getElementById("events-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 3%)";
+                document.getElementById("close-mobile-style-curtain").style.display = "none";
+                document.getElementById("open-mobile-style-curtain").style.display = "block";
+                document.getElementById("mobile-style-curtain").style.height = "0";
+                document.getElementById("mobile-style-curtain").style.overflow = "hidden";
+                document.getElementById("mobile-style-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 3%)";
+            } else {
+                document.getElementById("close-style-curtain").style.display = "none";
+                document.getElementById("open-style-curtain").style.display = "block";
+                document.getElementById("style-curtain").style.height = "0";
+                document.getElementById("style-curtain").style.overflow = "hidden";
+                document.getElementById("style-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 3%)";
+            }
+        });
+
+        document.getElementById("events-curtain-header").addEventListener('click', () => {
+            if (document.getElementById("events-curtain").offsetHeight == 0) {
+                document.getElementById("close-events-curtain").style.display = "block";
+                document.getElementById("open-events-curtain").style.display = "none";
+                document.getElementById("events-curtain").style.height = "auto";
+                document.getElementById("events-curtain-header").style.boxShadow = "none";
+                document.getElementById("close-style-curtain").style.display = "none";
+                document.getElementById("open-style-curtain").style.display = "block";
+                document.getElementById("style-curtain").style.height = "0";
+                document.getElementById("style-curtain").style.overflow = "hidden";
+                document.getElementById("style-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 3%)";
+                document.getElementById("close-mobile-style-curtain").style.display = "none";
+                document.getElementById("open-mobile-style-curtain").style.display = "block";
+                document.getElementById("mobile-style-curtain").style.height = "0";
+                document.getElementById("mobile-style-curtain").style.overflow = "hidden";
+                document.getElementById("mobile-style-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 3%)";
+            } else {
+                document.getElementById("close-events-curtain").style.display = "none";
+                document.getElementById("open-events-curtain").style.display = "block";
+                document.getElementById("events-curtain").style.height = "0";
+                document.getElementById("events-curtain").style.overflow = "hidden";
+                document.getElementById("events-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 3%)";
+            }
+        });
+
+        document.getElementById("mobile-style-curtain-header").addEventListener('click', () => {
+            if (document.getElementById("mobile-style-curtain").offsetHeight == 0) {
+                document.getElementById("close-mobile-style-curtain").style.display = "block";
+                document.getElementById("open-mobile-style-curtain").style.display = "none";
+                document.getElementById("mobile-style-curtain").style.height = "auto";
+                document.getElementById("mobile-style-curtain-header").style.boxShadow = "none";
+                document.getElementById("close-style-curtain").style.display = "none";
+                document.getElementById("open-style-curtain").style.display = "block";
+                document.getElementById("style-curtain").style.height = "0";
+                document.getElementById("style-curtain").style.overflow = "hidden";
+                document.getElementById("style-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 3%)";
+                document.getElementById("close-events-curtain").style.display = "none";
+                document.getElementById("open-events-curtain").style.display = "block";
+                document.getElementById("events-curtain").style.height = "0";
+                document.getElementById("events-curtain").style.overflow = "hidden";
+                document.getElementById("events-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 3%)";
+            } else {
+                document.getElementById("close-mobile-style-curtain").style.display = "none";
+                document.getElementById("open-mobile-style-curtain").style.display = "block";
+                document.getElementById("mobile-style-curtain").style.height = "0";
+                document.getElementById("mobile-style-curtain").style.overflow = "hidden";
+                document.getElementById("mobile-style-curtain-header").style.boxShadow = "0px 8px 4px -2px rgb(0 0 0 / 3%)";
+            }
+        });
+    }
+
+    renderPageById(pageId) {
+        this.pages.forEach(page => {
+            if (page.id == pageId)
+                this.openPageStream(page, page.contents[0]);
+        });
     }
 
     loadPanel = $('.loadpanel').dxLoadPanel({
@@ -129,35 +425,312 @@ export default class RenderManager {
         closeOnOutsideClick: false,
       }).dxLoadPanel('instance');
 
-    openPageStream = (fullPage, contentOrDraft) => {
+    openPageStream(fullPage, contentOrDraft) {
+        document.getElementById('search').style.display = "none";
         this.loadPanel.show()
-        setTimeout(() => {            
-            if (fullPage.drafts != null)
-                this.initPublishButton(fullPage.id);
+        setTimeout(() => {
             let page = JSON.parse(JSON.stringify(fullPage));
             page.contents = contentOrDraft;
+            page.contents.visibility = page.contents.visibility || page.contents.visibility == 0 ? page.contents.visibility : page.visibility;
+            page.contents.description = page.contents.description ? page.contents.description : page.description;
+            page.contents.slug = page.contents.slug ? page.contents.slug : page.slug;
             this.showPagePreview(page);
             this.selectedPage = page;
             this.historyManager = new HistoryManager();
             this.initHistoryButton();
-            this.initSaveInDraftButton();
             this.loadPanel.hide();
         }, 400);
     }
 
-    showPagePreview = (page) => {
-        let prev_button = document.getElementById("prev-page");
+    buttons = [
+        { id: 1, name: 'Salva bozza', icon: 'box' },
+        { id: 2, name: 'Elimina bozza', icon: 'trash' },
+        { id: 3, name: 'Pubblica', icon: 'upload' },
+      ];
+
+    saveDraft = $(() => {
+        let that = this;
+        that.saveInDraftBtn = $('#save-draft-button').dxButton({
+            stylingMode: 'contained',
+            text: 'Salva bozza',
+            type: 'default',
+            disabled: true,
+            width: 120,
+            onClick() {
+                that.loadPanel.show();
+                setTimeout(() => {
+                    that.loadPanel.hide();    
+                    if (that.historyManager.isHistoryEmpty() || that.historyManager.getHistoryLenght() == 1 && that.metadataChanged == false)
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Attenzione',
+                            text: 'Non ci sono modifiche da salvare',
+                        });                    
+                    else if (that.historyManager.isHistoryEmpty() && that.metadataChanged) {
+                        let saveManager = new SaveManager();
+                        saveManager.saveInDraft(that.selectedPage, that.selectedPage);
+                        document.getElementById("status").innerHTML = "bozza";
+                        document.getElementById("status").style.color = "#e03e0d";
+                        that.isDraft = true;
+                    }
+                    else if (!that.historyManager.isHistoryEmpty() || that.metadataChanged) {
+                        let saveManager = new SaveManager();
+                        saveManager.saveInDraft(that.selectedPage, that.historyManager.getInitialPage());
+                        that.historyManager.emptyHistory();
+                        document.getElementById("prev-page").style.display = "none";
+                        document.getElementById("status").innerHTML = "bozza";
+                        document.getElementById("status").style.color = "#e03e0d";
+                        that.isDraft = true;
+                        that.saveInDraftBtn.option("disabled", true);
+                        that.deleteDraftBtn.option("disabled", false);
+                        that.publishPageBtn.option("disabled", false);
+                    }
+                  }, 400);
+            },
+        }).dxButton('instance');
+    });
+
+    deleteDraft = $(() => {
+        let that = this;
+        that.deleteDraftBtn = $('#delete-draft-button').dxButton({
+            stylingMode: 'contained',
+            text: 'Elimina bozza',
+            type: 'danger',
+            disabled: true,
+            width: 130,
+            onClick() {
+                if (that.isDraft == false) {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Attenzione',
+                        text: 'Non è possibile ingrandire oltre la larghezza della pagina',
+                    });
+                    return;
+                }
+                Swal.fire({
+                    title: 'Eliminare le bozze ?',
+                    icon: 'question',
+                    showDenyButton: true,
+                    showCancelButton: false,
+                    confirmButtonText: 'Si',
+                    denyButtonText: `No`,
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        that.loadPanel.show();
+                        setTimeout(() => {
+                            that.loadPanel.hide();
+                            let saveManager = new SaveManager();
+                            saveManager.deleteDraft(that.selectedPage.id);
+                            that.selectedPage.drafts = null;
+
+                            that.isDraft = false;
+                            document.getElementById("status").innerHTML = "pubblicato";
+                            document.getElementById("status").style.color = "#22a93d";
+                            that.renderPageById(that.selectedPage.id);
+                            that.deleteDraftBtn.option("disabled", true);
+                            that.publishPageBtn.option("disabled", true);
+                        }, 400);
+                    }
+                });
+            },
+        }).dxButton('instance');
+    });
+
+    publish = $(() => {
+        let that = this;
+        that.publishPageBtn = $('#publish-button').dxButton({
+            stylingMode: 'contained',
+            text: 'Pubblica',
+            type: 'success',
+            disabled: true,
+            width: 120,
+            onClick() {
+                if (that.isDraft == false) {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Errore',
+                        text: 'Pagina già pubblicata',
+                    })
+                    return;
+                }
+                Swal.fire({
+                    title: 'Pubblicare la pagina ?',
+                    icon: 'question',
+                    showDenyButton: true,
+                    showCancelButton: false,
+                    confirmButtonText: 'Si',
+                    denyButtonText: `No`,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        that.loadPanel.show();
+                        setTimeout(() => {
+                            let saveManager = new SaveManager();
+                            saveManager.publishPage(that.selectedPage.id);
+                            window.location.reload();
+                        }, 400);
+                    }
+                });
+            },
+        }).dxButton('instance');
+    });
+
+    showPagePreview(page) {
+        document.getElementById("page-title").style.display = "block";
+        document.getElementById("page-title").innerHTML = page.description;
+        let formData = new FormData({}, page)
+        $(() => {
+            let items = [];
+            var that = this;
+            $.each( formData.metadataTab, function( key, value ) {
+                if (key == "visibility")
+                    items.push({dataField: key.toString(), editorType: 'dxRadioGroup', editorOptions: {items: formData.Visibility, value: (formData.Visibility[page.contents.visibility].value), valueExpr: 'value', displayExpr: 'text', layout: 'horizontal'}});
+                else if (key != "language" && key != "description" && key != "slug" && key != "visibility")
+                    items.push({dataField: key.toString(), validationRules: [{type: "required"}]});
+                else if (key == "language") {
+                    let index = page.contents.language ? formData.Language.findIndex( lan => lan.value == page.contents.language) : 0;
+                    items.push({dataField: key.toString(), editorType: 'dxSelectBox', editorOptions: {items: formData.Language, value: formData.Language[index].value, valueExpr: 'value', displayExpr: 'text', disabled: key == "language" && !page.contents.language ? true : false}, validationRules: [{type: "required"}]});
+                }
+                else
+                    items.push({dataField: key.toString()});
+            },),
+            $('#metadata').dxForm({
+              colCount: 1,
+              formData: formData.metadataTab,
+              items: items,
+              labelLocation: "left",
+              onFieldDataChanged: function (e) {
+                  that.metadataChanged = true;
+                  that.selectedPage.contents[e.dataField] = e.value;
+              }
+            });
+        });
+        document.getElementById("go-back").style.display = "block";
+        document.getElementById("info").style.display = "flex";
+        document.getElementById("save-draft-button").style.display = "block";
+        document.getElementById("delete-draft-button").style.display = "block";
+        document.getElementById("publish-button").style.display = "block";
+        document.getElementById("sidebar").style.display = "block";
+        document.getElementById("sidebar").style.marginTop = document.getElementById("navbar").clientHeight + 'px';
         this.setDefaultMode();
-        this.fillPage(page.contents.widgets);
+        this.fillPage(page.contents.widgets, false);
+    }
+    
+    createDropzone(base_id, container, widget) {
+        let that = this;
+        if (base_id && container) {
+            let widgetData = JSON.stringify(widget);
+            container.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData("text/plain", JSON.stringify(widgetData));
+            });
+            container.ondragover = function(e) {
+                e.preventDefault()
+                container.style.backgroundColor = "#e4e4e4";
+                container.style.opacity = "50%";
+            };
+            container.ondragleave = function() {
+                container.style.backgroundColor = "#fff";
+                container.style.opacity = "100%";
+            };
+            container.ondrop = function(event) {
+                event.preventDefault();
+                container.style.backgroundColor = "#fff";
+                container.style.opacity = "100%";
+                let widgetData = event.dataTransfer.getData("text");
+                widgetData = JSON.parse(widgetData);
+                if (typeof widgetData == 'number')
+                    that.addWidget(parseInt(widgetData), widget.row, widget.column);
+                else
+                    that.replaceWidget(widget, widgetData);
+                
+                this.saveInDraftBtn.option('disabled', false);
+            };
+        }
+        else if (base_id && !container) {
+            let id = this.generateId(base_id);
+            let dropzone = document.createElement('div');
+            dropzone.classList.add("dropzone");
+            dropzone.id= this.generateId('dz-');
+            let addIcon = document.createElement("i");
+            addIcon.className = "fa-solid fa-circle-plus";
+            addIcon.style.fontSize = "60px";
+            dropzone.append(addIcon);
+            dropzone.ondragover = function(e) {
+                e.preventDefault()
+                dropzone.style.backgroundColor = "#e4e4e4";
+                dropzone.style.opacity = "50%";
+            }
+            dropzone.ondragleave = function() {
+                dropzone.style.backgroundColor = "#fff";
+                dropzone.style.opacity = "100%";
+            }
+            dropzone.ondrop = function(event) {
+                event.preventDefault();
+                dropzone.style.backgroundColor = "#fff";
+                dropzone.style.opacity = "100%";
+                let widgetData = event.dataTransfer.getData("text");
+                widgetData = JSON.parse(widgetData);
+                if (typeof widgetData == 'number')
+                    that.addWidget(parseInt(widgetData), widget.row, widget.column);
+                else
+                    that.replaceWidget(widget, widgetData);
+            };
+            this.saveInDraftBtn.option('disabled', false);
+            return dropzone;
+        } else {
+            let dropzone = document.createElement('div');
+            dropzone.classList.add("dropzone");
+            dropzone.id= "dropzone";
+            let addIcon = document.createElement("i");
+            addIcon.id = "add-icon"
+            addIcon.className = "fa-solid fa-circle-plus";
+            addIcon.style.fontSize = "60px";
+            let dropText = document.createElement("p");
+            dropText.innerHTML = "Rilascia qui il widget o il preset";
+            dropText.style.fontStyle = "italic";
+            let dropzoneContent = document.createElement("div");
+            dropzoneContent.id = "dropzone-content";
+            let presets = document.getElementById('presets-container');
+            presets.style.display = "none";
+            dropzoneContent.append(addIcon, dropText, presets)
+            dropzone.append(dropzoneContent);
+            dropzone.ondragover = function(e) {
+                e.preventDefault()
+                dropzone.style.backgroundColor = "#e4e4e4";
+                dropzone.style.opacity = "50%";
+            }
+            dropzone.ondragleave = function() {
+                dropzone.style.backgroundColor = "#fff";
+                dropzone.style.opacity = "100%";
+            }
+            dropzone.ondrop = function(event) {
+                event.preventDefault();
+                dropzone.style.backgroundColor = "#fff";
+                dropzone.style.opacity = "100%";
+                let widgetType = event.dataTransfer.getData("text");
+                widgetType = JSON.parse(widgetType);
+                if (typeof widgetType != 'number') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Errore',
+                        text: 'In questa area è possibile aggiungere solo widget vuoti',
+                    })
+                    return;
+                }
+                that.addWidget(parseInt(widgetType));
+            };
+            this.saveInDraftBtn.option('disabled', false);
+            return dropzone;
+        }
     }
 
-    fillPage = (widgets) => {
+    fillPage(widgets) {
         var totRows = this.calculateRows(widgets),
             totCols = this.calculateColumns(widgets),
             rows = new Array(),
             cols = new Array(),
             object = { ratio: 1 };
-        for (var i = 0; i < totRows; i++) {
+        for (var i = 0; i < totRows + 1; i++) {
             rows.push(object);
         }
         for (var i = 0; i < totCols; i++) {
@@ -174,8 +747,23 @@ export default class RenderManager {
                 html: this.handleWidget(w)
             }
         });
+        
+        let dropzone = this.createDropzone()
 
-        $('#responsive-box').dxResponsiveBox({
+
+        items.push(
+            {
+                location: [{
+                    row: totRows,
+                    col: 0,
+                    colspan: totCols,
+                    rowspan: 1
+                }],
+                html: dropzone
+            }
+        )
+            
+        this.responsiveBox = $('#responsive-box').dxResponsiveBox({
             rows: rows,
             cols: cols,
             items: items,
@@ -183,10 +771,12 @@ export default class RenderManager {
             screenByWidth(width) {
                 return (width < 700) ? 'sm' : 'lg';
             },
-        });
+        }).dxResponsiveBox('instance');
+
+        this.initEventListener();
     }
 
-    calculateRows = (widgets) => {
+    calculateRows(widgets) {
         var totRows = 0;
         widgets.forEach((widget) => {
             var currentSpan = (!widget.rowSpan) ? 1 : widget.rowSpan
@@ -195,7 +785,7 @@ export default class RenderManager {
         return (totRows == 0) ? (totRows + 1) : totRows;
     }
 
-    calculateColumns = (widgets) => {
+    calculateColumns(widgets) {
         var totCols = 0;
         widgets.forEach((widget) => {
             var currentSpan = (!widget.columnSpan) ? 1 : widget.columnSpan;
@@ -204,7 +794,7 @@ export default class RenderManager {
         return (totCols == 0) ? (totCols + 1) : totCols;
     }
 
-    handleWidget = (widget) => {
+    handleWidget(widget) {
         var [container, elem, editButton, editButtonContainer] = [document.createElement('div'), this.handelWidgetType(widget), document.createElement('i'), document.createElement('div')];
         if (widget.style != null)
             elem = this.handleWidgetStyle(widget, elem);
@@ -214,62 +804,132 @@ export default class RenderManager {
         editButtonContainer.classList.add('edit-button-container');
         editButtonContainer.appendChild(editButton);
         editButton.className = 'fas fa-wrench edit-icon fa-lg';
-        $(editButton).attr("data-toggle", "modal");
-        $(editButton).attr("data-target", "#edit-modal");
-        editButton.addEventListener('click', () => {
+
+        let resizer = document.createElement("div");
+        resizer.className = 'resizer';
+        this.initResizeEvent(resizer, widget, elem);
+
+        container.setAttribute('draggable', false);
+        container.append(elem, resizer);
+        container.addEventListener('mouseover', () => {
+            resizer.style.display = "block";
+            // elem.style.opacity = "70%";  
+            elem.classList.add('structure');
+        });
+        container.addEventListener('mouseout', () => {
+            resizer.style.display = "none";
+            // elem.style.opacity = "100%";
+            elem.classList.remove('structure');
+        });
+        elem.addEventListener('click', () => {
             this.openModifyPanel(widget);
         })
-        container.append(editButtonContainer, elem);
         return container;
     }
 
-    handelWidgetType = (widget) => {
-        switch (widget.type) {
-            case 0:
-                var textContainer = this.handleTextWidget(widget);
-                return textContainer;
-                break;
-            case 1:
-                var galleryContainer = this.handleGalleryWidget(widget);
-                return galleryContainer;
-                break;
-            case 2:
-                var videoContainer = this.handleVideoWidget(widget);
-                return videoContainer;
-                break;
-            case 3:
-                var pdfContainer = this.handlePdfWidget(widget);
-                return pdfContainer;
-                break;
-            case 4:
-                var tourContainer = this.handleTourWidget(widget);
-                return tourContainer;
-            case 5:
-                var mapContainer = this.handleMapWidget(widget);
-                return mapContainer;
-            case 6:
-                var webPageContainer = this.handleWebPageWidget(widget);
-                return webPageContainer;
-            case 101:
-                var horizontalScrollGallery = this.handleHorizontalScrollGallery(widget);
-                return horizontalScrollGallery;
-            case 102:
-                var gridGalleryContainer = this.handleGridGalleryWidget(widget);
-                return gridGalleryContainer;
-            default:
-                var div = document.createElement("div");
-                div.innerHTML = "widget to handle";
-                return div;
-        }
+    initResizeEvent(resizer, widget, elem) {
+        resizer.addEventListener('mousedown', (e) => {
+            let besideWidget = this.selectedPage.contents.widgets.find(w => {return w.row == widget.row && w.column > widget.column});
+            let pageColumns = this.calculateColumns(this.selectedPage.contents.widgets);
+            let columnInPx = document.getElementById('page').clientWidth / pageColumns;
+            let startX = e.clientX;
+            let startWidth = parseInt(document.defaultView.getComputedStyle(elem).width, 10);
+            document.documentElement.addEventListener('mousemove', (e) => {
+                elem.style.width = (startWidth + e.clientX - startX) + 'px';
+            }, false);
+            document.documentElement.addEventListener('mouseup', (e) => {
+                    let oldElement = elem;
+                    let newElement = oldElement.cloneNode(true);
+                    oldElement.parentNode.replaceChild(newElement, oldElement);
+                    let resizeRatio = newElement.clientWidth / startWidth;
+                    let newSpan = Math.round(widget.columnSpan * resizeRatio) != 0 ? Math.round(widget.columnSpan * resizeRatio) : 1;
+                    let currWidget = this.selectedPage.contents.widgets.find(w => {return w.row == widget.row && w.column == widget.column});
+                    if ((widget.column + newSpan) > pageColumns) {
+                        newElement.style.width = startWidth;
+                        this.fillPage(this.selectedPage.contents.widgets);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Errore',
+                            text: 'Non è possibile ingrandire oltre la larghezza della pagina',
+                        })
+                        return;
+                    }
+                    else if (besideWidget && (currWidget.column + newSpan) > besideWidget.column) {
+                        newElement.style.width = startWidth;
+                        this.fillPage(this.selectedPage.contents.widgets);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Errore',
+                            text: 'Non è possibile sovrapporre due elementi',
+                        });
+                        return;
+                    } else {
+                        widget.columnSpan = newSpan;
+                        this.fillPage(this.selectedPage.contents.widgets);
+                    }
+            }, false);
+        } , false);
     }
 
-    handleTextWidget = (widget) => {
+    handelWidgetType(widget) {
+            switch (widget.type) {
+                case 0:
+                    var textContainer = this.handleTextWidget(widget);
+                    this.createDropzone('w-dz', textContainer, widget);
+                    return textContainer;
+                    break;
+                case 1:
+                    var galleryContainer = this.handleGalleryWidget(widget);
+                    this.createDropzone('w-dz', galleryContainer, widget);
+                    return galleryContainer;
+                    break;
+                case 2:
+                    var videoContainer = this.handleVideoWidget(widget);
+                    this.createDropzone('w-dz', videoContainer, widget);
+                    return videoContainer;
+                    break;
+                case 3:
+                    var pdfContainer = this.handlePdfWidget(widget);
+                    this.createDropzone('w-dz', pdfContainer, widget);
+                    return pdfContainer;
+                    break;
+                case 4:
+                    var tourContainer = this.handleTourWidget(widget);
+                    this.createDropzone('w-dz', tourContainer, widget);
+                    return tourContainer;
+                case 5:
+                    var mapContainer = this.handleMapWidget(widget);
+                    this.createDropzone('w-dz', mapContainer, widget);
+                    return mapContainer;
+                case 6:
+                    var webPageContainer = this.handleWebPageWidget(widget);
+                    this.createDropzone('w-dz', webPageContainer, widget);
+                    return webPageContainer;
+                case 101:
+                    var horizontalScrollGallery = this.handleHorizontalScrollGallery(widget);
+                    this.createDropzone('w-dz', horizontalScrollGallery, widget);
+                    return horizontalScrollGallery;
+                case 102:
+                    var gridGalleryContainer = this.handleGridGalleryWidget(widget);
+                    this.createDropzone('w-dz', gridGalleryContainer, widget);
+                    return gridGalleryContainer;
+                case 1000:
+                    let dropzone = this.createDropzone('dz', null, widget);
+                    return dropzone;
+                default:
+                    var div = document.createElement("div");
+                    div.innerHTML = "widget to handle";
+                    return div;
+            }
+    }
+
+    handleTextWidget(widget) {
         var div = document.createElement("div");
         div.innerHTML = widget.content.text.trim();
         return div;
     }
 
-    handleGalleryWidget = (widget) => {
+    handleGalleryWidget(widget) {
         var baseId = "g";
         var galleryContainer = document.createElement("div");
         var div = document.createElement("div");
@@ -290,7 +950,7 @@ export default class RenderManager {
         }, 100)
         galleryContainer.appendChild(div);
         setTimeout(() => {
-            if (widget.text) {
+            if (widget.text.value) {
                 let text = document.createElement("div");
                 text.innerHTML = widget.text?.value?.trim();
                 this.handleTextPosition(widget, text);
@@ -301,11 +961,11 @@ export default class RenderManager {
         return galleryContainer;
     }
 
-    handleVideoWidget = (widget) => {
+    handleVideoWidget(widget) {
         var videoContainer = document.createElement('div');
         var video = this.buildIframe(widget);
         const regExp = "/^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/";
-        var src = "https://www.youtube.com/embed/qC0vDKVPCrw";
+        var src = "https://www.youtube.com/embed/X91__O-5zz8";
         var video_url = new URL(src);
         if (src.match(regExp) || src.indexOf("www.youtube-nocookie") != -1) {
             video.allowFullscreen = "true";
@@ -322,14 +982,14 @@ export default class RenderManager {
         return videoContainer;
     }
 
-    handlePdfWidget = (widget) => {
+    handlePdfWidget(widget) {
         var scrollable = true;
         var direction = 'x';
         if (scrollable) {
             var canvasContainer = this.handleScrollablePdf(widget, direction);
             return canvasContainer;
         } else {
-            const url = '../docs/pdf.pdf';
+            const url = 'https://api.b2b.flowers.usalesman.it/api/v1/media/public/blobs/artnova/catalog.pdf';
 
             var canvas = document.createElement('canvas');
             var pdfToolbar = createpdfToolbar();
@@ -376,11 +1036,11 @@ export default class RenderManager {
         }
     }
 
-    handleScrollablePdf = (widget, direction) => {
+    handleScrollablePdf(widget, direction) {
         var canvasContainer = document.createElement('div');
         canvasContainer.classList.add(direction === 'y' ? 'vertical-pdf-scroll-container' : 'horizontal-pdf-scroll');
         canvasContainer.id = "canvas-container";
-        const url = '../docs/pdf.pdf';
+        const url = 'https://api.b2b.flowers.usalesman.it/api/v1/media/public/blobs/artnova/catalog.pdf';
         var options = { scale: 1 };
 
         var renderScrollablePdfPage = (page) => {
@@ -433,7 +1093,7 @@ export default class RenderManager {
 
     }
 
-    renderPdfPage = (pagePending = null, pdfSettings) => {
+    renderPdfPage(pagePending = null, pdfSettings) {
         pdfSettings.pageIsRendering = true;
         scale = pdfSettings.scale;
         var pageToRender;
@@ -466,7 +1126,7 @@ export default class RenderManager {
         });
     }
 
-    queueRenderPage = (pdfSettings, num) => {
+    queueRenderPage(pdfSettings, num) {
         if (pdfSettings.pageIsRendering) {
             pdfSettings.pageNumIsPending = num;
         } else {
@@ -474,39 +1134,39 @@ export default class RenderManager {
         }
     }
 
-    showPrevPage = (pdfSettings) => {
+    showPrevPage(pdfSettings) {
         if (pdfSettings.pageNum <= 1)
             return
         pdfSettings.pageNum--;
         this.queueRenderPage(pdfSettings, pdfSettings.pageNum);
     }
 
-    showNextPage = (pdfSettings) => {
+    showNextPage(pdfSettings) {
         if (pdfSettings.pageNum >= pdfSettings.pdfDoc.numPages)
             return;
         pdfSettings.pageNum++;
         this.queueRenderPage(pdfSettings, pdfSettings.pageNum);
     }
 
-    displayPage = (pdfSettings) => {
+    displayPage(pdfSettings) {
         pdfSettings.pdfDoc.getPage(pdfSettings.pageNum).then(() => {
             this.renderPdfPage(null, pdfSettings);
         })
     }
 
-    zoomInPdf = (pdfSetting) => {
+    zoomInPdf(pdfSetting) {
         pdfSetting.scale = pdfSetting.scale + 0.25;
         this.displayPage(pdfSetting);
     }
 
-    zoomOutPdf = (pdfSetting) => {
+    zoomOutPdf(pdfSetting) {
         if (pdfSetting.scale <= 0.25)
             return;
         pdfSetting.scale = pdfSetting.scale - 0.25;
         this.displayPage(pdfSetting);
     }
 
-    createpdfToolbar = () => {
+    createpdfToolbar() {
         var pdfToolbar = document.createElement('div');
         pdfToolbar.className = 'pdf-toolbar';
         var prevButton = document.createElement('button'),
@@ -536,7 +1196,7 @@ export default class RenderManager {
         return pdfToolbar;
     }
 
-    handleTourWidget = (widget) => {
+    handleTourWidget(widget) {
         var sdkKey = 'qeyy42zwyfu5fwkrxas6i6qqd';
         var tourContainer = document.createElement('div');
         var tourIframe = this.buildIframe(widget);
@@ -562,7 +1222,7 @@ export default class RenderManager {
         return tourContainer;
     }
 
-    handleMapWidget = (widget) => {
+    handleMapWidget(widget) {
         var mapContainer = document.createElement('div');
         var mapOptions;
         const position = { lat: widget.content.latitude, lng: widget.content.longitude };
@@ -582,7 +1242,7 @@ export default class RenderManager {
         return mapContainer;
     }
 
-    handleGridGalleryWidget = (widget) => {
+    handleGridGalleryWidget(widget) {
         var gridGalleryContainer = document.createElement('div');
         gridGalleryContainer.classList.add('grid-gallery');
         if (widget.content.source) {
@@ -590,7 +1250,7 @@ export default class RenderManager {
                 var imageContainer = document.createElement('div'),
                     img = document.createElement('img');
                 imageContainer.classList.add('image-item');
-                img.src = 'https://www.w3schools.com/w3images/nature.jpg';
+                img.src = 'assets/images/image.jpg';
                 imageContainer.appendChild(img);
                 gridGalleryContainer.appendChild(imageContainer);
             })
@@ -598,7 +1258,7 @@ export default class RenderManager {
         return gridGalleryContainer;
     }
 
-    handleWebPageWidget = (widget) => {
+    handleWebPageWidget(widget) {
         var webPageContainer = document.createElement('div');
         var webPageIframe = this.buildIframe(widget);
         webPageIframe.src = widget.content.source[0];
@@ -606,7 +1266,7 @@ export default class RenderManager {
         return webPageContainer;
     }
 
-    handleHorizontalScrollGallery = (widget) => {
+    handleHorizontalScrollGallery(widget) {
         var base_id = "horizontal-gallery";
         var [gallery, galleryWrapper] = [document.createElement('div'), document.createElement('div')];
         gallery.classList.add('gallery');
@@ -615,7 +1275,7 @@ export default class RenderManager {
         widget.content.source.forEach(source => {
             var [itemWrapper, item] = [document.createElement('div'), document.createElement('img')];
             itemWrapper.classList.add('item-gallery-image');
-            item.src = 'https://www.w3schools.com/w3images/nature.jpg';
+            item.src = 'assets/images/image.jpg';
             itemWrapper.appendChild(item);
             galleryWrapper.appendChild(itemWrapper);
         });
@@ -625,7 +1285,7 @@ export default class RenderManager {
         return gallery;
     }
 
-    createGalleryNavButtons = (galleryId) => {
+    createGalleryNavButtons(galleryId) {
         var [span, leftArrow, rightArrow] = [document.createElement('span'), document.createElement('i'), document.createElement('i')];
         leftArrow.className = 'fas fa-xl fa-angle-left left-icon';
         rightArrow.className = 'fas fa-xl fa-angle-right right-icon';
@@ -639,7 +1299,7 @@ export default class RenderManager {
         return span;
     }
 
-    handleVideo = (widget, video_url, video) => {
+    handleVideo(widget, video_url, video) {
         if (widget.content.enableAutoplay) {
             if (video_url.searchParams.get('autoplay') != null)
                 video_url.searchParams.set('autoplay', 1);
@@ -678,7 +1338,7 @@ export default class RenderManager {
         return video_url;
     }
 
-    buildIframe = (widget) => {
+    buildIframe(widget) {
         var iframe = document.createElement('iframe');
         iframe.src = "https://my.matterport.com/show/?m=xx7GChUUBii";
         iframe.allowFullscreen = true;
@@ -694,7 +1354,7 @@ export default class RenderManager {
     }
 
 
-    handleWidgetStyle = (widget, div) => {
+    handleWidgetStyle(widget, div) {
 
         div.style.position = "relative";
 
@@ -733,7 +1393,7 @@ export default class RenderManager {
         return div;
     }
 
-    handlePadding = (widget, div) => {
+    handlePadding(widget, div) {
         if (widget.style.padding.top) {
             div.style.paddingTop = widget.style.padding.top;
         }
@@ -752,7 +1412,7 @@ export default class RenderManager {
         return div;
     }
 
-    handleMargin = (widget, div) => {
+    handleMargin(widget, div) {
         if (widget.style.margin.top) {
             div.style.marginTop = widget.style.margin.top;
         }
@@ -771,7 +1431,7 @@ export default class RenderManager {
         return div;
     }
 
-    handleBorders = (widget, div) => {
+    handleBorders(widget, div) {
         widget.style.borders.forEach(border => {
             switch (border.type) {
                 case 0:
@@ -809,7 +1469,7 @@ export default class RenderManager {
         return div;
     }
 
-    handleTextPosition = (widget, text) => {
+    handleTextPosition(widget, text) {
         if (widget.text.position.type == 0) {
             text.style.position = "absolute";
             text.style.display = "flex";
@@ -827,7 +1487,7 @@ export default class RenderManager {
         }
     }
 
-    applyDefaultStyle = (widget, div) => {
+    applyDefaultStyle(widget, div) {
         switch (widget.type) {
             case 2:
                 div.classList.add('video-container-default');
@@ -845,7 +1505,7 @@ export default class RenderManager {
         }
     }
 
-    setDefaultMode = () => {
+    setDefaultMode() {
         var editIcon = document.querySelectorAll('.edit-icon');
         if (editIcon) {
             editIcon.forEach((icon) => {
@@ -853,133 +1513,251 @@ export default class RenderManager {
             })
         }
         document.getElementById("history-container").style.display = "block";
-        document.getElementById('page').classList.remove('page-structure');
-        document.getElementById('structure-icon').classList.remove('fa-eye');
-        document.getElementById('structure-icon').classList.add('fa-pen-to-square');
         document.getElementById("demo-container").style.display = "block";
-        var structureButton = document.getElementById('structure-button');
-        structureButton.style.display = 'block';
-        this.showingStructure = false;
     }
 
-    changeMode = () => {
-        var widgets = document.querySelectorAll(".widget");
-        var structureIcon = document.getElementById('structure-icon');
-        if (this.showingStructure) {
-            document.getElementById('page').classList.remove('page-structure');
-            [].forEach.call(widgets, (widget) => {
-                widget.classList.remove('structure');
-            });
-            this.changeEditIconsVisibility('none')
-            structureIcon.classList.remove('fa-eye');
-            structureIcon.classList.add('fa-pen-to-square');
-            this.showingStructure = false;
-        } else {
-            document.getElementById('page').classList.add('page-structure');
-            [].forEach.call(widgets, (widget) => {
-                widget.classList.add('structure');
-            });
-            this.changeEditIconsVisibility('block');
-            structureIcon.classList.add('fa-eye');
-            structureIcon.classList.remove('fa-pen-to-square');
-            this.showingStructure = true;
+    generateId(id) { // for all html elements which need an id
+        while (this.generatedId.indexOf(id) > -1) {
+            id = id + '-' + Math.floor((Math.random() * (10000 + 1 - 1)) + 1).toString();
         }
+        this.generatedId.push(id);
+        return id;
     }
-
-    changeEditIconsVisibility = (displayMode) => {
-        document.querySelectorAll('.edit-icon').forEach(editIcon => {
-            editIcon.style.display = displayMode;
-        })
-    }
-
-    initHistoryButton()
-    {
+    
+    initHistoryButton() {
+        let that = this;
+        document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey && event.key === 'z') {
+                that.closeModifyPanel();
+                that.renderPreviousPage();
+            }
+          });
         document.getElementById('prev-page').addEventListener('click', () => {
+            this.closeModifyPanel();
             this.renderPreviousPage();
         })
     }
 
-    initPublishButton(id)
-    {
-        $(() => {
-            $('#publish-page').dxSpeedDialAction({
-              label: 'Publish page',
-              icon: 'save',
-              index: 1,
-              onClick() {
-                let saveManager = new SaveManager();
-                saveManager.publishPage(id);
-              },
-            }).dxSpeedDialAction('instance');
-          });
-    }
-
-    initSaveInDraftButton()
-    {
-        $(() => {
-            let that = this;
-            $('#save-page').dxSpeedDialAction({
-              label: 'Save draft',
-              icon: 'save',
-              index: 1,
-              onClick() {
-                that.loadPanel.show();
-                setTimeout(() => {
-                    that.loadPanel.hide();       
-                    if (that.historyManager.isHistoryEmpty())
-                        $(() => {
-                            DevExpress.ui.notify("La pagina non è stata modificata", "warning");
-                        });
-                    else {
-                        let saveManager = new SaveManager();
-                        let saved = saveManager.saveInDraft(that.selectedPage, that.historyManager.getInitialPage());
-                        if (saved)
-                            that.historyManager.emptyHistory();
-                    }
-                  }, 400);
-                }
-            }).dxSpeedDialAction('instance');
-          });
-    }
-
-    renderPreviousPage()
-    {
+    renderPreviousPage() {
         if (this.historyManager.isHistoryEmpty())
-            $(() => {
-                DevExpress.ui.notify("Non sono state apportate delle modifiche");
-            })
+            Swal.fire({
+                icon: 'error',
+                title: 'Errore',
+                text: 'Non presenti delle modifiche in questa sessione',
+            });
+            
         else {
             this.selectedPage = this.historyManager.getPreviousPage();
-            this.showPagePreview(this.selectedPage);
+            this.fillPage(this.selectedPage.contents.widgets);
         }
     }
 
-    openModifyPanel = (widget) => {
+    openModifyPanel(widget) {
+        document.getElementById("sidebar-default-view").style.display = "none";
+        document.getElementById("sidebar-edit-view").style.display = "block";
         let text_content_id = this.generateId("0-ta-");
         let text_id = this.generateId("value-")
         let temp_selected_page = JSON.parse(JSON.stringify(this.selectedPage));
-        let modifyManager = new ModifyManager(widget, JSON.parse(JSON.stringify(this.selectedPage)), text_content_id, text_id);
+        let modifyManager = new ModifyManager(widget, JSON.parse(JSON.stringify(this.selectedPage)), text_content_id, text_id, this);
         modifyManager.initPanel();
-
-        document.getElementById("save-widget-changes-button").addEventListener("click", () => {
-
-            let modifiedPage = modifyManager.getUpdatedPage();
-            if (modifiedPage) {
-                if (this.historyManager.isHistoryEmpty())
-                    this.historyManager.updateHistory(this.selectedPage);
-                this.historyManager.updateHistory(modifiedPage);
-                this.selectedPage = this.historyManager.getLastPage();
-                this.showPagePreview(this.selectedPage);
-            }
-
-        });
     }
 
-    generateId = (id) => {
-            while (this.generatedId.indexOf(id) > -1) {
-                id = id + Math.floor((Math.random() * (10000 + 1 - 1)) + 1).toString();
-            }
-            this.generatedId.push(id);
-            return id;
+    closeModifyPanel() {
+        document.getElementById("sidebar-edit-view").style.display = "none";  
+        document.getElementById("sidebar-default-view").style.display = "block";  
+    }
+
+    renderChanges(modifiedPage) {
+        modifiedPage = JSON.parse(JSON.stringify(modifiedPage)); // to delete reference
+        if (modifiedPage) {
+            if (this.historyManager.isHistoryEmpty())
+                this.historyManager.updateHistory(this.selectedPage);
+            this.historyManager.updateHistory(modifiedPage);
+            this.selectedPage = this.historyManager.getLastPage();
+            this.fillPage(this.selectedPage.contents.widgets);
         }
+    }
+    
+    renderWidgetChanges(widget, modifiedPage) {
+        this.responsiveBox._screenItems.forEach(screenItem => {
+            if (screenItem.location.row == widget.row && screenItem.location.col == widget.column) {
+                modifiedPage = JSON.parse(JSON.stringify(modifiedPage)); // to delete reference
+                if (modifiedPage) {
+                    if (this.historyManager.isHistoryEmpty())
+                        this.historyManager.updateHistory(this.selectedPage);
+                    this.historyManager.updateHistory(modifiedPage);
+                    this.selectedPage = this.historyManager.getLastPage();
+                }
+                let oldNode = screenItem.item.html;
+                let newNode = this.handleWidget(widget);
+                let oldNodeParent = oldNode.parentNode;
+                console.log(oldNode, oldNodeParent)
+                oldNodeParent.innerHTML = "";
+                oldNodeParent.appendChild(newNode);
+                screenItem.item.html = newNode;
+                
+            }
+        });
+        console.log(this.responsiveBox)
+    }
+    
+    showPresets() {
+        let presets = document.getElementById('presets-container');
+        let dropzone = document.getElementById('dropzone');
+        document.getElementById("dropzone-content").style.display = "none";
+        presets.style.display = "block";
+        dropzone.appendChild(presets);
+    }
+
+    applyPreset(colNumber) {
+        let cols = 0;
+        let rows = 0;
+        if (this.selectedPage.contents.widgets.length != 0) {
+            cols = this.calculateColumns(this.selectedPage.contents.widgets);
+            rows = this.calculateRows(this.selectedPage.contents.widgets);
+        }
+        if (colNumber != cols) {
+            this.adaptPage(colNumber, cols, rows);
+        } else {
+            for(let i = 0; i < cols; i++) {
+                let newWidget = new Widget().getEmptyWidget();
+                newWidget.row = rows;
+                newWidget.column = i;
+                newWidget.type = 1000;
+                this.selectedPage.contents.widgets.push(newWidget);
+            }
+            this.renderChanges(this.selectedPage);
+        }
+    }
+
+    adaptPage(colNumber, cols, rows) {
+        let that = this;
+        if (cols % colNumber == 0 || colNumber % cols == 0) {
+            if (colNumber < cols) {
+                for (let i = 0; i < colNumber; i++) {
+                    let newWidget = new Widget().getEmptyWidget();
+                    newWidget.row = rows;
+                    newWidget.column = i * (cols / colNumber);
+                    newWidget.columnSpan = (cols / colNumber);
+                    newWidget.type = 1000;
+                    that.selectedPage.contents.widgets.push(newWidget);
+                }
+            } else {
+                that.selectedPage.contents.widgets.forEach(w => {
+                    w.columnSpan = (w.columnSpan) ? w.columnSpan : 1;
+                    w.columnSpan *= (colNumber / cols);
+                    if (w.column != 0)
+                        w.column = (w.column * w.columnSpan);
+                });
+                for (let i = 0; i < colNumber; i++) {
+                    let newWidget = new Widget().getEmptyWidget();
+                    newWidget.row = rows;
+                    newWidget.column = i;
+                    newWidget.type = 1000;
+                    that.selectedPage.contents.widgets.push(newWidget);
+                }
+            }
+        } else {
+            let temp = colNumber;
+            while (temp % cols != 0) {
+                temp += colNumber;
+            }
+            this.selectedPage.contents.widgets.forEach(w => {
+                w.columnSpan = w.columnSpan ? w.columnSpan * (temp / cols) : 1 * (temp / cols);
+                w.column =  w.column ? (w.column * temp) / cols : w.column;
+            });
+            for (let i = 0; i < colNumber; i++) {
+                let newWidget = new Widget().getEmptyWidget();
+                newWidget.row = rows;
+                newWidget.column = i * (temp / colNumber);
+                newWidget.columnSpan = (temp / colNumber);
+                newWidget.type = 1000;
+                that.selectedPage.contents.widgets.push(newWidget);
+            }
+        }
+        this.renderChanges(this.selectedPage);
+    }
+
+    replaceWidget(toWidget, fromWidget) {
+        Swal.fire({
+            title: 'Sostituire il widget ?',
+            icon: 'question',
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: 'Si',
+            denyButtonText: `No`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fromWidget = JSON.parse(fromWidget);
+                let toWidgetIndex = this.selectedPage.contents.widgets.findIndex(w => w.row == toWidget.row && w.column == toWidget.column);
+                this.selectedPage.contents.widgets[toWidgetIndex] = fromWidget;
+                this.selectedPage.contents.widgets[toWidgetIndex].row = toWidget.row;
+                this.selectedPage.contents.widgets[toWidgetIndex].column = toWidget.column;
+                this.selectedPage.contents.widgets[toWidgetIndex].columnSpan = toWidget.columnSpan;
+                this.renderChanges(this.selectedPage);
+            }
+        });
+    }
+    
+    addWidget(widgetType, row, column, span) {
+        let emptyWidget = new Widget().getEmptyWidget();
+        emptyWidget.type = widgetType;
+        let defaultContents = new DefaultContents();
+        switch (emptyWidget.type) {
+            case 0:
+                emptyWidget.content = defaultContents.textContent;
+                emptyWidget.style = {padding: {top: "30px", bottom: "30px"}};
+                break;
+            case 1:
+                emptyWidget.content = defaultContents.gallerySource;
+                break;
+            case 2:
+                emptyWidget.content = defaultContents.videoSource;
+                break;
+            case 3:
+                emptyWidget.content = defaultContents.pdfSource;
+                break;
+            case 4:
+                emptyWidget.content = defaultContents.showcaseSource;
+                break;    
+            case 5:
+                emptyWidget.content = defaultContents.mapContent;
+                break;
+            case 6:
+                emptyWidget.content = defaultContents.webPageSource;
+                break;
+            case 101:
+            case 102:
+                emptyWidget.content = defaultContents.horizontalAndGridGallerySource;
+                break;
+            case 1000:
+                emptyWidget = emptyWidget;
+                break;
+        }
+        if (span) {
+            emptyWidget.row = row;
+            emptyWidget.column = column;
+            emptyWidget.columnSpan = span;
+            this.selectedPage.contents.widgets.push(emptyWidget);
+        }
+        else if (row || row == 0 && column || column == 0) {
+            this.selectedPage.contents.widgets.forEach(widget => {
+                if (widget.row == row && widget.column == column) {
+                    widget.type = widgetType;
+                    widget.content = emptyWidget.content;
+                }
+            });
+        } else {
+            let pageRows = this.calculateRows(this.selectedPage.contents.widgets);
+            let pageColumns = this.calculateColumns(this.selectedPage.contents.widgets);
+            emptyWidget.row = pageRows;
+            emptyWidget.column = 0;
+            emptyWidget.columnSpan = pageColumns;
+            if (span)
+                emptyWidget.columnSpan = span;
+            this.selectedPage.contents.widgets.push(emptyWidget);
+        }
+        this.renderChanges(this.selectedPage);
+    }
+
 }
