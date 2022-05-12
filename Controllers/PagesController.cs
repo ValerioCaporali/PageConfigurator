@@ -27,8 +27,8 @@ namespace Pages_configurator.Controllers
     public class PagesController : Controller
     {
         private readonly ILogger<PagesController> _logger;
-        private IBindingService _bindingService;
-        private DataContext _context;
+        private readonly IBindingService _bindingService;
+        private readonly DataContext _context;
 
         public PagesController(ILogger<PagesController> logger, IBindingService bindingService, DataContext context)
         {
@@ -150,29 +150,23 @@ namespace Pages_configurator.Controllers
         }
 
         [HttpPost("delete-draft")]
-        public IActionResult DeleteFraft([FromBody] DeleteDraftDto deleteDraftDto)
+        public IActionResult DeleteDraft([FromBody] DeleteDraftDto deleteDraftDto)
         {
-            DbPage page = _context.Pages.Where(page => page.id == deleteDraftDto.id).FirstOrDefault();
-            if (page != null)
-            {
-                page.drafts = null;
-                _context.SaveChanges();
-                return Ok("Draft correctly deleted");
-            }
-            return BadRequest("Page not found");
+            DbPage page = _context.Pages.FirstOrDefault(page => page.id == deleteDraftDto.id);
+            if (page == null) return BadRequest("Page not found");
+            page.drafts = null;
+            _context.SaveChanges();
+            return Ok("Draft correctly deleted");
         }
 
         [HttpPost("delete-page")]
         public IActionResult DeletePage([FromBody] DeletePageDto deletePageDto)
         {
-            DbPage page = _context.Pages.Where(page => page.id == deletePageDto.id).FirstOrDefault();
-            if (page != null)
-            {
-                _context.Pages.Remove(page);
-                _context.SaveChanges();
-                return Ok("Page correctly deleted");
-            }
-            return BadRequest("Page not found");
+            DbPage page = _context.Pages.FirstOrDefault(page => page.id == deletePageDto.id);
+            if (page == null) return BadRequest("Page not found");
+            _context.Pages.Remove(page);
+            _context.SaveChanges();
+            return Ok("Page correctly deleted");
         }
 
         [HttpPost("create")]

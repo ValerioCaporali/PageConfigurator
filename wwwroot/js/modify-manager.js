@@ -661,7 +661,7 @@ export default class ModifyManager {
                     formData.galleryConfiguration.source.push(source);
                     gallery.refresh();
                     this.resetValues();
-                    that.getUpdatedPage()
+                    that.getUpdatedPage();
                 }
                 else if (e.value) {
                     swal("Errore", "Sorgente non raggiungibile", "warning");
@@ -936,14 +936,10 @@ export default class ModifyManager {
                         onReorder(e) {
                           const visibleRows = e.component.getVisibleRows();
                           const toIndex = formData.gridGalleryConfiguration.source.indexOf(visibleRows[e.toIndex].data);
-                          const fromIndex = formData.gridGalleryConfiguration.source.indexOf(e.itemData);
-                          console.log(toIndex, fromIndex);
-                  
+                          const fromIndex = formData.gridGalleryConfiguration.source.indexOf(e.itemData);                  
                           formData.gridGalleryConfiguration.source.splice(e.fromIndex, 1);
                           formData.gridGalleryConfiguration.source.splice(e.toIndex, 0, e.itemData);
-                  
                           e.component.refresh();
-
                           that.getUpdatedPage();
                         },
                       },
