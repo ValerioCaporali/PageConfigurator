@@ -122,7 +122,6 @@ export default class RenderManager {
     populatePageList() {
         let homeContainer = document.getElementById("home-pages-container");
         let pageContainer = document.getElementById("pages-container");
-        console.log(this.pages);
         this.pages.forEach(page => {
             let pageCard = document.createElement('div');
             pageCard.classList.add('page-card');
@@ -716,7 +715,6 @@ export default class RenderManager {
                 container.style.opacity = "100%";
                 let widgetData = event.dataTransfer.getData("text");
                 widgetData = JSON.parse(widgetData);
-                console.log(widgetData);
                 that.replaceWidget(widget, widgetData);
                 that.saveInDraftBtn.option('disabled', false);
             };
@@ -909,20 +907,20 @@ export default class RenderManager {
 
     initResizeEvent(resizer, widget, elem) {
         resizer.addEventListener('mousedown', (e) => {
-            let besideWidget = this.selectedPage.contents.widgets.find(w => {return w.row == widget.row && w.column > widget.column});
-            let pageColumns = this.calculateColumns(this.selectedPage.contents.widgets);
-            let startX = e.clientX;
-            let startWidth = parseInt(document.defaultView.getComputedStyle(elem).width, 10);
+            let besideWidget = this.selectedPage.contents.widgets.find(w => {return w.row == widget.row && w.column > widget.column}),
+                pageColumns = this.calculateColumns(this.selectedPage.contents.widgets),
+                startX = e.clientX,
+                startWidth = parseInt(document.defaultView.getComputedStyle(elem).width, 10);
             document.documentElement.addEventListener('mousemove', (e) => {
                 elem.style.width = (startWidth + e.clientX - startX) + 'px';
             }, false);
             document.documentElement.addEventListener('mouseup', (e) => {
-                    let oldElement = elem;
-                    let newElement = oldElement.cloneNode(true);
+                    let oldElement = elem,
+                        newElement = oldElement.cloneNode(true);
                     oldElement.parentNode.replaceChild(newElement, oldElement);
-                    let resizeRatio = newElement.clientWidth / startWidth;
-                    let newSpan = Math.round(widget.columnSpan * resizeRatio) != 0 ? Math.round(widget.columnSpan * resizeRatio) : 1;
-                    let currWidget = this.selectedPage.contents.widgets.find(w => {return w.row == widget.row && w.column == widget.column});
+                    let resizeRatio = newElement.clientWidth / startWidth,
+                        newSpan = Math.round(widget.columnSpan * resizeRatio) != 0 ? Math.round(widget.columnSpan * resizeRatio) : 1,
+                        currWidget = this.selectedPage.contents.widgets.find(w => {return w.row == widget.row && w.column == widget.column});
                     if ((widget.column + newSpan) > pageColumns) {
                         newElement.style.width = startWidth;
                         this.fillPage(this.selectedPage.contents.widgets);
@@ -945,15 +943,14 @@ export default class RenderManager {
                     } else {
                         widget.columnSpan = newSpan;
                         this.historyManager.updateHistory(JSON.parse(JSON.stringify(this.selectedPage)));
-                        var totRows = this.calculateRows(this.selectedPage.contents.widgets);
-                        var totCols = this.calculateColumns(this.selectedPage.contents.widgets);
+                        var totRows = this.calculateRows(this.selectedPage.contents.widgets),
+                            totCols = this.calculateColumns(this.selectedPage.contents.widgets);
                         this.initFallbackRespondiveBox(totRows, totCols, false);
 
                         // replace the entire row taking from fallback responsivebox
-                        let responsiveBoxCotnainer = document.getElementById('responsive-box');
-                        let newRowDiv = document.getElementById('fallback-responsive-box').children[0].children[widget.row];
-                        console.log(newRowDiv);
-                        let oldRowDiv = responsiveBoxCotnainer.children[0].children[widget.row];
+                        let responsiveBoxCotnainer = document.getElementById('responsive-box'),
+                            newRowDiv = document.getElementById('fallback-responsive-box').children[0].children[widget.row],
+                            oldRowDiv = responsiveBoxCotnainer.children[0].children[widget.row];
                         responsiveBoxCotnainer.children[0].replaceChild(newRowDiv, oldRowDiv);
                         
                         
@@ -986,8 +983,9 @@ export default class RenderManager {
                 return galleryContainer;
                 break;
             case 2:
-                var videoContainer = this.handleVideoWidget(widget);
-                let overlay = document.createElement("div");
+                var videoContainer,
+                    videoContainer = this.handleVideoWidget(widget),
+                    overlay = document.createElement("div");
                 overlay.style.display = "block"
                 overlay.classList.add('iframe-overlay');
                 let modifyIcon = document.createElement("i");
@@ -1010,8 +1008,8 @@ export default class RenderManager {
                 return pdfContainer;
                 break;
             case 4:
-                var tourContainer = this.handleTourWidget(widget);
-                let tourOverlay = document.createElement("div");
+                var tourContainer = this.handleTourWidget(widget),
+                    tourOverlay = document.createElement("div");
                 tourOverlay.style.display = "block";
                 tourOverlay.classList.add('iframe-overlay');
                 let tourModifyIcon = document.createElement("i");
@@ -1032,8 +1030,8 @@ export default class RenderManager {
                 this.createDropzone('w-dz', mapContainer, widget);
                 return mapContainer;
             case 6:
-                var webPageContainer = this.handleWebPageWidget(widget);
-                let pageOverlay = document.createElement("div");
+                var webPageContainer = this.handleWebPageWidget(widget),
+                    pageOverlay = document.createElement("div");
                 pageOverlay.style.display = "block"
                 pageOverlay.classList.add("iframe-overlay");
                 let pageModifyIcon = document.createElement("i");
@@ -1074,11 +1072,11 @@ export default class RenderManager {
     }
 
     handleGalleryWidget(widget) {
-        var baseId = "g";
-        var galleryContainer = document.createElement("div");
-        var div = document.createElement("div");
+        var baseId = "g",
+            galleryContainer = document.createElement("div"),
+            div = document.createElement("div"),
+            id = this.generateId(baseId);
         galleryContainer.classList.add("gallery-container");
-        var id = this.generateId(baseId)
         div.id = id;
         setTimeout(() => {
             $("#" + id).dxGallery({
@@ -1097,11 +1095,12 @@ export default class RenderManager {
     }
 
     handleVideoWidget(widget) {
-        var videoContainer = document.createElement('div');
-        var video = this.buildIframe(widget);
+        var videoContainer = document.createElement('div'),
+            video = this.buildIframe(widget),
+            src = widget.content.source[0],
+            video_url = new URL(src);
         const regExp = "/^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/";
-        var src = widget.content.source[0];
-        var video_url = new URL(src);
+        
         if (src.match(regExp) || src.indexOf("www.youtube-nocookie") != -1) {
             video.allowFullscreen = "true";
             var youtube_video = handleVideo(widget, video_url, video);
@@ -1335,9 +1334,9 @@ export default class RenderManager {
     }
 
     handleTourWidget(widget) {
-        var sdkKey = 'qeyy42zwyfu5fwkrxas6i6qqd';
-        var tourContainer = document.createElement('div');
-        var tourIframe = this.buildIframe(widget);
+        var sdkKey = 'qeyy42zwyfu5fwkrxas6i6qqd',
+            tourContainer = document.createElement('div'),
+            tourIframe = this.buildIframe(widget);
         if (widget.content.responsive)
             tourIframe.style.width = "100%";
 
@@ -1361,8 +1360,8 @@ export default class RenderManager {
     }
 
     handleMapWidget(widget) {
-        var mapContainer = document.createElement('div');
-        var mapOptions;
+        var mapContainer = document.createElement('div'),
+            mapOptions;
         const position = { lat: widget.content.latitude, lng: widget.content.longitude };
         mapContainer.id = "map";
         mapOptions = {
@@ -1397,16 +1396,16 @@ export default class RenderManager {
     }
 
     handleWebPageWidget(widget) {
-        var webPageContainer = document.createElement('div');
-        var webPageIframe = this.buildIframe(widget);
+        var webPageContainer = document.createElement('div'),
+            webPageIframe = this.buildIframe(widget);
         webPageIframe.src = widget.content.source[0];
         webPageContainer.appendChild(webPageIframe);
         return webPageContainer;
     }
 
     handleHorizontalScrollGallery(widget) {
-        var base_id = "horizontal-gallery";
-        var [gallery, galleryWrapper] = [document.createElement('div'), document.createElement('div')];
+        var base_id = "horizontal-gallery",
+            [gallery, galleryWrapper] = [document.createElement('div'), document.createElement('div')];
         gallery.classList.add('gallery');
         galleryWrapper.classList.add('gallery-container');
         galleryWrapper.id = this.generateId(base_id);;
@@ -1694,10 +1693,10 @@ export default class RenderManager {
     openModifyPanel(widget) {
         document.getElementById("sidebar-default-view").style.display = "none";
         document.getElementById("sidebar-edit-view").style.display = "block";
-        let text_content_id = this.generateId("0-ta-");
-        let text_id = this.generateId("value-")
-        let temp_selected_page = JSON.parse(JSON.stringify(this.selectedPage));
-        let modifyManager = new ModifyManager(widget, JSON.parse(JSON.stringify(this.selectedPage)), text_content_id, text_id, this);
+        let text_content_id = this.generateId("0-ta-"),
+            text_id = this.generateId("value-"),
+            temp_selected_page = JSON.parse(JSON.stringify(this.selectedPage)),
+            modifyManager = new ModifyManager(widget, JSON.parse(JSON.stringify(this.selectedPage)), text_content_id, text_id, this);
         this.loadPanel.show();
         modifyManager.initPanel();
         this.loadPanel.hide();
@@ -1818,14 +1817,9 @@ export default class RenderManager {
 
         var totRows = this.calculateRows(this.selectedPage.contents.widgets);
         var totCols = this.calculateColumns(this.selectedPage.contents.widgets);
-
         this.initFallbackRespondiveBox(totRows, totCols);
-        
-
         this.responsiveBox._screenItems[this.responsiveBox._screenItems.length - 1].location.row = totRows;
-        
         let lastScreenItem = this.responsiveBox._screenItems.pop();
-
         this.fallbackResponsiveBox._screenItems.forEach(screenItem => {
             screenItem.location.row = totRows - 1;
             screenItem.item.location[0].row = totRows - 1;

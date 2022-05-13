@@ -42,7 +42,7 @@ namespace Pages_configurator.Controllers
         {
             await _bindingService.BindPagesFromJsonAsync();
 
-            List<CustomTablePage> pages = new List<CustomTablePage>();
+            List<CustomTablePage> pages = new();
             List<DbPage> dbPages = _context.Pages.ToList();
             
             foreach (DbPage dbPage in dbPages)
@@ -67,28 +67,18 @@ namespace Pages_configurator.Controllers
         {
 
             DbPage page = _context.Pages.Find(publishDto.id);
-            if (page != null)
-            {
-                List<TableContent> contents = new List<TableContent>();
-                List<CustomTableContent> drafts = JsonConvert.DeserializeObject<List<CustomTableContent>>(page.drafts);
-                page.visibility = drafts[0].Visibility;
-                page.description = drafts[0].Description;
-                page.slug = drafts[0].Slug;
-                foreach (CustomTableContent draft in drafts)
-                {
-                    TableContent content = new TableContent {
-                        Language = draft.Language,
-                        Title = draft.Title,
-                        Widgets = draft.Widgets
-                    };
-                    contents.Add(content);
-                }
-                page.contents = JsonConvert.SerializeObject(contents);
-                page.drafts = null;
-                _context.SaveChanges();
-                return Ok("Page correctly published");
-            }
-            return BadRequest("Page not found");
+            
+            if (page == null) return BadRequest("Page not found");
+            
+            List<CustomTableContent> drafts = JsonConvert.DeserializeObject<List<CustomTableContent>>(page.drafts);
+            page.visibility = drafts[0].Visibility;
+            page.description = drafts[0].Description;
+            page.slug = drafts[0].Slug;
+            List<TableContent> contents = drafts.Select(draft => new TableContent {Language = draft.Language, Title = draft.Title, Widgets = draft.Widgets}).ToList();
+            page.contents = JsonConvert.SerializeObject(contents);
+            page.drafts = null;
+            _context.SaveChanges();
+            return Ok("Page correctly published");
 
         }
 
@@ -100,8 +90,8 @@ namespace Pages_configurator.Controllers
                 return BadRequest("Invalid sent data");
             }
             DbPage page = _context.Pages.Find(saveDto.Page.id);
-            DbPage updatedPage = new DbPage();
-            List<CustomTableContent> drafts = new List<CustomTableContent>();
+            DbPage updatedPage = new();
+            List<CustomTableContent> drafts = new();
             List<CustomTableContent> contents = JsonConvert.DeserializeObject<List<CustomTableContent>>(page.contents);
             if (page.drafts != null)
             {
@@ -125,21 +115,17 @@ namespace Pages_configurator.Controllers
             else
             {
                 drafts.Add(saveDto.Page.contents.First());
-                foreach (CustomTableContent content in contents)
+                drafts.AddRange(from content in contents
+                where content.Language != saveDto.InitialPage.contents.First().Language
+                select new CustomTableContent
                 {
-                    if (content.Language != saveDto.InitialPage.contents.First().Language)
-                    {
-                        CustomTableContent customContent = new CustomTableContent {
-                            Language = content.Language,
-                            Title = content.Title,
-                            Widgets = content.Widgets,
-                            Visibility = saveDto.Page.contents[0].Visibility,
-                            Description = saveDto.Page.contents[0].Description,
-                            Slug = saveDto.Page.contents[0].Slug
-                        };
-                        drafts.Add(customContent);
-                    }
-                }
+                    Language = content.Language,
+                    Title = content.Title,
+                    Widgets = content.Widgets,
+                    Visibility = saveDto.Page.contents[0].Visibility,
+                    Description = saveDto.Page.contents[0].Description,
+                    Slug = saveDto.Page.contents[0].Slug
+                });
             }
 
             updatedPage = page;
@@ -178,8 +164,7 @@ namespace Pages_configurator.Controllers
                 Title = "",
                 Language = null
             };
-            List<TableContent> contents = new List<TableContent>();
-            contents.Add(content);
+            List<TableContent> contents = new() {content};
             string serializedContents = JsonConvert.SerializeObject(contents);
             DbPage newPage = new DbPage
             {
@@ -190,7 +175,7 @@ namespace Pages_configurator.Controllers
                 contents = serializedContents
             };
 
-            CustomTablePage page = new CustomTablePage
+            CustomTablePage page = new()
             {
                 id = newPage.id,
                 type = newPage.type,
