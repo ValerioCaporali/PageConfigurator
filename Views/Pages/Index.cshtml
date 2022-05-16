@@ -1,12 +1,6 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-
-
-
 <!DOCTYPE html>
-<html lang="it">
 
+<html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -926,360 +920,317 @@
 </style>
 
 <body>
-    <div id="loader-container">
-        <div class="loader" id="loader"></div>
-    </div>
     <div id="wrapper" class="page-wrapper chiller-theme toggled" style="height: 100%;">
-
-        <nav id="navbar" class="navbar navbar-dark bg-dark">
-            <i id="go-back" class="dx-icon-arrowleft" style="display: none; color: #000 !important; font-size: 30px; cursor: pointer; color: #9a9a9a !important; margin-right: 10px;"></i>
-            <h5 id="page-title"></h5>
-            <form id="search" value="" class="form-inline my-2 my-lg-0" style="width: 75%; display: flex; left: 0; right: 0; margin: auto;">
-                <input id="search" class="form-control mr-sm-2" style="width: 83%;" type="search" placeholder="Search" required>
-                <select value="all" class="form-select form-inline form-select-sm" style="width: 9%;" aria-label=".form-select-sm example" id="filter" required>
-                  <option value="all" selected>Tutte</option>
-                  <option value="1">Pagine</option>
-                  <option value="0">Home</option>
-                </select>
-                <button id="create-page" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target=".bd-example-modal-lg">Crea Pagina</button>
-            </form>
-            <div id="info" style="display: none;"><p style="margin-right: 0.4rem; color: black;">Stato: </p><p id="status"></p></div>
-            <div id="history-container" style="display: block;">
-                <i id="prev-page" class="fa-solid fa-rotate-left fa-xl" style="display: none; margin-right: 20px; color: #556068;"></i> 
-            </div>
-            <div id="buttons" style="display: none;"></div>
-            <div id="save-draft-button" style="display: none;"></div>
-            <div id="delete-draft-button" style="display: none;"></div>
-            <div id="publish-button" style="display: none;"></div>
-            <div id="delete-page-button" style="display: none;"></div>
-            <div id="delete-language-button" style="display: none;"></div>
-        </nav>
-
-        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content" style="padding: 40px;">
-                <form>
-                  <div class="form-group">
-                    <label for="type">Tipo:</label>
-                    <select id="type" class="form-select" aria-label="Default select example">
-                      <option disabled="true" selected>Seleziona il tipo</option>
-                      <option value="0">Home</option>
-                      <option value="1">Pagina</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="slug">Slug:</label>
-                    <input id="slug" type="text" class="form-control" placeholder="/nuova-pagina">
-                  </div>
-                  <div class="modal-footer" style="margin-top: 35px; padding: 1rem 0 0 0 !important;">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
-                    <button id="create" type="button" class="btn btn-primary" data-dismiss="modal">Crea</button>
-                  </div>
-                </form>
-            </div>
-          </div>
-        </div>
-
-        <div id="sidebar" style="display: none;">
-            <div class="container" id="sidebar-default-view">
-                <div id="widgets-curtain-header" class="row sidebar-header curtain-header-shadow">
-                    <b class="sidebar-label">WIDGET</b>
-                    <i id="close-widgets-curtain" class="fa-solid fa-angle-down sidebar-icon"></i>
-                    <i id="open-widgets-curtain" class="fa-solid fa-angle-right sidebar-icon" style="display:none;"></i>
+    
+            <nav id="navbar" class="navbar navbar-dark bg-dark">
+                <i id="go-back" class="dx-icon-arrowleft" style="display: none; color: #000 !important; font-size: 30px; cursor: pointer; color: #9a9a9a !important; margin-right: 10px;"></i>
+                <h5 id="page-title"></h5>
+                <div id="info" style="display: none;"><p style="margin-right: 0.4rem; color: black;">Stato: </p><p id="status"></p></div>
+                <div id="history-container" style="display: block;">
+                    <i id="prev-page" class="fa-solid fa-rotate-left fa-xl" style="display: none; margin-right: 20px; color: #556068;"></i> 
                 </div>
-                <div id="widgets-curtain" class="draggable-widgets-list">
-                    <div class="row" style="margin: 0;">
-                        <div id="draggable-text" class="widget-wrapper" draggable="true" value="0">
-                            <div style="text-align: center; margin-top: 16px; padding: 10px;">
-                                <i class="fa-solid fa-align-justify fa-xl widget-thumbnail"></i>
-                                <p style="margin-top: 12px;">Testo</p>
-                            </div>
-                        </div>
-                        <div class="widget-wrapper" draggable="true" value="1">
-                            <div style="text-align: center; margin-top: 16px; padding: 10px;">
-                                <i class="fa-solid fa-panorama fa-xl widget-thumbnail"></i>
-                                <p style="margin-top: 12px;">Galleria</p>
-                            </div>
-                        </div>
+                <div id="buttons" style="display: none;"></div>
+                <div id="save-draft-button" style="display: none;"></div>
+                <div id="delete-draft-button" style="display: none;"></div>
+                <div id="publish-button" style="display: none;"></div>
+                <div id="delete-page-button" style="display: none;"></div>
+                <div id="delete-language-button" style="display: none;"></div>
+            </nav>
+
+    <div id="sidebar" style="display: none;">
+                <div class="container" id="sidebar-default-view">
+                    <div id="widgets-curtain-header" class="row sidebar-header curtain-header-shadow">
+                        <b class="sidebar-label">WIDGET</b>
+                        <i id="close-widgets-curtain" class="fa-solid fa-angle-down sidebar-icon"></i>
+                        <i id="open-widgets-curtain" class="fa-solid fa-angle-right sidebar-icon" style="display:none;"></i>
                     </div>
-                    <div class="row" style="margin: 0;">
-                        <div class="widget-wrapper" draggable="true" value="2">
-                            <div style="text-align: center; margin-top: 16px; padding: 10px;">
-                                <i class="fa-solid fa-video fa-xl widget-thumbnail"></i>
-                                <p style="margin-top: 12px;">Video</p>
-                            </div>
-                        </div>
-                        <div class="widget-wrapper" draggable="true" value="3">
-                            <div style="text-align: center; margin-top: 16px; padding: 10px;">
-                                <i class="fa-solid fa-file-pdf fa-xl widget-thumbnail"></i>
-                                <p style="margin-top: 12px;">Pdf</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row" style="margin: 0;">
-                        <div class="widget-wrapper" draggable="true" value="4">
-                            <div style="text-align: center; margin-top: 16px; padding: 10px;">
-                                <i class="fa-solid fa-road fa-xl widget-thumbnail"></i>
-                                <p style="margin-top: 12px;">Tour</p>
-                            </div>
-                        </div>
-                        <div class="widget-wrapper" draggable="true" value="5">
-                            <div style="text-align: center; margin-top: 16px; padding: 10px;">
-                                <i class="fa-solid fa-map fa-xl widget-thumbnail"></i>
-                                <p style="margin-top: 12px;">Map</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row" style="margin: 0;">
-                        <div class="widget-wrapper" draggable="true" value="6">
-                            <div style="text-align: center; margin-top: 16px; padding: 10px;">
-                                <i class="fa-solid fa-paste fa-xl widget-thumbnail"></i>
-                                <p style="margin-top: 12px;">Pagina</p>
-                            </div>
-                        </div>
-                        <div class="widget-wrapper" draggable="true" value="101">
-                            <div style="text-align: center; margin-top: 16px; padding: 10px;">
-                                <i class="fa-solid fa-left-right fa-xl widget-thumbnail"></i>
-                                <p style="margin-top: 12px;">Galleria orizzontale</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row" style="margin: 0;">
-                        <div class="widget-wrapper" draggable="true" value="102">
-                            <div style="text-align: center; margin-top: 16px; padding: 10px;">
-                                <i class="fa-solid fa-border-all fa-xl widget-thumbnail"></i>
-                                <p style="margin-top: 12px;">Galleria griglia</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <span style="margin-top: 20px; display: block;"></span>
-                <div id="metadata-curtain-header" class="row sidebar-header curtain-header-shadow">
-                    <b class="sidebar-label">METADATA</b>
-                    <i id="close-metadata-curtain" class="fa-solid fa-angle-down sidebar-icon" style="display:none;"></i>
-                    <i id="open-metadata-curtain" class="fa-solid fa-angle-right sidebar-icon"></i>
-                </div>
-                <div id="metadata" style="height: 0px; overflow: hidden;"></div>
-            </div>
-            <div id="sidebar-edit-view" style="max-width: 100%; display:none;">
-                <ul class="nav nav-pills mb-3" id="pills-tab" style="justify-content: space-around;" role="tablist">
-                    <li class="nav-item">
-                        <i id="widgets-list-button" class="fa-solid fa-grip fa-xl" style="color: #67646a; vertical-align: bottom; font-size: 20px;"></i>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" id="pills-content-tab" data-toggle="pill" href="#pills-content" role="tab" aria-controls="pills-content" aria-selected="true">CONTENUTO</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="pills-advanced-tab" data-toggle="pill" href="#pills-advanced" role="tab" aria-controls="pills-advanced" aria-selected="false">AVANAZATO</a>
-                    </li>
-                </ul>
-                
-                <div class="tab-content" id="pills-tabContent">
-                  <div class="tab-pane fade show active" id="pills-content" role="tabpanel" aria-labelledby="pills-content-tab">
-                        <div id="content-curtain-header" class="row sidebar-header curtain-header-shadow">
-                            <b class="sidebar-label">CONTENUTO</b>
-                            <i id="close-content-curtain" class="fa-solid fa-angle-down sidebar-icon"></i>
-                            <i id="open-content-curtain" class="fa-solid fa-angle-right sidebar-icon" style="display:none;"></i>
-                        </div>
-                        <div id="content-curtain">
-                            <div class="row" id="0" style="display: none;"></div>
-
-                            <div id="1" style="display: none;">
-                                <div id="gallery-source"></div>
-                                <span style="margin-top: 12px; display: block;"></span>
-                                <div id="gallery-source-form"></div>
-                                <span style="margin-top: 22px; display: block;"></span>
-                                <div id="gallery-content"></div>
-                            </div>
-
-                            <div id="2" style="display: none;">
-                                <div id="video-source"></div>
-                                <span style="margin-top: 22px; display: block;"></span>
-                                <div id="video-content"></div>
-                            </div>
-
-                            <div class="row" id="3" style="display: none;">
-                                <div id="pdf-source"></div>
-                            </div>
-
-                            <div id="4" style="display: none;">
-                                <div id="showcase-source"></div>
-                                <span style="margin-top: 22px; display: block;"></span>
-                                <div id="showcase-content"></div>
-                            </div>
-
-                            <div id="5" style="display: none;">
-                                <div id="map-content"></div>
-                            </div>
-
-                            <div class="row" id="6" style="display: none;">
-                                <div id="webpage-source"></div>
-                            </div>
-
-                            <div class="row" id="101" style="display: none;">
-                                <div id="horizontalScrollGallery-source"></div>
-                                <span style="margin-top: 12px; display: block;"></span>
-                                <div id="horizontal-gallery-source-form"></div>
-                            </div>
-
-                            <div class="row" id="102" style="display: none;">
-                                <div id="gridGallery-source"></div>
-                                <span style="margin-top: 12px; display: block;"></span>
-                                <div id="grid-gallery-source-form"></div>
-                            </div>  
-                            <span style="margin-top: 20px; display: block;"></span>
-                        </div>
-                        <span style="margin-top: 20px; display: block;"></span>
-                        <div id="text-curtain-header" class="row sidebar-header curtain-header-shadow">
-                            <b class="sidebar-label">TESTO</b>
-                            <i id="close-text-curtain" class="fa-solid fa-angle-down sidebar-icon" style="display:none;"></i>
-                            <i id="open-text-curtain" class="fa-solid fa-angle-right sidebar-icon"></i>
-                        </div>
-                        <div id="text-curtain" style="height: 0px; overflow: hidden;">
-                            <div class="row">
-                                <div id="text-editor-container-12" style="width: 100%;">
+                    <div id="widgets-curtain" class="draggable-widgets-list">
+                        <div class="row" style="margin: 0;">
+                            <div id="draggable-text" class="widget-wrapper" draggable="true" value="0">
+                                <div style="text-align: center; margin-top: 16px; padding: 10px;">
+                                    <i class="fa-solid fa-align-justify fa-xl widget-thumbnail"></i>
+                                    <p style="margin-top: 12px;">Testo</p>
                                 </div>
                             </div>
-                            <span style="margin-top: 20px; display: block;"></span>
-                            <div id="text"></div>
+                            <div class="widget-wrapper" draggable="true" value="1">
+                                <div style="text-align: center; margin-top: 16px; padding: 10px;">
+                                    <i class="fa-solid fa-panorama fa-xl widget-thumbnail"></i>
+                                    <p style="margin-top: 12px;">Galleria</p>
+                                </div>
+                            </div>
                         </div>
-                  </div>
-
-                  <div class="tab-pane fade" id="pills-advanced" role="tabpanel" aria-labelledby="pills-advanced-tab">
-                        <div id="style-curtain-header" class="row sidebar-header curtain-header-shadow">
-                            <b class="sidebar-label">STILE</b>
-                            <i id="close-style-curtain" class="fa-solid fa-angle-down sidebar-icon"></i>
-                            <i id="open-style-curtain" class="fa-solid fa-angle-right sidebar-icon" style="display:none;"></i>
+                        <div class="row" style="margin: 0;">
+                            <div class="widget-wrapper" draggable="true" value="2">
+                                <div style="text-align: center; margin-top: 16px; padding: 10px;">
+                                    <i class="fa-solid fa-video fa-xl widget-thumbnail"></i>
+                                    <p style="margin-top: 12px;">Video</p>
+                                </div>
+                            </div>
+                            <div class="widget-wrapper" draggable="true" value="3">
+                                <div style="text-align: center; margin-top: 16px; padding: 10px;">
+                                    <i class="fa-solid fa-file-pdf fa-xl widget-thumbnail"></i>
+                                    <p style="margin-top: 12px;">Pdf</p>
+                                </div>
+                            </div>
                         </div>
-                        <div id="style-curtain">
-                            <div id="dimensions"></div>
-                            <span style="margin-top: 20px; display: block;"></span>
-                            <div id="margin-total"></div>
-                            <p style="color: #333; font-size: 14px; font-family: 'Helvetica Neue','Segoe UI', helvetica,verdana, sans-serif">Margin:</p>
-                            <div id="margin"></div>
-                            <span style="margin-top: 20px; display: block;"></span>
-                            <p style="color: #333; font-size: 14px; font-family: 'Helvetica Neue','Segoe UI', helvetica,verdana, sans-serif">Padding:</p>
-                            <div id="padding"></div>
-                            <span style="margin-top: 20px; display: block;"></span>
-                            <div id="more"></div>
-                            <span style="margin-top: 20px; display: block;"></span>
-                            <div id="font"></div>
-                            <span style="margin-top: 20px; display: block;"></span>
-                            <label for="">Borders:</label><br />
-                            <div id="border-selection"></div>
-                            <span style="margin-top: 20px; display: block;"></span>
-                            <div id="border-properties"></div>
+                        <div class="row" style="margin: 0;">
+                            <div class="widget-wrapper" draggable="true" value="4">
+                                <div style="text-align: center; margin-top: 16px; padding: 10px;">
+                                    <i class="fa-solid fa-road fa-xl widget-thumbnail"></i>
+                                    <p style="margin-top: 12px;">Tour</p>
+                                </div>
+                            </div>
+                            <div class="widget-wrapper" draggable="true" value="5">
+                                <div style="text-align: center; margin-top: 16px; padding: 10px;">
+                                    <i class="fa-solid fa-map fa-xl widget-thumbnail"></i>
+                                    <p style="margin-top: 12px;">Map</p>
+                                </div>
+                            </div>
                         </div>
-                        <span style="margin-top: 20px; display: block;"></span>
-                        <div id="mobile-style-curtain-header" class="row sidebar-header curtain-header-shadow">
-                            <b class="sidebar-label">STILE MOBILE</b>
-                            <i id="close-mobile-style-curtain" class="fa-solid fa-angle-down sidebar-icon" style="display:none;"></i>
-                            <i id="open-mobile-style-curtain" class="fa-solid fa-angle-right sidebar-icon"></i>
+                        <div class="row" style="margin: 0;">
+                            <div class="widget-wrapper" draggable="true" value="6">
+                                <div style="text-align: center; margin-top: 16px; padding: 10px;">
+                                    <i class="fa-solid fa-paste fa-xl widget-thumbnail"></i>
+                                    <p style="margin-top: 12px;">Pagina</p>
+                                </div>
+                            </div>
+                            <div class="widget-wrapper" draggable="true" value="101">
+                                <div style="text-align: center; margin-top: 16px; padding: 10px;">
+                                    <i class="fa-solid fa-left-right fa-xl widget-thumbnail"></i>
+                                    <p style="margin-top: 12px;">Galleria orizzontale</p>
+                                </div>
+                            </div>
                         </div>
-                        <div id="mobile-style-curtain" style="height: 0px; overflow: hidden;">
-                            <div id="mobile-dimensions"></div>
-                            <span style="margin-top: 20px; display: block;"></span>
-                            <div id="mobile-margin-total"></div>
-                            <p style="color: #333; font-size: 14px; font-family: 'Helvetica Neue','Segoe UI', helvetica,verdana, sans-serif">Margin:</p>
-                            <div id="mobile-margin"></div>
-                            <span style="margin-top: 20px; display: block;"></span>
-                            <p style="color: #333; font-size: 14px; font-family: 'Helvetica Neue','Segoe UI', helvetica,verdana, sans-serif">Padding:</p>
-                            <div id="mobile-padding"></div>
-                            <span style="margin-top: 20px; display: block;"></span>
-                            <div id="mobile-more"></div>
-                            <span style="margin-top: 20px; display: block;"></span>
-                            <div id="mobile-font"></div>
-                            <span style="margin-top: 20px; display: block;"></span>
-                            <label for="">Borders:</label><br />
-                            <div id="mobile-border-selection"></div>
-                            <span style="margin-top: 20px; display: block;"></span>
-                            <div id="mobile-border-properties"></div>
+                        <div class="row" style="margin: 0;">
+                            <div class="widget-wrapper" draggable="true" value="102">
+                                <div style="text-align: center; margin-top: 16px; padding: 10px;">
+                                    <i class="fa-solid fa-border-all fa-xl widget-thumbnail"></i>
+                                    <p style="margin-top: 12px;">Galleria griglia</p>
+                                </div>
+                            </div>
                         </div>
-                        <span style="margin-top: 20px; display: block;"></span>
-                        <div id="events-curtain-header" class="row sidebar-header curtain-header-shadow">
-                            <b class="sidebar-label">EVENTI</b>
-                            <i id="close-events-curtain" class="fa-solid fa-angle-down sidebar-icon" style="display:none;"></i>
-                            <i id="open-events-curtain" class="fa-solid fa-angle-right sidebar-icon"></i>
-                        </div>
-                        <div id="events-curtain" style="height: 0px; overflow: hidden;">
-                            <div id="events-checkbox"></div>
-                            <span style="margin-top: 20px; display: block;"></span>
-                            <div id="ca-type"></div>
-                            <span style="margin-top: 20px; display: block;"></span>
-                            <div id="ca-0"></div>
-                            <div id="ca-1"></div>
-                            <div id="ca-2"></div>
-                            <div id="ca-4"></div>
-                            <div id="ca-5"></div>
-                            <div id="ca-6"></div>
-                        </div>
-                  </div>
+                    </div>
+                    <span style="margin-top: 20px; display: block;"></span>
+                    <div id="metadata-curtain-header" class="row sidebar-header curtain-header-shadow">
+                        <b class="sidebar-label">METADATA</b>
+                        <i id="close-metadata-curtain" class="fa-solid fa-angle-down sidebar-icon" style="display:none;"></i>
+                        <i id="open-metadata-curtain" class="fa-solid fa-angle-right sidebar-icon"></i>
+                    </div>
+                    <div id="metadata" style="height: 0px; overflow: hidden;"></div>
                 </div>
-                <div class="sidebar-footer">
-                    <div id="delete-widget-btn"></div>
+                <div id="sidebar-edit-view" style="max-width: 100%; display:none;">
+                    <ul class="nav nav-pills mb-3" id="pills-tab" style="justify-content: space-around;" role="tablist">
+                        <li class="nav-item">
+                            <i id="widgets-list-button" class="fa-solid fa-grip fa-xl" style="color: #67646a; vertical-align: bottom; font-size: 20px;"></i>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" id="pills-content-tab" data-toggle="pill" href="#pills-content" role="tab" aria-controls="pills-content" aria-selected="true">CONTENUTO</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-advanced-tab" data-toggle="pill" href="#pills-advanced" role="tab" aria-controls="pills-advanced" aria-selected="false">AVANAZATO</a>
+                        </li>
+                    </ul>
+                    
+                    <div class="tab-content" id="pills-tabContent">
+                      <div class="tab-pane fade show active" id="pills-content" role="tabpanel" aria-labelledby="pills-content-tab">
+                            <div id="content-curtain-header" class="row sidebar-header curtain-header-shadow">
+                                <b class="sidebar-label">CONTENUTO</b>
+                                <i id="close-content-curtain" class="fa-solid fa-angle-down sidebar-icon"></i>
+                                <i id="open-content-curtain" class="fa-solid fa-angle-right sidebar-icon" style="display:none;"></i>
+                            </div>
+                            <div id="content-curtain">
+                                <div class="row" id="0" style="display: none;"></div>
+    
+                                <div id="1" style="display: none;">
+                                    <div id="gallery-source"></div>
+                                    <span style="margin-top: 12px; display: block;"></span>
+                                    <div id="gallery-source-form"></div>
+                                    <span style="margin-top: 22px; display: block;"></span>
+                                    <div id="gallery-content"></div>
+                                </div>
+    
+                                <div id="2" style="display: none;">
+                                    <div id="video-source"></div>
+                                    <span style="margin-top: 22px; display: block;"></span>
+                                    <div id="video-content"></div>
+                                </div>
+    
+                                <div class="row" id="3" style="display: none;">
+                                    <div id="pdf-source"></div>
+                                </div>
+    
+                                <div id="4" style="display: none;">
+                                    <div id="showcase-source"></div>
+                                    <span style="margin-top: 22px; display: block;"></span>
+                                    <div id="showcase-content"></div>
+                                </div>
+    
+                                <div id="5" style="display: none;">
+                                    <div id="map-content"></div>
+                                </div>
+    
+                                <div class="row" id="6" style="display: none;">
+                                    <div id="webpage-source"></div>
+                                </div>
+    
+                                <div class="row" id="101" style="display: none;">
+                                    <div id="horizontalScrollGallery-source"></div>
+                                    <span style="margin-top: 12px; display: block;"></span>
+                                    <div id="horizontal-gallery-source-form"></div>
+                                </div>
+    
+                                <div class="row" id="102" style="display: none;">
+                                    <div id="gridGallery-source"></div>
+                                    <span style="margin-top: 12px; display: block;"></span>
+                                    <div id="grid-gallery-source-form"></div>
+                                </div>  
+                                <span style="margin-top: 20px; display: block;"></span>
+                            </div>
+                            <span style="margin-top: 20px; display: block;"></span>
+                            <div id="text-curtain-header" class="row sidebar-header curtain-header-shadow">
+                                <b class="sidebar-label">TESTO</b>
+                                <i id="close-text-curtain" class="fa-solid fa-angle-down sidebar-icon" style="display:none;"></i>
+                                <i id="open-text-curtain" class="fa-solid fa-angle-right sidebar-icon"></i>
+                            </div>
+                            <div id="text-curtain" style="height: 0px; overflow: hidden;">
+                                <div class="row">
+                                    <div id="text-editor-container-12" style="width: 100%;">
+                                    </div>
+                                </div>
+                                <span style="margin-top: 20px; display: block;"></span>
+                                <div id="text"></div>
+                            </div>
+                      </div>
+    
+                      <div class="tab-pane fade" id="pills-advanced" role="tabpanel" aria-labelledby="pills-advanced-tab">
+                            <div id="style-curtain-header" class="row sidebar-header curtain-header-shadow">
+                                <b class="sidebar-label">STILE</b>
+                                <i id="close-style-curtain" class="fa-solid fa-angle-down sidebar-icon"></i>
+                                <i id="open-style-curtain" class="fa-solid fa-angle-right sidebar-icon" style="display:none;"></i>
+                            </div>
+                            <div id="style-curtain">
+                                <div id="dimensions"></div>
+                                <span style="margin-top: 20px; display: block;"></span>
+                                <div id="margin-total"></div>
+                                <p style="color: #333; font-size: 14px; font-family: 'Helvetica Neue','Segoe UI', helvetica,verdana, sans-serif">Margin:</p>
+                                <div id="margin"></div>
+                                <span style="margin-top: 20px; display: block;"></span>
+                                <p style="color: #333; font-size: 14px; font-family: 'Helvetica Neue','Segoe UI', helvetica,verdana, sans-serif">Padding:</p>
+                                <div id="padding"></div>
+                                <span style="margin-top: 20px; display: block;"></span>
+                                <div id="more"></div>
+                                <span style="margin-top: 20px; display: block;"></span>
+                                <div id="font"></div>
+                                <span style="margin-top: 20px; display: block;"></span>
+                                <label for="">Borders:</label><br />
+                                <div id="border-selection"></div>
+                                <span style="margin-top: 20px; display: block;"></span>
+                                <div id="border-properties"></div>
+                            </div>
+                            <span style="margin-top: 20px; display: block;"></span>
+                            <div id="mobile-style-curtain-header" class="row sidebar-header curtain-header-shadow">
+                                <b class="sidebar-label">STILE MOBILE</b>
+                                <i id="close-mobile-style-curtain" class="fa-solid fa-angle-down sidebar-icon" style="display:none;"></i>
+                                <i id="open-mobile-style-curtain" class="fa-solid fa-angle-right sidebar-icon"></i>
+                            </div>
+                            <div id="mobile-style-curtain" style="height: 0px; overflow: hidden;">
+                                <div id="mobile-dimensions"></div>
+                                <span style="margin-top: 20px; display: block;"></span>
+                                <div id="mobile-margin-total"></div>
+                                <p style="color: #333; font-size: 14px; font-family: 'Helvetica Neue','Segoe UI', helvetica,verdana, sans-serif">Margin:</p>
+                                <div id="mobile-margin"></div>
+                                <span style="margin-top: 20px; display: block;"></span>
+                                <p style="color: #333; font-size: 14px; font-family: 'Helvetica Neue','Segoe UI', helvetica,verdana, sans-serif">Padding:</p>
+                                <div id="mobile-padding"></div>
+                                <span style="margin-top: 20px; display: block;"></span>
+                                <div id="mobile-more"></div>
+                                <span style="margin-top: 20px; display: block;"></span>
+                                <div id="mobile-font"></div>
+                                <span style="margin-top: 20px; display: block;"></span>
+                                <label for="">Borders:</label><br />
+                                <div id="mobile-border-selection"></div>
+                                <span style="margin-top: 20px; display: block;"></span>
+                                <div id="mobile-border-properties"></div>
+                            </div>
+                            <span style="margin-top: 20px; display: block;"></span>
+                            <div id="events-curtain-header" class="row sidebar-header curtain-header-shadow">
+                                <b class="sidebar-label">EVENTI</b>
+                                <i id="close-events-curtain" class="fa-solid fa-angle-down sidebar-icon" style="display:none;"></i>
+                                <i id="open-events-curtain" class="fa-solid fa-angle-right sidebar-icon"></i>
+                            </div>
+                            <div id="events-curtain" style="height: 0px; overflow: hidden;">
+                                <div id="events-checkbox"></div>
+                                <span style="margin-top: 20px; display: block;"></span>
+                                <div id="ca-type"></div>
+                                <span style="margin-top: 20px; display: block;"></span>
+                                <div id="ca-0"></div>
+                                <div id="ca-1"></div>
+                                <div id="ca-2"></div>
+                                <div id="ca-4"></div>
+                                <div id="ca-5"></div>
+                                <div id="ca-6"></div>
+                            </div>
+                      </div>
+                    </div>
+                    <div class="sidebar-footer">
+                        <div id="delete-widget-btn"></div>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div id="list" class="container" style="margin-top: 80px;">
-            <div id="home-pages-container" class="row" style="margin: 0;"></div>
-            <div id="pages-container" class="row" style="margin: 0;"></div>
-            <div id="searched" class="row" style="margin: 0;"></div>
-            <div class="modal fade" id="options-modal" role="dialog" style="backdrop-filter: blur(3px);"
-                 data-backdrop="static">
-                <div class="modal-dialog modal-xl" style="margin-top: 5rem;">
-                    <!-- Modal content-->
-                    <div class="modal-content" id="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="options-modal-title">Pagine disponibili</h4>
-                            <button id="close-modal-button" type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            <div style="padding-left: 20px;">
-                                <div id="page-options" class="row"></div>
+    
+            <div id="list" class="container" style="margin-top: 80px;">
+                <div id="home-pages-container" class="row" style="margin: 0;"></div>
+                <div id="pages-container" class="row" style="margin: 0;"></div>
+                <div id="searched" class="row" style="margin: 0;"></div>
+                <div class="modal fade" id="options-modal" role="dialog" style="backdrop-filter: blur(3px);"
+                     data-backdrop="static">
+                    <div class="modal-dialog modal-xl" style="margin-top: 5rem;">
+                        <!-- Modal content-->
+                        <div class="modal-content" id="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="options-modal-title">Pagine disponibili</h4>
+                                <button id="close-modal-button" type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <div style="padding-left: 20px;">
+                                    <div id="page-options" class="row"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div id="presets-container" class="container" style="display: none;">
-                <div class="row presets-label">
-                    <p>SCEGLI IL TUO PRESET</p>
+                <div id="presets-container" class="container" style="display: none;">
+                    <div class="row presets-label">
+                        <p>SCEGLI IL TUO PRESET</p>
+                    </div>
+                    <div class="row presets">
+                        <div id="two-column-preset" class="preset">
+                            <img src="assets/images/presets/two-columns.png" alt="">
+                        </div>
+                        <div id="three-column-preset" class="preset">
+                            <img src="assets/images/presets/three-columns.png" alt="">
+                        </div>
+                        <div id="four-column-preset" class="preset">
+                            <img src="assets/images/presets/four-columns.png" alt="">
+                        </div>
+                    </div>
                 </div>
-                <div class="row presets">
-                    <div id="two-column-preset" class="preset">
-                        <img src="assets/images/presets/two-columns.png" alt="">
-                    </div>
-                    <div id="three-column-preset" class="preset">
-                        <img src="assets/images/presets/three-columns.png" alt="">
-                    </div>
-                    <div id="four-column-preset" class="preset">
-                        <img src="assets/images/presets/four-columns.png" alt="">
+            </div>
+    
+            <main class="page-content" id="main">
+                <div class="spinner-container" style="display: block; height: 100%; width: 100%;">
+                    <div class="loadpanel"></div>
+                </div>
+                <div class="demo-container" id="demo-container" style="display: none;">
+                    <div id="page" class="page" style="">
+                        <div id="responsive-box"></div>
+                        <div id="fallback-responsive-box" style="display: none"></div>
+                        <div id="jsoneditor" style="width: 400px; height: 400px;"></div>
                     </div>
                 </div>
-            </div>
+            </main>
         </div>
-
-        <main class="page-content" id="main" style="display: none;">
-            <div class="spinner-container" style="display: block; height: 100%; width: 100%;">
-                <div class="loadpanel"></div>
-            </div>
-            <div id="data-spinner-container" style="display: block; height: 100%; width: 100%;">
-                <div class="loaddata"></div>
-            </div>
-            <div class="demo-container" id="demo-container" style="display: none;">
-                <div id="page" class="page" style="">
-                    <div id="responsive-box"></div>
-                    <div id="fallback-responsive-box" style="display: none"></div>
-                    <div id="jsoneditor" style="width: 400px; height: 400px;"></div>
-                </div>
-            </div>
-        </main>
-    </div>
-
 </body>
-
-</html>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -1291,5 +1242,5 @@
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.12.313/build/pdf.min.js"></script>
 <script src="https://cdn3.devexpress.com/jslib/21.2.4/js/dx.all.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.7.4/jsoneditor.min.js" integrity="sha512-KQaWlVsZF0iPXCR8p176hVrg/rlw+smy8dpJ+vwiuvoHyGr8PTVvaAV4ZmsAYdCvMRP8e3sB9pl1mRuaunaXrg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script type="module" src="~/js/index.js" defer></script>
+<script type="module" src="~/js/Page/index.js"></script>
+</html>

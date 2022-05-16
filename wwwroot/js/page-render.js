@@ -4,7 +4,8 @@ import SaveManager from './requests.js';
 import FormData from './formData.js';
 import Widget from "./widget.js";
 import DefaultContents from "./defaultContents.js";
-export default class RenderManager {
+
+export default class PageRender {
 
     pages;
     selectedPage;
@@ -32,19 +33,15 @@ export default class RenderManager {
         "de"
     ]
 
-    constructor(pages) {
-        // var container = document.getElementById("jsoneditor");
-        // var editor = new JSONEditor(container);
-        // editor.set(this.selectedPage.contents.widgets);
-        // var json = editor.get(); // to get modified json
-        this.pages = JSON.parse(JSON.stringify(pages));
+    constructor(page, content) {
+        console.log(page, content);
         this.initInteractives(); // init interactives html elements
     }
 
     initEventListener() {
         let that = this;
         let addIcon = document.getElementById('add-icon');
-        
+
         addIcon.addEventListener('click', () => {
             this.showPresets();
             if (!this.twoColEL) {
@@ -62,7 +59,7 @@ export default class RenderManager {
         });
 
         document.getElementById('go-back').addEventListener("click", () => {
-            this.reloadPage();
+            window.location.href = "https://localhost:5001";
         });
         let draggableWidgets = document.querySelectorAll('.widget-wrapper');
         draggableWidgets.forEach(draggableWidget => {
@@ -73,132 +70,10 @@ export default class RenderManager {
     }
 
     initInteractives() {
-        let that = this;
         this.initSidebarCurtains();
         document.getElementById("widgets-list-button").addEventListener("click", () => {
             this.closeModifyPanel();
         });
-        document.getElementById('search').addEventListener('keyup', (event) => {
-            document.getElementById('search').value = event.target.value;
-            clearTimeout(this.typingTimer);
-            this.typingTimer = setTimeout(() => {
-                this.populateBySearch(event.target.value, document.getElementById('filter').value);
-            }, this.doneTypingInterval);
-        });
-        document.getElementById('create').addEventListener('click', function() {
-            let type = document.getElementById('type').value;
-            let slug = document.getElementById('slug').value;
-            if (type && slug) {
-                let slugTaken = false;
-                that.pages.forEach(page => {
-                    if ('/' + slug == page.slug) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Errore',
-                            text: 'La path è già in uso',
-                        });
-                        slugTaken = true;
-                    }
-                })
-                if (!slugTaken) {
-                    new SaveManager().createPage(type, slug.toString()).then(newPage => {
-                        that.selectedPage = newPage;
-                        document.getElementById('list').style.display = "none";
-                        document.getElementById('main').style.display = "block";
-                        that.openPageStream(newPage, newPage.contents[0]);
-                    })
-                }
-            }
-            else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Errore',
-                    text: 'I campi non sono validi',
-                })
-            }
-        })
-    }
-
-
-
-    filters = document.getElementById('filter').addEventListener('change', (event) => {
-        let filter = event.target.value;
-        this.populateBySearch(document.getElementById('search').value, filter)
-    
-    });
-
-    populatePageList() {
-        let homeContainer = document.getElementById("home-pages-container");
-        let pageContainer = document.getElementById("pages-container");
-        this.pages.forEach(page => {
-            let pageCard = document.createElement('div');
-            pageCard.classList.add('page-card');
-            let pageImage = document.createElement("img");
-            pageImage.draggable = false;
-            pageImage.classList.add('card-img-top');
-            pageImage.src = "https://img.icons8.com/glyph-neue/452/paper.png";
-            let pageTitle = document.createElement("h6");
-            pageTitle.classList.add('card-title');
-            pageTitle.innerHTML = page.description;
-            pageTitle.style.textAlign = "center";
-            pageCard.append(pageImage, pageTitle);
-            if (page.drafts) {
-                let badge = document.createElement('span');
-                badge.className = "badge badge-warning";
-                badge.innerHTML = "Bozza";
-                pageCard.append(badge);
-            }
-            $(pageCard).attr("data-toggle", "modal");
-            $(pageCard).attr("data-target", "#options-modal");
-            if (page.type == 0)
-                homeContainer.appendChild(pageCard);
-            else
-                pageContainer.appendChild(pageCard);
-            pageCard.addEventListener('click', () => {
-                this.showOptions(page);
-            })
-        });
-    }
-
-    populateBySearch(val, filter) {
-        val = val ? val : "";
-        document.getElementById("home-pages-container").style.display = "none";
-        document.getElementById("pages-container").style.display = "none";
-        let search = document.getElementById('searched');
-        search.innerHTML = "";
-        let searched;
-        searched = this.pages.filter((page) => {
-            if (page.description?.toLowerCase().includes(val.toLowerCase()))
-                if (filter == "all")
-                    return page;
-                else if (page.type == filter)
-                    return page;
-        });
-        searched.forEach(page => {
-            let pageCard = document.createElement('div');
-            pageCard.classList.add('page-card');
-            let pageImage = document.createElement("img");
-            pageImage.draggable = false;
-            pageImage.classList.add('card-img-top');
-            pageImage.src = "https://img.icons8.com/glyph-neue/452/paper.png";
-            let pageTitle = document.createElement("h6");
-            pageTitle.classList.add('card-title');
-            pageTitle.innerHTML = page.description;
-            pageTitle.style.textAlign = "center";
-            pageCard.append(pageImage, pageTitle);
-            if (page.drafts) {
-                let badge = document.createElement('span');
-                badge.className = "badge badge-warning";
-                badge.innerHTML = "Bozza";
-                pageCard.append(badge);
-            }
-            $(pageCard).attr("data-toggle", "modal");
-            $(pageCard).attr("data-target", "#options-modal");
-            search.append(pageCard)
-            pageCard.addEventListener('click', () => {
-                this.showOptions(page);
-            })
-        })
     }
 
     reloadPage() {
@@ -220,108 +95,6 @@ export default class RenderManager {
         else {
             window.location.reload();
         }
-    }
-
-    showOptions(page) {
-        let pageOptionsContainer = document.getElementById('page-options');
-        pageOptionsContainer.innerHTML = "";
-        if (page.drafts != null) {
-            page.drafts.forEach(draft => {
-                let pageCard = document.createElement('div');
-                pageCard.classList.add('page-card');
-                let pageImage = document.createElement("img");
-                pageImage.classList.add('card-img-top');
-                pageImage.src = "https://img.icons8.com/glyph-neue/452/paper.png";
-                pageImage.draggable = false;
-                let pageTitle = document.createElement("h6");
-                pageTitle.classList.add('card-title');
-                pageTitle.innerHTML = draft.language ? draft.language + ' (Draft)' : 'Default (Draft)';
-                pageTitle.style.textAlign = "center";
-                pageCard.append(pageImage, pageTitle);
-                pageCard.style.backgroundColor = "white"
-                //  Link alla pagina dedicata per il configuratore della pagina specifica
-                let linkToPage = document.createElement('a');
-                linkToPage.href = "https://localhost:5001/api/pages/" + page.id + "/" + draft.language;
-                linkToPage.append(pageCard);
-                pageOptionsContainer.appendChild(linkToPage);
-                // pageCard.addEventListener("click", () => {
-                //        
-                //     
-                //     
-                //     // document.getElementById("status").innerHTML = "bozza";
-                //     // document.getElementById("status").style.color = "#e03e0d";
-                //     // $(pageCard).attr("data-toggle", "modal");
-                //     // $(pageCard).attr("data-target", "#options-modal");
-                //     // document.getElementById('list').style.display = "none";
-                //     // document.getElementById('main').style.display = "block";
-                //     // this.isDraft = true;
-                //     // this.openPageStream(page, draft);
-                //     // this.deleteDraftBtn.option("disabled", false);
-                //     // this.publishPageBtn.option("disabled", false);
-                // })
-            });
-        }
-        else {
-            page.contents.forEach(content => {
-                let pageCard = document.createElement('div');
-                pageCard.classList.add('page-card');
-                let pageImage = document.createElement("img");
-                pageImage.classList.add('card-img-top');
-                pageImage.src = "https://img.icons8.com/glyph-neue/452/paper.png";
-                pageImage.draggable = false;
-                let pageTitle = document.createElement("h6");
-                pageTitle.classList.add('card-title');
-                pageTitle.innerHTML = content.language ? content.language : 'Default';
-                pageTitle.style.textAlign = "center";
-                pageCard.append(pageImage, pageTitle);
-                pageCard.style.backgroundColor = "white"
-                let linkToPage = document.createElement('a');
-                linkToPage.href = "https://localhost:5001/api/pages/" + page.id + "/" + content.language;
-                linkToPage.append(pageCard);
-                pageOptionsContainer.appendChild(linkToPage);
-                pageCard.addEventListener("click", () => {
-                    //  Link alla pagina dedicata per il configuratore della pagina specifica
-                    // this.isDraft = false;
-                    // document.getElementById("status").innerHTML = "pubblicato";
-                    // document.getElementById("status").style.color = "#22a93d";
-                    // $(pageCard).attr("data-toggle", "modal");
-                    // $(pageCard).attr("data-target", "#options-modal");
-                    // document.getElementById('list').style.display = "none";
-                    // document.getElementById('main').style.display = "block";
-                    // this.openPageStream(page, content);
-                    // this.saveInDraftBtn.option("disabled", true);
-                    // this.deleteDraftBtn.option("disabled", true);
-                    // this.publishPageBtn.option("disabled", true);
-                })
-            });
-        }
-        let languageContainer = document.createElement('div'),
-            languageSelect = document.createElement("select");
-        languageContainer.className = "language-select";
-        languageSelect.className = "form-select form-inline form-select-sm";
-        let existingLanguages = new Array();
-        page.contents.forEach(content => existingLanguages.push(content.language));
-        let allowedLanguages = this.languages.filter(lan => existingLanguages.indexOf(lan) == -1);
-        allowedLanguages.forEach(lan => {
-            let option = document.createElement('option');
-            option.value = lan.toString();
-            option.innerText = lan.toString().charAt(0).toUpperCase() + lan.slice(1);
-            languageSelect.append(option);
-        })
-        let newLanguageButton = document.createElement('button');
-        newLanguageButton.className = "btn btn-primary btn-sm newLanguageBtn";
-        newLanguageButton.innerText = "Crea nuova lingua";
-        languageContainer.append(languageSelect, newLanguageButton);
-        pageOptionsContainer.appendChild(languageContainer);
-        $(newLanguageButton).attr("data-toggle", "modal");
-        $(newLanguageButton).attr("data-target", "#options-modal");
-        newLanguageButton.addEventListener('click', () => {
-            console.log('localhost:5001/api/pages/' + page.id + "/" + languageSelect.value)
-            window.location = 'localhost:5001/api/pages/' + page.id + "/" + languageSelect.value;
-            // let saveManager = new SaveManager().newLanguage(page.id, false, languageSelect.value, this)
-            // document.getElementById('list').style.display = "none";
-            // document.getElementById('main').style.display = "block";
-        })
     }
 
     initSidebarCurtains() {
@@ -511,10 +284,9 @@ export default class RenderManager {
         showPane: true,
         shading: true,
         closeOnOutsideClick: false,
-      }).dxLoadPanel('instance');
+    }).dxLoadPanel('instance');
 
     openPageStream(fullPage, contentOrDraft) {
-        document.getElementById('search').style.display = "none";
         this.loadPanel.show();
         setTimeout(() => {
             let page = JSON.parse(JSON.stringify(fullPage));
@@ -535,7 +307,7 @@ export default class RenderManager {
         { id: 1, name: 'Salva bozza', icon: 'box' },
         { id: 2, name: 'Elimina bozza', icon: 'trash' },
         { id: 3, name: 'Pubblica', icon: 'upload' },
-      ];
+    ];
 
     saveDraft = $(() => {
         let that = this;
@@ -548,7 +320,7 @@ export default class RenderManager {
             onClick() {
                 that.loadPanel.show();
                 setTimeout(() => {
-                    that.loadPanel.hide();    
+                    that.loadPanel.hide();
                     if (that.historyManager.isHistoryEmpty() || that.historyManager.getHistoryLenght() == 1 && that.metadataChanged == false)
                         Swal.fire({
                             icon: 'info',
@@ -574,7 +346,7 @@ export default class RenderManager {
                         that.deleteDraftBtn.option("disabled", false);
                         that.publishPageBtn.option("disabled", false);
                     }
-                  }, 400);
+                }, 400);
             },
         }).dxButton('instance');
     });
@@ -691,7 +463,7 @@ export default class RenderManager {
             },
         }).dxButton('instance');
     });
-    
+
     deleteLanguage = $(() => {
         let that = this;
         that.deleteLanguageBtn = $('#delete-language-button').dxButton({
@@ -741,17 +513,17 @@ export default class RenderManager {
                 else
                     items.push({dataField: key.toString()});
             },),
-            $('#metadata').dxForm({
-              colCount: 1,
-              formData: formData.metadataTab,
-              items: items,
-              labelLocation: "left",
-              onFieldDataChanged: function (e) {
-                  that.metadataChanged = true;
-                  that.selectedPage.contents[e.dataField] = e.value;
-                  that.historyManager.updateHistory(that.selectedPage);
-              }
-            });
+                $('#metadata').dxForm({
+                    colCount: 1,
+                    formData: formData.metadataTab,
+                    items: items,
+                    labelLocation: "left",
+                    onFieldDataChanged: function (e) {
+                        that.metadataChanged = true;
+                        that.selectedPage.contents[e.dataField] = e.value;
+                        that.historyManager.updateHistory(that.selectedPage);
+                    }
+                });
         });
         document.getElementById("go-back").style.display = "block";
         document.getElementById("info").style.display = "flex";
@@ -765,7 +537,7 @@ export default class RenderManager {
         this.setDefaultMode();
         this.fillPage(page.contents.widgets, false);
     }
-    
+
     createDropzone(base_id, container, widget) {
         let that = this;
         if (base_id && container) {
@@ -894,7 +666,7 @@ export default class RenderManager {
                 html: this.handleWidget(w)
             }
         });
-        
+
         let dropzone = this.createDropzone()
 
         items.push(
@@ -908,7 +680,7 @@ export default class RenderManager {
                 html: dropzone
             }
         )
-            
+
         this.responsiveBox = $('#responsive-box').dxResponsiveBox({
             rows: rows,
             cols: cols,
@@ -920,7 +692,7 @@ export default class RenderManager {
         }).dxResponsiveBox('instance');
 
         this.initEventListener();
-        
+
     }
 
     calculateRows(widgets) {
@@ -974,7 +746,7 @@ export default class RenderManager {
                 resizer.style.display = "none";
                 // elem.style.opacity = "100%";
                 elem.classList.remove('structure');
-            }); 
+            });
             elem.addEventListener('click', () => {
                 this.openModifyPanel(widget);
             })
@@ -992,57 +764,57 @@ export default class RenderManager {
                 elem.style.width = (startWidth + e.clientX - startX) + 'px';
             }, false);
             document.documentElement.addEventListener('mouseup', (e) => {
-                    let oldElement = elem,
-                        newElement = oldElement.cloneNode(true);
-                    oldElement.parentNode.replaceChild(newElement, oldElement);
-                    let resizeRatio = newElement.clientWidth / startWidth,
-                        newSpan = Math.round(widget.columnSpan * resizeRatio) != 0 ? Math.round(widget.columnSpan * resizeRatio) : 1,
-                        currWidget = this.selectedPage.contents.widgets.find(w => {return w.row == widget.row && w.column == widget.column});
-                    if ((widget.column + newSpan) > pageColumns) {
-                        newElement.style.width = startWidth;
-                        this.fillPage(this.selectedPage.contents.widgets);
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Errore',
-                            text: 'Non è possibile ingrandire oltre la larghezza della pagina',
-                        })
-                        return;
-                    }
-                    else if (besideWidget && (currWidget.column + newSpan) > besideWidget.column) {
-                        newElement.style.width = startWidth;
-                        this.fillPage(this.selectedPage.contents.widgets);
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Errore',
-                            text: 'Non è possibile sovrapporre due elementi',
-                        });
-                        return;
-                    } else {
-                        widget.columnSpan = newSpan;
-                        this.historyManager.updateHistory(JSON.parse(JSON.stringify(this.selectedPage)));
-                        var totRows = this.calculateRows(this.selectedPage.contents.widgets),
-                            totCols = this.calculateColumns(this.selectedPage.contents.widgets);
-                        this.initFallbackRespondiveBox(totRows, totCols, false);
+                let oldElement = elem,
+                    newElement = oldElement.cloneNode(true);
+                oldElement.parentNode.replaceChild(newElement, oldElement);
+                let resizeRatio = newElement.clientWidth / startWidth,
+                    newSpan = Math.round(widget.columnSpan * resizeRatio) != 0 ? Math.round(widget.columnSpan * resizeRatio) : 1,
+                    currWidget = this.selectedPage.contents.widgets.find(w => {return w.row == widget.row && w.column == widget.column});
+                if ((widget.column + newSpan) > pageColumns) {
+                    newElement.style.width = startWidth;
+                    this.fillPage(this.selectedPage.contents.widgets);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Errore',
+                        text: 'Non è possibile ingrandire oltre la larghezza della pagina',
+                    })
+                    return;
+                }
+                else if (besideWidget && (currWidget.column + newSpan) > besideWidget.column) {
+                    newElement.style.width = startWidth;
+                    this.fillPage(this.selectedPage.contents.widgets);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Errore',
+                        text: 'Non è possibile sovrapporre due elementi',
+                    });
+                    return;
+                } else {
+                    widget.columnSpan = newSpan;
+                    this.historyManager.updateHistory(JSON.parse(JSON.stringify(this.selectedPage)));
+                    var totRows = this.calculateRows(this.selectedPage.contents.widgets),
+                        totCols = this.calculateColumns(this.selectedPage.contents.widgets);
+                    this.initFallbackRespondiveBox(totRows, totCols, false);
 
-                        // replace the entire row taking from fallback responsivebox
-                        let responsiveBoxCotnainer = document.getElementById('responsive-box'),
-                            newRowDiv = document.getElementById('fallback-responsive-box').children[0].children[widget.row],
-                            oldRowDiv = responsiveBoxCotnainer.children[0].children[widget.row];
-                        responsiveBoxCotnainer.children[0].replaceChild(newRowDiv, oldRowDiv);
-                        
-                        
-                        // update main responsivebox screenItems
-                        this.responsiveBox._screenItems = this.responsiveBox._screenItems.filter(screenItem => screenItem.location.row != widget.row);
-                        this.fallbackResponsiveBox._screenItems.forEach(screenItem => {
-                            if (screenItem.location.row == widget.row) {
-                                this.responsiveBox._screenItems.push(screenItem);
-                                this.initEventListener(resizer, widget, screenItem.item.html);
-                            }
-                        });
+                    // replace the entire row taking from fallback responsivebox
+                    let responsiveBoxCotnainer = document.getElementById('responsive-box'),
+                        newRowDiv = document.getElementById('fallback-responsive-box').children[0].children[widget.row],
+                        oldRowDiv = responsiveBoxCotnainer.children[0].children[widget.row];
+                    responsiveBoxCotnainer.children[0].replaceChild(newRowDiv, oldRowDiv);
 
-                        // reset fallback responsivebox screenItems
-                        this.fallbackResponsiveBox._screenItems = null;                
-                    }
+
+                    // update main responsivebox screenItems
+                    this.responsiveBox._screenItems = this.responsiveBox._screenItems.filter(screenItem => screenItem.location.row != widget.row);
+                    this.fallbackResponsiveBox._screenItems.forEach(screenItem => {
+                        if (screenItem.location.row == widget.row) {
+                            this.responsiveBox._screenItems.push(screenItem);
+                            this.initEventListener(resizer, widget, screenItem.item.html);
+                        }
+                    });
+
+                    // reset fallback responsivebox screenItems
+                    this.fallbackResponsiveBox._screenItems = null;
+                }
             }, false);
         } , false);
     }
@@ -1177,7 +949,7 @@ export default class RenderManager {
             src = widget.content.source[0],
             video_url = new URL(src);
         const regExp = "/^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/";
-        
+
         if (src.match(regExp) || src.indexOf("www.youtube-nocookie") != -1) {
             video.allowFullscreen = "true";
             var youtube_video = handleVideo(widget, video_url, video);
@@ -1654,25 +1426,25 @@ export default class RenderManager {
                     div.style.borderWidth = border.width;
                     div.style.borderColor = border.color;
                     break;
-    
+
                 case 1:
                     div.style.borderLeft = border.style;
                     div.style.borderWidth = border.width;
                     div.style.borderColor = border.color;
                     break;
-    
+
                 case 2:
                     div.style.borderRight = border.style;
                     div.style.borderWidth = border.width;
                     div.style.borderColor = border.color;
                     break;
-    
+
                 case 3:
                     div.style.borderTop = border.style;
                     div.style.borderWidth = border.width;
                     div.style.borderColor = border.color;
                     break;
-    
+
                 case 4:
                     div.style.borderBottom = border.style;
                     div.style.borderWidth = border.width;
@@ -1738,7 +1510,7 @@ export default class RenderManager {
         this.generatedId.push(id);
         return id;
     }
-    
+
     initHistoryButton() {
         let that = this;
         document.addEventListener('keydown', function(event) {
@@ -1746,7 +1518,7 @@ export default class RenderManager {
                 that.closeModifyPanel();
                 that.renderPreviousPage();
             }
-          });
+        });
         document.getElementById('prev-page').addEventListener('click', () => {
             this.closeModifyPanel();
             this.renderPreviousPage();
@@ -1760,10 +1532,10 @@ export default class RenderManager {
                 title: 'Errore',
                 text: 'Non presenti delle modifiche in questa sessione',
             });
-            
+
         else {
             this.selectedPage = JSON.parse(JSON.stringify(this.historyManager.getPreviousPage()));
-            this.fillPage(this.selectedPage.contents.widgets)          
+            this.fillPage(this.selectedPage.contents.widgets)
         }
     }
 
@@ -1780,8 +1552,8 @@ export default class RenderManager {
     }
 
     closeModifyPanel() {
-        document.getElementById("sidebar-edit-view").style.display = "none";  
-        document.getElementById("sidebar-default-view").style.display = "block";  
+        document.getElementById("sidebar-edit-view").style.display = "none";
+        document.getElementById("sidebar-default-view").style.display = "block";
     }
 
     // renderChanges(modifiedPage) {
@@ -1794,7 +1566,7 @@ export default class RenderManager {
     //         this.fillPage(this.selectedPage.contents.widgets);
     //     }
     // }
-    
+
     renderWidgetChanges(widget, modifiedPage) {
         this.responsiveBox._screenItems.forEach(screenItem => {
             if (screenItem.location.row == widget.row && screenItem.location.col == widget.column) {
@@ -1809,7 +1581,7 @@ export default class RenderManager {
         });
         this.historyManager.updateHistory(JSON.parse(JSON.stringify(modifiedPage)));
     }
-    
+
     showPresets() {
         let presets = document.getElementById('presets-container');
         let dropzone = document.getElementById('dropzone');
@@ -1817,7 +1589,7 @@ export default class RenderManager {
         presets.style.display = "block";
         dropzone.appendChild(presets);
     }
-    
+
     hidePresets() {
         let presets = document.getElementById('presets-container');
         let dropzone = document.getElementById('dropzone');
@@ -1904,11 +1676,11 @@ export default class RenderManager {
         });
         lastScreenItem.location.row  = totRows;
         this.responsiveBox._screenItems.push(lastScreenItem);
-        
+
         this.fallbackResponsiveBox._screenItems = [];
-        
+
         let newRowNode = document.getElementById('fallback-responsive-box').firstChild.lastChild
-        
+
         document.getElementById('responsive-box').firstChild.insertBefore(newRowNode, document.getElementById('responsive-box').firstChild.lastChild);
     }
 
@@ -1952,11 +1724,11 @@ export default class RenderManager {
                     emptyWidget = emptyWidget;
                     break;
             }
-            
+
             emptyWidget.row = toWidget.row;
             emptyWidget.column = toWidget.column;
             emptyWidget.columnSpan = toWidget.columnSpan;
-            
+
             let oldWidgetIndex = this.selectedPage.contents.widgets.findIndex(w => w.row == toWidget.row && w.column == toWidget.column)
             this.selectedPage.contents.widgets[oldWidgetIndex] = emptyWidget;
             this.renderWidgetChanges(emptyWidget, this.selectedPage);
@@ -1984,7 +1756,7 @@ export default class RenderManager {
             }
         }
     }
-    
+
     addWidget(widgetType, row, column, span) {
         let emptyWidget = new Widget().getEmptyWidget();
         emptyWidget.type = widgetType;
@@ -2005,7 +1777,7 @@ export default class RenderManager {
                 break;
             case 4:
                 emptyWidget.content = defaultContents.showcaseSource;
-                break;    
+                break;
             case 5:
                 emptyWidget.content = defaultContents.mapContent;
                 break;
@@ -2044,7 +1816,7 @@ export default class RenderManager {
             if (span)
                 emptyWidget.columnSpan = span;
             this.selectedPage.contents.widgets.push(emptyWidget);
-        }        
+        }
         var totRows = this.calculateRows(this.selectedPage.contents.widgets);
         var totCols = this.calculateColumns(this.selectedPage.contents.widgets);
         this.initFallbackRespondiveBox(totRows, totCols);
@@ -2062,7 +1834,7 @@ export default class RenderManager {
         document.getElementById('responsive-box').firstChild.insertBefore(newRowNode, document.getElementById('responsive-box').firstChild.lastChild);
         this.historyManager.updateHistory(JSON.parse(JSON.stringify(this.selectedPage)));
     }
-    
+
     initFallbackRespondiveBox(rows, cols, append) {
         var totRows = rows;
         var totCols = cols;

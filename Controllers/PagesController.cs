@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Data.Entity.Infrastructure;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
@@ -15,8 +17,10 @@ using API.Interfaces;
 using API.Data;
 using API.Entities;
 using API.Model;
+using Microsoft.AspNetCore.Diagnostics;
 using Model.Page.Contents;
 using Model.Page.Type;
+using Model.PageModel.PageWidget;
 
 namespace Pages_configurator.Controllers
 {
@@ -36,6 +40,12 @@ namespace Pages_configurator.Controllers
             _bindingService = bindingService;
             _context = context;
         }
+        
+        [Route("{id}/{language}")]
+        public ActionResult Index(Guid id, string language)
+        {
+            return View();
+        }
 
         [HttpGet("get-all")]
         public async Task<ActionResult<List<CustomTablePage>>> GetAll()
@@ -44,7 +54,7 @@ namespace Pages_configurator.Controllers
 
             List<CustomTablePage> pages = new();
             List<DbPage> dbPages = _context.Pages.ToList();
-            
+
             foreach (DbPage dbPage in dbPages)
             {
                 CustomTablePage page = new CustomTablePage
@@ -61,6 +71,27 @@ namespace Pages_configurator.Controllers
             }
             return pages;
         }
+        
+        [HttpPost("get")]
+        public async Task<ActionResult<CustomTablePage>> Get(PageDto pageDto)
+        {
+            DbPage dbPage = _context.Pages.Find(pageDto.Id);
+            CustomTablePage page = new CustomTablePage
+            {
+                id = dbPage.id,
+                type = dbPage.type,
+                visibility = dbPage.visibility,
+                slug = dbPage.slug,
+                description = dbPage.description,
+                drafts = dbPage.drafts != null
+                    ? JsonConvert.DeserializeObject<List<CustomTableContent>>(dbPage.drafts)
+                    : null,
+                contents = JsonConvert.DeserializeObject<List<CustomTableContent>>(dbPage.contents)
+            };
+
+            return page;
+        }
+        
         
         [HttpPost("publish")]
         public IActionResult SavePage([FromBody] PublishDto publishDto)
@@ -195,10 +226,72 @@ namespace Pages_configurator.Controllers
             return page;
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [HttpPost("new-language")]
+        public async Task<ActionResult<CustomTablePage>> CreateLanguage([FromBody] NewLanguageDto newLanguageDto)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            if (!_context.Pages.Any(page => page.id == newLanguageDto.Id)) return BadRequest("Page not found");
+            DbPage page = _context.Pages.Find(newLanguageDto.Id);
+            List<TableContent> pageContents = JsonConvert.DeserializeObject<List<TableContent>>(page.contents);
+            if (pageContents.Any(content => content.Language == newLanguageDto.Language)) return BadRequest("Language already exists");
+            TableContent newContent = new()
+            {
+                Language = newLanguageDto.Language,
+                Title = pageContents.First().Title,
+                Widgets = newLanguageDto.Duplicate ? pageContents.First().Widgets : new List<Widget>()
+            };
+            pageContents.Add(newContent);
+            page.contents = JsonConvert.SerializeObject(pageContents);
+            CustomTablePage customPage = new CustomTablePage
+            {
+                id = page.id,
+                type = page.type,
+                visibility = page.visibility,
+                slug = page.slug,
+                description = page.description,
+                drafts = page.drafts != null ? JsonConvert.DeserializeObject<List<CustomTableContent>>(page.drafts) : null,
+                contents = JsonConvert.DeserializeObject<List<CustomTableContent>>(page.contents)
+            };
+            try
+            {
+                _context.Entry(page).Property("contents").IsModified = true;
+                _context.SaveChanges();
+                return customPage;
+
+            }
+            catch (DbUpdateException e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
+
+        [HttpDelete("delete-language")]
+        public ActionResult DeleteLanguage([FromBody] DeleteLanguageDto deleteLanguageDto)
+        {
+            if (!_context.Pages.Any(page => page.id == deleteLanguageDto.Id)) return BadRequest("Page not found");
+            DbPage page = _context.Pages.Find(deleteLanguageDto.Id);
+            List<TableContent> pageContents = JsonConvert.DeserializeObject<List<TableContent>>(page.contents);
+            if (!pageContents.Any(content => content.Language == deleteLanguageDto.Language)) return BadRequest("Page not found");
+            pageContents.Remove(pageContents.Find(content => content.Language == deleteLanguageDto.Language));
+            page.contents = JsonConvert.SerializeObject(pageContents);
+            try
+            {
+                _context.Entry(page).Property("contents").IsModified = true;
+                _context.SaveChanges();
+                return Ok("New language correctly created");
+
+            }
+            catch (DbUpdateException e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        // [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        // public IActionResult Error()
+        // {
+        //     return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        // }
     }
 }

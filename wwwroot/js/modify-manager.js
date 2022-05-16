@@ -1,5 +1,5 @@
 import FormData from "./formData.js";
-import SaveManager from "./save-manager.js"
+import SaveManager from "./requests.js"
 import Widget from "./widget.js";
 export default class ModifyManager {
     widgetIndex = {

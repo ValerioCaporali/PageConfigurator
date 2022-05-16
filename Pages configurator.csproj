@@ -27,4 +27,8 @@
     <Folder Include="wwwroot\assets\images" />
   </ItemGroup>
 
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Home\PageConfigurator\Page.cshtml" />
+  </ItemGroup>
+
 </Project>

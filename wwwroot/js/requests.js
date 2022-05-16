@@ -1,3 +1,6 @@
+import RenderManager from "./render-manager.js";
+import PageRender from "./page-render.js";
+
 export default class SaveManager {
 
     base_url = 'api/Pages/';
@@ -97,8 +100,7 @@ export default class SaveManager {
         });
     }
 
-    saveInDraft(history)
-    {
+    saveInDraft(history) {
 
          // if(!this.isPageValid(pageToSave)) {
          //     Swal.fire({
@@ -164,8 +166,7 @@ export default class SaveManager {
 
     }
 
-    deleteDraft(guid)
-    {
+    deleteDraft(guid) {
         const data = {
             id: guid
         }
@@ -208,8 +209,7 @@ export default class SaveManager {
     }
 
     
-    publishPage(guid)
-    {
+    publishPage(guid) {
         const data = {
             id: guid
         };
@@ -251,6 +251,7 @@ export default class SaveManager {
     }
 
     deletePage(guid) {
+        
         const data = {
             id: guid
         };
@@ -309,6 +310,126 @@ export default class SaveManager {
         let response = await fetch(this.base_url + 'create', options);
         let newPage = await response.json();
         return newPage;
+    }
+    
+    newLanguage(guid, duplicate, language, renderer) {
+        const data = {
+            id: guid,
+            duplicate: duplicate,
+            language: language
+        };
+        
+        const options = {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        };
+        
+        fetch(this.base_url + 'new-language', options).then(response => {
+            if(!response.ok) {
+                response.json()
+                    .catch(() => {
+                        $(() => {
+                            DevExpress.ui.notify(response.status);
+                        })
+                    })
+                    .then(({message}) => {
+                        $(() => {
+                            DevExpress.ui.notify(message);
+                        });
+                    })
+            }
+            else
+            {
+                response.json().then(data => {
+                    let newContent;
+                    data.contents.forEach(content => {
+                        if (content.language == language) 
+                            newContent = content;
+                    })
+                    renderer.openPageStream(data, newContent);
+                })
+            }
+        })
+        
+    }
+    
+    deleteLanguage(guid, language) {
+        const data = {
+            id: guid,
+            language: language
+        };
+        
+        const options = {
+            method: "DELETE",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }
+        
+        fetch(this.base_url + 'delete-language', options).then(response => {
+            if (!response.ok) {
+                response.json()
+                    .catch(() => {
+                        $(() => {
+                            DevExpress.ui.notify(response.status);
+                        })
+                    })
+                    .then(({message}) => {
+                        $(() => {
+                            DevExpress.ui.notify(message);
+                        });
+                    })
+            }
+            else {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Lingua eliminata correttamente !'
+                });
+            }
+        })
+    }
+    
+    getPageById(guid, language, renderer) {
+        const data = {
+            id: guid
+        };
+
+        const options = {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        };
+
+        fetch('https://localhost:5001/api/pages/get', options).then(response => {
+            if(!response.ok) {
+                response.json()
+                    .then(({message}) => {
+                        $(() => {
+                            DevExpress.ui.notify(message);
+                        });
+                    })
+            }
+            else
+            {
+                response.json().then(data => {
+                    let specificContent;
+                    data.contents.forEach(content => {
+                        if (content.language == language)
+                            specificContent = content;
+                    })
+                    renderer.openPageStream(data, specificContent)
+                })
+            }
+        })
     }
     
 }
