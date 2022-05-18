@@ -9,5 +9,6 @@ namespace API.DTOs
     {
         public PageType Type { get; set; }
         public string Slug { get; set; }
+        public string Description { get; set; }
     }
 }

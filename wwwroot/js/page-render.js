@@ -34,7 +34,8 @@ export default class PageRender {
     ]
 
     constructor(page, content) {
-        console.log(page, content);
+        if (page.drafts)
+            this.isDraft = true;
         this.initInteractives(); // init interactives html elements
     }
 
@@ -296,6 +297,8 @@ export default class PageRender {
             page.contents.slug = page.contents.slug ? page.contents.slug : page.slug;
             this.showPagePreview(page);
             this.selectedPage = page;
+            if (this.selectedPage.drafts)
+                this.deleteDraftBtn.option("disabled", false);
             this.historyManager = new HistoryManager();
             this.historyManager.updateHistory(JSON.parse(JSON.stringify(this.selectedPage)));
             this.initHistoryButton();
@@ -364,7 +367,7 @@ export default class PageRender {
                     Swal.fire({
                         icon: 'info',
                         title: 'Attenzione',
-                        text: 'Non è possibile ingrandire oltre la larghezza della pagina',
+                        text: 'Non sono presenti bozze da salvare',
                     });
                     return;
                 }
@@ -379,16 +382,19 @@ export default class PageRender {
                     if (result.isConfirmed) {
                         that.loadPanel.show();
                         setTimeout(() => {
-                            that.loadPanel.hide();
+                            let lan = that.selectedPage.contents.language;
                             let saveManager = new SaveManager();
                             saveManager.deleteDraft(that.selectedPage.id);
-                            that.selectedPage.drafts = null;
-                            that.isDraft = false;
-                            document.getElementById("status").innerHTML = "pubblicato";
-                            document.getElementById("status").style.color = "#22a93d";
-                            that.renderPageById(that.selectedPage.id);
-                            that.deleteDraftBtn.option("disabled", true);
-                            that.publishPageBtn.option("disabled", true);
+                            window.location.reload();
+                            //that.selectedPage.drafts = null;
+                            //that.isDraft = false;
+                            //document.getElementById("status").innerHTML = "pubblicato";
+                            //document.getElementById("status").style.color = "#22a93d";
+                            //that.deleteDraftBtn.option("disabled", true);
+                            //that.publishPageBtn.option("disabled", true);
+                            //that.loadPanel.hide();
+                            // render content after the draft being deleted
+                            
                         }, 400);
                     }
                 });
@@ -486,7 +492,7 @@ export default class PageRender {
                         setTimeout(() => {
                             let saveManager = new SaveManager();
                             saveManager.deleteLanguage(that.selectedPage.id, that.selectedPage.contents.language);
-                            window.location.reload();
+                            window.location.href = "https://localhost:5001";
                         }, 400);
                     }
                 });
@@ -1236,7 +1242,7 @@ export default class PageRender {
                 var imageContainer = document.createElement('div'),
                     img = document.createElement('img');
                 imageContainer.classList.add('image-item');
-                img.src = 'assets/images/image.jpg';
+                img.src = '../../../assets/images/image.jpg';
                 imageContainer.appendChild(img);
                 gridGalleryContainer.appendChild(imageContainer);
             })
@@ -1261,7 +1267,7 @@ export default class PageRender {
         widget.content.source.forEach(source => {
             var [itemWrapper, item] = [document.createElement('div'), document.createElement('img')];
             itemWrapper.classList.add('item-gallery-image');
-            item.src = 'assets/images/image.jpg';
+            item.src = '../../../assets/images/image.jpg';
             itemWrapper.appendChild(item);
             galleryWrapper.appendChild(itemWrapper);
         });

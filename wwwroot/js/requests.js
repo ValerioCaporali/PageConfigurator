@@ -140,7 +140,7 @@ export default class SaveManager {
 
         }
 
-        fetch(this.base_url + 'save', options)
+        fetch('https://localhost:5001/api/pages/save', options)
         .then(response => {
             if(!response.ok)
             {
@@ -181,7 +181,7 @@ export default class SaveManager {
 
         }
 
-        fetch(this.base_url + 'delete-draft', options)
+        fetch('https://localhost:5001/api/pages/delete-draft', options)
         .then(response => {
             if(!response.ok)
             {
@@ -223,7 +223,7 @@ export default class SaveManager {
             body: JSON.stringify(data)
         };
 
-        fetch(this.base_url + 'publish', options)
+        fetch('https://localhost:5001/api/pages/publish', options)
         .then(response => {
             if(!response.ok)
             {
@@ -265,7 +265,7 @@ export default class SaveManager {
             body: JSON.stringify(data)
         };
 
-        fetch(this.base_url + 'delete-page', options)
+        fetch('https://localhost:5001/api/pages/delete-page', options)
         .then(response => {
             if(!response.ok)
             {
@@ -285,17 +285,18 @@ export default class SaveManager {
             {
                 Swal.fire({
                     icon: 'success',
-                    title: 'Pagina pubblicata !',
-                    text: 'La pagina è stata pubblicata correttamente',
+                    title: 'Pagina Eliminata !',
+                    text: 'La pagina è stata eliminata correttamente',
                 });
             }
         })
     }
 
-    async createPage(type, slug) {
+    async createPage(type, slug, description) {
         const data = {
             type: Number(type),
-            slug: slug
+            slug: slug,
+            description: description
         };
 
         const options = {
@@ -307,7 +308,7 @@ export default class SaveManager {
             body: JSON.stringify(data)
         };
 
-        let response = await fetch(this.base_url + 'create', options);
+        let response = await fetch('https://localhost:5001/api/pages/create', options);
         let newPage = await response.json();
         return newPage;
     }
@@ -328,7 +329,7 @@ export default class SaveManager {
             body: JSON.stringify(data)
         };
         
-        fetch(this.base_url + 'new-language', options).then(response => {
+        fetch('https://localhost:5001/api/pages/new-language', options).then(response => {
             if(!response.ok) {
                 response.json()
                     .catch(() => {
@@ -350,7 +351,7 @@ export default class SaveManager {
                         if (content.language == language) 
                             newContent = content;
                     })
-                    renderer.openPageStream(data, newContent);
+                    window.location.href = "https://localhost:5001/api/pages/" + guid + "/" + language;
                 })
             }
         })
@@ -372,7 +373,7 @@ export default class SaveManager {
             body: JSON.stringify(data)
         }
         
-        fetch(this.base_url + 'delete-language', options).then(response => {
+        fetch('https://localhost:5001/api/pages/delete-language', options).then(response => {
             if (!response.ok) {
                 response.json()
                     .catch(() => {
@@ -395,9 +396,28 @@ export default class SaveManager {
         })
     }
     
-    getPageById(guid, language, renderer) {
+    async getPagesByType(type) {
+        let response = await fetch("https://localhost:5001/api/Pages/get-all/" + type);
+        if (!response.ok) {
+            let message = await response.json();
+            $(() => {
+                DevExpress.ui.notify(message);
+            });
+            return;
+        }
+        let data = await response.json();
+        return data;
+    }
+    
+    async getPageById(pageId, pageLan) {
+        
+        let page = {
+            metadata: null,
+            content: null
+        }
+        
         const data = {
-            id: guid
+            id: pageId
         };
 
         const options = {
@@ -409,27 +429,38 @@ export default class SaveManager {
             body: JSON.stringify(data)
         };
 
-        fetch('https://localhost:5001/api/pages/get', options).then(response => {
+        let response = await fetch('https://localhost:5001/api/pages/get', options);
             if(!response.ok) {
-                response.json()
-                    .then(({message}) => {
-                        $(() => {
-                            DevExpress.ui.notify(message);
-                        });
-                    })
+                let message = await response.json();
+                $(() => {
+                    DevExpress.ui.notify(message);
+                });
             }
             else
             {
-                response.json().then(data => {
-                    let specificContent;
+                let data = await response.json();
+                let specificContent;
+                if (data.drafts) {
+                    data.drafts.forEach(draft => {
+                        if (draft.language == pageLan && pageLan)
+                            specificContent = draft;
+                        else if (!draft.language)
+                            specificContent = draft;
+                    });
+                } else {
                     data.contents.forEach(content => {
-                        if (content.language == language)
+                        if (content.language == pageLan && pageLan)
                             specificContent = content;
-                    })
-                    renderer.openPageStream(data, specificContent)
-                })
+                        else if (!content.language)
+                            specificContent = content;
+                    });
+                }
+                page.metadata = data;
+                page.content = specificContent;
+                // let renderer = new PageRender(data, specificContent);
+                // renderer.openPageStream(data, specificContent);
             }
-        })
+        return page;
     }
     
 }

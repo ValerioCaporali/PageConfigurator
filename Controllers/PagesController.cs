@@ -47,28 +47,52 @@ namespace Pages_configurator.Controllers
             return View();
         }
 
-        [HttpGet("get-all")]
-        public async Task<ActionResult<List<CustomTablePage>>> GetAll()
+        [HttpGet("get-all/{type?}")]
+        public async Task<ActionResult<List<CustomTablePage>>> GetAll(int? type)
         {
             await _bindingService.BindPagesFromJsonAsync();
 
             List<CustomTablePage> pages = new();
             List<DbPage> dbPages = _context.Pages.ToList();
-
-            foreach (DbPage dbPage in dbPages)
+            
+            if (type == 0 || type == 1)
             {
-                CustomTablePage page = new CustomTablePage
+                foreach (DbPage dbPage in dbPages)
                 {
-                    id = dbPage.id,
-                    type = dbPage.type,
-                    visibility = dbPage.visibility,
-                    slug = dbPage.slug,
-                    description = dbPage.description,
-                    drafts = dbPage.drafts != null ? JsonConvert.DeserializeObject<List<CustomTableContent>>(dbPage.drafts) : null,
-                    contents = JsonConvert.DeserializeObject<List<CustomTableContent>>(dbPage.contents)
-                };
-                pages.Add(page);
+                    if (dbPage.type == (PageType) 1)
+                    {
+                    CustomTablePage page = new CustomTablePage
+                    {
+                            id = dbPage.id,
+                            type = dbPage.type,
+                            visibility = dbPage.visibility,
+                            slug = dbPage.slug,
+                            description = dbPage.description,
+                            drafts = dbPage.drafts != null ? JsonConvert.DeserializeObject<List<CustomTableContent>>(dbPage.drafts) : null,
+                            contents = JsonConvert.DeserializeObject<List<CustomTableContent>>(dbPage.contents)
+                        };
+                        pages.Add(page);
+                    }
+                }
             }
+            else
+            {
+                foreach (DbPage dbPage in dbPages)
+                {
+                    CustomTablePage page = new CustomTablePage
+                    {
+                        id = dbPage.id,
+                        type = dbPage.type,
+                        visibility = dbPage.visibility,
+                        slug = dbPage.slug,
+                        description = dbPage.description,
+                        drafts = dbPage.drafts != null ? JsonConvert.DeserializeObject<List<CustomTableContent>>(dbPage.drafts) : null,
+                        contents = JsonConvert.DeserializeObject<List<CustomTableContent>>(dbPage.contents)
+                    };
+                    pages.Add(page);
+                }
+            }
+
             return pages;
         }
         
@@ -83,9 +107,7 @@ namespace Pages_configurator.Controllers
                 visibility = dbPage.visibility,
                 slug = dbPage.slug,
                 description = dbPage.description,
-                drafts = dbPage.drafts != null
-                    ? JsonConvert.DeserializeObject<List<CustomTableContent>>(dbPage.drafts)
-                    : null,
+                drafts = dbPage.drafts != null ? JsonConvert.DeserializeObject<List<CustomTableContent>>(dbPage.drafts) : null,
                 contents = JsonConvert.DeserializeObject<List<CustomTableContent>>(dbPage.contents)
             };
 
@@ -203,6 +225,7 @@ namespace Pages_configurator.Controllers
                 type = (PageType) createPageDto.Type,
                 visibility = 1,
                 slug = "/" + createPageDto.Slug,
+                description = createPageDto.Description,
                 contents = serializedContents
             };
 

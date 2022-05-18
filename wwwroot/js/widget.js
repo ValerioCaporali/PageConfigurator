@@ -6,8 +6,9 @@ export default class Widget {
     borders;
     mobileBorders;
     groupValueIds;
+    url;
 
-    constructor(formData, text_content_id, text_id, borders, mobileBorders, groupValueIds) {
+    constructor(formData, text_content_id, text_id, borders, mobileBorders, groupValueIds, url) {
 
         this.formData = formData;
         this.text_content_id = text_content_id;
@@ -15,6 +16,7 @@ export default class Widget {
         this.borders = borders;
         this.mobileBorders = mobileBorders;
         this.groupValueIds = groupValueIds;
+        this.url = url;
         
     }
 
@@ -270,7 +272,7 @@ export default class Widget {
                 case 0:
                     let linkAction = {
                         type: this.formData.caType.clickActionType,
-                        url: this.formData.link.url,
+                        url: this.url,
                         external: this.formData.link.external
                     }
                     this.widget.clickAction = linkAction;
