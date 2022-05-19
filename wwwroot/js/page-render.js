@@ -786,7 +786,7 @@ export default class PageRender {
                     })
                     return;
                 }
-                else if (besideWidget && (currWidget.column + newSpan) > besideWidget.column) {
+                else if (besideWidget && (currWidget.column + newSpan) > besideWidget.column && besideWidget.type != 1000) {
                     newElement.style.width = startWidth;
                     this.fillPage(this.selectedPage.contents.widgets);
                     Swal.fire({
@@ -795,8 +795,73 @@ export default class PageRender {
                         text: 'Non è possibile sovrapporre due elementi',
                     });
                     return;
-                } else {
+                }
+                else if (besideWidget && (currWidget.column + newSpan) > besideWidget.column && besideWidget.type == 1000) {
+                    // currWidget.columnSpan = newSpan;
+                    // let newWidgets = this.selectedPage.contents.widgets.filter(w => {(w.row != currWidget.row && widget.column != currWidget.column) && (w.row != besideWidget.row && w.column != besideWidget.column)});
+                    let oldWidgetSpan = currWidget.columnSpan;
+                    this.selectedPage.contents.widgets.forEach(w => {
+                        if (w.column == currWidget.column && w.row == currWidget.row)
+                            currWidget.columnSpan = newSpan;
+                    });
+                    
+                    // if new span equals to beside widget columns, delete beside widget
+                    if ((currWidget.column + newSpan) >= (besideWidget.column + besideWidget.columnSpan)) {
+                        let widgets = new Array();
+                        this.selectedPage.contents.widgets.forEach(w => {
+                            if (w.row != besideWidget.row || w.column != besideWidget.column)
+                                widgets.push(w);
+                        });
+                        console.log(widgets)
+                        this.selectedPage.contents.widgets = widgets;
+                    } else {
+                        this.selectedPage.contents.widgets.forEach(w => {
+                            if (w.row == besideWidget.row && w.column == besideWidget.column) {
+                                let oldBesideWidgetColumns = besideWidget.column + besideWidget.columnSpan;
+                                besideWidget.column = currWidget.column + newSpan;
+                                besideWidget.columnSpan = oldBesideWidgetColumns - besideWidget.column;
+                            }
+                        });
+                    }
+                    
+                    // newWidgets.push(currWidget);
+                    // this.selectedPage.contents.widgets = newWidgets;
+                    this.historyManager.updateHistory(JSON.parse(JSON.stringify(this.selectedPage)));
+                    var totRows = this.calculateRows(this.selectedPage.contents.widgets),
+                        totCols = this.calculateColumns(this.selectedPage.contents.widgets);
+                    this.initFallbackRespondiveBox(totRows, totCols, false);
+
+                    // replace the entire row taking from fallback responsivebox
+                    let responsiveBoxCotnainer = document.getElementById('responsive-box'),
+                        newRowDiv = document.getElementById('fallback-responsive-box').children[0].children[widget.row],
+                        oldRowDiv = responsiveBoxCotnainer.children[0].children[widget.row];
+                    responsiveBoxCotnainer.children[0].replaceChild(newRowDiv, oldRowDiv);
+
+
+                    // update main responsivebox screenItems
+                    this.responsiveBox._screenItems = this.responsiveBox._screenItems.filter(screenItem => screenItem.location.row != widget.row);
+                    this.fallbackResponsiveBox._screenItems.forEach(screenItem => {
+                        if (screenItem.location.row == widget.row) {
+                            this.responsiveBox._screenItems.push(screenItem);
+                            this.initEventListener(resizer, widget, screenItem.item.html);
+                        }
+                    });
+
+                    // reset fallback responsivebox screenItems
+                    this.fallbackResponsiveBox._screenItems = null;
+                }
+                else {
+                    let oldColSpan = widget.columnSpan;
                     widget.columnSpan = newSpan;
+                    let dropzoneCol = widget.column + newSpan;
+                    let dropzoneRow = widget.row;
+                    let dropzoneColSpan = (widget.column + oldColSpan) - dropzoneCol;
+                    let dropzoneWidget = new Widget().getEmptyWidget();
+                    dropzoneWidget.row = dropzoneRow;
+                    dropzoneWidget.column = dropzoneCol;
+                    dropzoneWidget.columnSpan = dropzoneColSpan;
+                    dropzoneWidget.type = 1000;
+                    this.selectedPage.contents.widgets.push(dropzoneWidget);
                     this.historyManager.updateHistory(JSON.parse(JSON.stringify(this.selectedPage)));
                     var totRows = this.calculateRows(this.selectedPage.contents.widgets),
                         totCols = this.calculateColumns(this.selectedPage.contents.widgets);

@@ -1323,17 +1323,34 @@ export default class ModifyManager {
             if (result.isConfirmed) {
                 document.getElementById("sidebar-edit-view").style.display = "none";
                 document.getElementById("sidebar-default-view").style.display = "block";
-                this.selectedPage.contents.widgets = this.selectedPage.contents.widgets.filter(currWidget => currWidget.row != widget.row || currWidget.column != widget.column);
-                this.adaptPageLayout(widget);
-                this.renderer.saveInDraftBtn.option("disabled", false);
-                this.renderer.responsiveBox._screenItems.forEach(screenItem => {
-                    if (screenItem.location.row == widget.row && screenItem.location.col == widget.column) {
-                        let htmlNode = screenItem.item.html.parentNode;
-                        htmlNode.remove();
+                this.selectedPage.contents.widgets.forEach(currWidget => {
+                    if (currWidget.row == widget.row && currWidget.column == widget.column) {
+                        currWidget.type = 1000;
+                        currWidget.content = {};
                     }
-                })
-                this.renderer.historyManager.updateHistory(this.selectedPage);
+                });
                 this.renderer.selectedPage = this.selectedPage;
+                let totRows = this.renderer.calculateRows(this.selectedPage.contents.widgets);
+                let totCols = this.renderer.calculateColumns(this.selectedPage.contents.widgets);
+                this.renderer.initFallbackRespondiveBox(totRows, totCols, false);
+                // replace the entire row taking from fallback responsivebox
+                let responsiveBoxCotnainer = document.getElementById('responsive-box'),
+                    newRowDiv = document.getElementById('fallback-responsive-box').children[0].children[widget.row],
+                    oldRowDiv = responsiveBoxCotnainer.children[0].children[widget.row];
+                console.log(newRowDiv)
+                responsiveBoxCotnainer.children[0].replaceChild(newRowDiv, oldRowDiv);
+                // update main responsivebox screenItems
+                this.renderer.responsiveBox._screenItems = this.renderer.responsiveBox._screenItems.filter(screenItem => screenItem.location.row != widget.row);
+                this.renderer.fallbackResponsiveBox._screenItems.forEach(screenItem => {
+                    if (screenItem.location.row == widget.row) {
+                        console.log(screenItem)
+                        this.renderer.responsiveBox._screenItems.push(screenItem);
+                    }
+                });
+                // reset fallback responsivebox screenItems
+                this.renderer.fallbackResponsiveBox._screenItems = null;
+                console.log(this.selectedPage.contents.widgets)
+                this.renderer.historyManager.updateHistory(this.selectedPage);
             }
         });
     }
