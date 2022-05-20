@@ -216,7 +216,7 @@ export default class RenderManager {
                                         title: "Aggiungi lingua",
                                         showTitle: true,
                                         width: 700,
-                                        height: 525
+                                        height: 525,
                                     },
                                     form: {
                                         items: [{
@@ -245,7 +245,7 @@ export default class RenderManager {
                                                 .text('Edit')
                                                 .on('dxclick', function () {
                                                     let language = options.data.language != "Default" ? options.data.language : null;
-                                                    window.location.href = "https://localhost:5001/api/pages/" + options.data.id + "/" + language;
+                                                    window.location.href = "https://localhost:5001/pages/" + options.data.id + "/" + language;
                                                 })
                                                 .appendTo(container);
                                         }
@@ -421,7 +421,7 @@ export default class RenderManager {
                 pageCard.style.backgroundColor = "white"
                 //  Link alla pagina dedicata per il configuratore della pagina specifica
                 let linkToPage = document.createElement('a');
-                linkToPage.href = "https://localhost:5001/api/pages/" + page.id + "/" + draft.language;
+                linkToPage.href = "https://localhost:5001/pages/" + page.id + "/" + draft.language;
                 linkToPage.append(pageCard);
                 pageOptionsContainer.appendChild(linkToPage);
                 // pageCard.addEventListener("click", () => {
@@ -456,7 +456,7 @@ export default class RenderManager {
                 pageCard.append(pageImage, pageTitle);
                 pageCard.style.backgroundColor = "white"
                 let linkToPage = document.createElement('a');
-                linkToPage.href = "https://localhost:5001/api/pages/" + page.id + "/" + content.language;
+                linkToPage.href = "https://localhost:5001/pages/" + page.id + "/" + content.language;
                 linkToPage.append(pageCard);
                 pageOptionsContainer.appendChild(linkToPage);
                 pageCard.addEventListener("click", () => {

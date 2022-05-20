@@ -97,11 +97,11 @@ export default class ModifyManager {
                 }
             });
             let iframe = document.getElementsByTagName('iframe');
-            for(let i = 0; i < iframe.length; i++) {
-                let innerDoc = iframe[i].contentDocument;
-                let iframeBody = innerDoc.getElementById('tinymce');
-                // iframeBody.style.position = "relative";
-            }
+            //for(let i = 0; i < iframe.length; i++) {
+            //    let innerDoc = iframe[i].contentDocument;
+            //    let iframeBody = innerDoc.getElementById('tinymce');
+            //    // iframeBody.style.position = "relative";
+            //}
         });
     }
 

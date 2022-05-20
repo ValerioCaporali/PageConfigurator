@@ -40,6 +40,7 @@ export default class PageRender {
     }
 
     initEventListener() {
+        console.log(this.responsiveBox._screenItems);
         // init up and down arrows to change row position taking from responsive box
         let containers = document.getElementsByClassName("arrows-container");
         if (containers) {
@@ -179,7 +180,21 @@ export default class PageRender {
         });
 
         document.getElementById('go-back').addEventListener("click", () => {
-            window.location.href = "https://localhost:5001";
+            if (!this.historyManager.isHistoryEmpty()) {
+                Swal.fire({
+                    title: 'Sicuro di voler uscire ?',
+                    text: 'Tutte le modifiche non salvate andranno perse',
+                    icon: 'question',
+                    showDenyButton: true,
+                    showCancelButton: false,
+                    confirmButtonText: 'Si',
+                    denyButtonText: `No`,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.reload();
+                    }
+                });
+            } else window.location.href = "https://localhost:5001";
         });
         let draggableWidgets = document.querySelectorAll('.widget-wrapper');
         draggableWidgets.forEach(draggableWidget => {
@@ -958,7 +973,14 @@ export default class PageRender {
 
 
                     // update main responsivebox screenItems
-                    this.responsiveBox._screenItems = this.fallbackResponsiveBox._screenItems;
+                    this.responsiveBox._screenItems = this.responsiveBox._screenItems.filter(screenItem => screenItem.location.row != widget.row);
+                    this.fallbackResponsiveBox._screenItems.forEach(screenItem => {
+                        if (screenItem.location.row == widget.row) {
+                            this.responsiveBox._screenItems.push(screenItem);
+                            this.initEventListener(resizer, widget, screenItem.item.html);
+                        }
+                    });
+
 
                     // reset fallback responsivebox screenItems
                     this.fallbackResponsiveBox._screenItems = null;
@@ -988,7 +1010,14 @@ export default class PageRender {
 
 
                     // update main responsivebox screenItems
-                    this.responsiveBox._screenItems = this.fallbackResponsiveBox._screenItems;
+                    this.responsiveBox._screenItems = this.responsiveBox._screenItems.filter(screenItem => screenItem.location.row != widget.row);
+                    this.fallbackResponsiveBox._screenItems.forEach(screenItem => {
+                        if (screenItem.location.row == widget.row) {
+                            this.responsiveBox._screenItems.push(screenItem);
+                            this.initEventListener(resizer, widget, screenItem.item.html);
+                        }
+                    });
+
 
                     // reset fallback responsivebox screenItems
                     this.fallbackResponsiveBox._screenItems = null;
@@ -1746,8 +1775,6 @@ export default class PageRender {
     // }
 
     renderWidgetChanges(widget, modifiedPage) {
-        console.log(widget, modifiedPage);
-        console.log(this.responsiveBox._screenItems);
         this.responsiveBox._screenItems.forEach(screenItem => {
             if (screenItem.location.row == widget.row && screenItem.location.col == widget.column) {
                 modifiedPage = JSON.parse(JSON.stringify(modifiedPage)); // to delete reference
@@ -1756,9 +1783,12 @@ export default class PageRender {
                 let oldNodeParent = oldNode.parentNode;
                 oldNodeParent.innerHTML = "";
                 oldNodeParent.appendChild(newNode);
+                screenItem.item.html = newNode;
             }
         });
         this.historyManager.updateHistory(JSON.parse(JSON.stringify(modifiedPage)));
+        this.selectedPage = this.historyManager.getLastPage();
+        this.initEventListener();
     }
 
     showPresets() {
@@ -1783,6 +1813,10 @@ export default class PageRender {
         if (this.selectedPage.contents.widgets.length != 0) {
             cols = this.calculateColumns(this.selectedPage.contents.widgets);
             rows = this.calculateRows(this.selectedPage.contents.widgets);
+            this.responsiveBox._screenItems.forEach(screenItem => {
+                if (screenItem.location.row == rows)
+                    screenItem.location.row++;
+            })
         }
         if (colNumber != cols) {
             this.adaptPage(colNumber, cols, rows);
@@ -1849,12 +1883,13 @@ export default class PageRender {
         this.initFallbackRespondiveBox(totRows, totCols);
         this.responsiveBox._screenItems[this.responsiveBox._screenItems.length - 1].location.row = totRows;
         let lastScreenItem = this.responsiveBox._screenItems.pop();
+        console.log(lastScreenItem);
         this.fallbackResponsiveBox._screenItems.forEach(screenItem => {
             screenItem.location.row = totRows - 1;
             screenItem.item.location[0].row = totRows - 1;
             this.responsiveBox._screenItems.push(screenItem);
         });
-        lastScreenItem.location.row  = totRows;
+        lastScreenItem.location.row = totRows;
         this.responsiveBox._screenItems.push(lastScreenItem);
 
         this.fallbackResponsiveBox._screenItems = [];

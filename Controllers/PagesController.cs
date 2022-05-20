@@ -41,7 +41,7 @@ namespace Pages_configurator.Controllers
             _context = context;
         }
         
-        [Route("{id}/{language}")]
+        [Route("~/pages/{id}/{language}")]
         public ActionResult Index(Guid id, string language)
         {
             return View();
@@ -136,7 +136,7 @@ namespace Pages_configurator.Controllers
         }
 
         [HttpPost("save")]
-        public IActionResult SaveInDraft([FromBody] SaveDto saveDto)
+        public IActionResult SaveInDraft(SaveDto saveDto)
         {
             if (saveDto.Page == null || saveDto.InitialPage == null)
             {
