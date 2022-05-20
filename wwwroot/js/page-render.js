@@ -40,6 +40,125 @@ export default class PageRender {
     }
 
     initEventListener() {
+        // init up and down arrows to change row position taking from responsive box
+        let containers = document.getElementsByClassName("arrows-container");
+        if (containers) {
+            while (containers.length > 0) {
+                containers[0].parentNode.removeChild(containers[0]);
+            }
+        }
+        let htmlItems = document.getElementById('responsive-box').firstChild.childNodes;
+        htmlItems.forEach((item, index) => {
+            if (index != htmlItems.length - 1) {
+                let arrowsContainer = document.createElement('div');
+                arrowsContainer.style.visibility = "hidden";
+                arrowsContainer.className = "arrows-container";
+                arrowsContainer.id = index;
+                let arrowUp = document.createElement('i');
+                arrowUp.className = "fa-solid fa-arrow-up-long";
+                arrowUp.style.fontSize = "1.2em";
+                let arrowDown = document.createElement('i');
+                arrowDown.className = "fa-solid fa-arrow-down-long";
+                arrowDown.style.fontSize = "1.2em";
+                arrowsContainer.append(arrowUp, arrowDown);
+                item.firstChild.insertBefore(arrowsContainer, item.firstChild.firstChild);
+                item.addEventListener('mouseover', () => {
+                    arrowsContainer.style.visibility = "visible";
+                });
+                item.addEventListener('mouseout', () => {
+                    arrowsContainer.style.visibility = "hidden";
+                });
+                arrowUp.addEventListener('click', () => {
+                   if (arrowUp.parentNode.id == 0) {
+                       Swal.fire({
+                           icon: 'info',
+                           title: 'Attenzione',
+                           text: 'Impossibile spostare in alto la prima riga',
+                       });
+                       return;
+                   }
+                   else {
+                       let fromRow = parseInt(arrowUp.parentNode.id);
+                       this.selectedPage.contents.widgets.forEach(widget => {
+                           if (widget.row == (fromRow - 1))
+                               widget.row ++;
+                           else if (widget.row == fromRow)
+                               widget.row --;
+                       });
+                       
+                       this.historyManager.updateHistory(JSON.parse(JSON.stringify(this.selectedPage)));
+                       var totRows = this.calculateRows(this.selectedPage.contents.widgets),
+                           totCols = this.calculateColumns(this.selectedPage.contents.widgets);
+                       this.initFallbackRespondiveBox(totRows, totCols, false);
+    
+                       // replace the entire row taking from fallback responsivebox
+                       let responsiveBoxCotnainer = document.getElementById('responsive-box'),
+                           oldFromRowDiv = document.getElementById('fallback-responsive-box').children[0].children[parseInt(arrowUp.parentNode.id)],
+                           newFromRowDiv = responsiveBoxCotnainer.children[0].children[parseInt(arrowUp.parentNode.id)],
+                           oldToRowDiv = responsiveBoxCotnainer.children[0].children[parseInt(arrowUp.parentNode.id) - 1],
+                           newToRowDiv = document.getElementById('fallback-responsive-box').children[0].children[parseInt(arrowUp.parentNode.id) - 1]
+                       responsiveBoxCotnainer.children[0].replaceChild(oldFromRowDiv, newFromRowDiv);
+                       responsiveBoxCotnainer.children[0].replaceChild(newToRowDiv, oldToRowDiv);
+                       
+                       this.responsiveBox._screenItems = this.fallbackResponsiveBox._screenItems;
+    
+                       // update main responsivebox screenItems
+                       this.responsiveBox._screenItems = this.responsiveBox._screenItems.filter(screenItem => screenItem.location.row != parseInt(arrowUp.parentNode.id) && screenItem.location.row != parseInt(arrowUp.parentNode.id) - 1);
+                       this.fallbackResponsiveBox._screenItems.forEach(screenItem => {
+                           if (screenItem.location.row == fromRow || screenItem.location.row == (fromRow - 1)) {
+                               this.responsiveBox._screenItems.push(screenItem);
+                           }
+                       });
+                       // reset fallback responsivebox screenItems
+                       this.fallbackResponsiveBox._screenItems = null;
+                       this.initEventListener();
+                       
+                    }
+                });
+                
+                arrowDown.addEventListener('click', () => {
+                    var totRows = this.calculateRows(this.selectedPage.contents.widgets),
+                        totCols = this.calculateColumns(this.selectedPage.contents.widgets);
+                    if (arrowDown.parentNode.id == totRows - 1) {
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Attenzione',
+                            text: "Impossibile spostare in basso l'ultima riga",
+                        });
+                        return;
+                    }
+                    let fromRow = parseInt(arrowDown.parentNode.id);
+                    this.selectedPage.contents.widgets.forEach(widget => {
+                        if (widget.row == fromRow)
+                            widget.row ++;
+                        else if (widget.row == (fromRow + 1))
+                            widget.row --;
+                    });
+                    this.historyManager.updateHistory(JSON.parse(JSON.stringify(this.selectedPage)));
+                    this.initFallbackRespondiveBox(totRows, totCols, false);
+                    // replace the entire row taking from fallback responsivebox
+                    let responsiveBoxCotnainer = document.getElementById('responsive-box'),
+                        oldFromRowDiv = document.getElementById('fallback-responsive-box').children[0].children[parseInt(arrowUp.parentNode.id)],
+                        newFromRowDiv = responsiveBoxCotnainer.children[0].children[parseInt(arrowUp.parentNode.id)],
+                        oldToRowDiv = responsiveBoxCotnainer.children[0].children[parseInt(arrowUp.parentNode.id) + 1],
+                        newToRowDiv = document.getElementById('fallback-responsive-box').children[0].children[parseInt(arrowUp.parentNode.id) + 1]
+                    responsiveBoxCotnainer.children[0].replaceChild(oldFromRowDiv, newFromRowDiv);
+                    responsiveBoxCotnainer.children[0].replaceChild(newToRowDiv, oldToRowDiv);
+                    // update main responsivebox screenItems
+                    this.responsiveBox._screenItems = this.responsiveBox._screenItems.filter(screenItem => screenItem.location.row != parseInt(arrowUp.parentNode.id) && screenItem.location.row != parseInt(arrowUp.parentNode.id) + 1);
+                    this.fallbackResponsiveBox._screenItems.forEach(screenItem => {
+                        if (screenItem.location.row == fromRow || screenItem.location.row == (fromRow + 1)) {
+                            this.responsiveBox._screenItems.push(screenItem);
+                        }
+                    });
+                    console.log(this.responsiveBox)
+                    // reset fallback responsivebox screenItems
+                    this.fallbackResponsiveBox._screenItems = null;
+                    this.initEventListener();
+                })
+            }
+        });
+        
         let that = this;
         let addIcon = document.getElementById('add-icon');
 
@@ -839,13 +958,7 @@ export default class PageRender {
 
 
                     // update main responsivebox screenItems
-                    this.responsiveBox._screenItems = this.responsiveBox._screenItems.filter(screenItem => screenItem.location.row != widget.row);
-                    this.fallbackResponsiveBox._screenItems.forEach(screenItem => {
-                        if (screenItem.location.row == widget.row) {
-                            this.responsiveBox._screenItems.push(screenItem);
-                            this.initEventListener(resizer, widget, screenItem.item.html);
-                        }
-                    });
+                    this.responsiveBox._screenItems = this.fallbackResponsiveBox._screenItems;
 
                     // reset fallback responsivebox screenItems
                     this.fallbackResponsiveBox._screenItems = null;
@@ -875,13 +988,7 @@ export default class PageRender {
 
 
                     // update main responsivebox screenItems
-                    this.responsiveBox._screenItems = this.responsiveBox._screenItems.filter(screenItem => screenItem.location.row != widget.row);
-                    this.fallbackResponsiveBox._screenItems.forEach(screenItem => {
-                        if (screenItem.location.row == widget.row) {
-                            this.responsiveBox._screenItems.push(screenItem);
-                            this.initEventListener(resizer, widget, screenItem.item.html);
-                        }
-                    });
+                    this.responsiveBox._screenItems = this.fallbackResponsiveBox._screenItems;
 
                     // reset fallback responsivebox screenItems
                     this.fallbackResponsiveBox._screenItems = null;
@@ -1639,6 +1746,8 @@ export default class PageRender {
     // }
 
     renderWidgetChanges(widget, modifiedPage) {
+        console.log(widget, modifiedPage);
+        console.log(this.responsiveBox._screenItems);
         this.responsiveBox._screenItems.forEach(screenItem => {
             if (screenItem.location.row == widget.row && screenItem.location.col == widget.column) {
                 modifiedPage = JSON.parse(JSON.stringify(modifiedPage)); // to delete reference
@@ -1647,7 +1756,6 @@ export default class PageRender {
                 let oldNodeParent = oldNode.parentNode;
                 oldNodeParent.innerHTML = "";
                 oldNodeParent.appendChild(newNode);
-                screenItem.item.html = newNode;
             }
         });
         this.historyManager.updateHistory(JSON.parse(JSON.stringify(modifiedPage)));
@@ -1687,6 +1795,7 @@ export default class PageRender {
                 this.selectedPage.contents.widgets.push(newWidget);
             }
         }
+        this.initEventListener();
     }
 
     adaptPage(colNumber, cols, rows) {
@@ -1756,6 +1865,7 @@ export default class PageRender {
     }
 
     replaceWidget(toWidget, widgetData) {
+        console.log(toWidget)
         if (typeof widgetData == 'number') {
             // this.historyManager.updateHistory(this.selectedPage);
             let emptyWidget = new Widget().getEmptyWidget();
@@ -1784,7 +1894,7 @@ export default class PageRender {
                 case 6:
                     var totRows = this.calculateRows(this.selectedPage.contents.widgets);
                     var totCols = this.calculateColumns(this.selectedPage.contents.widgets);
-                    this.initFallbackRespondiveBox(totRows, totCols)
+                    //this.initFallbackRespondiveBox(totRows, totCols)
                     emptyWidget.content = defaultContents.webPageSource;
                     break;
                 case 101:
@@ -1826,6 +1936,7 @@ export default class PageRender {
                 });
             }
         }
+        //this.initEventListener();
     }
 
     addWidget(widgetType, row, column, span) {
@@ -1904,6 +2015,7 @@ export default class PageRender {
         let newRowNode = document.getElementById('fallback-responsive-box').firstChild.lastChild
         document.getElementById('responsive-box').firstChild.insertBefore(newRowNode, document.getElementById('responsive-box').firstChild.lastChild);
         this.historyManager.updateHistory(JSON.parse(JSON.stringify(this.selectedPage)));
+        this.initEventListener();
     }
 
     initFallbackRespondiveBox(rows, cols, append) {
