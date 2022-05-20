@@ -40,7 +40,6 @@ export default class PageRender {
     }
 
     initEventListener() {
-        console.log(this.responsiveBox._screenItems);
         // init up and down arrows to change row position taking from responsive box
         let containers = document.getElementsByClassName("arrows-container");
         if (containers) {
@@ -94,11 +93,11 @@ export default class PageRender {
     
                        // replace the entire row taking from fallback responsivebox
                        let responsiveBoxCotnainer = document.getElementById('responsive-box'),
-                           oldFromRowDiv = document.getElementById('fallback-responsive-box').children[0].children[parseInt(arrowUp.parentNode.id)],
-                           newFromRowDiv = responsiveBoxCotnainer.children[0].children[parseInt(arrowUp.parentNode.id)],
+                           newFromRowDiv = document.getElementById('fallback-responsive-box').children[0].children[parseInt(arrowUp.parentNode.id)],
+                           oldFromRowDiv = responsiveBoxCotnainer.children[0].children[parseInt(arrowUp.parentNode.id)],
                            oldToRowDiv = responsiveBoxCotnainer.children[0].children[parseInt(arrowUp.parentNode.id) - 1],
                            newToRowDiv = document.getElementById('fallback-responsive-box').children[0].children[parseInt(arrowUp.parentNode.id) - 1]
-                       responsiveBoxCotnainer.children[0].replaceChild(oldFromRowDiv, newFromRowDiv);
+                       responsiveBoxCotnainer.children[0].replaceChild(newFromRowDiv, oldFromRowDiv);
                        responsiveBoxCotnainer.children[0].replaceChild(newToRowDiv, oldToRowDiv);
                        
                        this.responsiveBox._screenItems = this.fallbackResponsiveBox._screenItems;
@@ -139,11 +138,11 @@ export default class PageRender {
                     this.initFallbackRespondiveBox(totRows, totCols, false);
                     // replace the entire row taking from fallback responsivebox
                     let responsiveBoxCotnainer = document.getElementById('responsive-box'),
-                        oldFromRowDiv = document.getElementById('fallback-responsive-box').children[0].children[parseInt(arrowUp.parentNode.id)],
-                        newFromRowDiv = responsiveBoxCotnainer.children[0].children[parseInt(arrowUp.parentNode.id)],
+                        newFromRowDiv = document.getElementById('fallback-responsive-box').children[0].children[parseInt(arrowUp.parentNode.id)],
+                        oldFromRowDiv = responsiveBoxCotnainer.children[0].children[parseInt(arrowUp.parentNode.id)],
                         oldToRowDiv = responsiveBoxCotnainer.children[0].children[parseInt(arrowUp.parentNode.id) + 1],
                         newToRowDiv = document.getElementById('fallback-responsive-box').children[0].children[parseInt(arrowUp.parentNode.id) + 1]
-                    responsiveBoxCotnainer.children[0].replaceChild(oldFromRowDiv, newFromRowDiv);
+                    responsiveBoxCotnainer.children[0].replaceChild(newFromRowDiv, oldFromRowDiv);
                     responsiveBoxCotnainer.children[0].replaceChild(newToRowDiv, oldToRowDiv);
                     // update main responsivebox screenItems
                     this.responsiveBox._screenItems = this.responsiveBox._screenItems.filter(screenItem => screenItem.location.row != parseInt(arrowUp.parentNode.id) && screenItem.location.row != parseInt(arrowUp.parentNode.id) + 1);
@@ -152,7 +151,6 @@ export default class PageRender {
                             this.responsiveBox._screenItems.push(screenItem);
                         }
                     });
-                    console.log(this.responsiveBox)
                     // reset fallback responsivebox screenItems
                     this.fallbackResponsiveBox._screenItems = null;
                     this.initEventListener();
@@ -191,7 +189,7 @@ export default class PageRender {
                     denyButtonText: `No`,
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.reload();
+                        window.location.href = "https://localhost:5001";
                     }
                 });
             } else window.location.href = "https://localhost:5001";
@@ -946,7 +944,6 @@ export default class PageRender {
                             if (w.row != besideWidget.row || w.column != besideWidget.column)
                                 widgets.push(w);
                         });
-                        console.log(widgets)
                         this.selectedPage.contents.widgets = widgets;
                     } else {
                         this.selectedPage.contents.widgets.forEach(w => {
@@ -986,17 +983,30 @@ export default class PageRender {
                     this.fallbackResponsiveBox._screenItems = null;
                 }
                 else {
-                    let oldColSpan = widget.columnSpan;
-                    widget.columnSpan = newSpan;
-                    let dropzoneCol = widget.column + newSpan;
-                    let dropzoneRow = widget.row;
-                    let dropzoneColSpan = (widget.column + oldColSpan) - dropzoneCol;
-                    let dropzoneWidget = new Widget().getEmptyWidget();
-                    dropzoneWidget.row = dropzoneRow;
-                    dropzoneWidget.column = dropzoneCol;
-                    dropzoneWidget.columnSpan = dropzoneColSpan;
-                    dropzoneWidget.type = 1000;
-                    this.selectedPage.contents.widgets.push(dropzoneWidget);
+                    if (besideWidget && besideWidget.type == 1000) {
+                        widget.columnSpan = newSpan;
+                        this.selectedPage.contents.widgets.forEach(w => {
+                            if (w.row == besideWidget.row && w.column == besideWidget.column && w.columnSpan == besideWidget.columnSpan) {
+                                let oldBesideWidgetColumn = besideWidget.column;
+                                let oldBesideWidgetColumnSpan = besideWidget.columnSpan;
+                                w.column = widget.column + newSpan;
+                                w.columnSpan = oldBesideWidgetColumnSpan + (oldBesideWidgetColumn - (widget.column + widget.columnSpan));
+                                console.log("sdlfjg ", this.selectedPage.contents.widgets)
+                            }
+                        })
+                    } else {
+                        let oldColSpan = widget.columnSpan;
+                        widget.columnSpan = newSpan;
+                        let dropzoneCol = widget.column + newSpan;
+                        let dropzoneRow = widget.row;
+                        let dropzoneColSpan = (widget.column + oldColSpan) - dropzoneCol;
+                        let dropzoneWidget = new Widget().getEmptyWidget();
+                        dropzoneWidget.row = dropzoneRow;
+                        dropzoneWidget.column = dropzoneCol;
+                        dropzoneWidget.columnSpan = dropzoneColSpan;
+                        dropzoneWidget.type = 1000;
+                        this.selectedPage.contents.widgets.push(dropzoneWidget);
+                    }
                     this.historyManager.updateHistory(JSON.parse(JSON.stringify(this.selectedPage)));
                     var totRows = this.calculateRows(this.selectedPage.contents.widgets),
                         totCols = this.calculateColumns(this.selectedPage.contents.widgets);
@@ -1883,7 +1893,6 @@ export default class PageRender {
         this.initFallbackRespondiveBox(totRows, totCols);
         this.responsiveBox._screenItems[this.responsiveBox._screenItems.length - 1].location.row = totRows;
         let lastScreenItem = this.responsiveBox._screenItems.pop();
-        console.log(lastScreenItem);
         this.fallbackResponsiveBox._screenItems.forEach(screenItem => {
             screenItem.location.row = totRows - 1;
             screenItem.item.location[0].row = totRows - 1;
@@ -1900,7 +1909,6 @@ export default class PageRender {
     }
 
     replaceWidget(toWidget, widgetData) {
-        console.log(toWidget)
         if (typeof widgetData == 'number') {
             // this.historyManager.updateHistory(this.selectedPage);
             let emptyWidget = new Widget().getEmptyWidget();

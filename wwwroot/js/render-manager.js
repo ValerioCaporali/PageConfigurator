@@ -172,9 +172,11 @@ export default class RenderManager {
                         }]
                     }
                 },
-                onSaving: function(e) {
-                    if (e.changes[0]?.data?.type)
-                        new SaveManager().createPage(e.changes[0].data.type, e.changes[0].data.slug, e.changes[0].data.description)
+                onSaving: async function(e) {
+                    if (e.changes[0]?.data?.type) {
+                        let newPage = await new SaveManager().createPage(e.changes[0].data.type, e.changes[0].data.slug, e.changes[0].data.description)
+                        window.location.href = "https://localhost:5001/pages/" + newPage.id + "/null";
+                    }
                 },
                 onRowRemoved: function(e) {
                     console.log(e)
@@ -504,7 +506,7 @@ export default class RenderManager {
         $(newLanguageButton).attr("data-target", "#options-modal");
         newLanguageButton.addEventListener('click', () => {
             let saveManager = new SaveManager().newLanguage(page.id, false, languageSelect.value, this);
-            window.location = 'https://localhost:5001/api/pages/' + page.id + "/" + languageSelect.value;
+            window.location = 'https://localhost:5001/pages/' + page.id + "/" + languageSelect.value;
             // document.getElementById('list').style.display = "none";
             // document.getElementById('main').style.display = "block";
         })

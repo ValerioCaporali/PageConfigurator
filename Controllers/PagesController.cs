@@ -61,8 +61,8 @@ namespace Pages_configurator.Controllers
                 {
                     if (dbPage.type == (PageType) 1)
                     {
-                    CustomTablePage page = new CustomTablePage
-                    {
+                        CustomTablePage page = new CustomTablePage
+                        {
                             id = dbPage.id,
                             type = dbPage.type,
                             visibility = dbPage.visibility,
@@ -277,7 +277,7 @@ namespace Pages_configurator.Controllers
             try
             {
                 _context.Entry(page).Property("contents").IsModified = true;
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return customPage;
 
             }

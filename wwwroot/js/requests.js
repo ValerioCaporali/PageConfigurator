@@ -351,7 +351,7 @@ export default class SaveManager {
                         if (content.language == language) 
                             newContent = content;
                     })
-                    window.location.href = "https://localhost:5001/api/pages/" + guid + "/" + language;
+                    window.location.href = "https://localhost:5001/pages/" + guid + "/" + language;
                 })
             }
         })
@@ -432,9 +432,10 @@ export default class SaveManager {
         let response = await fetch('https://localhost:5001/api/pages/get', options);
             if(!response.ok) {
                 let message = await response.json();
-                $(() => {
-                    DevExpress.ui.notify(message);
-                });
+                console.log(message.status)
+                //$(() => {
+                //    DevExpress.ui.notify(message);
+                //});
             }
             else
             {

@@ -14,7 +14,6 @@ export default class HistoryManager {
         if (this.getHistoryLenght() > 0)
             document.getElementById("prev-page").style.display = "block";
         this.history.push(page);
-        console.log(this.history);
         if (this.history.length != 0) {
             // if (this.history.length > this.maxHistoryLenght)
             //     this.history.shift();
