@@ -16,6 +16,9 @@ export default class RenderManager {
     twoColEL = false;
     threeColEL = false;
     fourColEL = false;
+    chosenLanguage = {
+        language: ''
+    }
     languages = [
         "it",
         "en",
@@ -221,16 +224,22 @@ export default class RenderManager {
                                         height: 525,
                                     },
                                     form: {
+                                        formData: that.chosenLanguage,
                                         items: [{
-                                            itemType: 'group',
+                                            // itemType: 'group',
+                                            editorType: 'dxSelectBox',
+                                            dataField: 'language',
+                                            editorOptions: {
+                                                items: that.languages,
+                                            },
                                             colCount: 2,
                                             colSpan: 2,
-                                            items: ['language']
                                             
                                         }]
                                     }
                                 },
                                 onSaving: function (e) {
+                                    console.log(that.chosenLanguage, e)
                                     if (e.changes[0]?.data?.language)
                                         new SaveManager().newLanguage(e.changes[0].insertBeforeKey, false, e.changes[0].data.language, that);
                                 },
