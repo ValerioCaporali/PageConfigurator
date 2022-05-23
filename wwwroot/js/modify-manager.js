@@ -194,7 +194,7 @@ export default class ModifyManager {
         
         $(async () => {
             let that = this;
-            // take all pages here (no homepages)
+            // take all pages here (no homepages) for link action
             let pages = await new SaveManager().getPagesByType(1);
             let pagesSource = pages.map((page, index) => ({slug: page.slug, ID: index}));
             let pagesDataSource = new DevExpress.data.DataSource({
@@ -205,7 +205,6 @@ export default class ModifyManager {
                 },
             });
             $("#ca-link").dxSelectBox({
-                // new devexpress ui component here
                 dataField: formData.link.url,
                 dataSource: pagesDataSource,
                 displayExpr: 'slug',
@@ -240,55 +239,11 @@ export default class ModifyManager {
             let items = [];
             $.each( formData.link, async function (key, value) {
                 if (key == "url") {
-
-                    //// take all pages here (no homepages)
-                    //let pages = await new SaveManager().getPagesByType(1);
-                    //let pagesSource = pages.map((page, index) => ({slug: page.slug, ID: index}));
-                    //let pagesDataSource = new DevExpress.data.DataSource({
-                    //    store: {
-                    //        type: 'array',
-                    //        key: 'ID',
-                    //        data: pagesSource,
-                    //    },
-                    //});
-//
-                    //items.push({
-                    //    // new devexpress ui component here
-                    //    dataField: key,
-                    //    editorType: 'dxSelectBox',
-                    //    editorOptions: {
-                    //        dataSource: pagesDataSource,
-                    //        displayExpr: 'slug',
-                    //        valueExpr: 'ID',
-                    //        value: value,
-                    //        acceptCustomValue: true,
-                    //        onCustomItemCreating(data) {
-                    //            if (!data.text) {
-                    //                data.customItem = null;
-                    //                return;
-                    //            }
-//
-                    //            const pageIds = pagesSource.map((page) => page.ID);
-                    //            const incrementedId = Math.max.apply(null, pageIds) + 1;
-                    //            const newItem = {
-                    //                slug: data.text,
-                    //                ID: incrementedId
-                    //            };
-                    //            data.customItem = pagesDataSource.store().insert(newItem)
-                    //                .then(() => pagesDataSource.load())
-                    //                .then(() => newItem)
-                    //                .catch((error) => {
-                    //                    throw error;
-                    //                });
-                    //        }
-                    //    }
-                    //});
                 } else items.push({dataField: key, editorType: "dxCheckBox", value: value});
             },);
             $('#ca-0').dxForm({
               colCount: 1, 
               formData: formData.link,
-              items: items,
               labelLocation: "top",
             });
         });

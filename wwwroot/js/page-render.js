@@ -518,15 +518,6 @@ export default class PageRender {
                             let saveManager = new SaveManager();
                             saveManager.deleteDraft(that.selectedPage.id);
                             window.location.reload();
-                            //that.selectedPage.drafts = null;
-                            //that.isDraft = false;
-                            //document.getElementById("status").innerHTML = "pubblicato";
-                            //document.getElementById("status").style.color = "#22a93d";
-                            //that.deleteDraftBtn.option("disabled", true);
-                            //that.publishPageBtn.option("disabled", true);
-                            //that.loadPanel.hide();
-                            // render content after the draft being deleted
-                            
                         }, 400);
                     }
                 });
@@ -929,8 +920,6 @@ export default class PageRender {
                     return;
                 }
                 else if (besideWidget && (currWidget.column + newSpan) > besideWidget.column && besideWidget.type == 1000) {
-                    // currWidget.columnSpan = newSpan;
-                    // let newWidgets = this.selectedPage.contents.widgets.filter(w => {(w.row != currWidget.row && widget.column != currWidget.column) && (w.row != besideWidget.row && w.column != besideWidget.column)});
                     let oldWidgetSpan = currWidget.columnSpan;
                     this.selectedPage.contents.widgets.forEach(w => {
                         if (w.column == currWidget.column && w.row == currWidget.row)
@@ -954,9 +943,7 @@ export default class PageRender {
                             }
                         });
                     }
-                    
-                    // newWidgets.push(currWidget);
-                    // this.selectedPage.contents.widgets = newWidgets;
+                
                     this.historyManager.updateHistory(JSON.parse(JSON.stringify(this.selectedPage)));
                     var totRows = this.calculateRows(this.selectedPage.contents.widgets),
                         totCols = this.calculateColumns(this.selectedPage.contents.widgets);
@@ -1059,7 +1046,6 @@ export default class PageRender {
                 videoContainer.appendChild(overlay);
                 this.createDropzone('w-dz', videoContainer, widget);
                 videoContainer.onmouseover = function() {
-                    // overlay.style.zIndex = "-1";
                     videoContainer.style.opacity = "80%";
                 }
                 videoContainer.onmouseout = function() {
@@ -1083,7 +1069,6 @@ export default class PageRender {
                 this.createDropzone('w-dz', tourContainer, widget);
                 tourContainer.appendChild(tourOverlay);
                 tourContainer.addEventListener('mouseover', function() {
-                    // tourOverlay.style.zIndex = "-1";
                     tourContainer.style.opacity = "80%";
                 });
                 tourContainer.addEventListener('mouseout', function() {
@@ -1105,7 +1090,6 @@ export default class PageRender {
                 this.createDropzone('w-dz', webPageContainer, widget);
                 webPageContainer.appendChild(pageOverlay);
                 webPageContainer.addEventListener('mouseover', function() {
-                    // pageOverlay.style.zIndex = "-1";
                     webPageContainer.style.opacity = "80%";
                 });
                 webPageContainer.addEventListener('mouseout', function() {
@@ -1773,17 +1757,6 @@ export default class PageRender {
         document.getElementById("sidebar-default-view").style.display = "block";
     }
 
-    // renderChanges(modifiedPage) {
-    //     modifiedPage = JSON.parse(JSON.stringify(modifiedPage)); // to delete reference
-    //     if (modifiedPage) {
-    //         if (this.historyManager.isHistoryEmpty())
-    //             this.historyManager.updateHistory(JSON.parse(JSON.stringify(this.selectedPage)));
-    //         this.historyManager.updateHistory(modifiedPage);
-    //         this.selectedPage = this.historyManager.getLastPage();
-    //         this.fillPage(this.selectedPage.contents.widgets);
-    //     }
-    // }
-
     renderWidgetChanges(widget, modifiedPage) {
         this.responsiveBox._screenItems.forEach(screenItem => {
             if (screenItem.location.row == widget.row && screenItem.location.col == widget.column) {
@@ -1910,7 +1883,6 @@ export default class PageRender {
 
     replaceWidget(toWidget, widgetData) {
         if (typeof widgetData == 'number') {
-            // this.historyManager.updateHistory(this.selectedPage);
             let emptyWidget = new Widget().getEmptyWidget();
             emptyWidget.type = widgetData;
             let defaultContents = new DefaultContents();
@@ -1979,7 +1951,6 @@ export default class PageRender {
                 });
             }
         }
-        //this.initEventListener();
     }
 
     addWidget(widgetType, row, column, span) {

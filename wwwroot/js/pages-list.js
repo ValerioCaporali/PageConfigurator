@@ -1,9 +1,5 @@
-import ModifyManager from './modify-manager.js'
 import HistoryManager from './history-manager.js';
 import SaveManager from './requests.js';
-import FormData from './formData.js';
-import Widget from "./widget.js";
-import DefaultContents from "./defaultContents.js";
 export default class RenderManager {
 
     pages;
@@ -104,9 +100,9 @@ export default class RenderManager {
             }
         });
         contents.forEach(content => {
-            if (!content.language)
-                content.language = "Default"
-            else content.language.toUpperCase();
+        if (!content.language)
+        content.language = "Default"
+        else content.language.toUpperCase();
             content.visibility = content.visibility == 1 ? "Private" : "Public";
         });
         pages.forEach(page => {
@@ -182,7 +178,6 @@ export default class RenderManager {
                     }
                 },
                 onRowRemoved: function(e) {
-                    console.log(e)
                     new SaveManager().deletePage(e.data.id);
                 },
                 paging: {
@@ -205,7 +200,7 @@ export default class RenderManager {
                     template(container, options) {
                         const currentEmployeeData = options.data;
                         $('<div style="margin-bottom: 10px;">')
-                            .addClass('master-detail-caption')
+                            .addClass('master-detail-caption')  
                             .text(`Languages`)
                             .appendTo(container);
 
@@ -232,8 +227,8 @@ export default class RenderManager {
                                             editorOptions: {
                                                 items: that.languages,
                                             },
-                                            colCount: 2,
-                                            colSpan: 2,
+                                            colCount: 1,
+                                            colSpan: 1,
                                             
                                         }]
                                     }
@@ -273,60 +268,6 @@ export default class RenderManager {
                 },
             }).dxDataGrid('instance');
         });
-
-        // let homeListContainer = document.getElementById("home-pages-list-container"),
-        //     pageListContainer = document.getElementById("pages-list-container"),
-        //     homeList = document.createElement("ul"),
-        //     pageList = document.createElement("ul");
-        // this.pages.forEach(page => {
-        //     let pageField = document.createElement("li");
-        //     pageField.className = "page-field";
-        //     let container = document.createElement('div');
-        //     container.style.display = "flex";
-        //     let dropdownArrow = document.createElement("img");
-        //     dropdownArrow.src = "https://img.icons8.com/external-tanah-basah-glyph-tanah-basah/344/external-Down-arrows-tanah-basah-glyph-tanah-basah-5.png";
-        //     dropdownArrow.style.width = "21px";
-        //     dropdownArrow.style.margin = "auto";
-        //     dropdownArrow.style.marginRight = "0";
-        //     let collapseArrow = document.createElement("img");
-        //     collapseArrow.src = "https://img.icons8.com/ios-filled/344/collapse-arrow.png";
-        //     collapseArrow.style.width = "21px";
-        //     collapseArrow.style.margin = "auto";
-        //     collapseArrow.style.display = "none";
-        //     collapseArrow.style.marginRight = "0";
-        //     let description = document.createElement('p');
-        //     description.style.margin = "3px";
-        //     description.innerText = page.description;
-        //     let languagesContainer = document.createElement("div");
-        //     languagesContainer.style.display = "none";
-        //     page.contents.forEach(content => {
-        //         let language = document.createElement("div");
-        //         language.className = "language-option"
-        //         language.innerText = content.language ? content.language.toUpperCase() : "Default";
-        //         language.onclick = () => {window.location.href = "https://localhost:5001/api/pages/" + page.id + "/" + content.language;}
-        //         languagesContainer.appendChild(language);
-        //     });
-        //     container.append(description, dropdownArrow, collapseArrow);
-        //     pageField.append(container, languagesContainer);
-        //     dropdownArrow.addEventListener('click', () => {
-        //         dropdownArrow.style.display = "none";
-        //         collapseArrow.style.display = "block";
-        //         languagesContainer.style.display = "flex";
-        //     });
-        //     collapseArrow.addEventListener('click', () => {
-        //         collapseArrow.style.display = "none";
-        //         dropdownArrow.style.display = "block";
-        //         languagesContainer.style.display = "none";
-        //     })
-        //     if (page.type == 0)
-        //         homeList.appendChild(pageField);
-        //     else 
-        //         pageList.appendChild(pageField);
-        // });
-        // homeListContainer.appendChild(homeList);
-        // pageListContainer.appendChild(pageList);
-        
-        
         
         let homeContainer = document.getElementById("home-pages-grid-container");
         let pageContainer = document.getElementById("pages-grid-container");
@@ -432,24 +373,10 @@ export default class RenderManager {
                 pageCard.style.backgroundColor = "white"
                 //  Link alla pagina dedicata per il configuratore della pagina specifica
                 let linkToPage = document.createElement('a');
-                linkToPage.href = "https://localhost:5001/pages/" + page.id + "/" + draft.language;
+                let language = draft.language ? draft.language : null;
+                linkToPage.href = "https://localhost:5001/pages/" + page.id + "/" + language;
                 linkToPage.append(pageCard);
                 pageOptionsContainer.appendChild(linkToPage);
-                // pageCard.addEventListener("click", () => {
-                //        
-                //     
-                //     
-                //     // document.getElementById("status").innerHTML = "bozza";
-                //     // document.getElementById("status").style.color = "#e03e0d";
-                //     // $(pageCard).attr("data-toggle", "modal");
-                //     // $(pageCard).attr("data-target", "#options-modal");
-                //     // document.getElementById('list').style.display = "none";
-                //     // document.getElementById('main').style.display = "block";
-                //     // this.isDraft = true;
-                //     // this.openPageStream(page, draft);
-                //     // this.deleteDraftBtn.option("disabled", false);
-                //     // this.publishPageBtn.option("disabled", false);
-                // })
             });
         }
         else {
@@ -467,22 +394,11 @@ export default class RenderManager {
                 pageCard.append(pageImage, pageTitle);
                 pageCard.style.backgroundColor = "white"
                 let linkToPage = document.createElement('a');
-                linkToPage.href = "https://localhost:5001/pages/" + page.id + "/" + content.language;
+                let language = content.language != "Default" ? content.language : null;
+                linkToPage.href = "https://localhost:5001/pages/" + page.id + "/" + language;
                 linkToPage.append(pageCard);
                 pageOptionsContainer.appendChild(linkToPage);
                 pageCard.addEventListener("click", () => {
-                    //  Link alla pagina dedicata per il configuratore della pagina specifica
-                    // this.isDraft = false;
-                    // document.getElementById("status").innerHTML = "pubblicato";
-                    // document.getElementById("status").style.color = "#22a93d";
-                    // $(pageCard).attr("data-toggle", "modal");
-                    // $(pageCard).attr("data-target", "#options-modal");
-                    // document.getElementById('list').style.display = "none";
-                    // document.getElementById('main').style.display = "block";
-                    // this.openPageStream(page, content);
-                    // this.saveInDraftBtn.option("disabled", true);
-                    // this.deleteDraftBtn.option("disabled", true);
-                    // this.publishPageBtn.option("disabled", true);
                 })
             });
         }
@@ -516,8 +432,6 @@ export default class RenderManager {
         newLanguageButton.addEventListener('click', () => {
             let saveManager = new SaveManager().newLanguage(page.id, false, languageSelect.value, this);
             window.location = 'https://localhost:5001/pages/' + page.id + "/" + languageSelect.value;
-            // document.getElementById('list').style.display = "none";
-            // document.getElementById('main').style.display = "block";
         })
     }
 

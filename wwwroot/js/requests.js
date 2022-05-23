@@ -1,4 +1,4 @@
-import RenderManager from "./render-manager.js";
+import RenderManager from "./pages-list.js";
 import PageRender from "./page-render.js";
 
 export default class SaveManager {
@@ -141,28 +141,21 @@ export default class SaveManager {
         }
 
         fetch('https://localhost:5001/api/pages/save', options)
-        .then(response => {
+        .then(async response => {
+            let message = await response.json();
             if(!response.ok)
             {
-                response.json()
-                .catch(() => {
-                    $(() => {
-                        swal(message, "warning");
-                    });
-                })
-                .then(({message}) => {
-                    swal(message, "warning");
-                })
+                $(() => {
+                    DevExpress.ui.notify(message, "error");
+                });
             }
             else
             {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Pagina salvata !',
-                    text: 'La pagina è stata salvata correttamente nelle bozze',
+                $(() => {
+                    DevExpress.ui.notify(message, "success");
                 });
             }
-        })
+        });
 
     }
 
@@ -182,30 +175,21 @@ export default class SaveManager {
         }
 
         fetch('https://localhost:5001/api/pages/delete-draft', options)
-        .then(response => {
-            if(!response.ok)
-            {
-                response.json()
-                .catch(() => {
+            .then(async response => {
+                let message = await response.json();
+                if(!response.ok)
+                {
                     $(() => {
-                        DevExpress.ui.notify(response.status, "warning");
+                        DevExpress.ui.notify(message, "error");
                     });
-                })
-                .then(({message}) => {
+                }
+                else
+                {
                     $(() => {
-                        DevExpress.ui.notify(message);
+                        DevExpress.ui.notify(message, "success");
                     });
-                })
-            }
-            else
-            {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Bozza eliminata',
-                    text: 'La bozza è stata eliminata correttamente',
-                });
-            }
-        })
+                }
+            });
     }
 
     
@@ -224,30 +208,21 @@ export default class SaveManager {
         };
 
         fetch('https://localhost:5001/api/pages/publish', options)
-        .then(response => {
-            if(!response.ok)
-            {
-                response.json()
-                .catch(() => {
+            .then(async response => {
+                let message = await response.json();
+                if(!response.ok)
+                {
                     $(() => {
-                        DevExpress.ui.notify(response.status);
-                    })
-                })
-                .then(({message}) => {
-                    $(() => {
-                        DevExpress.ui.notify(message);
+                        DevExpress.ui.notify(message, "error");
                     });
-                })
-            }
-            else
-            {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Pagina pubblicata !',
-                    text: 'La pagina è stata pubblicata correttamente',
-                });
-            }
-        })
+                }
+                else
+                {
+                    $(() => {
+                        DevExpress.ui.notify(message, "success");
+                    });
+                }
+            });
     }
 
     deletePage(guid) {
@@ -266,30 +241,21 @@ export default class SaveManager {
         };
 
         fetch('https://localhost:5001/api/pages/delete-page', options)
-        .then(response => {
-            if(!response.ok)
-            {
-                response.json()
-                .catch(() => {
+            .then(async response => {
+                let message = await response.json();
+                if(!response.ok)
+                {
                     $(() => {
-                        DevExpress.ui.notify(response.status);
-                    })
-                })
-                .then(({message}) => {
-                    $(() => {
-                        DevExpress.ui.notify(message);
+                        DevExpress.ui.notify(message, "error");
                     });
-                })
-            }
-            else
-            {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Pagina Eliminata !',
-                    text: 'La pagina è stata eliminata correttamente',
-                });
-            }
-        })
+                }
+                else
+                {
+                    $(() => {
+                        DevExpress.ui.notify(message, "success");
+                    });
+                }
+            });
     }
 
     async createPage(type, slug, description) {
@@ -320,6 +286,8 @@ export default class SaveManager {
             language: language
         };
         
+        console.log(data)
+        
         const options = {
             method: "POST",
             headers: {
@@ -329,32 +297,23 @@ export default class SaveManager {
             body: JSON.stringify(data)
         };
         
-        fetch('https://localhost:5001/api/pages/new-language', options).then(response => {
-            if(!response.ok) {
-                response.json()
-                    .catch(() => {
-                        $(() => {
-                            DevExpress.ui.notify(response.status);
-                        })
-                    })
-                    .then(({message}) => {
-                        $(() => {
-                            DevExpress.ui.notify(message);
-                        });
-                    })
-            }
-            else
-            {
-                response.json().then(data => {
-                    let newContent;
-                    data.contents.forEach(content => {
-                        if (content.language == language) 
-                            newContent = content;
-                    })
+        fetch('https://localhost:5001/api/pages/new-language', options)
+            .then(async response => {
+                let message = await response.json();
+                if(!response.ok)
+                {
+                    $(() => {
+                        DevExpress.ui.notify(message, "error");
+                    });
+                }
+                else
+                {
+                    $(() => {
+                        DevExpress.ui.notify("New language correctly created", "success");
+                    });
                     window.location.href = "https://localhost:5001/pages/" + guid + "/" + language;
-                })
-            }
-        })
+                }
+            });
         
     }
     
@@ -373,27 +332,22 @@ export default class SaveManager {
             body: JSON.stringify(data)
         }
         
-        fetch('https://localhost:5001/api/pages/delete-language', options).then(response => {
-            if (!response.ok) {
-                response.json()
-                    .catch(() => {
-                        $(() => {
-                            DevExpress.ui.notify(response.status);
-                        })
-                    })
-                    .then(({message}) => {
-                        $(() => {
-                            DevExpress.ui.notify(message);
-                        });
-                    })
-            }
-            else {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Lingua eliminata correttamente !'
-                });
-            }
-        })
+        fetch('https://localhost:5001/api/pages/delete-language', options)
+            .then(async response => {
+                let message = await response.json();
+                if(!response.ok)
+                {
+                    $(() => {
+                        DevExpress.ui.notify(message, "error");
+                    });
+                }
+                else
+                {
+                    $(() => {
+                        DevExpress.ui.notify(message, "success");
+                    });
+                }
+            });
     }
     
     async getPagesByType(type) {
@@ -432,10 +386,9 @@ export default class SaveManager {
         let response = await fetch('https://localhost:5001/api/pages/get', options);
             if(!response.ok) {
                 let message = await response.json();
-                console.log(message.status)
-                //$(() => {
-                //    DevExpress.ui.notify(message);
-                //});
+                $(() => {
+                    DevExpress.ui.notify(message, "error");
+                });
             }
             else
             {
@@ -445,19 +398,27 @@ export default class SaveManager {
                     data.drafts.forEach(draft => {
                         if (draft.language == pageLan && pageLan)
                             specificContent = draft;
-                        else if (!draft.language)
+                        else if (!draft.language && pageLan == "null")
                             specificContent = draft;
                     });
                 } else {
                     data.contents.forEach(content => {
                         if (content.language == pageLan && pageLan)
                             specificContent = content;
-                        else if (!content.language)
+                        else if (content.language == null && pageLan == "null")
                             specificContent = content;
                     });
                 }
                 page.metadata = data;
                 page.content = specificContent;
+                if (!page.content) {
+                    $(() => {
+                        DevExpress.ui.notify("Pagina o lingua inesistente", "error");
+                    });
+                    setTimeout(() => {
+                        window.location.href = "https://localhost:5001";
+                    }, 1000);
+                }
                 // let renderer = new PageRender(data, specificContent);
                 // renderer.openPageStream(data, specificContent);
             }

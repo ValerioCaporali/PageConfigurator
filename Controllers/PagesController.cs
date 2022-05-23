@@ -18,6 +18,7 @@ using API.Data;
 using API.Entities;
 using API.Model;
 using Microsoft.AspNetCore.Diagnostics;
+using Model.Content.Language;
 using Model.Page.Contents;
 using Model.Page.Type;
 using Model.PageModel.PageWidget;
@@ -66,7 +67,7 @@ namespace Pages_configurator.Controllers
                             id = dbPage.id,
                             type = dbPage.type,
                             visibility = dbPage.visibility,
-                            slug = dbPage.slug,
+                            slug = dbPage.slug, 
                             description = dbPage.description,
                             drafts = dbPage.drafts != null ? JsonConvert.DeserializeObject<List<CustomTableContent>>(dbPage.drafts) : null,
                             contents = JsonConvert.DeserializeObject<List<CustomTableContent>>(dbPage.contents)
@@ -99,7 +100,10 @@ namespace Pages_configurator.Controllers
         [HttpPost("get")]
         public async Task<ActionResult<CustomTablePage>> Get(PageDto pageDto)
         {
-            DbPage dbPage = _context.Pages.Find(pageDto.Id);
+            DbPage dbPage = await _context.Pages.FindAsync(pageDto.Id);
+            
+            if (dbPage == null) return NotFound("Page not found");
+            
             CustomTablePage page = new CustomTablePage
             {
                 id = dbPage.id,
@@ -110,7 +114,6 @@ namespace Pages_configurator.Controllers
                 drafts = dbPage.drafts != null ? JsonConvert.DeserializeObject<List<CustomTableContent>>(dbPage.drafts) : null,
                 contents = JsonConvert.DeserializeObject<List<CustomTableContent>>(dbPage.contents)
             };
-
             return page;
         }
         
@@ -120,7 +123,7 @@ namespace Pages_configurator.Controllers
         {
 
             DbPage page = _context.Pages.Find(publishDto.id);
-            
+
             if (page == null) return BadRequest("Page not found");
             
             List<CustomTableContent> drafts = JsonConvert.DeserializeObject<List<CustomTableContent>>(page.drafts);
@@ -128,6 +131,12 @@ namespace Pages_configurator.Controllers
             page.description = drafts[0].Description;
             page.slug = drafts[0].Slug;
             List<TableContent> contents = drafts.Select(draft => new TableContent {Language = draft.Language, Title = draft.Title, Widgets = draft.Widgets}).ToList();
+            
+            // Remove all widgets used for dropzone (custom type 1000)
+            foreach (TableContent content in contents)
+            {
+                content.Widgets.RemoveAll(c => c.Type == (WidgetType) 1000);
+            }
             page.contents = JsonConvert.SerializeObject(contents);
             page.drafts = null;
             _context.SaveChanges();
@@ -253,7 +262,12 @@ namespace Pages_configurator.Controllers
         public async Task<ActionResult<CustomTablePage>> CreateLanguage([FromBody] NewLanguageDto newLanguageDto)
         {
             if (!_context.Pages.Any(page => page.id == newLanguageDto.Id)) return BadRequest("Page not found");
-            DbPage page = _context.Pages.Find(newLanguageDto.Id);
+            if (!Language.TryParse(String.Concat(newLanguageDto.Language[0].ToString().ToUpper(), newLanguageDto.Language.AsSpan(1)), out Language language)) return BadRequest("Invalid sent data");
+            
+            DbPage page = await _context.Pages.FindAsync(newLanguageDto.Id);
+
+            if (page == null) return BadRequest("Page not found");
+            
             List<TableContent> pageContents = JsonConvert.DeserializeObject<List<TableContent>>(page.contents);
             if (pageContents.Any(content => content.Language == newLanguageDto.Language)) return BadRequest("Language already exists");
             TableContent newContent = new()
@@ -278,7 +292,7 @@ namespace Pages_configurator.Controllers
             {
                 _context.Entry(page).Property("contents").IsModified = true;
                 await _context.SaveChangesAsync();
-                return customPage;
+                return Ok(customPage);
 
             }
             catch (DbUpdateException e)
@@ -292,6 +306,8 @@ namespace Pages_configurator.Controllers
         public ActionResult DeleteLanguage([FromBody] DeleteLanguageDto deleteLanguageDto)
         {
             if (!_context.Pages.Any(page => page.id == deleteLanguageDto.Id)) return BadRequest("Page not found");
+            if (!Language.TryParse(String.Concat(deleteLanguageDto.Language[0].ToString().ToUpper(), deleteLanguageDto.Language.AsSpan(1)), out Language language)) return BadRequest("Invalid sent data");
+            
             DbPage page = _context.Pages.Find(deleteLanguageDto.Id);
             List<TableContent> pageContents = JsonConvert.DeserializeObject<List<TableContent>>(page.contents);
             if (!pageContents.Any(content => content.Language == deleteLanguageDto.Language)) return BadRequest("Page not found");
@@ -301,7 +317,7 @@ namespace Pages_configurator.Controllers
             {
                 _context.Entry(page).Property("contents").IsModified = true;
                 _context.SaveChanges();
-                return Ok("New language correctly created");
+                return Ok("Language correctly deleted");
 
             }
             catch (DbUpdateException e)
@@ -311,10 +327,10 @@ namespace Pages_configurator.Controllers
             }
         }
 
-        // [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        // public IActionResult Error()
-        // {
-        //     return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        // }
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
     }
 }
