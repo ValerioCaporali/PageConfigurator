@@ -531,7 +531,7 @@ export default class PageRender {
             stylingMode: 'contained',
             text: 'Pubblica',
             type: 'success',
-            disabled: true,
+            disabled: !that.isDraft,
             width: 120,
             onClick() {
                 if (that.isDraft == false) {

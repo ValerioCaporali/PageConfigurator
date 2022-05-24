@@ -8,7 +8,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Pages_configurator.Models;
 using Model.PageModel;
 using Model.PageModel.PageWidget.WidgetContent;
@@ -22,6 +21,7 @@ using Model.Content.Language;
 using Model.Page.Contents;
 using Model.Page.Type;
 using Model.PageModel.PageWidget;
+using System.Text.Json;
 
 namespace Pages_configurator.Controllers
 {
@@ -69,8 +69,8 @@ namespace Pages_configurator.Controllers
                             visibility = dbPage.visibility,
                             slug = dbPage.slug, 
                             description = dbPage.description,
-                            drafts = dbPage.drafts != null ? JsonConvert.DeserializeObject<List<CustomTableContent>>(dbPage.drafts) : null,
-                            contents = JsonConvert.DeserializeObject<List<CustomTableContent>>(dbPage.contents)
+                            drafts = dbPage.drafts != null ? JsonSerializer.Deserialize<List<CustomTableContent>>(dbPage.drafts) : null,
+                            contents = JsonSerializer.Deserialize<List<CustomTableContent>>(dbPage.contents)
                         };
                         pages.Add(page);
                     }
@@ -87,8 +87,8 @@ namespace Pages_configurator.Controllers
                         visibility = dbPage.visibility,
                         slug = dbPage.slug,
                         description = dbPage.description,
-                        drafts = dbPage.drafts != null ? JsonConvert.DeserializeObject<List<CustomTableContent>>(dbPage.drafts) : null,
-                        contents = JsonConvert.DeserializeObject<List<CustomTableContent>>(dbPage.contents)
+                        drafts = dbPage.drafts != null ? JsonSerializer.Deserialize<List<CustomTableContent>>(dbPage.drafts) : null,
+                        contents = JsonSerializer.Deserialize<List<CustomTableContent>>(dbPage.contents)
                     };
                     pages.Add(page);
                 }
@@ -111,8 +111,8 @@ namespace Pages_configurator.Controllers
                 visibility = dbPage.visibility,
                 slug = dbPage.slug,
                 description = dbPage.description,
-                drafts = dbPage.drafts != null ? JsonConvert.DeserializeObject<List<CustomTableContent>>(dbPage.drafts) : null,
-                contents = JsonConvert.DeserializeObject<List<CustomTableContent>>(dbPage.contents)
+                drafts = dbPage.drafts != null ? JsonSerializer.Deserialize<List<CustomTableContent>>(dbPage.drafts) : null,
+                contents = JsonSerializer.Deserialize<List<CustomTableContent>>(dbPage.contents)
             };
             return page;
         }
@@ -126,7 +126,7 @@ namespace Pages_configurator.Controllers
 
             if (page == null) return BadRequest("Page not found");
             
-            List<CustomTableContent> drafts = JsonConvert.DeserializeObject<List<CustomTableContent>>(page.drafts);
+            List<CustomTableContent> drafts = JsonSerializer.Deserialize<List<CustomTableContent>>(page.drafts);
             page.visibility = drafts[0].Visibility;
             page.description = drafts[0].Description;
             page.slug = drafts[0].Slug;
@@ -137,7 +137,7 @@ namespace Pages_configurator.Controllers
             {
                 content.Widgets.RemoveAll(c => c.Type == (WidgetType) 1000);
             }
-            page.contents = JsonConvert.SerializeObject(contents);
+            page.contents = JsonSerializer.Serialize(contents);
             page.drafts = null;
             _context.SaveChanges();
             return Ok("Page correctly published");
@@ -154,10 +154,10 @@ namespace Pages_configurator.Controllers
             DbPage page = _context.Pages.Find(saveDto.Page.id);
             DbPage updatedPage = new();
             List<CustomTableContent> drafts = new();
-            List<CustomTableContent> contents = JsonConvert.DeserializeObject<List<CustomTableContent>>(page.contents);
+            List<CustomTableContent> contents = JsonSerializer.Deserialize<List<CustomTableContent>>(page.contents);
             if (page.drafts != null)
             {
-                drafts = JsonConvert.DeserializeObject<List<CustomTableContent>>(page.drafts);
+                drafts = JsonSerializer.Deserialize<List<CustomTableContent>>(page.drafts);
                 int oldDraftIndex = drafts.FindIndex(draft => draft.Language == saveDto.InitialPage.contents.First().Language);
                 if (oldDraftIndex == -1)
                 {
@@ -191,7 +191,7 @@ namespace Pages_configurator.Controllers
             }
 
             updatedPage = page;
-            updatedPage.drafts = JsonConvert.SerializeObject(drafts);
+            updatedPage.drafts = JsonSerializer.Serialize(drafts);
             _context.Entry(page).CurrentValues.SetValues(updatedPage);
             _context.SaveChanges();
             return Ok("Page correctly saved");
@@ -227,7 +227,7 @@ namespace Pages_configurator.Controllers
                 Language = null
             };
             List<TableContent> contents = new() {content};
-            string serializedContents = JsonConvert.SerializeObject(contents);
+            string serializedContents = JsonSerializer.Serialize(contents);
             DbPage newPage = new DbPage
             {
                 id = Guid.NewGuid(),
@@ -245,8 +245,8 @@ namespace Pages_configurator.Controllers
                 visibility = newPage.visibility,
                 slug = newPage.slug,
                 description = newPage.description,
-                drafts = newPage.drafts != null ? JsonConvert.DeserializeObject<List<CustomTableContent>>(newPage.drafts) : null,
-                contents = JsonConvert.DeserializeObject<List<CustomTableContent>>(newPage.contents)
+                drafts = newPage.drafts != null ? JsonSerializer.Deserialize<List<CustomTableContent>>(newPage.drafts) : null,
+                contents = JsonSerializer.Deserialize<List<CustomTableContent>>(newPage.contents)
             };
 
             page.contents[0].Description = page.description;
@@ -268,7 +268,7 @@ namespace Pages_configurator.Controllers
 
             if (page == null) return BadRequest("Page not found");
             
-            List<TableContent> pageContents = JsonConvert.DeserializeObject<List<TableContent>>(page.contents);
+            List<TableContent> pageContents = JsonSerializer.Deserialize<List<TableContent>>(page.contents);
             if (pageContents.Any(content => content.Language == newLanguageDto.Language)) return BadRequest("Language already exists");
             TableContent newContent = new()
             {
@@ -277,7 +277,7 @@ namespace Pages_configurator.Controllers
                 Widgets = newLanguageDto.Duplicate ? pageContents.First().Widgets : new List<Widget>()
             };
             pageContents.Add(newContent);
-            page.contents = JsonConvert.SerializeObject(pageContents);
+            page.contents = JsonSerializer.Serialize(pageContents);
             CustomTablePage customPage = new CustomTablePage
             {
                 id = page.id,
@@ -285,8 +285,8 @@ namespace Pages_configurator.Controllers
                 visibility = page.visibility,
                 slug = page.slug,
                 description = page.description,
-                drafts = page.drafts != null ? JsonConvert.DeserializeObject<List<CustomTableContent>>(page.drafts) : null,
-                contents = JsonConvert.DeserializeObject<List<CustomTableContent>>(page.contents)
+                drafts = page.drafts != null ? JsonSerializer.Deserialize<List<CustomTableContent>>(page.drafts) : null,
+                contents = JsonSerializer.Deserialize<List<CustomTableContent>>(page.contents)
             };
             try
             {
@@ -309,10 +309,10 @@ namespace Pages_configurator.Controllers
             if (!Language.TryParse(String.Concat(deleteLanguageDto.Language[0].ToString().ToUpper(), deleteLanguageDto.Language.AsSpan(1)), out Language language)) return BadRequest("Invalid sent data");
             
             DbPage page = _context.Pages.Find(deleteLanguageDto.Id);
-            List<TableContent> pageContents = JsonConvert.DeserializeObject<List<TableContent>>(page.contents);
+            List<TableContent> pageContents = JsonSerializer.Deserialize<List<TableContent>>(page.contents);
             if (!pageContents.Any(content => content.Language == deleteLanguageDto.Language)) return BadRequest("Page not found");
             pageContents.Remove(pageContents.Find(content => content.Language == deleteLanguageDto.Language));
-            page.contents = JsonConvert.SerializeObject(pageContents);
+            page.contents = JsonSerializer.Serialize(pageContents);
             try
             {
                 _context.Entry(page).Property("contents").IsModified = true;

@@ -167,7 +167,7 @@ namespace API.Service
                     _context.Pages.Add(bindedPage);
                     }
             }
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return;
         }
         

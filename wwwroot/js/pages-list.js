@@ -299,18 +299,6 @@ export default class RenderManager {
                 this.showOptions(page);
             })
         });
-        
-        document.getElementById('grid-page-view').addEventListener('click', () => {
-            document.getElementById('grid-container').style.display = "none";
-            document.getElementsByClassName('dx-overlay')[0].style.display = "none";
-            document.getElementById('grid-list').style.display = "block";
-        });
-        
-        document.getElementById('list-page-view').addEventListener('click', () => {
-            document.getElementById('grid-list').style.display = "none";
-            document.getElementsByClassName('dx-overlay')[0].style.display = "block";
-            document.getElementById('grid-container').style.display = "block";
-        })
     }
 
     populateBySearch(val, filter) {
